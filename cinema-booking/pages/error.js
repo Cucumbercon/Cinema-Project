@@ -1,3 +1,6 @@
+/*  Title: Error Page
+*   Description: Error page for invalid routes
+*/
 import React from 'react';
 
 const error = () => {
