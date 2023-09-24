@@ -1,3 +1,15 @@
+
+## Node and NPM Versions 09/24/2023
+Make sure that Node.js is installed before running, you can check by typing in to see if you have the right version
+Typing this in the terminal:
+> node -v
+You should have version 18.14.1 for this
+
+Also make sure you have the latest npm:
+> npm -v
+You shuld have version 9.3.1
+
+
 ## Available Scripts
 
 In the project directory, you can run:
