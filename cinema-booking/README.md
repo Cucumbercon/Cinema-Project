@@ -9,7 +9,7 @@ Check by typing this in the terminal:
 > npm -v
 
 Also make sure to install react-router-dom:
->npm install react-router-dom
+> npm install react-router-dom
 
 
 ## Available Scripts
