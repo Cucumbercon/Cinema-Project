@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import './Navbar.css';
 import { Link } from "react-router-dom";
 
     function Navbar() {
+        
   return <nav className = "nav">
     <a href = "/" className = "site-title" >C1 Cinemas </a>
     <ul>
