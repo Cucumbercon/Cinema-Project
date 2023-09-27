@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react'
 import './home.css';
 
 function MovieBooking() {
+    const [searchTerm, setSearchTerm] = useState('');
+ 
   return (
+    // this part is builing top bar
     <div>
         <section className="top-bar">
+            {/* this part is building left content of top bar */}
             <div className="left-content">
                 <h2 className="title">WELCOME!</h2>
                 <ul className="navigation">
@@ -14,6 +18,16 @@ function MovieBooking() {
                     <li><a href="#">Promotion</a></li>
                 </ul>
             </div>
+            {/* this part is building search bar of top bar */}
+            <div className="search-bar-container">
+                        <input 
+                            type="text" 
+                            placeholder="Search for movies..." 
+                            value={searchTerm} 
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+            </div>
+            {/* this part is building right content of top bar */}
             <div className="right-content">
                 {/* <img src={require('./assests/images/movieCart.jpg')} alt="" className="cart"/> */}
                 {/* <img src={require('./moviefilter.jpg')} alt="" className="filter"/> */}
@@ -25,7 +39,10 @@ function MovieBooking() {
                 <img src={require('./movieMenu.png')} alt="" className="menu"/>
             </div>
         </section>
+         {/* this part is building the matin container inculde sidebar and movie container*/}
         <section className="main-container">
+            {/* this part is building sidebar for movie filter. user are able find the type of movie of what they like*/}
+            {/* there are three groups of sidebar which incude Categories, Language, Details. and one "Apply Filters" button */}
             <div className="sidebar">
                 <form action="#">
                     <div className="sidebar-groups">
@@ -45,7 +62,7 @@ function MovieBooking() {
 
                     </div>
                     
-
+                    {/* this part is for Language */}
                     <div className="sidebar-groups">
                         <h3 className="sg-title">Language</h3>
                         <input type="checkbox" id="english" name="english" value="english" />
@@ -55,7 +72,7 @@ function MovieBooking() {
                         <input type="checkbox" id="chinese" name="chinese" value="chinese" />
                         <label htmlFor="chinese">Chinese</label>
                     </div>    
-
+                    {/* this part is for Details */}
                     <div className="sidebar-groups">
                         <h3 className="sg-title">Details</h3>
                         <input type="checkbox" id="ratescore" name="ratescore" value="ratescore" />
@@ -65,13 +82,13 @@ function MovieBooking() {
                         <input type="checkbox" id="mostleased" name="mostleased" value="mostleased" />
                         <label htmlFor="mostleased">Mostleased</label>
                     </div>    
-
+                    {/* this part is for apply filters */}
                     <div className="sidebar-groups">
                         <a href="#" className="btn-l btn">Apply Filters</a>
                     </div>
                 </form>
             </div>
-            
+            {/* this part include both current movie and future movie*/}
             <div className="movies-container">
                 <div className="upcoming-img-box">
                     {/* <img src={require('./upcomingMovie.jpg')} alt=""/> */}
@@ -79,7 +96,7 @@ function MovieBooking() {
                     <p className="upcoming-title">Upcoming Movie</p>
                     <div className="buttons">
                         <a href="#" className="btn">Book Now</a>
-                        <a href="#" className="btn-alt btn">Play Trailer</a>
+                        <a href="https://www.youtube.com/watch?v=TMqfLxE15zI&t=1s&ab_channel=ScreenCulture" className="btn-alt btn">Play Trailer</a>
                     </div>
                 </div>
 
