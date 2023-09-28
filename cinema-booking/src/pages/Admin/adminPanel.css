@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Joan&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Joan', serif;
+}
+
+body {
+    background-color: black;
+    /* background-color: whitesmoke; */
+    display:grid;
+    /* grid-template-columns: 1000px; */
+    justify-content: space-evenly;
+}
+
+h2 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.top-bar{
+    background-color: black; 
+    color: white;
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+    padding: 1.5rem 5rem;
+    width: 100%;
+    margin-top: 50px;
+    box-sizing: border-box; 
+}
+
+.admin-info {
+    display: flex;
+    align-items: center; 
+}
+
+.admin-icon {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    border-radius: 20px; 
+
+}
+
+.admin-username {
+    font-weight: bold;
+}
+
+
+.search-bar-container input {
+    width: 100%;               
+    padding: 10px 20px;        
+    border: 1px solid #cd8c38; 
+    outline: none;             
+    border-radius: 20px;       
+    background-color: #dfe1ee; 
+    color: #adadad;            
+    font-size: 16px;           
+    transition: 0.2s;         
+}
+
+.search-bar-container input:focus {
+    border-color: rgb(228, 214, 214);     
+    box-shadow: 0 0 10px #92601f; 
+}
+
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 20px;
+}
+
+.team-member {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+}
+
+.team-member img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Circular images */
+    margin-bottom: 10px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

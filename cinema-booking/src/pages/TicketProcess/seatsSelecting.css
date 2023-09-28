@@ -5,7 +5,7 @@
 }
 body{
 
-    background-color: rgb(73, 58, 58);
+    background-color: black;
     display: flex;
     flex-direction:column;
     color: white;
