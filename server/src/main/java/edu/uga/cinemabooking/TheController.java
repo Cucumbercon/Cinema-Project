@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class TheController {
 
-    // retrieve message
+    //*****************************retrieve message*********************************//
     @GetMapping("/data")
     public ResponseEntity<String> fetchData() {
         // Logic to fetch data
@@ -21,7 +21,7 @@ public class TheController {
         return ResponseEntity.ok(data);
     }
 
-    // send message
+    //*****************************send message**************************************//
     @PostMapping("/send-message")
     public ResponseEntity<String> receiveMessage(@RequestBody String message) {
         // Process the received message here
