@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
-public class TheController {
+public class TestingController {
 
-    //*****************************retrieve message*********************************//
+    //*****************************retrieve message*********************************//             GET
     @GetMapping("/data")
     public ResponseEntity<String> fetchData() {
         // Logic to fetch data
@@ -21,7 +21,7 @@ public class TheController {
         return ResponseEntity.ok(data);
     }
 
-    //*****************************send message**************************************//
+    //*****************************send message**************************************//            POST
     @PostMapping("/send-message")
     public ResponseEntity<String> receiveMessage(@RequestBody String message) {
         // Process the received message here
