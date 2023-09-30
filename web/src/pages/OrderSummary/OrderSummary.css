@@ -1,0 +1,73 @@
+.order-summary-page {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.left-content {
+    width: 40%;
+    text-align: center;
+}
+
+.movie-poster {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.right-content {
+    width: 55%;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+}
+
+h1, h2 {
+    margin-bottom: 1rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+.edit-tickets {
+    float: right;
+    color: red;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.confirm, .cancel {
+    padding: .5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    font-size: 1rem;
+}
+
+.confirm {
+    background-color: red;
+    color: white;
+}
+
+.cancel {
+    background-color: white;
+    border: 1px solid red;
+    color: red;
+}
+
+.confirm:hover {
+    background-color: darkred;
+}
+
+.cancel:hover {
+    background-color: #fee0e0;
+}

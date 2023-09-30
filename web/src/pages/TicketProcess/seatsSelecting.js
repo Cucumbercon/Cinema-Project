@@ -7,7 +7,7 @@ function MovieSeatBooking() {
     const [selectedMovie, setSelectedMovie] = useState({ index: 0, price: 5 }); // Default to Child($5)
     
     useEffect(() => {
-        // Populate UI from localStorage
+
         const storedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
         if (storedSeats) {
             setSeats(storedSeats);
@@ -19,7 +19,7 @@ function MovieSeatBooking() {
     }, []);
 
     function generateSeats() {
-        // Based on your provided HTML, I assumed 7 rows of 9 seats each.
+        
         const rows = 7;
         const seatsInRow = 9;
         let generatedSeats = [];

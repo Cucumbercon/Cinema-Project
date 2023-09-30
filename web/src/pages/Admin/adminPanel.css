@@ -77,8 +77,8 @@ h2 {
 
 .team-member {
     background-color: #fff;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 25px;
+    border-radius: 15px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
 }
@@ -92,15 +92,44 @@ h2 {
 
 button {
     margin-top: 20px;
-    padding: 10px 15px;
+    /* modify the button size */
+    padding: 20px 15px; 
     border: none;
     background-color: #007BFF;
     color: white;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #0056b3;
+}
+
+.adminpermission {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.permissions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns grid */
+    gap: 20px;
+    width: 100%;
+    max-width: 600px; 
+}
+
+.permission-box {
+    background-color: #f3f3f3; 
+    padding: 50px;
+    border-radius: 10px; 
+    text-align: center;
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+.permission-box:hover {
+    background-color: #e0e0e0; 
 }

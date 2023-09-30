@@ -47,8 +47,22 @@ function AdminPanel() {
                 <button onClick={() => alert('Add New Admin Functionality Here!')}>Add New Admin</button>
             </div>
 
-    
-    </div>
+        <div>
+
+        </div>
+        {/* this selection is working on the admin's permission */}
+        {/* admin's permission should include send movie promotion, view customer information, update ticket price
+            update movie information  */}
+        <div className="adminpermission">
+                <h2>Admin Permissions</h2>
+                <div className="permissions-grid">
+                    <div className="permission-box">Dashboard</div>
+                    <div className="permission-box">User Management</div>
+                    <div className="permission-box">Movie Management</div>
+                    <div className="permission-box">Promotion & Ticket Management</div>
+                </div>
+            </div>
+        </div>
 
     );
 }

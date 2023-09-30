@@ -8,7 +8,7 @@
 
 a {
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .btn {
@@ -16,7 +16,7 @@ a {
     padding: .5rem 1rem;
     background-color: #cd8c38;
     border-radius: 2rem;
-    color: #1e1f26;
+    color: #1e1f26; 
     transition: .3s;
 }
 
@@ -39,6 +39,23 @@ body {
 }
 
 
+
+
+/* .square-container {
+    position: relative;
+    width: 100%;   
+    padding-top: 100%;  
+}
+
+.square-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+   
+} */
+
 /* top bar */
 
 .top-bar {
@@ -46,6 +63,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem 1rem;
+    
 }
 
 .left-content{
@@ -219,7 +237,7 @@ label {
 }
 
 .btn-alt {
-    background-color: #151516;
+    background-color: #202024;
     color: #dfd1bf;
     border: 1px solid #cd8c38;
     margin-left: 1rem;
@@ -269,3 +287,7 @@ label {
     justify-content: space-between;
     margin-top: 1rem;
 }
+
+
+
+
