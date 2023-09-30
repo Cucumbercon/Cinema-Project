@@ -14,12 +14,12 @@ function App() {
   return (
 
     // <MovieBooking />
-    <MovieDetails />
-    // <MovieSeatBooking />
+    // <MovieDetails />
+     <MovieSeatBooking />
     // <AdminPanel />
     // <OrderSummary/>
-    // <Checkout/>
-    // <ConfirmationPage />
+     //<Checkout/>
+     //<ConfirmationPage />
   );
   // return (
   //   <>

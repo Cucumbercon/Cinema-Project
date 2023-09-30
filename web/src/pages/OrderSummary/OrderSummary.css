@@ -1,73 +1,45 @@
-.order-summary-page {
-    display: flex;
-    justify-content: space-between;
-    padding: 2rem;
-}
-
-.left-content {
-    width: 40%;
-    text-align: center;
-}
-
-.movie-poster {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-}
-
-.right-content {
-    width: 55%;
+.confirmation-page {
+    font-family: 'Arial', sans-serif;
+    max-width: 800px;
+    margin: 2rem auto;
     padding: 2rem;
     border: 1px solid #ddd;
     border-radius: 10px;
-    background-color: #f7f7f7;
+    background-color: #f0f0f0; 
+    text-align: center;
 }
 
-h1, h2 {
-    margin-bottom: 1rem;
+h1 {
+    color: #006400; 
+    margin-bottom: 1.5rem;
 }
 
-p {
-    margin-bottom: 1rem;
+.spacer {
+    height: 2rem;
+    width: 100%;
 }
 
-.edit-tickets {
-    float: right;
-    color: red;
-    cursor: pointer;
-    text-decoration: underline;
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #333; 
 }
 
-.buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
+h2 span {
+    font-weight: bold;
+    color: #000; 
 }
 
-.confirm, .cancel {
-    padding: .5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    outline: none;
-    font-size: 1rem;
+.booking-details {
+    margin-bottom: 1.5rem;
+    text-align: left;
 }
 
-.confirm {
-    background-color: red;
-    color: white;
+.booking-details p {
+    margin-bottom: 0.5rem;
+    color: #333; 
 }
 
-.cancel {
-    background-color: white;
-    border: 1px solid red;
-    color: red;
-}
-
-.confirm:hover {
-    background-color: darkred;
-}
-
-.cancel:hover {
-    background-color: #fee0e0;
+p span {
+    font-weight: bold;
 }
