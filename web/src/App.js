@@ -5,12 +5,14 @@ import './App.css';
 import MovieBooking from './Homepage/home';
 import AdminPanel from './pages/Admin/adminPanel';
 import { Login } from './pages/Users/login';
+import  Error   from './pages/Users/error';
 
 function App() {
   return (
     // <AdminPanel />
     //<MovieBooking />
-    <Login />
+  //  <Login />
+    < Error />
   );
   // return (
   //   <>

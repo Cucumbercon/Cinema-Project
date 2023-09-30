@@ -2,7 +2,7 @@
 *  Description: Login page for the web users to login
 */
 
-//Todo: add login functionality and connect register here? button to register page
+//Todo: add login functionality and connect register here? button to register page - Sean Pastore
 
 import React, { useState } from "react";
 import './login.css'
@@ -11,13 +11,14 @@ export const Login = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
 
+
+    // todo: add login functionality
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(email);
     }
 
     return (
-        
         <div className="auth-form-container">
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="email">Email</label>
