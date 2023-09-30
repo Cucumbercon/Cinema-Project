@@ -5,15 +5,20 @@ import './App.css';
 import MovieBooking from './Homepage/home';
 import AdminPanel from './pages/Admin/adminPanel';
 import { Login } from './pages/Users/login';
-import  Error   from './pages/Users/error';
+import Error from './pages/Users/error';
+import { Signup }  from './pages/Users/signup';
 
 function App() {
   return (
-    // <AdminPanel />
-    <MovieBooking />
-    //<Login />
-    //< Error />
+    
+      // <AdminPanel /> 
+     // <MovieBooking /> 
+     //  <Login /> 
+      <Signup />
+     //  <Error /> 
+    
   );
+
   // return (
   //   <>
   //     <Router>
@@ -27,6 +32,7 @@ function App() {
 }
 
 export default App;
+
 
 
 //********************** RECEIVING TESTING **************************************//

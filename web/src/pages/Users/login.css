@@ -60,14 +60,13 @@ button[type="submit"]:hover {
     cursor: pointer;
     font-size: 14px;
     margin-top: 10px;
-    display: inline-block; 
-    padding: 0; 
-    background: none; 
-    border: none; 
-    outline: none; 
+    display: inline-block;
+    padding: 0;
+    background: none;
+    border: none;
+    outline: none;
 }
 
 .link-btn:hover {
     text-decoration: underline;
 }
-
