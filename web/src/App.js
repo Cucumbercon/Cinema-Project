@@ -4,11 +4,13 @@ import './App.css';
 // import Navbar from './components/Navbar';
 import MovieBooking from './Homepage/home';
 import AdminPanel from './pages/Admin/adminPanel';
+import { Login } from './pages/Users/login';
 
 function App() {
   return (
     // <AdminPanel />
-    <MovieBooking />
+    //<MovieBooking />
+    <Login />
   );
   // return (
   //   <>
