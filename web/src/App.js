@@ -10,9 +10,9 @@ import  Error   from './pages/Users/error';
 function App() {
   return (
     // <AdminPanel />
-    //<MovieBooking />
-  //  <Login />
-    < Error />
+    <MovieBooking />
+    //<Login />
+    //< Error />
   );
   // return (
   //   <>
