@@ -2,7 +2,6 @@
 *   Description: Error page for invalid routes
 */
 import React from 'react';
-
 const error = () => {
     return (
         <div>
@@ -11,5 +10,4 @@ const error = () => {
         </div>
     )
 }
-
 export default error;
