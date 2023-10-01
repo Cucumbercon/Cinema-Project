@@ -10,9 +10,9 @@ import edu.uga.cinemabooking.entity.User;
 import java.io.IOException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,35 +29,42 @@ public class RegisterController {
 
          try {
             JsonNode jsonNode = objectMapper.readTree(data);
-            String first = jsonNode.get("first name").asText();
-            String last = jsonNode.get("last name").asText();
-            String email = jsonNode.get("email").asText();
-            String password = jsonNode.get("password").asText();
-            String phoneNumber = jsonNode.get("phoneNumber").asText();
-            String subCheckBox = jsonNode.get("first name").asText();
+            String first = jsonNode.get("userData").get("first name").asText();
+            String last = jsonNode.get("userData").get("last name").asText();
+            String email = jsonNode.get("userData").get("email").asText();
+            String password = jsonNode.get("userData").get("password").asText();
+            String phoneNumber = jsonNode.get("userData").get("phoneNumber").asText();
+
+            // String subCheckBox = jsonNode.get("userData").get("first name").asText();
 
             User user = new User("1", first, last, email, password, phoneNumber);
-            System.out.println(user.toString());
 
-            // if (existingUser != null) {
-            //     return new ResponseEntity<>("Username already exists", HttpStatus.BAD_REQUEST);
-            // } else {
-            //     // 在这里执行用户注册逻辑
-            //     // ...
+            // check DB if the user already exists
+            /*
+             *  if user already exists:
+             *  if (isUsernameExists(userData.getUsername())) {
+                    return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
+                }
 
-            //     // 返回成功的响应
-            //     return new ResponseEntity<>("Registration successful", HttpStatus.OK);
-            // }
+                else {
+                    put the user info into db
+                }
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             */
+
+
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>("Invalid data format", HttpStatus.BAD_REQUEST);
         }
 
-
-
-
-
-        return ResponseEntity.ok(data);
+        return ResponseEntity.ok("Registration successful");
     }
 
 }

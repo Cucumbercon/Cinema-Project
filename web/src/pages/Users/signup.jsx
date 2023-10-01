@@ -12,31 +12,38 @@ export const Signup = (props) => {
     const [subscribe, setSubscribe] = useState(false);
 
     const userData = {
-        firstname,
-        lastname,
-        email,
-        pass,
-        phoneNumber
+        "first name": firstname,
+        "last name": lastname,
+        "email": email,
+        "password": pass,
+        "phoneNumber": phoneNumber
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // send post to spring
-        const response = fetch('http://localhost:8000/api/register', {
+        const response = await fetch('http://localhost:8000/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({userData}),
-        })
-        .then((response) => response.text())
-        .then((data) => {
-            console.log('Response from Spring:', data);
-        })
-        .catch((error) => {
-            console.error('Error sending message to Spring:', error);
+            body: JSON.stringify({ userData }),
         });
+            // if user register success
+            if (response.status === 200) {
+                // should direct to a new page!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                console.log('Registration successful');
+            } else if (response.status === 409) {
+                // if already exists, show a pop-up window, or something else
+                console.error('User already exists');
+            } else {
+                // deal with others error // maybe direct to a error page or error pop-up window
+                console.log(response)
+                console.error('Registration failed');
+            }
+
+
 
         // if (response.ok) {
         //     // success
