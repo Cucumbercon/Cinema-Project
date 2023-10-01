@@ -9,8 +9,8 @@ import { Login } from './pages/Users/login';
 function App() {
   return (
     // <AdminPanel />
-    //<MovieBooking />
-    <Login />
+    <MovieBooking />
+    // <Login />
   );
   // return (
   //   <>
