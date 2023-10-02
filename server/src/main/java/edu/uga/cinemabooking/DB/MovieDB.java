@@ -1,7 +1,5 @@
 package edu.uga.cinemabooking.DB;
 
-import static org.mockito.Mockito.description;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,36 +15,38 @@ public class MovieDB {
 
     public MovieDB() {
         try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (Exception e) {
             // TODO: handle exception
         }
     }
 
-    public void addMovie(int id, short adult, String[] language, String title[], 
+    public void addMovie(int id, int adult, String language, String title, 
                          double popularity, String posterPath, String backdropPath,
-                         String releaseDay, String state, String[] category, 
-                         String[] trailerPath, String synopsis, String cast, double rating) {
+                         String releaseDay, int state, String category, 
+                         String trailerPath, String synopsis, String cast, double rating) {
      
                             
-        String sql = "INSERT INTO movie (ID, adult, lanuage, title, popularity, poster_path, backdrop_path, " + 
+        String sql = "INSERT INTO movie (ID, adult, language, title, popularity, poster_path, backdrop_path, " + 
                      "release_day, state, category, trailer_path, synopsis, cast, rating) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
-            preparedStatement.setShort(2, adult);
-            preparedStatement.setString(3, director);
-            preparedStatement.setString(4, genre);
-            preparedStatement.setString(5, description);
-            preparedStatement.setString(6, description);
-            preparedStatement.setString(7, description);
-            preparedStatement.set(8, description);
-            preparedStatement.setString(9, description);
-            preparedStatement.setString(10, description);
-            preparedStatement.setString(11, description);
-            preparedStatement.setString(12, description);
-            preparedStatement.setString(13, description);
+            preparedStatement.setInt(2, 0);
+            preparedStatement.setString(3, language);
+            preparedStatement.setString(4, title);
+            preparedStatement.setDouble(5, popularity);
+            preparedStatement.setString(6, posterPath);
+            preparedStatement.setString(7, backdropPath);
+            preparedStatement.setDate(8, java.sql.Date.valueOf("2013-09-04"));
+            preparedStatement.setInt(9, state);
+            preparedStatement.setString(10, category);
+            preparedStatement.setString(11, trailerPath);
+            preparedStatement.setString(12, synopsis);
+            preparedStatement.setString(13, cast);
+            preparedStatement.setDouble(14, rating);
             preparedStatement.executeUpdate();
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
