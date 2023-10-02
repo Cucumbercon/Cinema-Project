@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Joan&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Joan', serif;
+}
+
+body {
+    /* background-color: black; */
+    background-color: white;
+    /* display: grid; */
+    display:grid;
+    grid-template-columns: 1000px;
+    justify-content: space-evenly;
+}
+
+
+.movie-management {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 300%;
+    margin: 50px;
+    padding: 2rem;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    background-color: grey;
+}
+
+.movie-management h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.movie-management form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.movie-management input,
+.movie-management textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    resize: none;
+}
+
+.movie-management button {
+    align-self: center;
+    padding: 10px 15px;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.movie-management button:hover {
+    background-color: #45a049;
+}
