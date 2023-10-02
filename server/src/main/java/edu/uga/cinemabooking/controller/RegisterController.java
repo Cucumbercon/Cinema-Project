@@ -10,7 +10,6 @@ import edu.uga.cinemabooking.entity.User;
 import java.io.IOException;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,15 +47,10 @@ public class RegisterController {
 
                 else {
                     put the user info into db
+
                 }
-             * 
-             * 
-             * 
-             * 
-             * 
-             * 
-             * 
-             */
+            */
+            
 
 
         } catch (IOException e) {
