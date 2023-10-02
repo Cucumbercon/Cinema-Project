@@ -47,10 +47,15 @@ public class RegisterController {
 
                 else {
                     put the user info into db
-
                 }
-            */
-            
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             */
 
 
         } catch (IOException e) {

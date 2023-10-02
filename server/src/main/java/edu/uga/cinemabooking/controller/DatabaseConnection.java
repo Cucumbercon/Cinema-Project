@@ -14,7 +14,7 @@ public class DatabaseConnection {
     public static void main(String[] args) {
 
         Date d=new Date();  
-        int id = 1;
+        int id = 2;
         int adult = 0;
         String lang = "English";
         String title = "Saw X";
@@ -31,9 +31,9 @@ public class DatabaseConnection {
 
         MovieDB mdb = new MovieDB();
 
-        mdb.addMovie(id, adult, lang, title, popularity, posterPath, backdropPath, releaseDay, state, category,
-                    trailerPath, synopsis, cast, rating);
-
+        // mdb.addMovie(id, adult, lang, title, popularity, posterPath, backdropPath, releaseDay, state, category,
+                    // trailerPath, synopsis, cast, rating);
+        mdb.deleteMovie(id);
     }
 
     // final static String URL =

@@ -64,8 +64,14 @@ public class MovieDB {
     }
 
     // this method is for delete movie
-    public void deleteMovie(String movieName) {
-
+    public void deleteMovie(int id) {
+        String sql = "DELETE FROM movie WHERE ID = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
