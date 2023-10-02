@@ -17,7 +17,7 @@ body {
 
 h2 {
     color: white;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 .top-bar{
@@ -73,12 +73,13 @@ h2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 20px;
+
 }
 
 .team-member {
     background-color: #fff;
     padding: 25px;
-    border-radius: 15px;
+    border-radius: 60px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
 }
@@ -87,7 +88,10 @@ h2 {
     width: 50px;
     height: 50px;
     border-radius: 50%; /* Circular images */
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
+    position: relative;
+    margin-right: 20px;
+    border-radius: 20px; 
 }
 
 button {
@@ -122,7 +126,7 @@ button:hover {
 }
 
 .permission-box {
-    background-color: #f3f3f3; 
+    background-color: #cd8c38; 
     padding: 50px;
     border-radius: 10px; 
     text-align: center;

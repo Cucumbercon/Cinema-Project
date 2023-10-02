@@ -25,7 +25,7 @@ function ConfirmationPage() {
                 <p><strong>Seats:</strong> {confirmationData.seats}</p>
                 <p><strong>Total Cost:</strong> {confirmationData.totalCost}</p>
             </div>
-            <p>A copy of your ticket has been sent to <span>{confirmationData.email}</span></p>
+            <p> <h3>A copy of your ticket has been sent to </ h3> <span>{confirmationData.email}</span></p>
         </div>
     );
 }

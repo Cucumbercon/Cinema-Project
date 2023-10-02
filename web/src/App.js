@@ -24,7 +24,7 @@ function App() {
     // <MovieDetails />
     // <Login />
     // <MovieSeatBooking />
-    // <AdminPanel />
+    <AdminPanel />
     // <DashBoard />
     // <MovieManagement />
     // <Promotion />

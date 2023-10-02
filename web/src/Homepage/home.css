@@ -5,10 +5,22 @@
     box-sizing: border-box;
     font-family: 'Joan', serif;
 }
+/* 
+.homepagebackground {
+    background-color: grey;
+    display: grid;
+    height: 100%;
+    width: 100%;
+    /* top: 0;
+    left: 0; */
+    /* position: fixed; */
+/* }  */
+
 
 a {
+    display: flex;
     text-decoration: none;
-    color: white;
+    color: brown;
 }
 
 .btn {
@@ -31,7 +43,7 @@ a {
 
 body {
     /* background-color: rgb(184, 43, 43); */
-    background-color: whitesmoke;
+    background-color: black;
     /* display: grid; */
     display:grid;
     grid-template-columns: 1000px;
@@ -39,27 +51,9 @@ body {
 }
 
 
-
-
-/* .square-container {
-    position: relative;
-    width: 100%;   
-    padding-top: 100%;  
-}
-
-.square-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-   
-} */
-
-/* top bar */
-
 .top-bar {
     display: flex;
+    /* position:relative; */
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem 1rem;
@@ -67,11 +61,16 @@ body {
 }
 
 .left-content{
+    padding-top: 15px;
     display: flex;
     align-items: center;
 }
 .right-content {
+    background-color: black;
     display: flex;
+    position: relative;
+    width: min-content;
+    /* max-width: 100px; */
     align-items: center;
 }
 
@@ -99,12 +98,14 @@ body {
 }
 
 .search-bar-container input {
-    width: 100%;               
-    padding: 10px 20px;        
+    width: 100%;              
+    padding: 10px 20px;
+    margin-left: 10px;
+    margin-top: 20px;
     border: 1px solid #cd8c38; 
     outline: none;             
     border-radius: 20px;       
-    background-color: #dfe1ee; 
+    background-color: whitesmoke; 
     color: #adadad;            
     font-size: 16px;           
     transition: 0.2s;         
@@ -116,18 +117,16 @@ body {
 }
 
 
-.filter,
 .cart,
-.help,
 .menu {
-    position: relative;
+    position:relative;
+    margin-left: 10px;;
     width: 20px;
     height: 20px;
 }
 
 .filter,
-.cart,
-.help {
+.cart{
     margin-right: 1rem;
 }
 
@@ -255,26 +254,33 @@ label {
     padding-bottom: 2rem;
 }
 
-.current-movies {
+.current-movies,
+.future-movies {
+    /* display:flex; */
     display: grid;
+    position:relative;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 20px;
 }
 
-.current-movie {
+
+.current-movie,
+.future-movie {
+    display:block;
     background: linear-gradient(45deg, rgba(255, 255, 255, .05), rgba(205, 140, 56, .15));
     padding: 1rem;
     border-radius: .5rem;
 }
 
-.current-img-box {
-    position: relative;
+.current-img-box,.future-img-box {
+    position:relative;
     height: 300px;
     width: auto;
     margin-bottom: 1rem;
     border-radius: .5rem;
     overflow: hidden;
 }
+
 
 .movie-title {
     color: #312d2d;

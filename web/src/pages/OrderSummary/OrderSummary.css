@@ -42,10 +42,13 @@ p {
     display: flex;
     justify-content: space-between;
     margin-top: 1rem;
+    margin-bottom: 10rem;
+    margin-left: 28rem;
 }
 
 .confirm, .cancel {
     padding: .5rem 1rem;
+    position: relative;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -53,15 +56,18 @@ p {
     font-size: 1rem;
 }
 
-.confirm {
-    background-color: red;
+.confirm-btn{
+    margin-left: 10px;
+    background-color: black;
+    border: 1px solid red;
     color: white;
 }
 
-.cancel {
-    background-color: white;
+.cancel-btn {
+    margin-left: 50px;
+    background-color: black;
     border: 1px solid red;
-    color: red;
+    color: white;
 }
 
 .confirm:hover {
