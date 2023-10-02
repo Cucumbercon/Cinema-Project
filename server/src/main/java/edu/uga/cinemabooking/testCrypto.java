@@ -7,7 +7,9 @@ public class testCrypto {
 
     SecretKey key;
     IvParameterSpec iv;
-    public String encrypt(String algorithm, String input)
+
+    String algorithm = "AES/CBC/PKCS5Padding";
+    public String encrypt(String input)
             throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException,
             BadPaddingException, IllegalBlockSizeException {
@@ -27,7 +29,7 @@ public class testCrypto {
                 .encodeToString(cipherText);
     }
 
-    public String decrypt(String algorithm, String encryptedMsg)
+    public String decrypt(String encryptedMsg)
             throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException,
             BadPaddingException, IllegalBlockSizeException {
