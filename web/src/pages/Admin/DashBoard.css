@@ -1,8 +1,22 @@
+
+.DashBoardBackground{
+    display: flex;
+    background-color: wheat;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
 .movie-management {
     display: flex;
-    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    min-width: 30vh;
+    min-height: 70vh;
     font-family: 'Arial', sans-serif;
-    color: #333;
+    color: black;
+
 }
 
 .sidebar {

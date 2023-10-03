@@ -1,20 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Joan&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Joan', serif;
 }
-/* 
+
 .homepagebackground {
-    background-color: grey;
+    background-color: black;
+    margin-top: 500px;
     display: grid;
     height: 100%;
     width: 100%;
-    /* top: 0;
-    left: 0; */
-    /* position: fixed; */
-/* }  */
+ }  
 
 
 a {
@@ -66,11 +65,11 @@ body {
     align-items: center;
 }
 .right-content {
-    background-color: black;
-    display: flex;
+    color: #000;
+    display:flex;
     position: relative;
     width: min-content;
-    /* max-width: 100px; */
+    max-width: 50px;
     align-items: center;
 }
 
@@ -173,12 +172,14 @@ img {
     background: linear-gradient(45deg, rgba(255, 255, 255, .05), rgba(205, 140, 56, .15));
     backdrop-filter: blur(5px);
     height: fit-content;
+    /* display:inline; */
     border-radius: 1rem;
     padding: 2rem 2.5rem;
 }
 
 .sidebar-groups {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    
 }
 
 .sg-title {
@@ -230,7 +231,10 @@ label {
 }
 
 .buttons {
+    /* position:relative; */
     position: absolute;
+
+    overflow: hidden;
     bottom: 2rem;
     left: 2rem;
 }

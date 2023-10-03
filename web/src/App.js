@@ -24,13 +24,13 @@ function App() {
     // <MovieDetails />
     // <Login />
     // <MovieSeatBooking />
-    <AdminPanel />
+    // <AdminPanel />
     // <DashBoard />
     // <MovieManagement />
     // <Promotion />
     // <OrderSummary/>
     // <Checkout/>
-    // <ConfirmationPage />
+    <ConfirmationPage />
   );
   // return (
   //   <>

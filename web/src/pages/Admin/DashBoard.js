@@ -10,6 +10,7 @@ function DashBoard() {
     ];
 
     return (
+        <div className='DashBoardBackground'>
         <div className="movie-management">
             <div className="sidebar">
                 <div className="section" onClick={() => setActivePanel('updateDetails')}>Update Movie Details</div>
@@ -42,6 +43,7 @@ function DashBoard() {
                     </table>
                 )}
             </div>
+        </div>
         </div>
     );
 }

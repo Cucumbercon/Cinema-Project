@@ -5,11 +5,12 @@
 }
 
 .payment-section, .order-summary-section {
-    width: 48%; /* Adjusted for closer to screen edge */
+    width: 100%; /* Adjusted for closer to screen edge */
     background-color: #f7f7f7;
     padding: 1.5rem 5rem;
     border: 1px solid #e0e0e0;
     border-radius: 30px;
+    margin-left: 80px;
 }
 
 h1 {
@@ -30,6 +31,7 @@ h1 {
     padding: 0.5rem;
     margin-right: 0.5rem; /* Adjusted margin to fix overflow */
 }
+
 
 .use-saved-card-btn, .apply-promo-btn {
     background-color: transparent;

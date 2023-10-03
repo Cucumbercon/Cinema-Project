@@ -27,7 +27,7 @@ function MovieManagement() {
     };
 
     return (
-        
+        <div className='movManBackground'>
         <div className="movie-management">
             <h2>Movie Details</h2>
             <form>
@@ -48,6 +48,7 @@ function MovieManagement() {
                 <button type="submit">Update Movie Details</button>
             </form>
         </div>
+        </ div>
     );
 }
 

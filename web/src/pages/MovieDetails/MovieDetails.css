@@ -5,6 +5,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Joan', serif;
+
 }
 
 
@@ -15,6 +16,7 @@
 }
 
 .trailer-section {
+    margin-top: 300px;
     width: 100%;
     margin-bottom: 20px;
 }
@@ -42,7 +44,7 @@
 }
 
 .showtime-section {
-    margin-top: 3rem;
+    margin-top: 1rem;
     border: 1px solid #2b2929;
     padding: 2rem;
     border-radius: 5px;
@@ -53,6 +55,7 @@
     display:flow-root;
     /* display:inline-block; */
     justify-content: space-around;
+    margin-bottom: 1rem;
     margin-top: 1rem;
 }
 
@@ -64,6 +67,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-bottom: 1rem;
 }
 
 .date-button:hover, .time-button:hover {
@@ -81,6 +85,7 @@
     border: none;
     margin-top: 50px;
     margin-left: 650px;
+    margin-bottom: 3rem;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
