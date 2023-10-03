@@ -2,9 +2,16 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import Navbar from './components/Navbar';
 import { Login } from './pages/Users/login';
+import DashBoard from './pages/Admin/DashBoard';
 import MovieBooking from './Homepage/home';
 import MovieDetails from './pages/MovieDetails/MovieDetails';
+import MovieManagement from './pages/Admin/MovieM';
+import ConfirmationPage from './pages/ConfirmationPage/ConfirmationPage'
+import Promotion from './pages/Admin/promo';
+import MovieSeatBooking from './pages/TicketProcess/seatsSelecting';
 import AdminPanel from './pages/Admin/adminPanel';
+import OrderSummary from './pages/OrderSummary/OrderSummary'
+import Checkout from './pages/Checkout/Checkout';
 import { Signup }   from './pages/Users/signup';
 import { NotFound } from './pages/Users/NotFound';
 import { EditProfile } from './pages/Users/editprofile';
@@ -13,17 +20,16 @@ import { EditProfile } from './pages/Users/editprofile';
 function App() {
   return (
 
-    <MovieBooking />
+    // <MovieBooking />
     // <MovieDetails />
     //  <MovieSeatBooking />
     // <AdminPanel />
-     //<DashBoard />
-    // <MovieManagement />
+    //  <DashBoard />
+    <MovieManagement />
     // <Promotion />
     // <OrderSummary/>
      //<Checkout/>
      //<ConfirmationPage />
-    
       // <AdminPanel /> 
       // <Login />  
       // <Signup /> 
