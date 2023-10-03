@@ -1,28 +1,26 @@
 import React, { useState } from "react";
 import "./signup.css";
-    //TODO: Add validation for email and password
-    //      Add functionality to Create Account button and link to login page 
-
 
 export const Signup = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
-    const [firstname, setFirstName] = useState('');
-    const [lastname, setLastName] = useState('');
+    const [fullName, setFullName] = useState(''); // Combine First Name and Last Name into a single field
     const [phoneNumber, setPhoneNumber] = useState(''); 
     const [subscribe, setSubscribe] = useState(false); 
-
+    const [creditCardNumber, setCreditCardNumber] = useState('');
+    const [expirationDate, setExpirationDate] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        //logs the values to the console
+        // Logs the values to the console
         console.log(email);
         console.log(pass);
-        console.log(firstname); 
-        console.log(lastname);
+        console.log(fullName); // Updated to fullName
         console.log(phoneNumber); 
         console.log(subscribe); 
+        console.log(creditCardNumber);
+        console.log(expirationDate);
     }
 
     return (
@@ -30,24 +28,29 @@ export const Signup = (props) => {
             <div className="form-box"> {/* Container for labels */}
                 <form className="register-form" onSubmit={handleSubmit}>
                     <div className="label-input">
-                        <label htmlFor="first name">First Name</label>
-                        <input value={firstname} name="first name" onChange={(e) => setFirstName(e.target.value)} id="first name" placeholder="First Name" type = "first" />
+                        <label htmlFor="fullName">Full Name *</label> {/* Updated label to Full Name */}
+                        <input value={fullName} name="fullName" onChange={(e) => setFullName(e.target.value)} id="fullName" placeholder="Full Name" type="text" required />
                     </div>
                     <div className="label-input">
-                        <label htmlFor="Last Name">Last Name</label>
-                        <input value={lastname} name="Last Name" onChange={(e) => setLastName(e.target.value)} id="last name" type = "last" placeholder="Last Name" />
+                        <label htmlFor="email">Email *</label>
+                        <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email" required />
                     </div>
                     <div className="label-input">
-                        <label htmlFor="email">Email</label>
-                        <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email" />
+                        <label htmlFor="password">Password *</label>
+                        <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" required />
                     </div>
                     <div className="label-input">
-                        <label htmlFor="password">Password</label>
-                        <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
+                        <label htmlFor="phoneNumber">Phone Number *</label>
+                        <input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="tel" placeholder="111-111-1111" id="phoneNumber" name="phoneNumber" required />
+                    </div>
+                    {/* New fields for credit card information */}
+                    <div className="label-input">
+                        <label htmlFor="creditCardNumber">Credit Card Number</label>
+                        <input value={creditCardNumber} onChange={(e) => setCreditCardNumber(e.target.value)} type="text" placeholder="XXXX-XXXX-XXXX-XXXX" id="creditCardNumber" name="creditCardNumber" />
                     </div>
                     <div className="label-input">
-                        <label htmlFor="phoneNumber">Phone Number</label>
-                        <input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="tel" placeholder="111-111-1111" id="phoneNumber" name="phoneNumber" />
+                        <label htmlFor="expirationDate">Expiration Date</label>
+                        <input value={expirationDate} onChange={(e) => setExpirationDate(e.target.value)} type="text" placeholder="MM/YYYY" id="expirationDate" name="expirationDate" />
                     </div>
 
                     {/* Checkbox for promotional emails */}
