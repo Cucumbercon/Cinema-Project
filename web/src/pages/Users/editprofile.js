@@ -3,8 +3,6 @@
 */
 
 import React, { useState } from "react";
-// TODO: Add validation for email and password
-// Add functionality to update profile button
 
 export const EditProfile = (props) => {
   const [email, setEmail] = useState('');
@@ -14,12 +12,11 @@ export const EditProfile = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Perform an API call or update user information in your backend
-    // You may want to add validation before making the API call
+    
 
-    console.log("Updated email:", email);
-    console.log("Updated password:", pass);
-    console.log("Updated phone number:", phoneNumber);
+   // console.log("Updated email:", email);
+   // console.log("Updated password:", pass);
+   // console.log("Updated phone number:", phoneNumber);
   }
 
   return (
