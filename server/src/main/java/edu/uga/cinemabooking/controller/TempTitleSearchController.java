@@ -17,49 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
-@RequestMapping("/api")
-@CrossOrigin(origins = "*")
 public class TempTitleSearchController {
 
     MovieDB mdb = new MovieDB();
-
-    @PostMapping("/filter")
-    public ResponseEntity<String> fetchData(@RequestBody String data) {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        try {
-
-            System.out.println(data);
-
-            JsonNode jsonNode = objectMapper.readTree(data);
-            String title = jsonNode.get("title").asText();
-            String language = jsonNode.get("language").asText();
-            double popularity = jsonNode.get("popularity").asDouble();
-            String posterPath = jsonNode.get("poster_path").asText();
-            String backdropPath = jsonNode.get("backdrop_path").asText();
-
-            /**
-             * STILL NEW A DATE HERE FOR RELEASEDATE
-             */
-            int state = jsonNode.get("state").asInt();
-            String category = jsonNode.get("category").asText();
-            String trailerPath = jsonNode.get("trailer_path").asText();
-            String synopsis = jsonNode.get("synopsis").asText();
-            String cast = jsonNode.get("cast").asText();
-            String director = jsonNode.get("director").asText();
-            String producer = jsonNode.get("producer").asText();
-            double rating = jsonNode.get("rating").asDouble();
-
-            mdb.addMovie(language, title, popularity, posterPath, backdropPath, "null", state, category, trailerPath, synopsis, cast, rating, director, producer);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("Invalid data format", HttpStatus.BAD_REQUEST);
-        }
-
-        return ResponseEntity.ok("Registration successful");
-
     }
 }
