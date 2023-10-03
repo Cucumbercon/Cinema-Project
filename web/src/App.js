@@ -6,6 +6,7 @@ import AdminPanel from './pages/Admin/adminPanel';
 import { Login } from './pages/Users/login';
 import { Signup }   from './pages/Users/signup';
 import { NotFound } from './pages/Users/NotFound';
+import { EditProfile } from './pages/Users/editprofile';
 
 
 function App() {
@@ -13,10 +14,10 @@ function App() {
     
       // <AdminPanel /> 
       //<MovieBooking /> 
-      // <Login />  // Complete 
-      // <Signup /> // Complete
-      //< NotFound /> // Complete
-       
+      // <Login />  
+      // <Signup /> 
+      // < NotFound /> 
+       <EditProfile /> 
     
   );
 
