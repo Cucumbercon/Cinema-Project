@@ -60,8 +60,17 @@ public class MovieDB {
 
     // this method is for search movie
     public void searchMovie(String term) {
-
-    }
+        public ResultSet searchMovie(String term) {
+            String query = "SELECT FROM movie"
+                    + " WHERE title LIKE \'?%\'";
+            try (PreparedStatement prestate = connection.prepareStatement(query)) {
+                prestate.setString(1, term);
+                return prestate.executeQuery();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } // ResultSet
+    } // searchMovie
 
     // this method is for delete movie
     public void deleteMovie(int id) {
