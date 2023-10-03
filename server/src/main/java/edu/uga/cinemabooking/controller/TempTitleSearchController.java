@@ -24,7 +24,7 @@ public class TempTitleSearchController {
 
     MovieDB mdb = new MovieDB();
 
-    @PostMapping("/addMovie")
+    @PostMapping("/filter")
     public ResponseEntity<String> fetchData(@RequestBody String data) {
 
         ObjectMapper objectMapper = new ObjectMapper();

@@ -2,11 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import Navbar from './components/Navbar';
 import { Login } from './pages/Users/login';
-import  Error   from './pages/Users/error';
 import MovieBooking from './Homepage/home';
 import MovieDetails from './pages/MovieDetails/MovieDetails';
 import AdminPanel from './pages/Admin/adminPanel';
-import { Login } from './pages/Users/login';
 import { Signup }   from './pages/Users/signup';
 import { NotFound } from './pages/Users/NotFound';
 import { EditProfile } from './pages/Users/editprofile';
@@ -27,11 +25,10 @@ function App() {
      //<ConfirmationPage />
     
       // <AdminPanel /> 
-      //<MovieBooking /> 
       // <Login />  
       // <Signup /> 
       // < NotFound /> 
-       <EditProfile /> 
+      //  <EditProfile /> 
     
   );
   // return (

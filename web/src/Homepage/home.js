@@ -21,28 +21,28 @@ function MovieBooking() {
     };
 
     // get the onshow movie from db
-    // fetch('http://localhost:8000/api/getAvailableMovie', {
-    //     method: 'GET',
-    // }).then((response) => response.text())
-    //     .then((data) => {
-    //         setAvailableMovie(data);
-    //         console.log('Response from Spring:', data);
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error sending message to Spring:', error);
-    //     });
+    fetch('http://localhost:8000/api/getAvailableMovie', {
+        method: 'GET',
+    }).then((response) => response.text())
+        .then((data) => {
+            setAvailableMovie(data);
+            console.log('Response from Spring:', data);
+        })
+        .catch((error) => {
+            console.error('Error sending message to Spring:', error);
+        });
 
-    // // get the upcoming movie from db
-    // fetch('http://localhost:8000/api/getUpComingMovie', {
-    //     method: 'GET',
-    // }).then((response) => response.text())
-    // .then((data) => {
-    //     setUpComingMovie(data);
-    //     console.log('Response from Spring:', data);
-    // })
-    // .catch((error) => {
-    //     console.error('Error sending message to Spring:', error);
-    // });
+    // get the upcoming movie from db
+    fetch('http://localhost:8000/api/getUpComingMovie', {
+        method: 'GET',
+    }).then((response) => response.text())
+    .then((data) => {
+        setUpComingMovie(data);
+        console.log('Response from Spring:', data);
+    })
+    .catch((error) => {
+        console.error('Error sending message to Spring:', error);
+    });
 
     return (
         // this part is builing top bar
