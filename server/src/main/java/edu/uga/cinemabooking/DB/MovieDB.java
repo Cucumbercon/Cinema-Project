@@ -61,7 +61,7 @@ public class MovieDB {
     }
 
     // this method is for search movie
-    public void searchMovie() {
+    public void searchMovie(String term) {
 
     }
 
