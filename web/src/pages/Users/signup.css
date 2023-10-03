@@ -1,0 +1,86 @@
+/* signup.css */
+
+/* Font import */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* Set up the font family for the entire form */
+body, input, label, button {
+  font-family: 'Roboto', sans-serif;
+}
+
+.auth-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form-box {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* style for Form labels and inputs */
+.label-input {
+  margin-bottom: 20px;
+  text-align: center; 
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="first"],
+input[type="last"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* style for checkbox and text */
+.subscribe-checkbox label {
+  display: flex;
+  align-items: flex; /* Align items to the top */
+}
+
+.subscribe-checkbox input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+/* style for the Login button */
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* style for the Login link button */
+.link-btn {
+  margin-top: 20px;
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link-btn:hover {
+  color: #0056b3;
+}

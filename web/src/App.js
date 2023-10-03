@@ -2,21 +2,36 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 // import Navbar from './components/Navbar';
+import { Login } from './pages/Users/login';
+import  Error   from './pages/Users/error';
 import MovieBooking from './Homepage/home';
 import MovieDetails from './pages/MovieDetails/MovieDetails';
 import AdminPanel from './pages/Admin/adminPanel';
+import DashBoard from './pages/Admin/DashBoard';
+import MovieManagement from './pages/Admin/MovieM';
+import Promotion from './pages/Admin/promo';
 import MovieSeatBooking from './pages/TicketProcess/seatsSelecting';
 import ConfirmationPage from './pages/ConfirmationPage/ConfirmationPage'
 import OrderSummary from './pages/OrderSummary/OrderSummary'
 import Checkout from './pages/Checkout/Checkout';
+
+
 
 function App() {
   return (
 
     // <MovieBooking />
     // <MovieDetails />
+<<<<<<< HEAD
      <MovieSeatBooking />
+=======
+    // <Login />
+    // <MovieSeatBooking />
+>>>>>>> 376f71472e697ab707e9cbec41fc1876dbf9ab9b
     // <AdminPanel />
+    // <DashBoard />
+    <MovieManagement />
+    // <Promotion />
     // <OrderSummary/>
      //<Checkout/>
      //<ConfirmationPage />
