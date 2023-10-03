@@ -3,7 +3,7 @@ import './OrderSummary.css';
 
 function OrderSummary() {
     const movieDetails = {
-        poster: './web/src/pages/OrderSummary/MoviePoster.png',
+        poster: './MoviePoster.png',
         title: "The Creator",
         adultTicket: 3,
         seniorTicket: 0,

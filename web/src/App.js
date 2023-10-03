@@ -26,11 +26,11 @@ function App() {
     // <MovieSeatBooking />
     // <AdminPanel />
     // <DashBoard />
-    // <MovieManagement />
+    <MovieManagement />
     // <Promotion />
     // <OrderSummary/>
     // <Checkout/>
-    <ConfirmationPage />
+    // <ConfirmationPage />
   );
   // return (
   //   <>
