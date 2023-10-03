@@ -25,7 +25,6 @@ h2 {
     color: #333; 
 }
 
-<<<<<<< HEAD
 h2 span {
     font-weight: bold;
     color: #000; 
@@ -43,49 +42,4 @@ h2 span {
 
 p span {
     font-weight: bold;
-=======
-.buttons {
-    /* position: absolute; */
-    display:flex;
-    justify-content: space-between;
-    margin-top: 1rem;
-    margin-bottom: 20rem;
-    margin-left: 15rem;
-}
-
-.confirm, .cancel {
-    padding: .5rem 1rem;
-    /* position: absolute; */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    outline: none;
-    font-size: 1rem;
-}
-
-.confirm-btn{
-    /* position: absolute; */
-    margin-left: 630px;
-    border-radius: 15px;
-    background-color: green;
-    border: 1px solid white;
-    color: white;
-}
-
-.cancel-btn {
-    /* position: absolute; */
-    margin-left: 50px;
-    border-radius: 15px;
-    background-color: black;
-    border: 1px solid black;
-    color: white;
-}
-
-.confirm:hover {
-    background-color: darkred;
-}
-
-.cancel:hover {
-    background-color: #fee0e0;
->>>>>>> 376f71472e697ab707e9cbec41fc1876dbf9ab9b
 }

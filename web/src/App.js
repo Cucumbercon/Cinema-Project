@@ -22,15 +22,10 @@ function App() {
 
     // <MovieBooking />
     // <MovieDetails />
-<<<<<<< HEAD
      <MovieSeatBooking />
-=======
-    // <Login />
-    // <MovieSeatBooking />
->>>>>>> 376f71472e697ab707e9cbec41fc1876dbf9ab9b
     // <AdminPanel />
-    // <DashBoard />
-    <MovieManagement />
+     //<DashBoard />
+    //<MovieManagement />
     // <Promotion />
     // <OrderSummary/>
      //<Checkout/>

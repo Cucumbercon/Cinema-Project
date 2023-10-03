@@ -1,18 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
 
-*{
+* {
     box-sizing: border-box;
 }
-body{
 
+body {
     background-color: black;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     color: white;
     align-items: center;
     justify-content: center;
     height: 80vh;
-    /* height: auto; */
     font-family: 'Lato', 'sans-serif';
 }
 
@@ -27,88 +26,77 @@ body{
 
 .row {
     display: flex;
+    justify-content: center; 
 }
 
 .movie-container {
     margin: 20px 0;
 }
 
-.movie-container select{
+.movie-container select {
     background-color: whitesmoke;
     border: 0;
     border-radius: 5px;
     font-size: 14px;
-    margin-left: 5px 15px 5px 15px;
+    margin: 5px 15px;
 }
 
-.seat.selected{
+.seat.selected {
     background-color: rgb(48, 193, 99);
 }
 
-.seat.occupied{
+.seat.occupied {
     background-color: red;
 }
 
-.seat:nth-of-type(2){
-    margin-right:25px;
+.seat:not(.occupied):hover {
+    cursor: pointer;
+    transform: scale(1.2);
 }
 
-.seat:nth-last-of-type(2){
-    margin-left:30px;
-}
-
-.seat:not(.occupied):hover{
-    cursor:pointer;
-    transform:scale(1.2);
-}
-
-.seatcase .seat:not(.occupied):hover{
+.seatcase .seat:not(.occupied):hover {
     cursor: default;
-    transform:scale(1);
+    transform: scale(1);
 }
 
 .seatcase {
     background-color: gray;
     padding: 5px 10px;
-    border-radius:5px;
+    border-radius: 5px;
     color: black;
     list-style-type: none;
     display: flex;
-    justify-content:space-between;
-    
+    justify-content: space-between;
 }
 
-.seatcase li{
+.seatcase li {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 10px;
 }
 
-.seatcase li small{
+.seatcase li small {
     margin-left: 10px;
 }
 
-.screen{
+.screen {
     background-color: white;
     height: 85px;
-    width:100%;
-    margin :15px 0;
-    /* transform:rotateX('-45deg'); */
-    box-shadow: 0 30px 50px rgba(225,225,225,0.75);
+    width: 100%;
+    margin: 15px 0;
+    box-shadow: 0 30px 50px rgba(225, 225, 225, 0.75);
 }
 
-.container{
-    /* background-color: black; */
+.container {
     perspective: 100px;
     margin-bottom: 30px;
 }
 
 p.text {
-    /* background-color: blue; */
     margin: 10px 0;
 }
 
-p.text span{
+p.text span {
     color: #e0d6d6;
 }
