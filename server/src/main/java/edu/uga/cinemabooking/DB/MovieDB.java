@@ -21,30 +21,32 @@ public class MovieDB {
         }
     }
 
-    public void addMovie(int id, int adult, String language, String title, 
-                         double popularity, String posterPath, String backdropPath,
-                         String releaseDay, int state, String category, 
-                         String trailerPath, String synopsis, String cast, double rating) {
+    public void addMovie(String id, String language, String title, 
+                         double popularity, String posterPath, String releaseDay, 
+                         String state, String category, String trailerPath, String synopsis, 
+                         String cast, double rating, String director, String producer) {
      
                             
         String sql = "INSERT INTO movie (ID, adult, language, title, popularity, poster_path, backdrop_path, " + 
-                     "release_day, state, category, trailer_path, synopsis, cast, rating) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                     "release_day, state, category, trailer_path, synopsis, cast, rating, director, producer) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
             preparedStatement.setInt(2, 0);
             preparedStatement.setString(3, language);
             preparedStatement.setString(4, title);
             preparedStatement.setDouble(5, popularity);
             preparedStatement.setString(6, posterPath);
-            preparedStatement.setString(7, backdropPath);
+            preparedStatement.setString(7, " ");
             preparedStatement.setDate(8, java.sql.Date.valueOf("2013-09-04"));
-            preparedStatement.setInt(9, state);
+            preparedStatement.setString(9, state);
             preparedStatement.setString(10, category);
             preparedStatement.setString(11, trailerPath);
             preparedStatement.setString(12, synopsis);
             preparedStatement.setString(13, cast);
             preparedStatement.setDouble(14, rating);
+            preparedStatement.setString(15, director);
+            preparedStatement.setString(16, producer);
             preparedStatement.executeUpdate();
             
         } catch (SQLException e) {

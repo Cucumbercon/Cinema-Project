@@ -19,10 +19,18 @@ import Checkout from './pages/Checkout/Checkout';
 
 function App() {
   return (
-    // <AdminPanel />
-    <MovieBooking />
-  );
 
+    // <MovieBooking />
+    // <MovieDetails />
+    //  <MovieSeatBooking />
+    // <AdminPanel />
+     //<DashBoard />
+    <MovieManagement />
+    // <Promotion />
+    // <OrderSummary/>
+     //<Checkout/>
+     //<ConfirmationPage />
+  );
   // return (
   //   <>
   //     <Router>
@@ -36,7 +44,6 @@ function App() {
 }
 
 export default App;
-
 
 
 //********************** RECEIVING TESTING **************************************//
