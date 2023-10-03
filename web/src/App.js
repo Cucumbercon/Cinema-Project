@@ -1,21 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
 // import Navbar from './components/Navbar';
 import MovieBooking from './Homepage/home';
 import AdminPanel from './pages/Admin/adminPanel';
 import { Login } from './pages/Users/login';
-import Error from './pages/Users/error';
 import { Signup }   from './pages/Users/signup';
+import { NotFound } from './pages/Users/NotFound';
+
 
 function App() {
   return (
     
       // <AdminPanel /> 
-     // <MovieBooking /> 
-     //  <Login /> 
-      <Signup />
-     //  <Error /> 
+      //<MovieBooking /> 
+      // <Login />  // Complete 
+      // <Signup /> // Complete
+      //< NotFound /> // Complete
+       
     
   );
 
