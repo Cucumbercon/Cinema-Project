@@ -29,11 +29,6 @@ body, input, label, button {
   text-align: center; 
 }
 
-/* .label-input label::after {
-  content: " *";
-  color: red;
-} */
-
 label {
   display: block;
   margin-bottom: 5px;

@@ -1,0 +1,45 @@
+.confirmation-page {
+    font-family: 'Arial', sans-serif;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f0f0f0; 
+    text-align: center;
+}
+
+h1 {
+    color: #006400; 
+    margin-bottom: 1.5rem;
+}
+
+.spacer {
+    height: 2rem;
+    width: 100%;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #333; 
+}
+
+h2 span {
+    font-weight: bold;
+    color: #000; 
+}
+
+.booking-details {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.booking-details p {
+    margin-bottom: 0.5rem;
+    color: #333; 
+}
+
+p span {
+    font-weight: bold;
+}

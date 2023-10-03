@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Joan&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -6,9 +7,19 @@
     font-family: 'Joan', serif;
 }
 
+.homepagebackground {
+    background-color: black;
+    margin-top: 500px;
+    display: grid;
+    height: 100%;
+    width: 100%;
+ }  
+
+
 a {
+    display: flex;
     text-decoration: none;
-    color: black;
+    color: brown;
 }
 
 .btn {
@@ -16,7 +27,7 @@ a {
     padding: .5rem 1rem;
     background-color: #cd8c38;
     border-radius: 2rem;
-    color: #1e1f26;
+    color: #1e1f26; 
     transition: .3s;
 }
 
@@ -30,8 +41,8 @@ a {
 }
 
 body {
-    /* background-color: black; */
-    background-color: whitesmoke;
+    /* background-color: rgb(184, 43, 43); */
+    background-color: black;
     /* display: grid; */
     display:grid;
     grid-template-columns: 1000px;
@@ -39,21 +50,26 @@ body {
 }
 
 
-/* top bar */
-
 .top-bar {
     display: flex;
+    /* position:relative; */
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem 1rem;
+    
 }
 
 .left-content{
+    padding-top: 15px;
     display: flex;
     align-items: center;
 }
 .right-content {
-    display: flex;
+    color: #000;
+    display:flex;
+    position: relative;
+    width: min-content;
+    max-width: 50px;
     align-items: center;
 }
 
@@ -81,12 +97,14 @@ body {
 }
 
 .search-bar-container input {
-    width: 100%;               
-    padding: 10px 20px;        
+    width: 100%;              
+    padding: 10px 20px;
+    margin-left: 10px;
+    margin-top: 20px;
     border: 1px solid #cd8c38; 
     outline: none;             
     border-radius: 20px;       
-    background-color: #dfe1ee; 
+    background-color: whitesmoke; 
     color: #adadad;            
     font-size: 16px;           
     transition: 0.2s;         
@@ -98,18 +116,16 @@ body {
 }
 
 
-.filter,
 .cart,
-.help,
 .menu {
-    position: relative;
+    position:relative;
+    margin-left: 10px;;
     width: 20px;
     height: 20px;
 }
 
 .filter,
-.cart,
-.help {
+.cart{
     margin-right: 1rem;
 }
 
@@ -156,12 +172,14 @@ img {
     background: linear-gradient(45deg, rgba(255, 255, 255, .05), rgba(205, 140, 56, .15));
     backdrop-filter: blur(5px);
     height: fit-content;
+    /* display:inline; */
     border-radius: 1rem;
     padding: 2rem 2.5rem;
 }
 
 .sidebar-groups {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    
 }
 
 .sg-title {
@@ -213,13 +231,16 @@ label {
 }
 
 .buttons {
+    /* position:relative; */
     position: absolute;
+
+    overflow: hidden;
     bottom: 2rem;
     left: 2rem;
 }
 
 .btn-alt {
-    background-color: #151516;
+    background-color: #202024;
     color: #dfd1bf;
     border: 1px solid #cd8c38;
     margin-left: 1rem;
@@ -237,26 +258,33 @@ label {
     padding-bottom: 2rem;
 }
 
-.current-movies {
+.current-movies,
+.future-movies {
+    /* display:flex; */
     display: grid;
+    position:relative;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 20px;
 }
 
-.current-movie {
+
+.current-movie,
+.future-movie {
+    display:block;
     background: linear-gradient(45deg, rgba(255, 255, 255, .05), rgba(205, 140, 56, .15));
     padding: 1rem;
     border-radius: .5rem;
 }
 
-.current-img-box {
-    position: relative;
+.current-img-box,.future-img-box {
+    position:relative;
     height: 300px;
     width: auto;
     margin-bottom: 1rem;
     border-radius: .5rem;
     overflow: hidden;
 }
+
 
 .movie-title {
     color: #312d2d;
@@ -269,3 +297,7 @@ label {
     justify-content: space-between;
     margin-top: 1rem;
 }
+
+
+
+

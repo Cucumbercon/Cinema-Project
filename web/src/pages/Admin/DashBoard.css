@@ -1,0 +1,67 @@
+
+.DashBoardBackground{
+    display: flex;
+    background-color: wheat;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.movie-management {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 30vh;
+    min-height: 70vh;
+    font-family: 'Arial', sans-serif;
+    color: black;
+
+}
+
+.sidebar {
+    flex: 0 0 200px;
+    background-color: #2c3e50;
+    padding: 1rem;
+}
+
+.sidebar .section {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    color: #ecf0f1;
+    background-color: #34495e;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.sidebar .section:hover {
+    background-color: #2c3e50;
+}
+
+.panel {
+    flex-grow: 1;
+    padding: 2rem;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.schedule-table th,
+.schedule-table td {
+    border: 1px solid #dfe4ea;
+    text-align: left;
+    padding: 0.75rem;
+}
+
+.schedule-table th {
+    background-color: #f5f6fa;
+}
+
+.schedule-table td {
+    background-color: #ffffff;
+}
+
+

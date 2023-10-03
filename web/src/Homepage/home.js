@@ -1,11 +1,28 @@
 import React, {useState} from 'react'
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 import './home.css';
 
 function MovieBooking() {
     const [searchTerm, setSearchTerm] = useState('');
+
+
+
+    // Carousels for movies 
+    const settings = {
+        dots: true,  
+        infinite: true,  
+        speed: 500,
+        slidesToShow: 3,  
+        slidesToScroll: 1,  
+        autoplay: true,  
+        autoplaySpeed: 3000,  
+    };
  
   return (
     // this part is builing top bar
+    <div className = "homepagebackground">
     <div>
         <section className="top-bar">
             {/* this part is building left content of top bar */}
@@ -32,7 +49,6 @@ function MovieBooking() {
                 {/* <img src={require('./assests/images/movieCart.jpg')} alt="" className="cart"/> */}
                 {/* <img src={require('./moviefilter.jpg')} alt="" className="filter"/> */}
                 <img src={require('./movieCart.jpg')} alt="" className="cart"/>
-                <img src={require('./movieHelp.jpg')} alt="" className="help"/>
                 <div className="profile-img-box">
                     <img src={require('./movieUserIcon.jpg')} alt="Signin/Join"/>
                 </div>
@@ -91,7 +107,6 @@ function MovieBooking() {
             {/* this part include both current movie and future movie*/}
             <div className="movies-container">
                 <div className="upcoming-img-box">
-                    {/* <img src={require('./upcomingMovie.jpg')} alt=""/> */}
                     <img src={require('./Venom3.jpg')} alt=""/>
                     <p className="upcoming-title">Upcoming Movie</p>
                     <div className="buttons">
@@ -101,7 +116,7 @@ function MovieBooking() {
                 </div>
 
                 <div className="current-movies">
-
+                {/* <Slider {...settings}> */}
                     <div className="current-movie">
                         <div className="current-img-box">
                             <img src={require('./crtMov1.png')} alt=""/>
@@ -132,11 +147,52 @@ function MovieBooking() {
                         </div>
                     </div>
 
+                    {/* <div className="future-movies"> */}
 
+                    {/* <div className="future-movie">
+                        <div className="future-img-box"> */}
+                    <div className="current-movie">
+                        <div className="current-img-box">
+                            <img src={require('./crtMov3.png')} alt=""/>
+                        </div>
+                        <h3 className="movie-title">The Equalizer 3</h3>
+                        <div className="booking">
+                            <a href="#" className="btn">Veiw Details</a>
+                        </div>
+                    </div>
+
+                    {/* <div className="future-movie">
+                        <div className="future-img-box"> */}
+                    <div className="current-movie">
+                        <div className="current-img-box">
+                            <img src={require('./crtMov3.png')} alt=""/>
+                        </div>
+                        <h3 className="movie-title">The Equalizer 3</h3>
+                        <div className="booking">
+                            <a href="#" className="btn">Veiw Details</a>
+                        </div>
+                    </div>
+
+                    {/* <div className="future-movie">
+                        <div className="future-img-box"> */}
+                    <div className="current-movie">
+                        <div className="current-img-box">
+                            <img src={require('./crtMov3.png')} alt=""/>
+                        </div>
+                        <h3 className="movie-title">The Equalizer 3</h3>
+                        <div className="booking">
+                            <a href="#" className="btn">Veiw Details</a>
+                        </div>
+                    </div>
+
+                    {/* </div> */}
+                    {/* </Slider> */}
                 </div>
                 
             </div>
         </section>
+    </div>
+    
     </div>
   );
 }

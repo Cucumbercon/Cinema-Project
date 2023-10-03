@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Joan&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Joan', serif;
+
+}
+
+
+.movie-details-container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.trailer-section {
+    margin-top: 300px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.details-section {
+    background-color: #cab1b1; 
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.details-section h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.details-section p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+    color: #555;
+}
+
+.next-step button:hover {
+    background-color: #0056b3; 
+}
+
+.showtime-section {
+    margin-top: 1rem;
+    border: 1px solid #2b2929;
+    padding: 2rem;
+    border-radius: 5px;
+}
+
+
+.date-selector, .time-selector {
+    display:flow-root;
+    /* display:inline-block; */
+    justify-content: space-around;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.date-button, .time-button {
+    background-color: #242323;
+    border: none;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 1rem;
+}
+
+.date-button:hover, .time-button:hover {
+    background-color: #242121;
+}
+
+.next-step {
+    text-align: center;
+}
+
+.next-step button {
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    margin-top: 50px;
+    margin-left: 650px;
+    margin-bottom: 3rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
