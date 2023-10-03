@@ -59,7 +59,7 @@ public class MovieDB {
     }
 
     // this method is for search movie
-    public void searchMovie(String term) {
+    public ResultSet searchMovie(String term) {
         public ResultSet searchMovie(String term) {
             String query = "SELECT FROM movie"
                     + " WHERE title LIKE \'?%\'";
