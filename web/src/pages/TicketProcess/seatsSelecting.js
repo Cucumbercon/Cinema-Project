@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './seatsSelecting.css';
 
 function MovieSeatBooking() {
+    // These are the state variables
     const [seats, setSeats] = useState(generateSeats());
     const [selectedMovie, setSelectedMovie] = useState({ index: 0, price: 5 });
     const [selectedSeatsCount, setSelectedSeatsCount] = useState({
@@ -12,15 +13,17 @@ function MovieSeatBooking() {
     });
 
     useEffect(() => {
+        // This Loads the selected movie from local storage when the component mounts
         const storedMovieIndex = localStorage.getItem('selectedMovieIndex');
         if (storedMovieIndex) {
             setSelectedMovie({
                 index: storedMovieIndex,
-                price: parseFloat(localStorage.getItem('selectedMoviePrice'))
+                price: parseFloat(localStorage.getItem('selectedMoviePrice')),
             });
         }
     }, []);
 
+    // This is to generate initial seat data
     function generateSeats() {
         const rows = 7;
         const seatsInRow = 9;
@@ -30,7 +33,7 @@ function MovieSeatBooking() {
             for (let j = 0; j < seatsInRow; j++) {
                 row.push({
                     selected: false,
-                    occupied: Math.random() < 0.3
+                    occupied: Math.random() < 0.3,
                 });
             }
             generatedSeats.push(row);
@@ -38,31 +41,30 @@ function MovieSeatBooking() {
         return generatedSeats;
     }
 
+    // Function to toggle seat selection
     const toggleSeatSelection = (rowIndex, seatIndex) => {
         const updatedSeats = [...seats];
         const seat = updatedSeats[rowIndex][seatIndex];
-    
+
         if (!seat.occupied) {
             const seatType = getSeatType(selectedMovie.index);
             const updatedSelectedSeatsCount = { ...selectedSeatsCount };
-    
+
             if (!seat.selected) {
                 seat.selected = true;
                 updatedSelectedSeatsCount[seatType]++;
             } else if (seat.selected && updatedSelectedSeatsCount[seatType] > 0) {
-                
                 seat.selected = false;
                 updatedSelectedSeatsCount[seatType]--;
             }
-    
+
             setSeats(updatedSeats);
             setSelectedSeatsCount(updatedSelectedSeatsCount);
             localStorage.setItem('selectedSeats', JSON.stringify(updatedSeats));
         }
     };
-    
-    
 
+    // This is to handle any movie selection change
     const handleMovieChange = (e) => {
         const price = +e.target.value;
         const index = e.target.selectedIndex;
@@ -71,11 +73,13 @@ function MovieSeatBooking() {
         localStorage.setItem('selectedMoviePrice', price);
     };
 
+    //  This is to calculate the total price based on the selected seats
     const calculateTotalPrice = () => {
         const { child, adult, senior } = selectedSeatsCount;
         return child * 5 + adult * 15 + senior * 8;
     };
 
+    // This is to get the seat type based on movie index
     const getSeatType = (movieIndex) => {
         switch (movieIndex) {
             case 0:
@@ -92,9 +96,9 @@ function MovieSeatBooking() {
     return (
         <div>
             <div className="movie-container">
-                <label> Please Select a seat </label>
+                <label>Please Select a seat</label>
                 <br />
-                <label> Age Category </label>
+                <label>Age Category</label>
                 <select id="movie" value={selectedMovie.price} onChange={handleMovieChange}>
                     <option value="5">Child($5)</option>
                     <option value="15">Adult($15)</option>
@@ -102,7 +106,7 @@ function MovieSeatBooking() {
                 </select>
             </div>
 
-            <div className="centered-container"> 
+            <div className="centered-container">
                 <div className="container">
                     <div className="screen"></div>
                     {seats.map((row, rowIndex) => (
@@ -125,7 +129,7 @@ function MovieSeatBooking() {
                 You have selected {selectedSeatsCount.child} Child seats, {selectedSeatsCount.adult} Adult seats, and {selectedSeatsCount.senior} Senior seats for a total price of $<span>{calculateTotalPrice()}</span>
             </p>
 
-            <p className="Ready to pay">Lets go ready to pay!</p>
+            <p className="Ready to pay">Let's go, ready to pay!</p>
         </div>
     );
 }
