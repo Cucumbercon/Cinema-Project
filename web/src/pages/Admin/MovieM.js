@@ -37,22 +37,19 @@ function MovieManagement() {
             }
         })
         .then(function(response) {
-            // 如果200，direct到homepage，并且更新页面
             if (response.status === 200) {
+                // if 200，direct to homepage，and update the page
                 return response.json();
+            } else if (response.status === 400) {
+                // if 400, to inform the admin that the movie already exists in the db (popupwindow,or somethingelse)
             } else {
-                // 其他HTTP状态码，如404（未找到）、500（服务器错误）等
-                // 出现一个弹框，或其他方式通知用户
+                // if return other HTTP status, inform the admin as well
                 console.error('Request failed with status:', response.status);
-                // 返回一个Promise，以便后续链式操作
                 return Promise.reject('Request failed');
             }
         })
-        .then(function(data) {
-            // 处理后端的响应，仅当HTTP状态码为200时才会执行到这里
-        })
         .catch(function(error) {
-            // 处理任何错误，包括网络错误和HTTP状态码非200的情况
+            // if error occurs other than http, direct to error page or something else
             console.error('Error:', error);
         });   
         
