@@ -18,7 +18,6 @@ function MovieManagement() {
         producer: '',
         synopsis: '',
         rating: '',
-
     });
 
     const handleChange = (e) => {

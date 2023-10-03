@@ -33,15 +33,16 @@ public class AddMovieController {
             System.out.println(data);
 
             JsonNode jsonNode = objectMapper.readTree(data);
-            String id = jsonNode.get("id").asText();
             String title = jsonNode.get("title").asText();
             String language = jsonNode.get("language").asText();
             double popularity = jsonNode.get("popularity").asDouble();
             String posterPath = jsonNode.get("poster_path").asText();
+            String backdropPath = jsonNode.get("backdrop_path").asText();
+
             /**
              * STILL NEW A DATE HERE FOR RELEASEDATE
              */
-            String state = jsonNode.get("state").asText();
+            int state = jsonNode.get("state").asInt();
             String category = jsonNode.get("category").asText();
             String trailerPath = jsonNode.get("trailer_path").asText();
             String synopsis = jsonNode.get("synopsis").asText();
@@ -50,7 +51,7 @@ public class AddMovieController {
             String producer = jsonNode.get("producer").asText();
             double rating = jsonNode.get("rating").asDouble();
 
-            mdb.addMovie(id, language, title, popularity, posterPath, "null", state, category, trailerPath, synopsis, cast, rating, director, producer);
+            mdb.addMovie(language, title, popularity, posterPath, backdropPath, "null", state, category, trailerPath, synopsis, cast, rating, director, producer);
 
         } catch (IOException e) {
             e.printStackTrace();
