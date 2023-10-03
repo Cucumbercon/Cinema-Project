@@ -20,12 +20,12 @@ import Checkout from './pages/Checkout/Checkout';
 function App() {
   return (
 
-    // <MovieBooking />
+    <MovieBooking />
     // <MovieDetails />
     //  <MovieSeatBooking />
     // <AdminPanel />
      //<DashBoard />
-    <MovieManagement />
+    // <MovieManagement />
     // <Promotion />
     // <OrderSummary/>
      //<Checkout/>

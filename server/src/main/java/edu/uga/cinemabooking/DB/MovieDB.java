@@ -5,6 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.uga.cinemabooking.entity.Movie;
 
 public class MovieDB {
 
@@ -21,15 +25,14 @@ public class MovieDB {
         }
     }
 
-    public void addMovie(String language, String title, double popularity, String posterPath, 
-                         String backdropPath, String releaseDay, int state, String category, 
-                         String trailerPath, String synopsis, String cast, double rating, 
-                         String director, String producer) {
-     
-                            
-        String sql = "INSERT INTO movie (language, title, popularity, poster_path, backdrop_path, " + 
-                     "release_day, state, category, trailer_path, synopsis, cast, rating, director, producer) " +
-                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    public void addMovie(String language, String title, double popularity, String posterPath,
+            String backdropPath, String releaseDay, int state, String category,
+            String trailerPath, String synopsis, String cast, double rating,
+            String director, String producer) {
+
+        String sql = "INSERT INTO movie (language, title, popularity, poster_path, backdrop_path, " +
+                "release_day, state, category, trailer_path, synopsis, cast, rating, director, producer) " +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, language);
             preparedStatement.setString(2, title);
@@ -46,7 +49,7 @@ public class MovieDB {
             preparedStatement.setString(13, director);
             preparedStatement.setString(14, producer);
             preparedStatement.executeUpdate();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,8 +61,88 @@ public class MovieDB {
 
     }
 
-    // this method is for search movie
-    public void searchMovie(String term) {
+    // this method is for available movie
+    public List<Movie> getAvailableMovie() {
+
+        String sql = "SELECT * FROM movie WHERE state = ?";
+        List<Movie> movies = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, 1);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            movies = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Movie movie = new Movie();
+                movie.setId(resultSet.getInt("id"));
+                movie.setLanguage(resultSet.getString("language"));
+                movie.setTitle(resultSet.getString("title"));
+                movie.setState(resultSet.getInt("state"));
+                movie.setPopularity(resultSet.getDouble("popularity"));
+                movie.setPosterPath(resultSet.getString("poster_path"));
+                movie.setBackdropPath(resultSet.getString("backdrop_path"));
+                movie.setDate(resultSet.getString("release_day"));
+                movie.setCategory(resultSet.getString("category"));
+                movie.setTrailerPath(resultSet.getString("trailer_path"));
+                movie.setSynopsis(resultSet.getString("synopsis"));
+                movie.setCast(resultSet.getString("cast"));
+                movie.setRating(resultSet.getDouble("rating"));
+                movie.setDirector(resultSet.getString("director"));
+                movie.setProducer(resultSet.getString("producer"));
+
+                movies.add(movie);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return movies;
+
+    }
+
+    // this method is for upcoming movie
+    public List<Movie> getUpComingMovie() {
+        String sql = "SELECT * FROM movie WHERE state = ?";
+        List<Movie> movies = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, 0);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            movies = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Movie movie = new Movie();
+                movie.setId(resultSet.getInt("id"));
+                movie.setLanguage(resultSet.getString("language"));
+                movie.setTitle(resultSet.getString("title"));
+                movie.setState(resultSet.getInt("state"));
+                movie.setPopularity(resultSet.getDouble("popularity"));
+                movie.setPosterPath(resultSet.getString("poster_path"));
+                movie.setBackdropPath(resultSet.getString("backdrop_path"));
+                movie.setDate(resultSet.getString("release_day"));
+                movie.setCategory(resultSet.getString("category"));
+                movie.setTrailerPath(resultSet.getString("trailer_path"));
+                movie.setSynopsis(resultSet.getString("synopsis"));
+                movie.setCast(resultSet.getString("cast"));
+                movie.setRating(resultSet.getDouble("rating"));
+                movie.setDirector(resultSet.getString("director"));
+                movie.setProducer(resultSet.getString("producer"));
+
+                movies.add(movie);
+            }
+
+            // for (Movie movie : movies) {
+            // System.out.println(movie.toString());
+            // }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return movies;
 
     }
 

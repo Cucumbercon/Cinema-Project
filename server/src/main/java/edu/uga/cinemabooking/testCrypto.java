@@ -1,3 +1,5 @@
+package edu.uga.cinemabooking;
+
 import javax.crypto.*;
 import javax.crypto.spec.*;
 import java.security.*;
