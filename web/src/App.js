@@ -22,23 +22,22 @@ import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 
 function App() {
   return (
-
-     <MovieBooking />
+    // <MovieBooking />
+    // <Signup /> 
+    //<EmailVerification/>
+    //<RegistrationSuccessPage/>
+    // <Login /> 
+    // <UpdateProfile /> 
     // <MovieDetails />
-    //  <MovieSeatBooking />
+    // <MovieSeatBooking />
+    // <OrderSummary/>
+    //<Checkout/>
+    //<ConfirmationPage />
     // <AdminPanel />
     //  <DashBoard />
-    //<MovieManagement />
     // <Promotion />
-    // <OrderSummary/>
-     //<Checkout/>
-     //<ConfirmationPage />
-      // <AdminPanel /> 
-      // <Login />  
-      // <Signup /> 
-      // < NotFound /> 
-      //  <EditProfile /> 
-    
+    // <MovieManagement />
+    // < NotFound /> 
   );
 
   // Alternatively, you can use the following code to set up routing with a Navbar:
