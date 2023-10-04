@@ -12,8 +12,8 @@ function App() {
   return (
     
       // <AdminPanel /> 
-      //<MovieBooking /> 
-       <Login />  
+      <MovieBooking /> 
+      // <Login />  
       // <Signup /> 
       // < NotFound /> 
       //<UpdateProfile />

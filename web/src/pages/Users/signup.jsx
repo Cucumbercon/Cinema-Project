@@ -4,7 +4,7 @@ import "./signup.css";
 export const Signup = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
-    const [fullName, setFullName] = useState(''); // Combine First Name and Last Name into a single field
+    const [fullName, setFullName] = useState(''); 
     const [phoneNumber, setPhoneNumber] = useState(''); 
     const [subscribe, setSubscribe] = useState(false); 
     const [creditCardNumber, setCreditCardNumber] = useState('');
@@ -16,7 +16,7 @@ export const Signup = (props) => {
         // Logs the values to the console
         console.log(email);
         console.log(pass);
-        console.log(fullName); // Updated to fullName
+        console.log(fullName); 
         console.log(phoneNumber); 
         console.log(subscribe); 
         console.log(creditCardNumber);
