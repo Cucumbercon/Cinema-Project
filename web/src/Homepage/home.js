@@ -230,7 +230,14 @@ function MovieBooking() {
                                             <a href="#" className="btn">Veiw Details</a>
                                         </div>
                                         <div className="booking">
-                                            <a href="#" className="btn">Play Trailer</a>
+                                            <a
+                                                href="#"
+                                                className="btn"
+                                                onClick={() => {
+                                                    viewTrailer(movie)
+                                                    // openTrailerModal(movie.trailerPath);
+                                                }}
+                                            >Play Trailer</a>
                                         </div>
                                     </div>
                                 ))
