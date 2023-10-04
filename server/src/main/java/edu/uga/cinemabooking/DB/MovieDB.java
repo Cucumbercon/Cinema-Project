@@ -157,4 +157,25 @@ public class MovieDB {
         }
     }
 
+    // this method is for searching movies
+    // For now, only searches the title of movie
+    public String[] searchMovie(String term) {
+        String sql = "SELECT * FROM movie WHERE title LIKE \'?%\'";
+        String[] movieTitles = new String[10];
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, term);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int counter = 0;
+            while (resultSet.next()) {
+                if (counter != 10) {
+                    movieTitles[counter] = resultSet.getString("title");
+                    counter++;
+                } // if
+            } // while
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // try
+        return movieTitles;
+    } // SearchMovie
+
 }

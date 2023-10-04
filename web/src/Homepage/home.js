@@ -44,6 +44,18 @@ function MovieBooking() {
         console.error('Error sending message to Spring:', error);
     });
 
+    // get the searchterm from db
+    fetch('http://localhost:8000/api/setSearchTerm', {
+        method: 'GET',
+    }).then((response) => response.text())
+        .then((data) => {
+            setSearchTerm(data);
+            console.log('Response from Spring:', data);
+        })
+        .catch((error) => {
+            console.error('Error sending message to Spring:', error);
+        });
+
     return (
         // this part is builing top bar
         <div className="homepagebackground">
