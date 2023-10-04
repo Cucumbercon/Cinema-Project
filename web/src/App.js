@@ -6,19 +6,18 @@ import AdminPanel from './pages/Admin/adminPanel';
 import { Login } from './pages/Users/login';
 import { Signup }   from './pages/Users/signup';
 import { NotFound } from './pages/Users/NotFound';
-import { EditProfile } from './pages/Users/editprofile';
-
+import { UpdateProfile } from './pages/Users/UpdateProfile';
 
 function App() {
   return (
     
       // <AdminPanel /> 
       //<MovieBooking /> 
-      // <Login />  
+       <Login />  
       // <Signup /> 
       // < NotFound /> 
-       <EditProfile /> 
-    
+      //<UpdateProfile />
+     
   );
 
   // return (

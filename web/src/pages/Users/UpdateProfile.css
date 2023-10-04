@@ -1,0 +1,72 @@
+/* Apply the 'Joan' font-family to the whole form */
+.update-profile-form {
+    font-family: 'Joan', serif;
+}
+
+/* Style the buttons */
+.btn {
+    display: inline-block;
+    padding: .5rem 1rem;
+    background-color: #cd8c38;
+    border-radius: 2rem;
+    color: #1e1f26;
+    transition: .3s;
+    margin: 0.5rem 0;
+}
+
+.btn:hover {
+    background-color: #92601f;
+}
+
+/* Add styling to the input fields */
+.input-container input {
+    width: 100%;
+    padding: 10px 20px;
+    border: 1px solid #cd8c38;
+    outline: none;
+    border-radius: 20px;
+    background-color: #dfe1ee;
+    color: #adadad;
+    font-size: 16px;
+    transition: 0.2s;
+    margin-bottom: 0.6rem;
+}
+
+.input-container input:focus {
+    border-color: rgb(228, 214, 214);
+    box-shadow: 0 0 10px #92601f;
+}
+
+.profile-picture-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture-box img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem; /* Add margin to separate from labels */
+}
+
+
+/* Style the labels for input fields */
+.label-input label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+/* Style the checkbox */
+.subscribe-checkbox label {
+    display: flex;
+    align-items: center;
+    color: #adadad;
+    margin-top: 15px;
+}
+
+.subscribe-checkbox input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
