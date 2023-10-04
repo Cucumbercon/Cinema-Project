@@ -11,6 +11,18 @@ function MovieBooking() {
     const [searchResults, setSearchResults] = useState([]);
     const [availableMovie, setAvailableMovie] = useState([]);
     const [upComingMovie, setUpComingMovie] = useState([]);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [selectedMovie, setSelectedMovie] = useState(false);
+
+    const viewTrailer = (movie) => {
+        setSelectedMovie(movie);
+        setModalIsOpen(true);
+    };
+
+    const closeModal = ()=> {
+        setModalIsOpen(false);
+        setSelectedMovie(null);
+    };
 
     // Carousels for movies 
     const settings = {
@@ -185,13 +197,14 @@ function MovieBooking() {
                                         </div>
                                         <h3 className="movie-title">{movie.title}</h3>
                                         <div className="booking">
-                                            <a href="#" className="btn">Veiw Details</a>
+                                            <a href="#" className="btn">View Details</a>
                                         </div>
                                         <div className="booking">
                                             <a
                                                 href="#"
                                                 className="btn"
                                                 onClick={() => {
+                                                    viewTrailer(movie)
                                                     // openTrailerModal(movie.trailerPath);
                                                 }}
                                             >Play Trailer</a>
@@ -276,7 +289,7 @@ function MovieBooking() {
                     <Modal
                         isOpen={modalIsOpen}
                         onRequestClose={closeModal}
-                        contentLabel="Video Modal"
+                        contentLabel='Video Modal'
                         style= {{
                             overlay: {
                                 backgroundColor: ""
@@ -287,9 +300,22 @@ function MovieBooking() {
                                 margin: "auto", // Centers the modal horizontally
                                 padding: "0px",
                                 border: "none",
+                                overflow: "hidden"
                             },
                         }}
-                    ></Modal>
+                        >
+                        {selectedMovie && ( 
+                        <div>
+                            <ReactPlayer
+                            url={selectedMovie.trailerPath}
+                            height='85vh'
+                            width='850px'
+                            controls={true}
+                            className = 'modal-popup'
+                        />
+                        </div>
+                        )}
+                    </Modal>
                 </section>
 
             </div>
