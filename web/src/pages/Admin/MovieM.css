@@ -1,19 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Joan&display=swap');
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Joan', serif;
-}
+} */
 
-body {
+.movManBackground {
     /* background-color: black; */
-    background-color: wheat;
     /* display: grid; */
     display:flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     /* grid-template-columns: 1000px; */
     justify-content: space-evenly;
 }
+
 
 .movie-management {
     /* display:contents; */
@@ -30,7 +33,6 @@ body {
 
 .movie-management h2 {
     font-size: 1.5rem;
-    margin-top: 20rem;
     margin-bottom: 1rem;
 }
 

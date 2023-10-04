@@ -101,7 +101,7 @@ function MovieBooking() {
                     <div className="right-content">
                         {/* <img src={require('./assests/images/movieCart.jpg')} alt="" className="cart"/> */}
                         {/* <img src={require('./moviefilter.jpg')} alt="" className="filter"/> */}
-                        <img src={require('./movieCart.jpg')} alt="" className="cart" />
+                        {/* <img src={require('./movieCart.jpg')} alt="" className="cart" /> */}
                         <div className="profile-img-box">
                             <img src={require('./movieUserIcon.jpg')} alt="Signin/Join" />
                         </div>

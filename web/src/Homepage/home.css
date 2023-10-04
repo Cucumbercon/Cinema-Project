@@ -9,7 +9,7 @@
 
 .homepagebackground {
     background-color: black;
-    margin-top: 500px;
+    margin-top: 30px;
     display: grid;
     height: 100%;
     width: 100%;
@@ -51,6 +51,7 @@ body {
 
 
 .top-bar {
+    background-color: #000;
     display: flex;
     /* position:relative; */
     align-items: center;

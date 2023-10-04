@@ -15,7 +15,8 @@ function OrderSummary() {
     return (
         <div className="order-summary-container">
             <div className="movie-section">
-                <img src={movieDetails.poster} alt={movieDetails.title + ' poster'} className="movie-poster"/>
+                <img src={require('./MoviePoster.png')} alt="" className="movie-poster"/>
+                {/* <img src={movieDetails.poster} alt={movieDetails.title + ' poster'} className="movie-poster"/> */}
                 <h2>{movieDetails.title}</h2>
             </div>
             <div className="summary-section">

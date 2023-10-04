@@ -10,9 +10,9 @@
     text-align: center;
 }
 
-h1 {
-    color: pink;
-    margin-bottom: 1.5rem;
+ .confirmation-page h1 {
+    color: black;
+    /* margin-bottom: 1.5rem; */
 }
 
 .spacer {
@@ -20,7 +20,7 @@ h1 {
     width: 100%;
 }
 
-h2 {
+.confirmation-page h2 {
     color: black;
     font-size: 1.5rem;
     margin-bottom: 2rem;
