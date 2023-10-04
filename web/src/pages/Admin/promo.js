@@ -3,11 +3,15 @@ import './promo.css';
 
 function Promotion() {
     const [showAddPromo, setShowAddPromo] = useState(false);
-    const [promoCodes, setPromoCodes] = useState([]);
+    const [promoCodes, setPromoCodes] = useState([
+        {
+            name: "SAMPLEPROMO",
+            validity: "2023-12-31",
+            status: true
+        }
+    ]);
 
     const handleAddPromo = () => {
-        // Push new promotions to promoCodes state here
-        // Since we dont have any yet, It will show blank
         setShowAddPromo(!showAddPromo);
     };
 

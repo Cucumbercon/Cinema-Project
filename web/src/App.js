@@ -6,6 +6,7 @@ import DashBoard from './pages/Admin/DashBoard';
 import MovieBooking from './Homepage/home';
 import MovieDetails from './pages/MovieDetails/MovieDetails';
 import MovieManagement from './pages/Admin/MovieM';
+import UserManagement from './pages/Admin/UserM';
 import ConfirmationPage from './pages/ConfirmationPage/ConfirmationPage'
 import Promotion from './pages/Admin/promo';
 import MovieSeatBooking from './pages/TicketProcess/seatsSelecting';
@@ -21,23 +22,24 @@ import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 
 function App() {
   return (
-   //< RegistrationSuccessPage />
-    //< EmailVerification />
-     // <UpdateProfile />
-     // <MovieBooking />
-    //  <MovieDetails />
-     // <MovieSeatBooking />
-     // <AdminPanel />
-     // <DashBoard />
-     // <MovieManagement />
-     // <Promotion />
-     // <OrderSummary />
-    //  <Checkout />
-     // <ConfirmationPage />
-    //  <AdminPanel />
-     // <Login />
-      <Signup />
-     // <NotFound /> 
+  
+
+     <MovieBooking />
+    // <MovieDetails />
+    //  <MovieSeatBooking />
+    // <AdminPanel />
+    //  <DashBoard />
+    //<MovieManagement />
+    // <Promotion />
+    // <OrderSummary/>
+     //<Checkout/>
+     //<ConfirmationPage />
+      // <AdminPanel /> 
+      // <Login />  
+      // <Signup /> 
+      // < NotFound /> 
+      //  <EditProfile /> 
+    
   );
 
   // Alternatively, you can use the following code to set up routing with a Navbar:

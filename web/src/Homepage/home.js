@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Slider from "react-slick";
+import Modal from "react-modal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './home.css';
@@ -9,7 +10,6 @@ function MovieBooking() {
     const [searchResults, setSearchResults] = useState([]);
     const [availableMovie, setAvailableMovie] = useState([]);
     const [upComingMovie, setUpComingMovie] = useState([]);
-
 
     // Carousels for movies 
     const settings = {
@@ -24,54 +24,67 @@ function MovieBooking() {
     const handleSearch = () => {
         // 发起搜索请求
         fetch(`http://localhost:8000/api/searchMovieByName?movieName=${searchTerm}`, {
-          method: 'GET',
+            method: 'GET',
         })
-            
-          .then((response) => response.text())
-          .then((data) => {
-            console.log(searchTerm);
-            const parsedData = JSON.parse(data);
-            setSearchResults(parsedData); // 存储搜索结果
-            console.log('Search results:', parsedData);
-          })
-          .catch((error) => {
-            console.error('Error searching movies:', error);
-          });
-      };
+
+            .then((response) => response.text())
+            .then((data) => {
+                console.log(searchTerm);
+                const parsedData = JSON.parse(data);
+                parsedData.forEach(movie => {
+                    const state = movie.state;
+                    availableMovie.length = 0;
+                    upComingMovie.length = 0;
+                    if (state === 1) {
+                        setAvailableMovie(prevMovies => [...prevMovies, movie]);
+                    } else if (state === 0) {
+                        setUpComingMovie(prevUpcoming => [...prevUpcoming, movie]);
+                    }
+                });
+                console.log(availableMovie.length);
+
+                // setSearchResults(parsedData); // 存储搜索结果
+                console.log('Search results:', data);
+            })
+            .catch((error) => {
+                console.error('Error searching movies:', error);
+            });
+    };
     useEffect(() => {
-    // get the onshow movie from db
-    fetch('http://localhost:8000/api/getAvailableMovie', {
-  method: 'GET',
-})
-  .then((response) => response.text()) // 解析响应为JSON
-  .then((data) => {
-    const parsedData = JSON.parse(data);
-    setAvailableMovie(parsedData);
-    console.log('availableMoviedata:', parsedData);
-  })
-  .catch((error) => {
-    console.error('Error sending message to Spring:', error);
-  });
-    // get the upcoming movie from db
-    fetch('http://localhost:8000/api/getUpComingMovie', {
-        method: 'GET',
-      })
-        .then((response) => response.text()) // 解析响应为 JSON 格式
-        .then((data) => {
-            // transfer Json from string to Obj
-          const parsedData = JSON.parse(data);
-          setUpComingMovie(parsedData); // 存储数据在 upComingMovie 状态中
-          console.log('upComingMovie:',parsedData);
+        // get the onshow movie from db
+        fetch('http://localhost:8000/api/getAvailableMovie', {
+            method: 'GET',
         })
-        .catch((error) => {
-          console.error('Error sending message to Spring:', error);
-        });
+            .then((response) => response.text()) // 解析响应为JSON
+            .then((data) => {
+                const parsedData = JSON.parse(data);
+                setAvailableMovie(parsedData);
+                console.log('availableMoviedata:', parsedData);
+            })
+            .catch((error) => {
+                console.error('Error sending message to Spring:', error);
+            });
+        // get the upcoming movie from db
+        fetch('http://localhost:8000/api/getUpComingMovie', {
+            method: 'GET',
+        })
+            .then((response) => response.text()) // 解析响应为 JSON 格式
+            .then((data) => {
+                // transfer Json from string to Obj
+                const parsedData = JSON.parse(data);
+                setUpComingMovie(parsedData); // 存储数据在 upComingMovie 状态中
+                console.log('upComingMovie:', parsedData);
+            })
+            .catch((error) => {
+                console.error('Error sending message to Spring:', error);
+            });
     }, []);
 
     return (
         // this part is builing top bar
         <div className="homepagebackground">
             <div>
+
                 <section className="top-bar">
                     {/* this part is building left content of top bar */}
                     <div className="left-content">
@@ -85,23 +98,23 @@ function MovieBooking() {
                     </div>
                     {/* this part is building search bar of top bar */}
                     <div className="search-bar-container">
-        <input
-          type="text"
-          placeholder="Search for movies..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              handleSearch();
-            }
-          }}
-        />
-      </div>
+                        <input
+                            type="text"
+                            placeholder="Search for movies..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    handleSearch();
+                                }
+                            }}
+                        />
+                    </div>
                     {/* this part is building right content of top bar */}
                     <div className="right-content">
                         {/* <img src={require('./assests/images/movieCart.jpg')} alt="" className="cart"/> */}
                         {/* <img src={require('./moviefilter.jpg')} alt="" className="filter"/> */}
-                        <img src={require('./movieCart.jpg')} alt="" className="cart" />
+                        {/* <img src={require('./movieCart.jpg')} alt="" className="cart" /> */}
                         <div className="profile-img-box">
                             <img src={require('./movieUserIcon.jpg')} alt="Signin/Join" />
                         </div>
@@ -159,72 +172,92 @@ function MovieBooking() {
                     </div>
                     {/* this part include both current movie and future movie*/}
                     <div className="movies-container">
-                        <div className="upcoming-img-box">
-                            <img src={require('./Venom3.jpg')} alt="" />
-                            <p className="upcoming-title">Upcoming Movie</p>
-                            <div className="buttons">
-                                <a href="#" className="btn">Book Now</a>
-                                <a href="https://www.youtube.com/watch?v=TMqfLxE15zI&t=1s&ab_channel=ScreenCulture" className="btn-alt btn">Play Trailer</a>
-                            </div>
-                        </div>
+                        <p className='separate'>Up-coming Movies</p>
+                        <div className="future-movies">
 
-                        <div className="current-movies">
-                            {/* <Slider {...settings}> */}
-                            
-
-                            {searchResults.length <= 0 ? (
-                            availableMovie.map((movie) => (
-                                <div className="current-movie" key={movie.id}>
-                                    <div className="current-img-box">
-                                        <img src={movie.posterPath} alt={movie.title} />
-                                    </div>
-                                    <h3 className="movie-title">{movie.title}</h3>
-                                    <div className="booking">
-                                        <a href="#" className="btn">Veiw Details</a>
-                                    </div>
-                                    <div className="booking">
-                                    <a href="#" className="btn">Play Trailer</a>
-                                    </div>
-                                </div>
-                            ))
-                                ) : (
-                                ""
-                            )}
                             {/*另起一行 */}
                             {searchResults.length <= 0 ? (
-                            upComingMovie.map((movie) => (
-                                <div className="current-movie" key={movie.id}>
-                                    <div className="current-img-box">
-                                        <img src={movie.posterPath} alt={movie.title} />
+                                upComingMovie.map((movie) => (
+                                    <div className="current-movie" key={movie.id}>
+                                        <div className="current-img-box">
+                                            <img src={movie.posterPath} alt={movie.title} />
+                                        </div>
+                                        <h3 className="movie-title">{movie.title}</h3>
+                                        <div className="booking">
+                                            <a href="#" className="btn">Veiw Details</a>
+                                        </div>
+                                        <div className="booking">
+                                            <a
+                                                href="#"
+                                                className="btn"
+                                                onClick={() => {
+                                                    // openTrailerModal(movie.trailerPath);
+                                                }}
+                                            >Play Trailer</a>
+                                        </div>
                                     </div>
-                                    <h3 className="movie-title">{movie.title}</h3>
-                                    <div className="booking">
-                                        <a href="#" className="btn">Veiw Details</a>
-                                    </div>
-                                    <div className="booking">
-                                    <a href="#" className="btn">Play Trailer</a>
-                                    </div>
-                                </div>
                                 ))
-                                ) : (
-                                    ""
+                            ) : (
+                                ""
                             )}
+                        </div>
+
+                        <p className='separate'>Current Movies</p>
+                        <div className="current-movies">
+                            {/* <Slider {...settings}> */}
+                            {searchResults.length <= 0 ? (
+                                availableMovie.map((movie) => (
+                                    <div className="current-movie" key={movie.id}>
+                                        <div className="current-img-box">
+                                            <img src={movie.posterPath} alt={movie.title} />
+                                        </div>
+                                        <h3 className="movie-title">{movie.title}</h3>
+                                        <div className="booking">
+                                            <a href="#" className="btn">Veiw Details</a>
+                                        </div>
+                                        <div className="booking">
+                                            <a href="#" className="btn">Play Trailer</a>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                ""
+                            )}
+                            {/* 另起一行 */}
+                            {/* {searchResults.length <= 0 ? (
+                                upComingMovie.map((movie) => (
+                                    <div className="current-movie" key={movie.id}>
+                                        <div className="current-img-box">
+                                            <img src={movie.posterPath} alt={movie.title} />
+                                        </div>
+                                        <h3 className="movie-title">{movie.title}</h3>
+                                        <div className="booking">
+                                            <a href="#" className="btn">Veiw Details</a>
+                                        </div>
+                                        <div className="booking">
+                                            <a href="#" className="btn">Play Trailer</a>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                ""
+                            )} */}
                             {/*另起一行 */}
 
                             {searchResults.length > 0 ? (
                                 searchResults.map((movie) => (
-                                <div className="current-movie" key={movie.id}>
-                                <div className="current-img-box">
-                                    <img src={movie.posterPath} alt={movie.title} />
-                                </div>
-                                <h3 className="movie-title">{movie.title}</h3>
-                                <div className="booking">
-                                    <a href="#" className="btn">View Details</a>
-                                </div>
-                                <div className="booking">
-                                    <a href="#" className="btn">Play Trailer</a>
-                                </div>
-                            </div>
+                                    <div className="current-movie" key={movie.id}>
+                                        <div className="current-img-box">
+                                            <img src={movie.posterPath} alt={movie.title} />
+                                        </div>
+                                        <h3 className="movie-title">{movie.title}</h3>
+                                        <div className="booking">
+                                            <a href="#" className="btn">View Details</a>
+                                        </div>
+                                        <div className="booking">
+                                            <a href="#" className="btn">Play Trailer</a>
+                                        </div>
+                                    </div>
                                 ))
                             ) : (
                                 ""
@@ -239,9 +272,11 @@ function MovieBooking() {
 
                     </div>
                 </section>
+
             </div>
 
         </div>
+
     );
 }
 

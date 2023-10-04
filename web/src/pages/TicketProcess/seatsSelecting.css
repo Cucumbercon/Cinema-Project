@@ -83,9 +83,12 @@ body {
 
 .screen {
     background-color: white;
+    /* align-items: center;
+    justify-content: center; */
     height: 85px;
+    /* width: 300px; */
     width: 100%;
-    margin: 15px 0;
+    margin: 15px 0 50px 0;
     box-shadow: 0 30px 50px rgba(225, 225, 225, 0.75);
 }
 

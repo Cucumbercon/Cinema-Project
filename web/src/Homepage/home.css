@@ -9,7 +9,7 @@
 
 .homepagebackground {
     background-color: black;
-    margin-top: 500px;
+    margin-top: 30px;
     display: grid;
     height: 100%;
     width: 100%;
@@ -51,6 +51,7 @@ body {
 
 
 .top-bar {
+    background-color: #000;
     display: flex;
     /* position:relative; */
     align-items: center;
@@ -258,6 +259,18 @@ label {
     padding-bottom: 2rem;
 }
 
+.separate {
+    font-size: 27px; 
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    padding: 10px; 
+    border-radius: 10px; 
+    display: flex;
+    align-items: center;
+    color: white; 
+    width: fit-content; 
+}
+
 .current-movies,
 .future-movies {
     /* display:flex; */
@@ -266,7 +279,6 @@ label {
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
-
 
 .current-movie,
 .future-movie {
@@ -297,7 +309,4 @@ label {
     justify-content: space-between;
     margin-top: 1rem;
 }
-
-
-
 
