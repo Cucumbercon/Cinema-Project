@@ -8,7 +8,18 @@ function MovieBooking() {
     const [searchTerm, setSearchTerm] = useState('');
     const [availableMovie, setAvailableMovie] = useState([]);
     const [upComingMovie, setUpComingMovie] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentTrailerUrl, setCurrentTrailerUrl] = useState('');
 
+    const openModal = (trailerUrl) => {
+        setCurrentTrailerUrl(trailerUrl);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setCurrentTrailerUrl('');
+        setIsModalOpen(false);
+    };
     // Carousels for movies 
     const settings = {
         dots: true,
@@ -159,9 +170,24 @@ function MovieBooking() {
                                     <div className="booking">
                                         <a href="#" className="btn">Veiw Details</a>
                                     </div>
+                                    <div className="booking">
+                                    <a href="#" className="btn" onClick={() => openModal(movie.trailerPath)}>Play Trailer</a>
+                                    </div>
                                 </div>
                             ))}
-
+                           {isModalOpen && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={closeModal}>&times;</span>
+                        <iframe
+                            src={currentTrailerUrl}
+                            frameborder="0"
+                            allow="autoplay; encrypted-media"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                </div>
+            )}
                         
 
                             <div className="current-movie">
