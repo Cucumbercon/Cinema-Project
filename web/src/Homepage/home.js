@@ -19,7 +19,7 @@ function MovieBooking() {
         setModalIsOpen(true);
     };
 
-    const closeModal = ()=> {
+    const closeModal = () => {
         setModalIsOpen(false);
         setSelectedMovie(null);
     };
@@ -286,7 +286,11 @@ function MovieBooking() {
 
                     </div>
 
-                    <Modal
+                    
+                </section>
+
+            </div>
+            <Modal
                         isOpen={modalIsOpen}
                         onRequestClose={closeModal}
                         contentLabel='Video Modal'
@@ -316,10 +320,6 @@ function MovieBooking() {
                         </div>
                         )}
                     </Modal>
-                </section>
-
-            </div>
-
         </div>
 
     );
