@@ -12,11 +12,11 @@ function App() {
   return (
     
       // <AdminPanel /> 
-      <MovieBooking /> 
+      //<MovieBooking /> 
       // <Login />  
       // <Signup /> 
       // < NotFound /> 
-      //<UpdateProfile />
+      <UpdateProfile />
      
   );
 
