@@ -32,7 +32,7 @@ input[type="email"],
 input[type="password"] {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 5px; /* Reduced margin to 10px */
     border: 1px solid #ccc;
     border-radius: 3px;
 }
@@ -52,19 +52,18 @@ button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-
 /* Style for the link back to signup.js */
 .link-btn {
     color: #007bff;
     text-decoration: none;
     cursor: pointer;
     font-size: 14px;
-    margin-top: 10px;
-    display: inline-block; 
-    padding: 0; 
-    background: none; 
-    border: none; 
-    outline: none; 
+    margin-top: 5px; /* Reduced margin to 5px */
+    display: inline-block;
+    padding: 0;
+    background: none;
+    border: none;
+    outline: none;
 }
 
 .link-btn:hover {
