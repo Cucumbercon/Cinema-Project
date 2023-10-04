@@ -93,6 +93,11 @@ function MovieSeatBooking() {
         }
     };
 
+    // Function to handle the checkout process
+    const handleCheckout = () => {
+        
+    };
+
     return (
         <div>
             <div className="movie-container">
@@ -129,7 +134,10 @@ function MovieSeatBooking() {
                 You have selected {selectedSeatsCount.child} Child seats, {selectedSeatsCount.adult} Adult seats, and {selectedSeatsCount.senior} Senior seats for a total price of $<span>{calculateTotalPrice()}</span>
             </p>
 
-            <p className="Ready to pay">Let's go, ready to pay!</p>
+            {/* Checkout button */}
+            <button className="checkout-button" onClick={handleCheckout}>
+                Checkout
+            </button>
         </div>
     );
 }

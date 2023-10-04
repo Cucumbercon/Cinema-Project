@@ -26,11 +26,12 @@ body {
 
 .row {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
 }
 
 .movie-container {
     margin: 20px 0;
+    color: white
 }
 
 .movie-container select {
@@ -99,4 +100,21 @@ p.text {
 
 p.text span {
     color: #e0d6d6;
+}
+
+/* Checkout button styles */
+.checkout-button {
+    background-color: #FF5733; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.checkout-button:hover {
+    background-color: #FF4500; 
 }

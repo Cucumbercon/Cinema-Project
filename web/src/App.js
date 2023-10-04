@@ -21,7 +21,7 @@ import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 
 function App() {
   return (
-   < RegistrationSuccessPage />
+   //< RegistrationSuccessPage />
     //< EmailVerification />
      // <UpdateProfile />
      // <MovieBooking />
@@ -36,7 +36,7 @@ function App() {
      // <ConfirmationPage />
     //  <AdminPanel />
      // <Login />
-     // <Signup />
+      <Signup />
      // <NotFound /> 
   );
 
