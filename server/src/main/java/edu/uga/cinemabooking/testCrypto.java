@@ -11,6 +11,7 @@ public class testCrypto {
     IvParameterSpec iv;
 
     String algorithm = "AES/CBC/PKCS5Padding";
+    
     public String encrypt(String input) {
         try {
             if (key == null && iv == null) {
@@ -24,12 +25,11 @@ public class testCrypto {
             Cipher cipher = Cipher.getInstance(algorithm);
             cipher.init(Cipher.ENCRYPT_MODE, key, iv);
             byte[] cipherText = cipher.doFinal(input.getBytes());
-            return Base64.getEncoder()
-                    .encodeToString(cipherText);
+            input = Base64.getEncoder().encodeToString(cipherText);
         } catch (Exception e) {
             e.toString();
         }
-
+        return input;
     }
 
     public String decrypt(String encryptedMsg) {
@@ -47,10 +47,11 @@ public class testCrypto {
             cipher.init(Cipher.DECRYPT_MODE, key, iv);
             byte[] plainText = cipher.doFinal(Base64.getDecoder()
                     .decode(encryptedMsg));
-            return new String(plainText);
+             encryptedMsg = new String(plainText);
         } catch (Exception e){
             e.toString();
         }
+        return encryptedMsg;
 
     } // decrypt
 
