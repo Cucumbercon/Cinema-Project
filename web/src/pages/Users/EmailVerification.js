@@ -10,7 +10,7 @@ function EmailVerification() {
     const enteredCode = e.target.value;
     setCode(enteredCode);
 
-    // Validate the code format (6 digits)
+    // Validates the code format (6 digits)
     const codeRegex = /^\d{6}$/;
     setIsValidCode(codeRegex.test(enteredCode));
   };
@@ -18,13 +18,12 @@ function EmailVerification() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check if the code is valid
+   
     if (isValidCode) {
-      // Code is valid; you can proceed with the registration process
-      // For this example, we'll just log the code to the console
+      
       console.log('Code entered:', code);
     } else {
-      // Code is not valid; you can show an error message to the user
+     
       console.error('Invalid code format');
     }
   };
