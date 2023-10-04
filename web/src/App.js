@@ -14,13 +14,12 @@ import OrderSummary from './pages/OrderSummary/OrderSummary'
 import Checkout from './pages/Checkout/Checkout';
 import { Signup }   from './pages/Users/signup';
 import { NotFound } from './pages/Users/NotFound';
-import { EditProfile } from './pages/Users/editprofile';
-
+import { UpdateProfile } from './pages/Users/UpdateProfile';
 
 function App() {
   return (
-
-     <MovieBooking />
+      < UpdateProfile />
+     //<MovieBooking />
     // <MovieDetails />
     //  <MovieSeatBooking />
     // <AdminPanel />
