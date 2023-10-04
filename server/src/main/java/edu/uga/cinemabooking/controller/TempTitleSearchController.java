@@ -20,5 +20,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TempTitleSearchController {
 
     MovieDB mdb = new MovieDB();
-    }
-}
+    
+} 
