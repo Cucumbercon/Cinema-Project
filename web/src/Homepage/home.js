@@ -306,9 +306,9 @@ function MovieBooking() {
                                 backgroundColor: ""
                             },
                             content: {
-                                width: "850px",
+                                width: "1050px",
                                 height: "85vh",
-                                margin: "auto", // Centers the modal horizontally
+                                margin: "auto",
                                 padding: "0px",
                                 border: "none",
                                 overflow: "hidden"
@@ -320,7 +320,7 @@ function MovieBooking() {
                             <ReactPlayer
                             url={selectedMovie.trailerPath}
                             height='85vh'
-                            width='850px'
+                            width='1050px'
                             controls={true}
                             className = 'modal-popup'
                         />
