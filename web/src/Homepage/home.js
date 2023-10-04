@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Slider from "react-slick";
 import Modal from "react-modal";
+import ReactPlayer from "react-player";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './home.css';
@@ -271,6 +272,24 @@ function MovieBooking() {
                         </div>
 
                     </div>
+
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={closeModal}
+                        contentLabel="Video Modal"
+                        style= {{
+                            overlay: {
+                                backgroundColor: ""
+                            },
+                            content: {
+                                width: "850px",
+                                height: "85vh",
+                                margin: "auto", // Centers the modal horizontally
+                                padding: "0px",
+                                border: "none",
+                            },
+                        }}
+                    ></Modal>
                 </section>
 
             </div>
