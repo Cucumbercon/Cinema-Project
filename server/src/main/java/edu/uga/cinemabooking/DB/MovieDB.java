@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,16 @@ public class MovieDB {
             String trailerPath, String synopsis, String cast, double rating,
             String director, String producer) {
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date utilDate = null;
+        try {
+            utilDate = sdf.parse(releaseDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+
         String sql = "INSERT INTO movie (language, title, popularity, poster_path, backdrop_path, " +
                 "release_day, state, category, trailer_path, synopsis, cast, rating, director, producer) " +
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -39,7 +51,7 @@ public class MovieDB {
             preparedStatement.setDouble(3, popularity);
             preparedStatement.setString(4, posterPath);
             preparedStatement.setString(5, backdropPath);
-            preparedStatement.setDate(6, java.sql.Date.valueOf("2013-09-04"));
+            preparedStatement.setDate(6, sqlDate);
             preparedStatement.setInt(7, state);
             preparedStatement.setString(8, category);
             preparedStatement.setString(9, trailerPath);
@@ -97,7 +109,6 @@ public class MovieDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return movies;
 
     }

@@ -27,6 +27,8 @@ public class GetMovieController {
 
     @GetMapping("/getAvailableMovie")
     public ResponseEntity<String> receiveAvailable() {
+        System.out.println("ajdgaujhgdhjagdvjhasgdajdhasgjdghjb");
+
         List<Movie> movies = mdb.getAvailableMovie();
         ObjectMapper objectMapper = new ObjectMapper();
         try {

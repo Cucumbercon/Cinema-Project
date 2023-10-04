@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -20,6 +20,7 @@ function MovieBooking() {
         autoplaySpeed: 3000,
     };
 
+    useEffect(() => {
     // get the onshow movie from db
     fetch('http://localhost:8000/api/getAvailableMovie', {
         method: 'GET',
@@ -43,6 +44,7 @@ function MovieBooking() {
     .catch((error) => {
         console.error('Error sending message to Spring:', error);
     });
+    }, []);
 
     return (
         // this part is builing top bar
