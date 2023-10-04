@@ -13,37 +13,54 @@ import MovieSeatBooking from './pages/TicketProcess/seatsSelecting';
 import AdminPanel from './pages/Admin/adminPanel';
 import OrderSummary from './pages/OrderSummary/OrderSummary'
 import Checkout from './pages/Checkout/Checkout';
-import { Signup }   from './pages/Users/signup';
+import { Signup } from './pages/Users/signup';
 import { NotFound } from './pages/Users/NotFound';
-import { EditProfile } from './pages/Users/editprofile';
+import { UpdateProfile } from './pages/Users/UpdateProfile';
+import EmailVerification from './pages/Users/EmailVerification';
+import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 
 
 function App() {
   return (
 
-    //  <MovieBooking />
+     <MovieBooking />
     // <MovieDetails />
     //  <MovieSeatBooking />
     // <AdminPanel />
     //  <DashBoard />
-    // <MovieManagement />
-    // <UserManagement />
+    //<MovieManagement />
     // <Promotion />
     // <OrderSummary/>
-    //  <Checkout/>
-    //  <ConfirmationPage />
-    // <Login />  
-    // <Signup /> 
-    // < NotFound /> 
-    //  <EditProfile /> 
+     //<Checkout/>
+     //<ConfirmationPage />
+      // <AdminPanel /> 
+      // <Login />  
+      // <Signup /> 
+      // < NotFound /> 
+      //  <EditProfile /> 
     
   );
+
+  // Alternatively, you can use the following code to set up routing with a Navbar:
   // return (
   //   <>
   //     <Router>
   //       <Navbar />
   //       <Routes>
-  //         <Route path="/" exact />
+  //         <Route path="/" element={<Home />} />
+  //         <Route path="/dashboard" element={<DashBoard />} />
+  //         <Route path="/moviebooking" element={<MovieBooking />} />
+  //         <Route path="/moviedetails" element={<MovieDetails />} />
+  //         <Route path="/movieseatbooking" element={<MovieSeatBooking />} />
+  //         <Route path="/adminpanel" element={<AdminPanel />} />
+  //         <Route path="/moviemanagement" element={<MovieManagement />} />
+  //         <Route path="/promotion" element={<Promotion />} />
+  //         <Route path="/ordersummary" element={<OrderSummary />} />
+  //         <Route path="/checkout" element={<Checkout />} />
+  //         <Route path="/confirmationpage" element={<ConfirmationPage />} />
+  //         <Route path="/login" element={<Login />} />
+  //         <Route path="/signup" element={<Signup />} />
+  //         <Route path="/notfound" element={<NotFound />} />
   //       </Routes>
   //     </Router>
   //   </>
@@ -51,60 +68,3 @@ function App() {
 }
 
 export default App;
-
-
-//********************** RECEIVING TESTING **************************************//
-// import React, { useEffect, useState } from 'react';
-
-// function App() {
-//   const [data, setData] = useState('');
-
-//   useEffect(() => {
-//     const apiUrl = '/api/data';
-
-//     // Fetch data from the Spring API
-//     fetch(apiUrl)
-//         .then((response) => response.text())
-//         .then((data) => {
-//             console.log('Data from Spring:', data); // Log the data received
-//             setData(data);
-//         })
-//         .catch((error) => {
-//             console.error('Error fetching data from Spring:', error);
-//         });
-// }, []);
-
-
-//   return (
-//     <div>
-//       <h1>React Frontend</h1>
-//       <p>Data from Spring Backend: {data}</p>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-
-//*******************SENDING TESTING******************//
-// function App() {
-
-// const apiUrl = 'http://localhost:8000/api/send-message';
-//     const message = 'Hello from React!';
-
-//     fetch(apiUrl, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ message }),
-//     })
-//     .then((response) => response.text())
-//     .then((data) => {
-//         console.log('Response from Spring:', data);
-//     })
-//     .catch((error) => {
-//         console.error('Error sending message to Spring:', error);
-//     });
-//   }
