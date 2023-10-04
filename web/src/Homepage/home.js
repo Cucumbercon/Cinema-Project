@@ -6,20 +6,11 @@ import './home.css';
 
 function MovieBooking() {
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
     const [availableMovie, setAvailableMovie] = useState([]);
     const [upComingMovie, setUpComingMovie] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [currentTrailerUrl, setCurrentTrailerUrl] = useState('');
 
-    const openModal = (trailerUrl) => {
-        setCurrentTrailerUrl(trailerUrl);
-        setIsModalOpen(true);
-    };
 
-    const closeModal = () => {
-        setCurrentTrailerUrl('');
-        setIsModalOpen(false);
-    };
     // Carousels for movies 
     const settings = {
         dots: true,
@@ -30,7 +21,23 @@ function MovieBooking() {
         autoplay: true,
         autoplaySpeed: 3000,
     };
-
+    const handleSearch = () => {
+        // 发起搜索请求
+        fetch(`http://localhost:8000/api/searchMovieByName?movieName=${searchTerm}`, {
+          method: 'GET',
+        })
+            
+          .then((response) => response.text())
+          .then((data) => {
+            console.log(searchTerm);
+            const parsedData = JSON.parse(data);
+            setSearchResults(parsedData); // 存储搜索结果
+            console.log('Search results:', parsedData);
+          })
+          .catch((error) => {
+            console.error('Error searching movies:', error);
+          });
+      };
     useEffect(() => {
     // get the onshow movie from db
     fetch('http://localhost:8000/api/getAvailableMovie', {
@@ -78,13 +85,18 @@ function MovieBooking() {
                     </div>
                     {/* this part is building search bar of top bar */}
                     <div className="search-bar-container">
-                        <input
-                            type="text"
-                            placeholder="Search for movies..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
+        <input
+          type="text"
+          placeholder="Search for movies..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              handleSearch();
+            }
+          }}
+        />
+      </div>
                     {/* this part is building right content of top bar */}
                     <div className="right-content">
                         {/* <img src={require('./assests/images/movieCart.jpg')} alt="" className="cart"/> */}
@@ -160,8 +172,8 @@ function MovieBooking() {
                             {/* <Slider {...settings}> */}
                             
 
-
-                            {availableMovie.map((movie) => (
+                            {searchResults.length <= 0 ? (
+                            availableMovie.map((movie) => (
                                 <div className="current-movie" key={movie.id}>
                                     <div className="current-img-box">
                                         <img src={movie.posterPath} alt={movie.title} />
@@ -171,92 +183,55 @@ function MovieBooking() {
                                         <a href="#" className="btn">Veiw Details</a>
                                     </div>
                                     <div className="booking">
-                                    <a href="#" className="btn" onClick={() => openModal(movie.trailerPath)}>Play Trailer</a>
+                                    <a href="#" className="btn">Play Trailer</a>
                                     </div>
                                 </div>
-                            ))}
-                           {isModalOpen && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="close" onClick={closeModal}>&times;</span>
-                        <iframe
-                            src={currentTrailerUrl}
-                            frameborder="0"
-                            allow="autoplay; encrypted-media"
-                            allowfullscreen
-                        ></iframe>
-                    </div>
-                </div>
-            )}
-                        
-
-                            <div className="current-movie">
-                                <div className="current-img-box">
-                                    <img src={require('./crtMov1.png')} alt="" />
+                            ))
+                                ) : (
+                                ""
+                            )}
+                            {/*另起一行 */}
+                            {searchResults.length <= 0 ? (
+                            upComingMovie.map((movie) => (
+                                <div className="current-movie" key={movie.id}>
+                                    <div className="current-img-box">
+                                        <img src={movie.posterPath} alt={movie.title} />
+                                    </div>
+                                    <h3 className="movie-title">{movie.title}</h3>
+                                    <div className="booking">
+                                        <a href="#" className="btn">Veiw Details</a>
+                                    </div>
+                                    <div className="booking">
+                                    <a href="#" className="btn">Play Trailer</a>
+                                    </div>
                                 </div>
-                                <h3 className="movie-title">XXXX</h3>
+                                ))
+                                ) : (
+                                    ""
+                            )}
+                            {/*另起一行 */}
+
+                            {searchResults.length > 0 ? (
+                                searchResults.map((movie) => (
+                                <div className="current-movie" key={movie.id}>
+                                <div className="current-img-box">
+                                    <img src={movie.posterPath} alt={movie.title} />
+                                </div>
+                                <h3 className="movie-title">{movie.title}</h3>
                                 <div className="booking">
-                                    <a href="#" className="btn">Veiw Details</a>
+                                    <a href="#" className="btn">View Details</a>
+                                </div>
+                                <div className="booking">
+                                    <a href="#" className="btn">Play Trailer</a>
                                 </div>
                             </div>
+                                ))
+                            ) : (
+                                ""
+                            )}
 
-                            <div className="current-movie">
-                                <div className="current-img-box">
-                                    <img src={require('./crtMov2.png')} alt="" />
-                                </div>
-                                <h3 className="movie-title">A haunting in Venice</h3>
-                                <div className="booking">
-                                    <a href="#" className="btn">Veiw Details</a>
-                                </div>
-                            </div>
 
-                            <div className="current-movie">
-                                <div className="current-img-box">
-                                    <img src={require('./crtMov3.png')} alt="" />
-                                </div>
-                                <h3 className="movie-title">The Equalizer 3</h3>
-                                <div className="booking">
-                                    <a href="#" className="btn">Veiw Details</a>
-                                </div>
-                            </div>
 
-                            {/* <div className="future-movies"> */}
-
-                            {/* <div className="future-movie">
-                        <div className="future-img-box"> */}
-                            <div className="current-movie">
-                                <div className="current-img-box">
-                                    <img src={require('./crtMov3.png')} alt="" />
-                                </div>
-                                <h3 className="movie-title">The Equalizer 3</h3>
-                                <div className="booking">
-                                    <a href="#" className="btn">Veiw Details</a>
-                                </div>
-                            </div>
-
-                            {/* <div className="future-movie">
-                        <div className="future-img-box"> */}
-                            <div className="current-movie">
-                                <div className="current-img-box">
-                                    <img src={require('./crtMov3.png')} alt="" />
-                                </div>
-                                <h3 className="movie-title">The Equalizer 3</h3>
-                                <div className="booking">
-                                    <a href="#" className="btn">Veiw Details</a>
-                                </div>
-                            </div>
-
-                            {/* <div className="future-movie">
-                        <div className="future-img-box"> */}
-                            <div className="current-movie">
-                                <div className="current-img-box">
-                                    <img src={require('./crtMov3.png')} alt="" />
-                                </div>
-                                <h3 className="movie-title">The Equalizer 3</h3>
-                                <div className="booking">
-                                    <a href="#" className="btn">Veiw Details</a>
-                                </div>
-                            </div>
 
                             {/* </div> */}
                             {/* </Slider> */}

@@ -52,5 +52,17 @@ public class GetMovieController {
             return ResponseEntity.status(500).body("Error converting movies to JSON");
         }
     }
-
+    @GetMapping("/searchMovieByName")
+    public ResponseEntity<String> searchMovieByName(@RequestParam String movieName) {
+        System.out.println(movieName);
+        List<Movie> movies = mdb.searchMovieByName(movieName); //calling searchMovie
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String jsonMovies = objectMapper.writeValueAsString(movies);
+            return ResponseEntity.ok(jsonMovies);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error converting movies to JSON");
+        }
+    }
 }

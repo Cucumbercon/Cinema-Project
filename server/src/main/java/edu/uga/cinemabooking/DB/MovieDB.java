@@ -167,5 +167,39 @@ public class MovieDB {
             e.printStackTrace();
         }
     }
+    
+    public List<Movie> searchMovieByName(String movieName) {
+        String sql = "SELECT * FROM movie WHERE title LIKE ?";
+        List<Movie> movies = new ArrayList<>();
+    
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, "%" + movieName + "%"); // 使用通配符匹配部分电影名称
+            ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println(resultSet);
+            while (resultSet.next()) {
+                Movie movie = new Movie();
+                movie.setId(resultSet.getInt("id"));
+                movie.setLanguage(resultSet.getString("language"));
+                movie.setTitle(resultSet.getString("title"));
+                movie.setState(resultSet.getInt("state"));
+                movie.setPopularity(resultSet.getDouble("popularity"));
+                movie.setPosterPath(resultSet.getString("poster_path"));
+                movie.setBackdropPath(resultSet.getString("backdrop_path"));
+                movie.setDate(resultSet.getString("release_day"));
+                movie.setCategory(resultSet.getString("category"));
+                movie.setTrailerPath(resultSet.getString("trailer_path"));
+                movie.setSynopsis(resultSet.getString("synopsis"));
+                movie.setCast(resultSet.getString("cast"));
+                movie.setRating(resultSet.getDouble("rating"));
+                movie.setDirector(resultSet.getString("director"));
+                movie.setProducer(resultSet.getString("producer"));
+    
+                movies.add(movie);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        return movies;
+    }
 }
