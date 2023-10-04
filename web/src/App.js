@@ -20,12 +20,12 @@ import { EditProfile } from './pages/Users/editprofile';
 function App() {
   return (
 
-    // <MovieBooking />
+     <MovieBooking />
     // <MovieDetails />
     //  <MovieSeatBooking />
     // <AdminPanel />
     //  <DashBoard />
-    <MovieManagement />
+    //<MovieManagement />
     // <Promotion />
     // <OrderSummary/>
      //<Checkout/>

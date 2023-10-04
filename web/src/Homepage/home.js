@@ -6,8 +6,8 @@ import './home.css';
 
 function MovieBooking() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [availableMovie, setAvailableMovie] = useState('');
-    const [upComingMovie, setUpComingMovie] = useState('');
+    const [availableMovie, setAvailableMovie] = useState([]);
+    const [upComingMovie, setUpComingMovie] = useState([]);
 
     // Carousels for movies 
     const settings = {
@@ -23,27 +23,31 @@ function MovieBooking() {
     useEffect(() => {
     // get the onshow movie from db
     fetch('http://localhost:8000/api/getAvailableMovie', {
-        method: 'GET',
-    }).then((response) => response.text())
-        .then((data) => {
-            setAvailableMovie(data);
-            console.log('Response from Spring:', data);
-        })
-        .catch((error) => {
-            console.error('Error sending message to Spring:', error);
-        });
-
+  method: 'GET',
+})
+  .then((response) => response.text()) // 解析响应为JSON
+  .then((data) => {
+    const parsedData = JSON.parse(data);
+    setAvailableMovie(parsedData);
+    console.log('availableMoviedata:', parsedData);
+  })
+  .catch((error) => {
+    console.error('Error sending message to Spring:', error);
+  });
     // get the upcoming movie from db
     fetch('http://localhost:8000/api/getUpComingMovie', {
         method: 'GET',
-    }).then((response) => response.text())
-    .then((data) => {
-        setUpComingMovie(data);
-        console.log('Response from Spring:', data);
-    })
-    .catch((error) => {
-        console.error('Error sending message to Spring:', error);
-    });
+      })
+        .then((response) => response.text()) // 解析响应为 JSON 格式
+        .then((data) => {
+            // transfer Json from string to Obj
+          const parsedData = JSON.parse(data);
+          setUpComingMovie(parsedData); // 存储数据在 upComingMovie 状态中
+          console.log('upComingMovie:',parsedData);
+        })
+        .catch((error) => {
+          console.error('Error sending message to Spring:', error);
+        });
     }, []);
 
     return (
@@ -143,6 +147,23 @@ function MovieBooking() {
 
                         <div className="current-movies">
                             {/* <Slider {...settings}> */}
+                            
+
+
+                            {availableMovie.map((movie) => (
+                                <div className="current-movie" key={movie.id}>
+                                    <div className="current-img-box">
+                                        <img src={movie.posterPath} alt={movie.title} />
+                                    </div>
+                                    <h3 className="movie-title">{movie.title}</h3>
+                                    <div className="booking">
+                                        <a href="#" className="btn">Veiw Details</a>
+                                    </div>
+                                </div>
+                            ))}
+
+                        
+
                             <div className="current-movie">
                                 <div className="current-img-box">
                                     <img src={require('./crtMov1.png')} alt="" />
