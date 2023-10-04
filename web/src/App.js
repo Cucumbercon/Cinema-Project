@@ -24,7 +24,7 @@ function App() {
   return (
   
 
-     <MovieBooking />
+    // <MovieBooking />
     // <MovieDetails />
     //  <MovieSeatBooking />
     // <AdminPanel />
@@ -36,9 +36,9 @@ function App() {
      //<ConfirmationPage />
       // <AdminPanel /> 
       // <Login />  
-      // <Signup /> 
+       <Signup /> 
       // < NotFound /> 
-      //  <EditProfile /> 
+    //<UpdateProfile />
     
   );
 
