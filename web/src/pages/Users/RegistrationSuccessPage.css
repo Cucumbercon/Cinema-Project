@@ -1,0 +1,11 @@
+/* RegistrationSuccessPage.css */
+
+/* Center the content horizontally and vertically */
+.display-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust this value as needed */
+  }
+  

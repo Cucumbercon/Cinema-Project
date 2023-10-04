@@ -15,9 +15,14 @@ import Checkout from './pages/Checkout/Checkout';
 import { Signup } from './pages/Users/signup';
 import { NotFound } from './pages/Users/NotFound';
 import { UpdateProfile } from './pages/Users/UpdateProfile';
+import EmailVerification from './pages/Users/EmailVerification';
+import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
+
 
 function App() {
   return (
+   < RegistrationSuccessPage />
+    //< EmailVerification />
      // <UpdateProfile />
      // <MovieBooking />
     //  <MovieDetails />
@@ -30,7 +35,7 @@ function App() {
     //  <Checkout />
      // <ConfirmationPage />
     //  <AdminPanel />
-      <Login />
+     // <Login />
      // <Signup />
      // <NotFound /> 
   );

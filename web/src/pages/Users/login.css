@@ -25,6 +25,8 @@ label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #FF5733; /* Change label text color */
+    font-family: Arial, sans-serif; /* Change label font */
 }
 
 /* Style for both input fields */
@@ -32,38 +34,41 @@ input[type="email"],
 input[type="password"] {
     width: 100%;
     padding: 10px;
-    margin-bottom: 5px; /* Reduced margin to 10px */
+    margin-bottom: 5px; /* Reduced margin to 5px */
     border: 1px solid #ccc;
     border-radius: 3px;
+    font-family: Arial, sans-serif; /* Change input font */
 }
 
 /* Style for the login button */
 button[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #FF5733; /* Change button background color */
     color: #fff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
+    font-family: Arial, sans-serif; /* Change button font */
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #FF4500; /* Change button hover background color */
 }
 
 /* Style for the link back to signup.js */
 .link-btn {
-    color: #007bff;
+    color: #FF5733; /* Change link text color */
     text-decoration: none;
     cursor: pointer;
     font-size: 14px;
-    margin-top: 5px; /* Reduced margin to 5px */
+    margin-top: 10px; /* Reduced margin to 5px */
     display: inline-block;
     padding: 0;
     background: none;
     border: none;
     outline: none;
+    font-family: Arial, sans-serif; /* Change link font */
 }
 
 .link-btn:hover {
