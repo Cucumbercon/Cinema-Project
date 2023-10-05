@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Slider from "react-slick";
 import Modal from "react-modal";
+import ReactPlayer from "react-player";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './home.css';
@@ -10,6 +11,18 @@ function MovieBooking() {
     const [searchResults, setSearchResults] = useState([]);
     const [availableMovie, setAvailableMovie] = useState([]);
     const [upComingMovie, setUpComingMovie] = useState([]);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [selectedMovie, setSelectedMovie] = useState(false);
+
+    const viewTrailer = (movie) => {
+        setSelectedMovie(movie);
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+        setSelectedMovie(null);
+    };
 
     // Carousels for movies 
     const settings = {
@@ -184,13 +197,14 @@ function MovieBooking() {
                                         </div>
                                         <h3 className="movie-title">{movie.title}</h3>
                                         <div className="booking">
-                                            <a href="#" className="btn">Veiw Details</a>
+                                            <a href="#" className="btn">View Details</a>
                                         </div>
                                         <div className="booking">
                                             <a
                                                 href="#"
                                                 className="btn"
                                                 onClick={() => {
+                                                    viewTrailer(movie)
                                                     // openTrailerModal(movie.trailerPath);
                                                 }}
                                             >Play Trailer</a>
@@ -216,7 +230,14 @@ function MovieBooking() {
                                             <a href="#" className="btn">Veiw Details</a>
                                         </div>
                                         <div className="booking">
-                                            <a href="#" className="btn">Play Trailer</a>
+                                            <a
+                                                href="#"
+                                                className="btn"
+                                                onClick={() => {
+                                                    viewTrailer(movie)
+                                                    // openTrailerModal(movie.trailerPath);
+                                                }}
+                                            >Play Trailer</a>
                                         </div>
                                     </div>
                                 ))
@@ -271,10 +292,41 @@ function MovieBooking() {
                         </div>
 
                     </div>
+
+                    
                 </section>
 
             </div>
-
+            <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={closeModal}
+                        contentLabel='Video Modal'
+                        style= {{
+                            overlay: {
+                                backgroundColor: ""
+                            },
+                            content: {
+                                width: "1050px",
+                                height: "85vh",
+                                margin: "auto",
+                                padding: "0px",
+                                border: "none",
+                                overflow: "hidden"
+                            },
+                        }}
+                        >
+                        {selectedMovie && ( 
+                        <div>
+                            <ReactPlayer
+                            url={selectedMovie.trailerPath}
+                            height='85vh'
+                            width='1050px'
+                            controls={true}
+                            className = 'modal-popup'
+                        />
+                        </div>
+                        )}
+                    </Modal>
         </div>
 
     );
