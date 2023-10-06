@@ -23,14 +23,14 @@ In the project directory, you can run:
 
 ### `npm run start`
 
-Runs the app in the development mode.\
+Runs the app in the development mode.
 
 Added 10/6/2023:
 Make sure to run:
-> server/src/main/java/edu/uga/cinemabooking/CinemaBookingApplication.java
+> server/src/main/java/edu/uga/cinemabooking/CinemaBookingApplication.java \
 Or else movies will not be fetched from the DB.
 
-The page will reload when you make changes.\
+The page will reload when you make changes.
 
 ### `npm run build`
 
