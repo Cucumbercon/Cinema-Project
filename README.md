@@ -28,7 +28,7 @@ Runs the app in the development mode.
 Added 10/6/2023:
 Make sure to run:
 > server/src/main/java/edu/uga/cinemabooking/CinemaBookingApplication.java
-# Or else movies will not be fetched from the DB.
+### Or else movies will not be fetched from the DB.
 
 The page will reload when you make changes.
 
