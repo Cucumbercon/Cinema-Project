@@ -58,7 +58,7 @@ public class testCrypto {
     public void setSecretKey() {
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-            keyGenerator.init(192);
+            keyGenerator.init(256); // 10/6/2023 change to AES-256
             key = keyGenerator.generateKey();
         } catch (Exception e) {
             e.toString();
