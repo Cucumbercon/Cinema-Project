@@ -10,11 +10,11 @@ Check by typing this in the terminal:
 
 ## React package installs:
 Also make sure to install the following:
-> npm install react-router-dom
-> npm install react-slick
-> npm install react-modal
-> npm install react-player
-> npm install crypto-js
+> npm install react-router-dom \
+> npm install react-slick \
+> npm install react-modal \
+> npm install react-player \
+> npm install crypto-js \
 
 
 ## Available Scripts
