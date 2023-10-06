@@ -27,15 +27,15 @@ Runs the app in the development mode.
 
 Added 10/6/2023:
 Make sure to run:
-> server/src/main/java/edu/uga/cinemabooking/CinemaBookingApplication.java \
-Or else movies will not be fetched from the DB.
+> server/src/main/java/edu/uga/cinemabooking/CinemaBookingApplication.java
+# Or else movies will not be fetched from the DB.
 
 The page will reload when you make changes.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
+Builds the app for production to the `build` folder.
 
-The build is minified and the filenames include the hashes.\
+The build is minified and the filenames include the hashes.
 
 
