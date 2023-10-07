@@ -36,7 +36,7 @@ function App() {
      //<ConfirmationPage />
       // <AdminPanel /> 
       // <Login />  
-       <Signup /> 
+       <Signup  /> 
       // < NotFound /> 
     //<UpdateProfile />
     
