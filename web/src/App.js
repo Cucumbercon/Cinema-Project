@@ -22,21 +22,22 @@ import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 
 function App() {
   return (
-  
 
-    // <MovieBooking />
+     <MovieBooking />
     // <MovieDetails />
-    //  <MovieSeatBooking />
+    // <MovieSeatBooking />
+    // <OrderSummary/>
+    // <Checkout/>
+    // <ConfirmationPage />
     // <AdminPanel />
     //  <DashBoard />
-    //<MovieManagement />
     // <Promotion />
     // <OrderSummary/>
      //<Checkout/>
      //<ConfirmationPage />
       // <AdminPanel /> 
       // <Login />  
-       <Signup  /> 
+      //  <Signup /> 
       // < NotFound /> 
     //<UpdateProfile />
     
