@@ -23,7 +23,7 @@ import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 function App() {
   return (
 
-     <MovieBooking />
+    // <MovieBooking />
     // <MovieDetails />
     // <MovieSeatBooking />
     // <OrderSummary/>
@@ -37,7 +37,7 @@ function App() {
      //<ConfirmationPage />
       // <AdminPanel /> 
       // <Login />  
-      //  <Signup /> 
+        <Signup /> 
       // < NotFound /> 
     //<UpdateProfile />
     
