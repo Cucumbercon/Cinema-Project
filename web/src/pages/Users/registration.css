@@ -1,66 +1,95 @@
 /* registration.css */
 
-.auth-form-container {
-    display: flex;
-    justify-content: space-between;
-  }
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #121212;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 50px;
   
-  .form-box {
-    width: 45%;
-    padding: 20px;
-    border: 1px solid #ccc;
-    margin: 10px;
-  }
-  
-  /* Style the labels for required fields */
-  .label-container label {
-    font-weight: bold;
-  }
-  
-  /* Style the input fields */
-  .input-field {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  /* Style the optional fields container */
-  .optional-fields {
-    width: 45%;
-    padding: 20px;
-    border: 1px solid #ccc;
-    margin: 10px;
-  }
-  
-  /* Style the checkboxes */
-  .subscribe-checkbox label {
-    display: block;
-    margin-top: 10px;
-    font-weight: normal;
-  }
-  
-  button[type="submit"] {
-    background-color: #ff6600; 
-    color: #fff; 
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; 
-  }
-  
-  /* Change button color on hover */
-  button[type="submit"]:hover {
-    background-color: #ff3300; 
-  }
-  /* Style the login link button */
-  .link-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #ff6600;
-    margin-top: 20px;
-  }
-  
+}
+
+/* Form box */
+.form-box {
+  background-color: #121212;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* Form title */
+.form-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Label styles */
+.label-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  color: #ff6600;
+}
+
+/* Input field styles */
+.input-field {
+  padding: 10px;
+  border: 1px solid #f3ebeb;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+
+/* Checkbox for including Credit Card Info & Address */
+.subscribe-checkbox label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.subscribe-checkbox input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* Checkbox for promotional emails */
+.subscribe-checkbox label:last-child {
+  margin-bottom: 0;
+  color:#ff6600
+}
+
+
+
+
+
+
+/* Submit button styles */
+button[type="submit"] {
+  background-color: #006ce0;
+  color: #ff6600;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Link button styles */
+.link-btn {
+  background-color: #121212;
+  border: none;
+  color: #ff6600;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+}
+
+.link-btn:hover {
+  background-color: #121212;  
+}

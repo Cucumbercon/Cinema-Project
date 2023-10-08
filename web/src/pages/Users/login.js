@@ -1,18 +1,10 @@
-/* Title: Login Page
-*  Description: Login page for the web users to login
-*/
-
-//Todo: add login functionality and connect register here? button to register page - Sean Pastore
-
 import React, { useState } from "react";
-import './login.css'
+import './login2.css';
 
 export const Login = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
 
-
-    // todo: add login functionality
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(email);
@@ -22,14 +14,29 @@ export const Login = (props) => {
         <div className="auth-form-container">
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="email">Email</label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="youremail@gmail.com" id="email" name="email" />
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                  placeholder="youremail@gmail.com"
+                  id="email"
+                  name="email"
+                />
                 <label htmlFor="password">Password</label>
-                <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
-                <button type="submit">Login</button>
+                <input
+                  value={pass}
+                  onChange={(e) => setPass(e.target.value)}
+                  type="password"
+                  placeholder="********"
+                  id="password"
+                  name="password"
+                />
+                <button className="login-btn" type="login">Login</button>
             </form>
             
-        <button className="link-btn" onClick={() => props.onFormSwitch('test')}>Don't have an account? Register here.</button>
-
+            <button className="log-btn" onClick={() => props.onFormSwitch('test')}>
+              Don't have an account? Register here.
+            </button>
         </div>
     )
 }

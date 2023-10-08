@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./registration.css"; // Import the CSS file
 
 export const Signup = (props) => {
+ 
   // State variables
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -37,15 +38,12 @@ export const Signup = (props) => {
       console.log("State:", state);
       console.log("Zip Code:", zipCode);
     }
-
   }
 
-
   return (
-    <div className="auth-form-container">
+    <div className="auth-container">
       <div className="form-box">
         <form className="register-form" onSubmit={handleSubmit}>
-          
           {/* Full Name */}
           <div className="label-container">
             <label htmlFor="fullName">Full Name *</label>
@@ -214,10 +212,24 @@ export const Signup = (props) => {
             </div>
           )}
 
+         
+
           {/* Submit button */}
           <button type="submit">Create Account</button>
         </form>
       </div>
+
+       {/* Checkbox for promotional emails */}
+       <div className="subscribe-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                checked={subscribe}
+                onChange={(e) => setSubscribe(e.target.checked)}
+              />
+              Subscribe to promotional emails
+            </label>
+          </div>
 
       {/* Login link */}
       <button className="link-btn" onClick={() => props.onFormSwitch('login')}>
