@@ -29,14 +29,23 @@ public class RegisterController {
         // Logic to fetch data
         ObjectMapper objectMapper = new ObjectMapper();
 
-         try {
+        try {
             JsonNode jsonNode = objectMapper.readTree(data);
-            String name = jsonNode.get("userData").get("name").asText();
-            String email = jsonNode.get("userData").get("email").asText();
-            String password = jsonNode.get("userData").get("password").asText();
-            String phoneNumber = jsonNode.get("userData").get("phoneNumber").asText();
+            String fullName = jsonNode.get("fullName").asText();
+            String email = jsonNode.get("email").asText();
+            String password = jsonNode.get("password").asText();
+            String phoneNumber = jsonNode.get("phoneNumber").asText();
+            boolean subscribe = jsonNode.get("subscribe").asBoolean();
+            boolean includeCreditCardInfo = jsonNode.get("includeCreditCardInfo").asBoolean();
+            String creditCardNumber = jsonNode.get("creditCardNumber").asText();
+            String expirationDate = jsonNode.get("expirationDate").asText();
+            String city = jsonNode.get("city").asText();
+            String state = jsonNode.get("state").asText();
+            String street = jsonNode.get("street").asText();
+            String zipCode = jsonNode.get("zipCode").asText();
 
-            // check if the email is already in uses.
+            int id = udb.addUser(fullName, email, password, phoneNumber, subscribe);
+            // System.out.println(includeCreditCardInfo);
 
         } catch (IOException e) {
             e.printStackTrace();

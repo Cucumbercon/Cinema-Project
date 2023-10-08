@@ -23,21 +23,39 @@ export const Signup = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Log form values to the console
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Full Name:", fullName);
-    console.log("Phone Number:", phoneNumber);
-    console.log("Subscribe:", subscribe);
-    
-    if (includeCreditCardInfo) {
-      console.log("Credit Card Number:", creditCardNumber);
-      console.log("Expiration Date:", expirationDate);
-      console.log("Street:", street);
-      console.log("City:", city);
-      console.log("State:", state);
-      console.log("Zip Code:", zipCode);
-    }
+    const userData = {
+      email,
+      password,
+      fullName,
+      phoneNumber,
+      subscribe,
+      includeCreditCardInfo,
+      creditCardNumber,
+      expirationDate,
+      street,
+      city,
+      state,
+      zipCode,
+    };
+
+    fetch('http://localhost:8000/api/register', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      if (response.status === 200) {
+        // success
+        return response.json();
+      } else if (response.status === 400) {
+        // means email already exists
+      } else {
+        // other errors
+        console.error('Request failed with status: ', response.status);
+        return Promise.reject('请求失败');
+      }
+    });
   }
 
   return (

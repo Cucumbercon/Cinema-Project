@@ -33,7 +33,7 @@ public class UserDB {
      * @param password password
      * @param phone phone
      */
-    public void addUser(String name, String email, String password, String phone) {
+    public int addUser(String name, String email, String password, String phone, boolean subscribe) {
 
          String sql = "INSERT INTO user (full_name, email, password, phone) " +
                 "VALUES (?,?,?,?)";
@@ -47,6 +47,8 @@ public class UserDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return 0;
 
     } // addUser
 
