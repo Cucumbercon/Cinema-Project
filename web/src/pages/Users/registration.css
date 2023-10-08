@@ -42,18 +42,18 @@
   }
   
   button[type="submit"] {
-    background-color: #ff6600; /* Orange background color */
-    color: #fff; /* White text color */
+    background-color: #ff6600; 
+    color: #fff; 
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition */
+    transition: background-color 0.3s ease; 
   }
   
   /* Change button color on hover */
   button[type="submit"]:hover {
-    background-color: #ff3300; /* Darker orange color on hover */
+    background-color: #ff3300; 
   }
   /* Style the login link button */
   .link-btn {
