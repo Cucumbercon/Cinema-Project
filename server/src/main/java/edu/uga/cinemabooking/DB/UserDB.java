@@ -8,11 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.uga.cinemabooking.entity.Movie;
 import edu.uga.cinemabooking.entity.User;
 
 public class UserDB {
-    
+
     final static String URL = "jdbc:mysql://sg-cdb-kpa6dm3n.sql.tencentcdb.com:63965/ebooking";
     final static String USERNAME = "root";
     final static String PASSWORD = "uga4050uga4050_1";
@@ -27,22 +26,44 @@ public class UserDB {
     }
 
     /**
-     * This method is to add the user to the db
-     * @param name name
+     * This method will add the user to db
+     * @param name full name
      * @param email email
      * @param password password
-     * @param phone phone
+     * @param phone phone number
+     * @param subscribe subscribe to promotion
+     * @param homeCity home address city
+     * @param homeState home address state
+     * @param homeStreet home address street
+     * @param homeZipCode home address zip code
+     * @return the incresment userID
      */
-    public int addUser(String name, String email, String password, String phone, boolean subscribe) {
+    public int addUser(String name, String email, String password, 
+                       String phone, boolean subscribe, String homeCity,
+                       String homeState, String homeStreet, String homeZipCode) {
 
-         String sql = "INSERT INTO user (full_name, email, password, phone) " +
-                "VALUES (?,?,?,?)";
+        String sql = "INSERT INTO user (user_name, email, password, phone, SUBSCRIBER HERE*******, " +
+                     "city, state, street, zipcode) " +
+                "VALUES (?,?,?,?,?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, password);
             preparedStatement.setString(4, phone);
+            preparedStatement.setBoolean(5, subscribe);
+            preparedStatement.setString(6, homeCity);
+            preparedStatement.setString(7, homeState);
+            preparedStatement.setString(8, homeStreet);
+            preparedStatement.setString(9, homeZipCode);
+
             preparedStatement.executeUpdate();
+
+            // get the increment user id from the db
+            String idSQL = "SELECT * FROM user WHERE email = ?";
+            PreparedStatement idPreparedStatement = connection.prepareStatement(idSQL);
+            idPreparedStatement.setString(1, email);
+            ResultSet idResultSet = idPreparedStatement.executeQuery();
+            return idResultSet.getInt("ID"); 
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -108,6 +129,28 @@ public class UserDB {
             e.printStackTrace();
         }
         return users;
+    }
 
+    /**
+     * check if the email is valid
+     * 
+     * @return true if email already exists
+     */
+    public boolean emailValid(String email) {
+
+        String sql = "SELECT * FROM user WHERE email = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
     }
 }

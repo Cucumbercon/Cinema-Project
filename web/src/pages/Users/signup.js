@@ -9,6 +9,10 @@
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [subscribe, setSubscribe] = useState(false);
+    const [homeStreet, setHomeStreet] = useState('');
+    const [homeCity, setHomeCity] = useState('');
+    const [homeState, setHomeState] = useState('');
+    const [homeZipCode, setHomeZipCode] = useState('');
 
     // Optional fields
     const [includeCreditCardInfo, setIncludeCreditCardInfo] = useState(false);
@@ -28,6 +32,10 @@
         password,
         fullName,
         phoneNumber,
+        homeCity,
+        homeState,
+        homeStreet,
+        homeZipCode,
         subscribe,
         includeCreditCardInfo,
         creditCardNumber,
@@ -133,8 +141,8 @@
           type="text"
           id="street"
           name="street"
-          value={street}
-          onChange={(e) => setStreet(e.target.value)}
+          value={homeStreet}
+          onChange={(e) => setHomeStreet(e.target.value)}
           className="input-field"
           placeholder="Street"
         />
@@ -147,8 +155,8 @@
           type="text"
           id="city"
           name="city"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
+          value={homeCity}
+          onChange={(e) => setHomeCity(e.target.value)}
           className="input-field"
           placeholder="City"
         />
@@ -161,8 +169,8 @@
           type="text"
           id="state"
           name="state"
-          value={state}
-          onChange={(e) => setState(e.target.value)}
+          value={homeState}
+          onChange={(e) => setHomeState(e.target.value)}
           className="input-field"
           placeholder="State"
         />
@@ -175,8 +183,8 @@
           type="text"
           id="zipCode"
           name="zipCode"
-          value={zipCode}
-          onChange={(e) => setZipCode(e.target.value)}
+          value={homeZipCode}
+          onChange={(e) => setHomeZipCode(e.target.value)}
           className="input-field"
           placeholder="Zip Code"
         />
