@@ -122,6 +122,73 @@ export const Signup = (props) => {
             />
           </div>
 
+       {/* Home Address */}
+<div className="label-container">
+  <label htmlFor="homeAddress" style={{ textDecoration: includeCreditCardInfo ? 'underline' : 'none' }}>Home Address</label>
+  <div className="address-container">
+    {/* Street */}
+    <div className="label-container">
+      <label htmlFor="street">Street</label>
+      <input
+        type="text"
+        id="street"
+        name="street"
+        value={street}
+        onChange={(e) => setStreet(e.target.value)}
+        className="input-field"
+        placeholder="Street"
+      />
+    </div>
+
+    {/* City */}
+    <div className="label-container">
+      <label htmlFor="city">City</label>
+      <input
+        type="text"
+        id="city"
+        name="city"
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+        className="input-field"
+        placeholder="City"
+      />
+    </div>
+
+    {/* State */}
+    <div className="label-container">
+      <label htmlFor="state">State</label>
+      <input
+        type="text"
+        id="state"
+        name="state"
+        value={state}
+        onChange={(e) => setState(e.target.value)}
+        className="input-field"
+        placeholder="State"
+      />
+    </div>
+
+    {/* Zip Code */}
+    <div className="label-container">
+      <label htmlFor="zipCode">Zip Code</label>
+      <input
+        type="text"
+        id="zipCode"
+        name="zipCode"
+        value={zipCode}
+        onChange={(e) => setZipCode(e.target.value)}
+        className="input-field"
+        placeholder="Zip Code"
+      />
+    </div>
+  </div>
+</div>
+
+
+
+          
+          
+
           {/* Checkbox for including Credit Card Info & Address*/}
           <div className="subscribe-checkbox">
             <label>
@@ -130,7 +197,7 @@ export const Signup = (props) => {
                 checked={includeCreditCardInfo}
                 onChange={(e) => setIncludeCreditCardInfo(e.target.checked)}
               />
-              Include Credit Card Information & Address
+              Include Credit Card Information & Billing Address
             </label>
           </div>
 
