@@ -215,6 +215,7 @@
                 <label htmlFor="creditCardNumber">Credit Card Number</label>
                 <input
                   type="text"
+                  required
                   id="creditCardNumber"
                   name="creditCardNumber"
                   value={creditCardNumber}
@@ -231,6 +232,7 @@
                 <label htmlFor="expirationDate">Expiration Date</label>
                 <input
                   type="text"
+                  required
                   id="expirationDate"
                   name="expirationDate"
                   value={expirationDate}
@@ -249,6 +251,7 @@
                   type="text"
                   id="street"
                   name="street"
+                  required
                   value={street}
                   onChange={(e) => setStreet(e.target.value)}
                   className="input-field" 
@@ -264,6 +267,7 @@
                 <input
                   type="text"
                   id="city"
+                  required
                   name="city"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
@@ -281,6 +285,7 @@
                   type="text"
                   id="state"
                   name="state"
+                  required
                   value={state}
                   onChange={(e) => setState(e.target.value)}
                   className="input-field" 
@@ -296,6 +301,7 @@
                 <input
                   type="text"
                   id="zipCode"
+                  required  
                   name="zipCode"
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}

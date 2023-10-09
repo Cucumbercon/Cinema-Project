@@ -43,8 +43,7 @@ public class UserDB {
                        String homeState, String homeStreet, String homeZipCode) {
 
         String sql = "INSERT INTO user (user_name, email, password, phone, SUBSCRIBER HERE*******, " +
-                     "city, state, street, zipcode) " +
-                "VALUES (?,?,?,?,?,?,?,?,?)";
+                     "city, state, street, zipcode) VALUES (?,?,?,?,?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, email);

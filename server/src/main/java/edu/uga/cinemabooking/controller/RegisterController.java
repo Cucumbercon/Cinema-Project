@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import edu.uga.cinemabooking.DB.CardDB;
 import edu.uga.cinemabooking.DB.UserDB;
 import edu.uga.cinemabooking.entity.User;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RegisterController {
 
     UserDB udb = new UserDB();
+    CardDB cdb = new CardDB();
 
     @PostMapping("/register")
     public ResponseEntity<String> fetchData(@RequestBody String data) {
@@ -46,7 +48,7 @@ public class RegisterController {
                 boolean subscribe = jsonNode.get("subscribe").asBoolean();
                 boolean includeCreditCardInfo = jsonNode.get("includeCreditCardInfo").asBoolean();
                 String creditCardNumber = jsonNode.get("creditCardNumber").asText();
-                String expirationDate = jsonNode.get("expirationDate").asText();
+                String expDate = jsonNode.get("expirationDate").asText();
                 String city = jsonNode.get("city").asText();
                 String state = jsonNode.get("state").asText();
                 String street = jsonNode.get("street").asText();
@@ -57,7 +59,7 @@ public class RegisterController {
                 System.out.println("data: " + data);
                 System.out.println("id: " + id);
                 if (includeCreditCardInfo) {
-                    // add payment card for the user
+                    cdb.addCard(id, creditCardNumber, expDate, state, street, zipCode, city);
                 }
 
             }
