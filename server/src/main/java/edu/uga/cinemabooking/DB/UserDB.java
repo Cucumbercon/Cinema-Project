@@ -27,23 +27,24 @@ public class UserDB {
 
     /**
      * This method will add the user to db
-     * @param name full name
-     * @param email email
-     * @param password password
-     * @param phone phone number
-     * @param subscribe subscribe to promotion
-     * @param homeCity home address city
-     * @param homeState home address state
-     * @param homeStreet home address street
+     * 
+     * @param name        full name
+     * @param email       email
+     * @param password    password
+     * @param phone       phone number
+     * @param subscribe   subscribe to promotion
+     * @param homeCity    home address city
+     * @param homeState   home address state
+     * @param homeStreet  home address street
      * @param homeZipCode home address zip code
      * @return the incresment userID
      */
-    public int addUser(String name, String email, String password, 
-                       String phone, boolean subscribe, String homeCity,
-                       String homeState, String homeStreet, String homeZipCode) {
+    public int addUser(String name, String email, String password,
+            String phone, boolean subscribe, String homeCity,
+            String homeState, String homeStreet, String homeZipCode) {
 
-        String sql = "INSERT INTO user (user_name, email, password, phone, SUBSCRIBER HERE*******, " +
-                     "city, state, street, zipcode) VALUES (?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO user (user_name, email, password, phone, subscribe, " +
+                "city, state, street, zipcode) VALUES (?,?,?,?,?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, email);
@@ -55,15 +56,22 @@ public class UserDB {
             preparedStatement.setString(8, homeStreet);
             preparedStatement.setString(9, homeZipCode);
 
-            preparedStatement.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate();
 
-            // get the increment user id from the db
-            String idSQL = "SELECT * FROM user WHERE email = ?";
-            PreparedStatement idPreparedStatement = connection.prepareStatement(idSQL);
-            idPreparedStatement.setString(1, email);
-            ResultSet idResultSet = idPreparedStatement.executeQuery();
-            return idResultSet.getInt("ID"); 
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+        
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int userId = generatedKeys.getInt(1); // Assuming the ID is in the first column
+                    return userId;
+                } else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
 
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

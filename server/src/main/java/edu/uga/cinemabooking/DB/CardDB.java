@@ -44,7 +44,7 @@ public class CardDB {
         }
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
-        String sql = "INSERT INTO movie (user_id, card_number, exp_date, zipcode, street, city, state) " +
+        String sql = "INSERT INTO payment (user_id, card_number, exp_date, zipcode, street, city, state) " +
         "VALUES (?,?,?,?,?,?,?)";        
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
