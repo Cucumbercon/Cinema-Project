@@ -54,14 +54,33 @@
         }
       }).then(function (response) {
         if (response.status === 200) {
-          // success
+          /** signup successfully, 
+           * Need to do somethin here
+           * should pop-up window to inform user
+           * or direct to sign up page 
+           * Or other things
+           * */ 
+
           return response.json();
-        } else if (response.status === 400) {
-          // means email already exists
+        } else if (response.status === 406) {
+          /**
+           * means email already exists
+           * need to do something here to inform the user
+           * 
+           * 
+           * 
+           * */ 
+          console.error('Request failed with status: ', response);
         } else {
-          // other errors
+          /**
+           * other errors
+           * maybe direct to error page, and put the response status into error page
+           * 
+           * 
+           *  */ 
+
           console.error('Request failed with status: ', response.status);
-          return Promise.reject('请求失败');
+          return Promise.reject('request fail');
         }
       });
     }

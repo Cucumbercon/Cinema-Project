@@ -5,9 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.qos.logback.core.encoder.EchoEncoder;
 import edu.uga.cinemabooking.entity.User;
 
 public class UserDB {
@@ -43,9 +45,9 @@ public class UserDB {
             String phone, boolean subscribe, String homeCity,
             String homeState, String homeStreet, String homeZipCode) {
 
-        String sql = "INSERT INTO user (user_name, email, password, phone, subscribe, " +
+        String sql = "INSERT INTO user (user_name, email, password_hash, phone, subscribe, " +
                 "city, state, street, zipcode) VALUES (?,?,?,?,?,?,?,?,?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, password);
@@ -56,19 +58,12 @@ public class UserDB {
             preparedStatement.setString(8, homeStreet);
             preparedStatement.setString(9, homeZipCode);
 
-            int affectedRows = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
-            if (affectedRows == 0) {
-                throw new SQLException("Creating user failed, no rows affected.");
-            }
-        
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int userId = generatedKeys.getInt(1); // Assuming the ID is in the first column
-                    return userId;
-                } else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
-                }
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int generatedId = generatedKeys.getInt(1);
+                return (generatedId);
             }
 
             

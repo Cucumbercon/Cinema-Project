@@ -62,6 +62,9 @@ public class RegisterController {
                     cdb.addCard(id, creditCardNumber, expDate, state, street, zipCode, city);
                 }
 
+            } else {
+                // System.out.println("\n\n\n\n\n here");
+                return new ResponseEntity<>("Email already exists", HttpStatus.NOT_ACCEPTABLE);
             }
 
             // System.out.println(includeCreditCardInfo);
