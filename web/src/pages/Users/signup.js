@@ -27,6 +27,8 @@
     const handleSubmit = (e) => {
       e.preventDefault();
 
+      const formatDate = expirationDate + "-01";
+
       const userData = {
         email,
         password,
@@ -39,7 +41,7 @@
         subscribe,
         includeCreditCardInfo,
         creditCardNumber,
-        expirationDate,
+        formatDate,
         street,
         city,
         state,
@@ -257,7 +259,7 @@
                   value={expirationDate}
                   onChange={(e) => setExpirationDate(e.target.value)}
                   className="input-field" 
-                  placeholder="MM/YYYY"
+                  placeholder="YYYY-MM"
                 />
               </div>
             )}
