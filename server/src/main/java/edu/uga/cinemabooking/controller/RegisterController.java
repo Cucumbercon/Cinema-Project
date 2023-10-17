@@ -26,6 +26,11 @@ public class RegisterController {
     UserDB udb = new UserDB();
     CardDB cdb = new CardDB();
 
+    /**
+     * This method is used for signup function
+     * @param data the data from frontend
+     * @return status code
+     */
     @PostMapping("/register")
     public ResponseEntity<String> fetchData(@RequestBody String data) {
         // Logic to fetch data

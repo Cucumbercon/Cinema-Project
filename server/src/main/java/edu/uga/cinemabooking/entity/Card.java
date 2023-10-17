@@ -10,6 +10,9 @@ public class Card {
     String billingCity;
     int userID;
 
+    /*
+     * Empty construcotr
+     */
     public Card() {
 
     }

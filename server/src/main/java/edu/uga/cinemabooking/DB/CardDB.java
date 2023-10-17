@@ -8,11 +8,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class CardDB {
+
     final static String URL = "jdbc:mysql://sg-cdb-kpa6dm3n.sql.tencentcdb.com:63965/ebooking";
     final static String USERNAME = "root";
     final static String PASSWORD = "uga4050uga4050_1";
     Connection connection = null;
 
+    /**
+     * Calling this will init the connection to db
+     */
     public CardDB() {
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);

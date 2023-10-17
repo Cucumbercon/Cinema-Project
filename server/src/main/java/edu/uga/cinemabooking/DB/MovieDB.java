@@ -19,6 +19,9 @@ public class MovieDB {
     final static String PASSWORD = "uga4050uga4050_1";
     Connection connection = null;
 
+    /**
+     * Calling this will init the connection to db
+     */
     public MovieDB() {
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -27,6 +30,24 @@ public class MovieDB {
         }
     }
 
+    /**
+     * This method will add the movie to the db
+     * 
+     * @param language language
+     * @param title title
+     * @param popularity popularity
+     * @param posterPath posterPath
+     * @param backdropPath backdropPath
+     * @param releaseDay releaseDay
+     * @param state state
+     * @param category category
+     * @param trailerPath trailerPath
+     * @param synopsis synopsis
+     * @param cast cast
+     * @param rating rating
+     * @param director director
+     * @param producer producer
+     */
     public void addMovie(String language, String title, double popularity, String posterPath,
             String backdropPath, String releaseDay, int state, String category,
             String trailerPath, String synopsis, String cast, double rating,
@@ -68,12 +89,19 @@ public class MovieDB {
 
     }
 
-    // this method is for update movie
+    /**
+     * This method is for update movie
+     * @param type
+     * @param newInfo
+     */
     public void updateMovie(String type, String newInfo) {
 
     }
 
-    // this method is for available movie
+    /**
+     * This method is used to search for the available movie from db
+     * @return the lis of movies
+     */
     public List<Movie> getAvailableMovie() {
 
         String sql = "SELECT * FROM movie WHERE state = ?";
@@ -113,7 +141,10 @@ public class MovieDB {
 
     }
 
-    // this method is for upcoming movie
+    /**
+     * This method is used to search for upcoming movie
+     * @return up-coming movie list
+     */
     public List<Movie> getUpComingMovie() {
         String sql = "SELECT * FROM movie WHERE state = ?";
         List<Movie> movies = null;
@@ -158,16 +189,21 @@ public class MovieDB {
     }
 
     // this method is for delete movie
-    public void deleteMovie(int id) {
-        String sql = "DELETE FROM movie WHERE ID = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    // public void deleteMovie(int id) {
+    //     String sql = "DELETE FROM movie WHERE ID = ?";
+    //     try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+    //         preparedStatement.setInt(1, id);
+    //         preparedStatement.executeUpdate();
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
     
+    /**
+     * This method will search the db with keyword
+     * @param movieName keyword
+     * @return the list of movies
+     */
     public List<Movie> searchMovieByName(String movieName) {
         String sql = "SELECT * FROM movie WHERE title LIKE ?";
         List<Movie> movies = new ArrayList<>();

@@ -25,6 +25,10 @@ public class GetMovieController {
 
     MovieDB mdb = new MovieDB();
 
+    /**
+     * This method is used to get the available movies
+     * @return the list of movies
+     */
     @GetMapping("/getAvailableMovie")
     public ResponseEntity<String> receiveAvailable() {
         //System.out.println("ajdgaujhgdhjagdvjhasgdajdhasgjdghjb");
@@ -40,6 +44,10 @@ public class GetMovieController {
         }
     }
 
+    /**
+     * This method is used to get the up-coming movies
+     * @return the list of up-coming movies
+     */
     @GetMapping("/getUpComingMovie")
     public ResponseEntity<String> receiveUpComing() {
         List<Movie> movies = mdb.getUpComingMovie();
@@ -52,6 +60,12 @@ public class GetMovieController {
             return ResponseEntity.status(500).body("Error converting movies to JSON");
         }
     }
+
+    /**
+     * This method is used to get the movies by searching function
+     * @param movieName keyword
+     * @return the list of movies that contains the keyword
+     */
     @GetMapping("/searchMovieByName")
     public ResponseEntity<String> searchMovieByName(@RequestParam String movieName) {
         System.out.println(movieName);

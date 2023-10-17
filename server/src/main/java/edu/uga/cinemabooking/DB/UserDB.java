@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import edu.uga.cinemabooking.entity.User;
 
 public class UserDB {
@@ -19,6 +18,9 @@ public class UserDB {
     final static String PASSWORD = "uga4050uga4050_1";
     Connection connection = null;
 
+    /**
+     * Calling this will init the db connection
+     */
     public UserDB() {
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -75,7 +77,10 @@ public class UserDB {
 
     } // addUser
 
-    // this method is to retrieve the customer list
+    /**
+     * This method will search for all the customers
+     * @return the list of customers
+     */
     public List<User> getCustomers() {
 
         String sql = "SELECT * FROM user WHERE type = ?";
@@ -104,7 +109,10 @@ public class UserDB {
         return users;
     }
 
-    // this method is to retrieve the admin list
+    /**
+     * This method will search for all the admins
+     * @return the list of admins
+     */
     public List<User> getAdmins() {
 
         String sql = "SELECT * FROM user WHERE type = ?";
@@ -134,7 +142,7 @@ public class UserDB {
     }
 
     /**
-     * check if the email is valid
+     * This method is used to check if the email is valid
      * 
      * @return true if email already exists
      */

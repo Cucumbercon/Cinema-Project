@@ -23,6 +23,11 @@ public class AddMovieController {
 
     MovieDB mdb = new MovieDB();
 
+    /**
+     * This class is used to add the movie to the db
+     * @param data A JSON string representing the movie data to be added.
+     * @return A response entity indicating the result of the operation.
+     */
     @PostMapping("/addMovie")
     public ResponseEntity<String> fetchData(@RequestBody String data) {
 
