@@ -12,4 +12,7 @@ function encrypt(data) {
         padding: CryptoJS.pad.Pkcs7 // In Java file, padding is Pkcs5 but this does not matter because AES uses a block size of 8 bytes
     });
     return cipher.toString();
+    
 }
+
+export { encrypt };

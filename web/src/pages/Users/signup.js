@@ -1,11 +1,12 @@
   import React, { useState } from "react";
   import "./registration.css"; // Import the CSS file
+  import { encrypt } from './encryptpassword';
 
   export const Signup = (props) => {
   
     // State variables
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [plainPassword, setPlainPassword] = useState('');
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [subscribe, setSubscribe] = useState(false);
@@ -28,6 +29,7 @@
       e.preventDefault();
 
       const formatDate = expirationDate + "-01";
+      const password = (encrypt(plainPassword));
 
       const userData = {
         email,
@@ -48,43 +50,45 @@
         zipCode,
       };
 
-      fetch('http://localhost:8000/api/register', {
-        method: 'POST',
-        body: JSON.stringify(userData),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(function (response) {
-        if (response.status === 200) {
-          /** signup successfully, 
-           * Need to do somethin here
-           * should pop-up window to inform user
-           * or direct to sign up page 
-           * Or other things
-           * */ 
+      console.log(userData);
 
-          return response.json();
-        } else if (response.status === 406) {
-          /**
-           * means email already exists
-           * need to do something here to inform the user
-           * 
-           * 
-           * 
-           * */ 
-          console.error('Request failed with status: ', response);
-        } else {
-          /**
-           * other errors
-           * maybe direct to error page, and put the response status into error page
-           * 
-           * 
-           *  */ 
+    //   fetch('http://localhost:8000/api/register', {
+    //     method: 'POST',
+    //     body: JSON.stringify(userData),
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   }).then(function (response) {
+    //     if (response.status === 200) {
+    //       /** signup successfully, 
+    //        * Need to do somethin here
+    //        * should pop-up window to inform user
+    //        * or direct to sign up page 
+    //        * Or other things
+    //        * */ 
 
-          console.error('Request failed with status: ', response.status);
-          return Promise.reject('request fail');
-        }
-      });
+    //       return response.json();
+    //     } else if (response.status === 406) {
+    //       /**
+    //        * means email already exists
+    //        * need to do something here to inform the user
+    //        * 
+    //        * 
+    //        * 
+    //        * */ 
+    //       console.error('Request failed with status: ', response);
+    //     } else {
+    //       /**
+    //        * other errors
+    //        * maybe direct to error page, and put the response status into error page
+    //        * 
+    //        * 
+    //        *  */ 
+
+    //       console.error('Request failed with status: ', response.status);
+    //       return Promise.reject('request fail');
+    //     }
+    //   });
     }
 
     return (
@@ -128,8 +132,8 @@
                 type="password"
                 id="password"
                 name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={plainPassword}
+                onChange={(e) => setPlainPassword(e.target.value)}
                 className="input-field" 
                 placeholder="********"
                 required
