@@ -23,7 +23,7 @@ import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 function App() {
   return (
 
-    // <MovieBooking />
+     //<MovieBooking />
     // <MovieDetails />
     // <MovieSeatBooking />
     // <OrderSummary/>
