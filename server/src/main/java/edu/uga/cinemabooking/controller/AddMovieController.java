@@ -60,7 +60,7 @@ public class AddMovieController {
             return new ResponseEntity<>("Invalid data format", HttpStatus.BAD_REQUEST);
         }
 
-        return ResponseEntity.ok("Registration successful");
+        return ResponseEntity.ok("Added movies successful");
 
     }
 }

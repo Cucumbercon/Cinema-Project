@@ -52,43 +52,43 @@
 
       console.log(userData);
 
-    //   fetch('http://localhost:8000/api/register', {
-    //     method: 'POST',
-    //     body: JSON.stringify(userData),
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     }
-    //   }).then(function (response) {
-    //     if (response.status === 200) {
-    //       /** signup successfully, 
-    //        * Need to do somethin here
-    //        * should pop-up window to inform user
-    //        * or direct to sign up page 
-    //        * Or other things
-    //        * */ 
+      fetch('http://localhost:8000/api/register', {
+        method: 'POST',
+        body: JSON.stringify(userData),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(function (response) {
+        if (response.status === 200) {
+          /** signup successfully, 
+           * Need to do somethin here
+           * should pop-up window to inform user
+           * or direct to sign up page 
+           * Or other things
+           * */ 
 
-    //       return response.json();
-    //     } else if (response.status === 406) {
-    //       /**
-    //        * means email already exists
-    //        * need to do something here to inform the user
-    //        * 
-    //        * 
-    //        * 
-    //        * */ 
-    //       console.error('Request failed with status: ', response);
-    //     } else {
-    //       /**
-    //        * other errors
-    //        * maybe direct to error page, and put the response status into error page
-    //        * 
-    //        * 
-    //        *  */ 
+          return response.json();
+        } else if (response.status === 406) {
+          /**
+           * means email already exists
+           * need to do something here to inform the user
+           * 
+           * 
+           * 
+           * */ 
+          console.error('Request failed with status: ', response);
+        } else {
+          /**
+           * other errors
+           * maybe direct to error page, and put the response status into error page
+           * 
+           * 
+           *  */ 
 
-    //       console.error('Request failed with status: ', response.status);
-    //       return Promise.reject('request fail');
-    //     }
-    //   });
+          console.error('Request failed with status: ', response.status);
+          return Promise.reject('request fail');
+        }
+      });
     }
 
     return (
