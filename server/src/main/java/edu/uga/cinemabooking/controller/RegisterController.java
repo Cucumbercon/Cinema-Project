@@ -41,7 +41,7 @@ public class RegisterController {
             String email = jsonNode.get("email").asText();
 
             // if email is valid
-            if (udb.emailValid(email)) {
+            if (!udb.emailExist(email)) {
 
                 String fullName = jsonNode.get("fullName").asText();
                 String password = jsonNode.get("password").asText();
@@ -61,24 +61,25 @@ public class RegisterController {
 
                 int id = udb.addUser(fullName, email, password, phoneNumber, subscribe,
                                      homeCity, homeState, homeStreet, homeZipCode);
-                System.out.println("data: " + data);
-                System.out.println("id: " + id);
+                // System.out.println("data: " + data);
+                // System.out.println("id: " + id);
                 if (includeCreditCardInfo) {
                     cdb.addCard(id, creditCardNumber, expDate, state, street, zipCode, city);
                 }
 
             } else {
-                // System.out.println("\n\n\n\n\n here");
+                // if email already exists
                 return new ResponseEntity<>("Email already exists", HttpStatus.NOT_ACCEPTABLE);
             }
 
             // System.out.println(includeCreditCardInfo);
 
-        } catch (IOException e) {
+            // if something wrongs going on
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("Invalid data format", HttpStatus.BAD_REQUEST);
         }
-
+        // if register successfully
         return ResponseEntity.ok("Registration successful");
     }
 

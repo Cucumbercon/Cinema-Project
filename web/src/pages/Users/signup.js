@@ -1,11 +1,12 @@
   import React, { useState } from "react";
   import "./registration.css"; // Import the CSS file
+  import { encrypt } from './encryptpassword';
 
   export const Signup = (props) => {
   
     // State variables
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [plainPassword, setPlainPassword] = useState('');
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [subscribe, setSubscribe] = useState(false);
@@ -28,6 +29,7 @@
       e.preventDefault();
 
       const formatDate = expirationDate + "-01";
+      const password = (encrypt(plainPassword));
 
       const userData = {
         email,
@@ -47,6 +49,8 @@
         state,
         zipCode,
       };
+
+      console.log(userData);
 
       fetch('http://localhost:8000/api/register', {
         method: 'POST',
@@ -128,8 +132,8 @@
                 type="password"
                 id="password"
                 name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={plainPassword}
+                onChange={(e) => setPlainPassword(e.target.value)}
                 className="input-field" 
                 placeholder="********"
                 required

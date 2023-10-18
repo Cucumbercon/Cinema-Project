@@ -3,6 +3,7 @@ package edu.uga.cinemabooking.entity;
 public class User {
 
     int id;
+    int type;
     String fullName;
     String email;
     String password;
@@ -11,7 +12,8 @@ public class User {
     String expirationDate;
     String state;
     String street;
-    String subscribe;
+    String city;
+    int subscribe;
     String zipCode;
 
     // empty contrusctor
@@ -19,10 +21,26 @@ public class User {
 
     }
 
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
+    }
+
     public String getCreditCardNumber() {
         return creditCardNumber;
     }
-    
+
     public void setCreditCardNumber(String creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
     }
@@ -63,11 +81,11 @@ public class User {
         return street;
     }
 
-    public void setSubscribe(String subscribe) {
+    public void setSubscribe(int subscribe) {
         this.subscribe = subscribe;
     }
 
-    public String getSubscribe() {
+    public int getSubscribe() {
         return subscribe;
     }
 
@@ -85,14 +103,6 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return fullName;
-    }
-
-    public void setName(String name) {
-        this.fullName = name;
     }
 
     public String getEmail() {
@@ -118,8 +128,20 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + fullName + ", email=" + email
-                + ", password=" + password + "]";
+        return "User{" +
+                "id=" + id +
+                ", type=" + type +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", street='" + street + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", creditCardNumber='" + creditCardNumber + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", subscribe='" + subscribe + '\'' +
+                '}';
     }
 
     public void setPassword(String password) {

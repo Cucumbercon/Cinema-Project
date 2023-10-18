@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.yaml.snakeyaml.events.Event.ID;
+
 import edu.uga.cinemabooking.entity.User;
 
 public class UserDB {
@@ -68,7 +70,6 @@ public class UserDB {
                 return (generatedId);
             }
 
-            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -78,7 +79,41 @@ public class UserDB {
     } // addUser
 
     /**
+     * 
+     * @param email    email
+     * @param password password
+     * @return 0 if email is not in db
+     *         1 successfully
+     *         -1 email and password do not match
+     */
+    public User loginValidation(String email, String password) {
+
+        String sql = "SELECT * FROM user WHERE email = ? AND password_hash = ?";
+        User user = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getInt("ID"));
+                user.setFullName(resultSet.getString("user_name"));
+                user.setType(resultSet.getInt("type"));
+            } 
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+
+        return user;
+    }
+
+    /**
      * This method will search for all the customers
+     * 
      * @return the list of customers
      */
     public List<User> getCustomers() {
@@ -94,7 +129,7 @@ public class UserDB {
 
             while (resultSet.next()) {
                 User user = new User();
-                user.setName(resultSet.getString("name"));
+                user.setFullName(resultSet.getString("name"));
                 user.setEmail(resultSet.getString("email"));
                 user.setId(resultSet.getInt("id"));
                 user.setPhoneNumber(resultSet.getString("phone"));
@@ -111,6 +146,7 @@ public class UserDB {
 
     /**
      * This method will search for all the admins
+     * 
      * @return the list of admins
      */
     public List<User> getAdmins() {
@@ -126,7 +162,7 @@ public class UserDB {
 
             while (resultSet.next()) {
                 User user = new User();
-                user.setName(resultSet.getString("name"));
+                user.setFullName(resultSet.getString("name"));
                 user.setEmail(resultSet.getString("email"));
                 user.setId(resultSet.getInt("id"));
                 user.setPhoneNumber(resultSet.getString("phone"));
@@ -146,7 +182,7 @@ public class UserDB {
      * 
      * @return true if email already exists
      */
-    public boolean emailValid(String email) {
+    public boolean emailExist(String email) {
 
         String sql = "SELECT * FROM user WHERE email = ?";
 
@@ -155,12 +191,14 @@ public class UserDB {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return false;
+                return true;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(e);
+
         }
 
-        return true;
+        return false;
     }
 }
