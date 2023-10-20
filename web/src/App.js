@@ -36,8 +36,8 @@ function App() {
      //<Checkout/>
      //<ConfirmationPage />
       // <AdminPanel /> 
-       <Login />  
-      // <Signup /> 
+      //  <Login />  
+      <Signup /> 
       // < NotFound /> 
     //<UpdateProfile />
     

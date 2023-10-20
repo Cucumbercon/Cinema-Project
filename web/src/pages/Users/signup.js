@@ -1,6 +1,6 @@
   import React, { useState } from "react";
   import "./registration.css"; // Import the CSS file
-  import { encrypt } from './encryptpassword';
+  import { encrypt } from './encryption';
 
   export const Signup = (props) => {
   
@@ -14,10 +14,12 @@
     const [homeCity, setHomeCity] = useState('');
     const [homeState, setHomeState] = useState('');
     const [homeZipCode, setHomeZipCode] = useState('');
+    let  creditCardNumber = '';
+    let  formatDate = '';
 
     // Optional fields
     const [includeCreditCardInfo, setIncludeCreditCardInfo] = useState(false);
-    const [creditCardNumber, setCreditCardNumber] = useState('');
+    const [plainCreditCardNumber, setPlainCreditCardNumber] = useState('');
     const [expirationDate, setExpirationDate] = useState('');
     const [street, setStreet] = useState('');
     const [city, setCity] = useState('');
@@ -28,8 +30,17 @@
     const handleSubmit = (e) => {
       e.preventDefault();
 
-      const formatDate = expirationDate + "-01";
       const password = (encrypt(plainPassword));
+
+      if (plainCreditCardNumber !== '') {
+        creditCardNumber = encrypt(plainCreditCardNumber);
+      }
+      
+      if (expirationDate !== '') {
+        console.log(expirationDate + "-01");
+        formatDate = encrypt(expirationDate + "-01");
+      }
+      
 
       const userData = {
         email,
@@ -243,8 +254,8 @@
                   required
                   id="creditCardNumber"
                   name="creditCardNumber"
-                  value={creditCardNumber}
-                  onChange={(e) => setCreditCardNumber(e.target.value)}
+                  value={plainCreditCardNumber}
+                  onChange={(e) => setPlainCreditCardNumber(e.target.value)}
                   className="input-field" 
                   placeholder="XXXX-XXXX-XXXX-XXXX"
                 />

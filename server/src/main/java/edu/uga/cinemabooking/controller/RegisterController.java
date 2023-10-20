@@ -7,9 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.uga.cinemabooking.DB.CardDB;
 import edu.uga.cinemabooking.DB.UserDB;
-import edu.uga.cinemabooking.entity.User;
-
-import java.io.IOException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +25,7 @@ public class RegisterController {
 
     /**
      * This method is used for signup function
+     * 
      * @param data the data from frontend
      * @return status code
      */
@@ -52,18 +50,17 @@ public class RegisterController {
                 String homeZipCode = jsonNode.get("homeZipCode").asText();
                 boolean subscribe = jsonNode.get("subscribe").asBoolean();
                 boolean includeCreditCardInfo = jsonNode.get("includeCreditCardInfo").asBoolean();
-                String creditCardNumber = jsonNode.get("creditCardNumber").asText();
-                String expDate = jsonNode.get("expirationDate").asText();
-                String city = jsonNode.get("city").asText();
-                String state = jsonNode.get("state").asText();
-                String street = jsonNode.get("street").asText();
-                String zipCode = jsonNode.get("zipCode").asText();
 
                 int id = udb.addUser(fullName, email, password, phoneNumber, subscribe,
-                                     homeCity, homeState, homeStreet, homeZipCode);
-                // System.out.println("data: " + data);
-                // System.out.println("id: " + id);
+                        homeCity, homeState, homeStreet, homeZipCode);
+
                 if (includeCreditCardInfo) {
+                    String creditCardNumber = jsonNode.get("creditCardNumber").asText();
+                    String expDate = jsonNode.get("expirationDate").asText();
+                    String city = jsonNode.get("city").asText();
+                    String state = jsonNode.get("state").asText();
+                    String street = jsonNode.get("street").asText();
+                    String zipCode = jsonNode.get("zipCode").asText();
                     cdb.addCard(id, creditCardNumber, expDate, state, street, zipCode, city);
                 }
 
