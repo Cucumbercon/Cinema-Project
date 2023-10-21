@@ -45,7 +45,7 @@ public class SigninController {
 
                 if (user != null) {
                     String jsonUser = objectMapper.writeValueAsString(user);
-                    System.out.println(jsonUser);
+                    System.out.println("logged in");
                     return ResponseEntity.ok(jsonUser);
                 } else {
                     System.out.println("logged fail");

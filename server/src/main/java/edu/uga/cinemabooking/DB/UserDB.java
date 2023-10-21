@@ -9,8 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.yaml.snakeyaml.events.Event.ID;
-
+import edu.uga.cinemabooking.Decryption;
 import edu.uga.cinemabooking.entity.User;
 
 public class UserDB {
@@ -19,6 +18,7 @@ public class UserDB {
     final static String USERNAME = "root";
     final static String PASSWORD = "uga4050uga4050_1";
     Connection connection = null;
+    Decryption decryption = new Decryption();
 
     /**
      * Calling this will init the db connection
@@ -88,20 +88,22 @@ public class UserDB {
      */
     public User loginValidation(String email, String password) {
 
-        String sql = "SELECT * FROM user WHERE email = ? AND password_hash = ?";
+        String sql = "SELECT * FROM user WHERE email = ?";
         User user = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                user = new User();
-                user.setId(resultSet.getInt("ID"));
-                user.setFullName(resultSet.getString("user_name"));
-                user.setType(resultSet.getInt("type"));
-            } 
+                String dbPassword = resultSet.getString("password_hash");
+                if (decryption.decryptData(dbPassword).equals(decryption.decryptData(password))) {
+                    user = new User();
+                    user.setId(resultSet.getInt("ID"));
+                    user.setFullName(resultSet.getString("user_name"));
+                    user.setType(resultSet.getInt("type"));
+                } else return user;
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

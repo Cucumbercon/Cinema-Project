@@ -8,17 +8,13 @@ import java.util.Base64;
 
 public class Decryption {
 
-    private static final String PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----\n" +
-    "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCWHh1Lo7/JREHUNxprVJHjpT/hlyqgMFA4meDUnJC4ubQvjVfENXKfPPohLGORsfYlUjalYGkhP0rMvb3fpMJnNGE/aueYawSp66QDHWzYCzDEEo7w8FcD3FEcX5LQruX4YN2Z/hMiiNnw9eG/1SXCOLQIxPrSEgH51pGwzVfA1QIDAQAB" + 
-    "-----END PRIVATE KEY-----";
+    private static final String PRIVATE_KEY = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJYeHUujv8lEQdQ3GmtUkeOlP+GXKqAwUDiZ4NSckLi5tC+NV8Q1cp88+iEsY5Gx9iVSNqVgaSE/Ssy9vd+kwmc0YT9q55hrBKnrpAMdbNgLMMQSjvDwVwPcURxfktCu5fhg3Zn+EyKI2fD14b/VJcI4tAjE+tISAfnWkbDNV8DVAgMBAAECgYAhVGLXPC5U+q9t9WULfv2cMECobuZzJf7trjaVpgRYyzxnEWfy45YFJmX3rxIVU1COFTyWR7tXuyR5pEgPq1ZQ+hPNh6gPEXHIiD9zmHwNmWCV6QaAzmJzcdezFExJMY0Td4+uFBPVdxM4qyS/K1pto8F8dAiCXy7ibGOI1WhFuQJBAM0Y5vJDdratq8B76lSHrCY8K+GC/w5EXvcYlfVvIzrz+XYA6g2FA5n8p7kqFqOT8j+/6JiKeultQSJit7VF9B0CQQC7YAQREytwJA9O/9zutcOYqpc9VTmi2sG1YrvEaPqXKtYBaPnjyuSLwaNK2Lj6TC50pKbX6lutO21/5oTIpnIZAkEArpgaUfYYYx6o7S0PqHHunIXwnQMU+SI+7X6iedLoXNFAdbIFjQjErhuk9D3eE9ZoDNjjuqd4RqpZHlqHJOuuCQJALu8+FYjXuJ9Ptlog3SpqdDNG7vYKGeDx5J12qxwgqPzx3iiNb6HC3b8DSBxBOXEbsdwMbsklbZ8VLpRvblNDAQJAO+YUjbgBHnxY3xfI4+2rDxpHH0QKwBHuIIOM8t8cccX8+m3swqhxOWOFUoJpEqaOzQ3njemeYHoj6KQEA2/1xQ==";
 
 
-    public static String decryptData(String encryptedData) {
+
+    public String decryptData(String encryptedData) {
         try {
-            String privateKeyPEM = PRIVATE_KEY.replace("-----BEGIN PRIVATE KEY-----", "")
-            .replace("-----END PRIVATE KEY-----", "");
-            System.out.println(privateKeyPEM);
-            byte[] encodedPrivateKey = Base64.getDecoder().decode(privateKeyPEM);
+            byte[] encodedPrivateKey = Base64.getDecoder().decode(PRIVATE_KEY);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encodedPrivateKey);
             PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
@@ -27,8 +23,7 @@ public class Decryption {
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
             String decryptedData = new String(decryptedBytes);
-            System.out.println(decryptedData);
-
+            
             return decryptedData;
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,8 +31,8 @@ public class Decryption {
         }
     }
 
-    public static void main(String[] args) {
-        decryptData("RkWw9R+7M3TOskV6tgAwIe0ipwe6i3F4pErijRdH8BYQByNR5PIU19A2Ms+b5KXeuFg5/nkHA+ZOBfFvFsZhp0f+mROrVgxOpdPxewvwNUevxd+9UvNWClL7iH1d9C+5qQ5k4i7ew0avN0clg8BBjEiLoV1zqJjQox64zqYUYOs=");
-    }
+    // public static void main(String[] args) {
+    //     System.out.println(decryptData("YbFiGFX4PJoDD0g0XcZaO8yoG0YcoDLTt//CisK+u08Vv1NEvuR+WGhpcl6mFSffM2lsqS0TDww7Nvh0Qc940ph3bCpyNcHGdPNA/oxEI8s84tTCnx8X+Rhkkxzr0Gzx6HK+vZ2O3NI3OnWAYuDrLtcfUppeyW6oKDTeSp8KdeM="));
+    // }
 
 }

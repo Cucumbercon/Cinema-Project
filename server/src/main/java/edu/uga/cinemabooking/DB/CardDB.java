@@ -7,11 +7,15 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import edu.uga.cinemabooking.Decryption;
+
+
 public class CardDB {
 
     final static String URL = "jdbc:mysql://sg-cdb-kpa6dm3n.sql.tencentcdb.com:63965/ebooking";
     final static String USERNAME = "root";
     final static String PASSWORD = "uga4050uga4050_1";
+    Decryption decryption = new Decryption();
     Connection connection = null;
 
     /**
@@ -41,6 +45,8 @@ public class CardDB {
         // reformat the java string to sql's date
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date utilDate = null;
+        expDate = decryption.decryptData(expDate);
+
         try {
             utilDate = sdf.parse(expDate);
         } catch (ParseException e) {

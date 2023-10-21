@@ -1,17 +1,21 @@
 import React, { useState } from "react";
+import { encrypt } from './encryption';
+
 import './login2.css';
 
 export const Login = (props) => {
     const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
+    const [plainPass, setPlainPass] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        const pass = encrypt(plainPass);
+
         const loginInfo = {
           email, pass,
         };
-
+        console.log(loginInfo)
         fetch('http://localhost:8000/api/login', {
         method: 'POST',
         body: JSON.stringify(loginInfo),
@@ -68,6 +72,7 @@ export const Login = (props) => {
                 <label htmlFor="email">Email</label>
                 <input
                   value={email}
+                  required
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   placeholder="youremail@gmail.com"
@@ -76,8 +81,9 @@ export const Login = (props) => {
                 />
                 <label htmlFor="password">Password</label>
                 <input
-                  value={pass}
-                  onChange={(e) => setPass(e.target.value)}
+                  value={plainPass}
+                  required
+                  onChange={(e) => setPlainPass(e.target.value)}
                   type="password"
                   placeholder="********"
                   id="password"

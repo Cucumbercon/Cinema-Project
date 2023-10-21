@@ -56,7 +56,7 @@ public class RegisterController {
 
                 if (includeCreditCardInfo) {
                     String creditCardNumber = jsonNode.get("creditCardNumber").asText();
-                    String expDate = jsonNode.get("expirationDate").asText();
+                    String expDate = jsonNode.get("formatDate").asText();
                     String city = jsonNode.get("city").asText();
                     String state = jsonNode.get("state").asText();
                     String street = jsonNode.get("street").asText();
@@ -66,6 +66,7 @@ public class RegisterController {
 
             } else {
                 // if email already exists
+                System.out.println("Register fail: Email already exists");
                 return new ResponseEntity<>("Email already exists", HttpStatus.NOT_ACCEPTABLE);
             }
 
@@ -74,6 +75,7 @@ public class RegisterController {
             // if something wrongs going on
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Register fail: Something wrong");
             return new ResponseEntity<>("Invalid data format", HttpStatus.BAD_REQUEST);
         }
         // if register successfully
