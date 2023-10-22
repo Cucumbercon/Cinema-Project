@@ -1,9 +1,12 @@
   import React, { useState } from "react";
   import "./registration.css"; // Import the CSS file
   import { encrypt } from './encryption';
+  import { useNavigate } from "react-router-dom";
 
   export const Signup = (props) => {
-  
+    const navigate = useNavigate();
+
+
     // State variables
     const [email, setEmail] = useState('');
     const [plainPassword, setPlainPassword] = useState('');
@@ -89,12 +92,8 @@
            * */ 
           console.error('Request failed with status: ', response);
         } else {
-          /**
-           * other errors
-           * maybe direct to error page, and put the response status into error page
-           * 
-           * 
-           *  */ 
+          
+          navigate('/notfound'); // redirecting to not found page
 
           console.error('Request failed with status: ', response.status);
           return Promise.reject('request fail');

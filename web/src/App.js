@@ -21,7 +21,7 @@ import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 
 
 function App() {
-  return (
+ // return (
 
      //<MovieBooking />
     // <MovieDetails />
@@ -37,36 +37,34 @@ function App() {
      //<ConfirmationPage />
       // <AdminPanel /> 
       //  <Login />  
-      <Signup /> 
+     // <Signup /> 
       // < NotFound /> 
     //<UpdateProfile />
     
-  );
+ // );
 
-  // Alternatively, you can use the following code to set up routing with a Navbar:
-  // return (
-  //   <>
-  //     <Router>
-  //       <Navbar />
-  //       <Routes>
-  //         <Route path="/" element={<Home />} />
-  //         <Route path="/dashboard" element={<DashBoard />} />
-  //         <Route path="/moviebooking" element={<MovieBooking />} />
-  //         <Route path="/moviedetails" element={<MovieDetails />} />
-  //         <Route path="/movieseatbooking" element={<MovieSeatBooking />} />
-  //         <Route path="/adminpanel" element={<AdminPanel />} />
-  //         <Route path="/moviemanagement" element={<MovieManagement />} />
-  //         <Route path="/promotion" element={<Promotion />} />
-  //         <Route path="/ordersummary" element={<OrderSummary />} />
-  //         <Route path="/checkout" element={<Checkout />} />
-  //         <Route path="/confirmationpage" element={<ConfirmationPage />} />
-  //         <Route path="/login" element={<Login />} />
-  //         <Route path="/signup" element={<Signup />} />
-  //         <Route path="/notfound" element={<NotFound />} />
-  //       </Routes>
-  //     </Router>
-  //   </>
-  // );
+   
+  return (
+       <Router>
+         <Routes>
+            <Route path="/" element={<MovieBooking />} />
+           <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/moviebooking" element={<MovieBooking />} />
+           <Route path="/moviedetails" element={<MovieDetails />} />
+          <Route path="/movieseatbooking" element={<MovieSeatBooking />} />
+         <Route path="/adminpanel" element={<AdminPanel />} />
+           <Route path="/moviemanagement" element={<MovieManagement />} />
+           <Route path="/promotion" element={<Promotion />} />
+           <Route path="/ordersummary" element={<OrderSummary />} />
+           <Route path="/checkout" element={<Checkout />} />
+           <Route path="/confirmationpage" element={<ConfirmationPage />} />
+           <Route path="/login" element={<Login />} />
+           <Route path="/signup" element={<Signup />} />
+           <Route path="/notfound" element={<NotFound />} />
+         </Routes>
+      </Router>
+     
+  ); 
 }
 
 export default App;
