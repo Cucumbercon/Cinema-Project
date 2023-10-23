@@ -21,7 +21,7 @@ import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 
 
 function App() {
-  return (
+ // return (
 
   //<MovieBooking />
   // <MovieDetails />
@@ -39,9 +39,9 @@ function App() {
   //  <Login />  
   // <Signup /> 
   // < NotFound /> 
-  <UpdateProfile />
+ // <UpdateProfile />
 
-  );
+  //);
 
 
   return (

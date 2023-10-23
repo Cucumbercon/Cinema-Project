@@ -1,100 +1,102 @@
-import React, { useState } from "react";
-import { encrypt } from './encryption';
+  import React, { useState } from "react";
+  import { encrypt } from './encryption';
+  import {useNavigate}from 'react-router-dom';
 
-import './login2.css';
+  import './login2.css';
 
-export const Login = (props) => {
-    const [email, setEmail] = useState('');
-    const [plainPass, setPlainPass] = useState('');
+  export const Login = (props) => {
+      const navigate = useNavigate();
+      const [email, setEmail] = useState('');
+      const [plainPass, setPlainPass] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+      const handleSubmit = (e) => {
+          e.preventDefault();
 
-        const pass = encrypt(plainPass);
+          const pass = encrypt(plainPass);
 
-        const loginInfo = {
-          email, pass,
-        };
-        console.log(loginInfo)
-        fetch('http://localhost:8000/api/login', {
-        method: 'POST',
-        body: JSON.stringify(loginInfo),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(function (response) {
-        if (response.status === 200) {
-          response.json()
-            .then(function (jsonUser) {
-              console.log(jsonUser.fullName);
-              /**
-               * you can receive user's name, id, and type(0 is customer, 1 is admin):
-               * jsonUser.fullName, jsonUser.id, jsonUser.type
-               * 
-               * capture them here, if u need more user info, I can add them(e.g. address, phone number, email)
-               * 
-               * 
-               * direct to a welcome page or popup-window or something else to inform the user login successfully
-               * 
-               *  
-               * */ 
-            })
-            .catch(function (error) {
-              console.error(error);
-            });
-        } else if (response.status === 406) {
-          /**
-           * means Email and/or password do not match
-           * need to do something here to inform the user
-           * 
-           * 
-           * 
-           * */ 
-          console.error('Request failed with status: ', response);
-        } else {
-          /**
-           * other errors
-           * maybe direct to error page, and put the response status into error page
-           * 
-           * 
-           *  */ 
+          const loginInfo = {
+            email, pass,
+          };
+          console.log(loginInfo)
+          fetch('http://localhost:8000/api/login', {
+          method: 'POST',
+          body: JSON.stringify(loginInfo),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(function (response) {
+          if (response.status === 200) {
+            response.json()
+              .then(function (jsonUser) {
+                console.log(jsonUser.fullName);
+                /**
+                 * you can receive user's name, id, and type(0 is customer, 1 is admin):
+                 * jsonUser.fullName, jsonUser.id, jsonUser.type
+                 * 
+                 * capture them here, if u need more user info, I can add them(e.g. address, phone number, email)
+                 * 
+                 * 
+                 * direct to a welcome page or popup-window or something else to inform the user login successfully
+                 * 
+                 *  
+                 * */ 
+              })
+              .catch(function (error) {
+                console.error(error);
+              });
+          } else if (response.status === 406) {
+            /**
+             * means Email and/or password do not match
+             * need to do something here to inform the user
+             * 
+             * 
+             * 
+             * */ 
+            console.error('Request failed with status: ', response);
+          } else {
+            /**
+             * other errors
+             * maybe direct to error page, and put the response status into error page
+             * 
+             * 
+             *  */ 
 
-          console.error('Request failed with status: ', response.status);
-          return Promise.reject('request fail');
-        }
-      });
+            console.error('Request failed with status: ', response.status);
+            return Promise.reject('request fail');
+          }
+        });
 
-    }
+      }
 
-    return (
-        <div className="auth-form-container">
-            <form className="login-form" onSubmit={handleSubmit}>
-                <label htmlFor="email">Email</label>
-                <input
-                  value={email}
-                  required
-                  onChange={(e) => setEmail(e.target.value)}
-                  type="email"
-                  placeholder="youremail@gmail.com"
-                  id="email"
-                  name="email"
-                />
-                <label htmlFor="password">Password</label>
-                <input
-                  value={plainPass}
-                  required
-                  onChange={(e) => setPlainPass(e.target.value)}
-                  type="password"
-                  placeholder="********"
-                  id="password"
-                  name="password"
-                />
-                <button className="login-btn" type="login">Login</button>
-            </form>
-            
-            <button className="log-btn" onClick={() => props.onFormSwitch('test')}>
-              Don't have an account? Register here.
-            </button>
-        </div>
-    )
-}
+      return (
+          <div className="auth-form-container">
+              <form className="login-form" onSubmit={handleSubmit}>
+                  <label htmlFor="email">Email</label>
+                  <input
+                    value={email}
+                    required
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                    placeholder="youremail@gmail.com"
+                    id="email"
+                    name="email"
+                  />
+                  <label htmlFor="password">Password</label>
+                  <input
+                    value={plainPass}
+                    required
+                    onChange={(e) => setPlainPass(e.target.value)}
+                    type="password"
+                    placeholder="********"
+                    id="password"
+                    name="password"
+                  />
+                  <button className="login-btn" type="login">Login</button>
+              </form>
+              
+              <button className="log-btn" onClick={() =>  navigate('/signup')}>
+                Don't have an account? Register here.
+              </button>
+          </div>
+      )
+  }
