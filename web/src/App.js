@@ -21,50 +21,51 @@ import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 
 
 function App() {
- // return (
-
-     //<MovieBooking />
-    // <MovieDetails />
-    // <MovieSeatBooking />
-    // <OrderSummary/>
-    // <Checkout/>
-    // <ConfirmationPage />
-    // <AdminPanel />
-    //  <DashBoard />
-    // <Promotion />
-    // <OrderSummary/>
-     //<Checkout/>
-     //<ConfirmationPage />
-      // <AdminPanel /> 
-      //  <Login />  
-     // <Signup /> 
-      // < NotFound /> 
-    //<UpdateProfile />
-    
- // );
-
-   
   return (
-       <Router>
-         <Routes>
-            <Route path="/" element={<MovieBooking />} />
-           <Route path="/dashboard" element={<DashBoard />} />
-          <Route path="/moviebooking" element={<MovieBooking />} />
-           <Route path="/moviedetails" element={<MovieDetails />} />
-          <Route path="/movieseatbooking" element={<MovieSeatBooking />} />
-         <Route path="/adminpanel" element={<AdminPanel />} />
-           <Route path="/moviemanagement" element={<MovieManagement />} />
-           <Route path="/promotion" element={<Promotion />} />
-           <Route path="/ordersummary" element={<OrderSummary />} />
-           <Route path="/checkout" element={<Checkout />} />
-           <Route path="/confirmationpage" element={<ConfirmationPage />} />
-           <Route path="/login" element={<Login />} />
-           <Route path="/signup" element={<Signup />} />
-           <Route path="/notfound" element={<NotFound />} />
-         </Routes>
-      </Router>
-     
-  ); 
+
+  //<MovieBooking />
+  // <MovieDetails />
+  // <MovieSeatBooking />
+  // <OrderSummary/>
+  // <Checkout/>
+  // <ConfirmationPage />
+  // <AdminPanel />
+  // <DashBoard />
+  // <Promotion />
+  // <OrderSummary/>
+  //<Checkout/>
+  //<ConfirmationPage />
+  // <AdminPanel /> 
+  //  <Login />  
+  // <Signup /> 
+  // < NotFound /> 
+  <UpdateProfile />
+
+  );
+
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<MovieBooking />} />
+        <Route path="/dashboard" element={<DashBoard />} />
+        <Route path="/moviebooking" element={<MovieBooking />} />
+        <Route path="/moviedetails" element={<MovieDetails />} />
+        <Route path="/movieseatbooking" element={<MovieSeatBooking />} />
+        <Route path="/adminpanel" element={<AdminPanel />} />
+        <Route path="/moviemanagement" element={<MovieManagement />} />
+        <Route path="/promotion" element={<Promotion />} />
+        <Route path="/ordersummary" element={<OrderSummary />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/confirmationpage" element={<ConfirmationPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/notfound" element={<NotFound />} />
+        <Route path="/updateprofile" element={<UpdateProfile/>} />
+      </Routes>
+    </Router>
+
+  );
 }
 
 export default App;
