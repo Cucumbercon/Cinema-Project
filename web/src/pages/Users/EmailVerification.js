@@ -1,10 +1,14 @@
 // EmailVerification.js
 import React, { useState } from 'react';
 import './EmailVerification.css';
+import { useNavigate } from 'react-router-dom';
+
+
 
 function EmailVerification() {
   const [code, setCode] = useState('');
   const [isValidCode, setIsValidCode] = useState(true);
+  const navigate = useNavigate();
 
   const handleCodeChange = (e) => {
     const enteredCode = e.target.value;
@@ -22,6 +26,7 @@ function EmailVerification() {
     if (isValidCode) {
       
       console.log('Code entered:', code);
+      navigate("/registrationsuccess"); //direct to registration success page
     } else {
      
       console.error('Invalid code format');
@@ -35,7 +40,7 @@ function EmailVerification() {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Enter 6-digit code"
+          placeholder="XXXXXX"
           value={code}
           onChange={handleCodeChange}
         />

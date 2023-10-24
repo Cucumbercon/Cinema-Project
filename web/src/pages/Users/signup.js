@@ -76,7 +76,7 @@
           }
         }).then(function (response) {
           if (response.status === 200) {
-            navigate('/moviebooking'); // redirecting to movie booking page
+            navigate('/emailverification'); // redirecting to email verification page
 
             return response.json();
           } else if (response.status === 406) {

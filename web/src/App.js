@@ -6,7 +6,7 @@ import DashBoard from './pages/Admin/DashBoard';
 import MovieBooking from './Homepage/home';
 import MovieDetails from './pages/MovieDetails/MovieDetails';
 import MovieManagement from './pages/Admin/MovieM';
-import UserManagement from './pages/Admin/UserM';
+//import UserManagement from './pages/Admin/UserM';
 import ConfirmationPage from './pages/ConfirmationPage/ConfirmationPage'
 import Promotion from './pages/Admin/promo';
 import MovieSeatBooking from './pages/TicketProcess/seatsSelecting';
@@ -18,6 +18,7 @@ import { NotFound } from './pages/Users/NotFound';
 import { UpdateProfile } from './pages/Users/UpdateProfile';
 import EmailVerification from './pages/Users/EmailVerification';
 import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
+import Forgotpass from './pages/Users/Forgotpass';
 
 
 function App() {
@@ -62,6 +63,10 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/notfound" element={<NotFound />} />
         <Route path="/updateprofile" element={<UpdateProfile/>} />
+        <Route path="/emailverification" element={<EmailVerification/>} />
+        <Route path="/registrationsuccess" element={<RegistrationSuccessPage/>} />
+        <Route path="/forgotpass" element={<Forgotpass/>} />
+
       </Routes>
     </Router>
 
