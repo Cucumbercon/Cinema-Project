@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Slider from "react-slick";
 import Modal from "react-modal";
 import ReactPlayer from "react-player";
@@ -14,6 +15,42 @@ function MovieBooking() {
     const [upComingMovie, setUpComingMovie] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(false);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); 
+
+    const navigate = useNavigate();
+
+    const toggleUserPopup = () => {
+        setIsPopupOpen(!isPopupOpen);
+    };
+
+    const handleLogin = () => {
+    };
+
+    const handleSignup = () => {
+    };
+
+    const handleProfileUpdate = () => {
+    };
+
+    const goToLoginPage = () => {
+        navigate('/login');
+    };
+
+    const goToSignupPage = () => {
+        navigate('/signup');
+    };
+    
+    const goToProfilePage = () => {
+        navigate('/profile');
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('authToken');
+        setIsLoggedIn(false);
+        navigate('/');
+    };
+
 
     const viewTrailer = (movie) => {
         setSelectedMovie(movie);
@@ -64,6 +101,7 @@ function MovieBooking() {
                 console.error('Error searching movies:', error);
             });
     };
+    
     useEffect(() => {
         // get the onshow movie from db
         fetch('http://localhost:8000/api/getAvailableMovie', {
@@ -129,9 +167,36 @@ function MovieBooking() {
                         {/* <img src={require('./assests/images/movieCart.jpg')} alt="" className="cart"/> */}
                         {/* <img src={require('./moviefilter.jpg')} alt="" className="filter"/> */}
                         {/* <img src={require('./movieCart.jpg')} alt="" className="cart" /> */}
-                        <div className="profile-img-box">
-                            <img src={require('./movieUserIcon.jpg')} alt="Signin/Join" />
+                        <div className="profile-img-box" onClick={toggleUserPopup} className = {isPopupOpen ? 'profile-img-box open' : 'profile-img-box'}>
+                            {isLoggedIn ? (
+                                <img src={require('./baseUserIcon.png')} alt="User's Profile" />
+                            ) : (
+                                <img src={require('./movieUserIcon.jpg')} alt="Signin/Join" />
+                                )}
                         </div>
+                        {isPopupOpen && (
+                            <div className="user-popup">
+                                <div className="popup-content">
+                                    {isLoggedIn ? (
+                                        <div>
+                                            <h3>Welcome back, [Username]!</h3>
+                                            <button onClick={goToProfilePage}>Update Profile</button>
+                                            <button onClick={handleLogout}>Logout</button>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <h3>Hello, There!</h3>
+                                            <button onClick= {goToLoginPage}>Login</button>
+                                            {/* <button onClick={handleLogin}>Login</button> */}
+                                            <button onClick={goToSignupPage}>Signup</button>
+                                            <div className="admin-login" onClick={goToLoginPage}> Login As Admin
+                                            </div>
+
+                                        </div>
+                                    )}
+                            </div>
+                        </div>
+                    )}
                         <img src={require('./movieMenu.png')} alt="" className="menu" />
                     </div>
                 </section>

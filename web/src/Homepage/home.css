@@ -125,10 +125,10 @@ body {
     height: 20px;
 }
 
-.filter,
+/* .filter,
 .cart{
     margin-right: 1rem;
-}
+} */
 
 .menu {
     margin-left: .8rem;
@@ -145,6 +145,60 @@ body {
     width: 30px;
     border-radius: 50%;
     overflow: hidden;
+    cursor: pointer;  
+    transition: all 0.3s ease;  
+}
+
+.profile-img-box img {
+    border-radius: 50%;  
+    transition: box-shadow 0.3s ease, transform 0.3s ease;  
+}
+
+/* When the popup is open, apply the styles below to the icon */
+.profile-img-box.open img {
+    box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);  /* Slightly enlarges the icon */
+}
+
+.user-popup {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 250px;
+    /* text-align: center; */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10; /* Ensures the popup is on top of other elements */
+}
+
+.popup-content {
+    padding: 15px;
+    text-align: center;
+    background-color: gray;
+    border-radius: 1rem;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0,0,0,.1);
+}
+
+.popup-content button{
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    border: 1ch;
+    margin-right: 15px;
+    margin-left: 20px;
+}
+
+.admin-login {
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    color: whitesmoke;  
+    text-decoration: underline;
+    text-align: center;  
+}
+
+.admin-login:hover {
+    color: black;  
 }
 
 img {
