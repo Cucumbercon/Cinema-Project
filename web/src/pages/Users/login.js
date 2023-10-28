@@ -8,6 +8,7 @@
       const navigate = useNavigate();
       const [email, setEmail] = useState('');
       const [plainPass, setPlainPass] = useState('');
+      const [rememberMe, setRememberMe] = useState(false);
 
       const handleSubmit = (e) => {
           e.preventDefault();
@@ -15,7 +16,7 @@
           const pass = encrypt(plainPass);
 
           const loginInfo = {
-            email, pass,
+            email, pass, rememberMe,
           };
           console.log(loginInfo)
           fetch('http://localhost:8000/api/login', {
@@ -91,12 +92,29 @@
                     id="password"
                     name="password"
                   />
-                  <button className="login-btn" type="login">Login</button>
+                  <div className="login-remember-container">
+                    <button className="login-btn" type="login">Login</button>
+                    <div className="remember-me">
+                      <input
+                        type="checkbox"
+                        id="rememberMe"
+                        name="rememberMe"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                      />
+                      <label htmlFor="rememberMe">Remember me</label>
+                    </div>
+                  </div>
               </form>
               
+
+              <button className="forgot-pass-btn" onClick={() => navigate('/forgotpass')}>
+                Forgot Password?
+              </button>
               <button className="log-btn" onClick={() =>  navigate('/signup')}>
                 Don't have an account? Register here.
               </button>
+              
           </div>
       )
   }

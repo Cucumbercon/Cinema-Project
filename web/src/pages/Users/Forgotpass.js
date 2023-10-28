@@ -34,7 +34,7 @@ function Forgotpass() {
                 <input type="password" value={newPassword} onChange={handleNewPasswordChange} />
             </label>
             <label>
-                Confirm New Password:
+                Re-Type New Password:
                 <input type="password" value={confirmNewPassword} onChange={handleConfirmNewPasswordChange} />
             </label>
             <button type="submit">Confirm</button>
