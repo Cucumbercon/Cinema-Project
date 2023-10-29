@@ -13,15 +13,7 @@ export const UpdateProfile = (props) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
 
-    const handleProfilePictureUpload = (e) => {
-        const file = e.target.files[0];
-
-        if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setSelectedProfilePicture(imageUrl);
-        }
-    };
-
+   
     // ToDO: function to load the user's existing information 
     const loadUserProfile = () => {
         // Fetch user's existing information
@@ -44,27 +36,6 @@ export const UpdateProfile = (props) => {
     }, []);
 
     return (
-        <div className="update-profile-container">
-            <div className="profile-picture-box">
-                {selectedProfilePicture ? (
-                    <img src={selectedProfilePicture} alt="Profile" />
-                ) : (
-                    <FontAwesomeIcon icon={faUser} size="5x" />
-                )}
-                <button
-                    className="change-profile-picture-button"
-                    onClick={() => document.getElementById('profilePictureInput').click()}
-                >
-                    Change Profile Picture
-                </button>
-                <input
-                    type="file"
-                    accept="image/*"
-                    id="profilePictureInput"
-                    style={{ display: 'none' }}
-                    onChange={handleProfilePictureUpload}
-                />
-            </div>
             <div className="form-box">
                 <form className="update-profile-form" onSubmit={handleSubmit}>
                     {/* Full Name */}
@@ -153,6 +124,6 @@ export const UpdateProfile = (props) => {
                     <button type="submit">Update Profile</button>
                 </form>
             </div>
-        </div>
+        
     );
 };

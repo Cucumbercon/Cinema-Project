@@ -24,7 +24,7 @@ function Forgotpass() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="forgot-pass">
             <label>
                 Current Password:
                 <input type="password" value={currentPassword} onChange={handleCurrentPasswordChange} />

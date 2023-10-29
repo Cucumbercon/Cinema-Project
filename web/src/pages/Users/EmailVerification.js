@@ -39,7 +39,7 @@ function EmailVerification() {
       <p>Enter the 6-digit code sent to your email address:</p>
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
+          type="email"
           placeholder="XXXXXX"
           value={code}
           onChange={handleCodeChange}

@@ -1,104 +1,106 @@
-    import React, { useState } from "react";
-    import "./registration.css"; 
-    import { encrypt } from './encryption';
-    import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import "./registration.css";
+import { encrypt } from './encryption';
+import { useNavigate } from "react-router-dom";
 
-    export const Signup = (props) => {
-      const navigate = useNavigate();
+export const Signup = (props) => {
+  const navigate = useNavigate();
 
 
-      // State variables
-      const [email, setEmail] = useState('');
-      const [showEmailExistsModal, setShowEmailExistsModal] = useState(false);
-      const [plainPassword, setPlainPassword] = useState('');
-      const [fullName, setFullName] = useState('');
-      const [phoneNumber, setPhoneNumber] = useState('');
-      const [subscribe, setSubscribe] = useState(false);
-      const [homeStreet, setHomeStreet] = useState('');
-      const [homeCity, setHomeCity] = useState('');
-      const [homeState, setHomeState] = useState('');
-      const [homeZipCode, setHomeZipCode] = useState('');
-      let  creditCardNumber = '';
-      let  formatDate = '';
+  // State variables
+  const [email, setEmail] = useState('');
+  const [showEmailExistsModal, setShowEmailExistsModal] = useState(false);
+  const [plainPassword, setPlainPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [subscribe, setSubscribe] = useState(false);
+  const [homeStreet, setHomeStreet] = useState('');
+  const [homeCity, setHomeCity] = useState('');
+  const [homeState, setHomeState] = useState('');
+  const [homeZipCode, setHomeZipCode] = useState('');
+  let creditCardNumber = '';
+  let formatDate = '';
 
-      // Optional fields
-    
-      const [includeCreditCardInfo, setIncludeCreditCardInfo] = useState(false);
-      const [plainCreditCardNumber, setPlainCreditCardNumber] = useState('');
-      const [expirationDate, setExpirationDate] = useState('');
-      const [street, setStreet] = useState('');
-      const [city, setCity] = useState('');
-      const [state, setState] = useState('');
-      const [zipCode, setZipCode] = useState('');
+  // Optional fields
 
-      // Form submission handler
-      const handleSubmit = (e) => {
-        e.preventDefault();
+  const [includeCreditCardInfo, setIncludeCreditCardInfo] = useState(false);
+  const [plainCreditCardNumber, setPlainCreditCardNumber] = useState('');
+  const [expirationDate, setExpirationDate] = useState('');
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zipCode, setZipCode] = useState('');
 
-        const password = (encrypt(plainPassword));
+  // Form submission handler
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-        if (plainCreditCardNumber !== '') {
-          creditCardNumber = encrypt(plainCreditCardNumber);
-        }
-        
-        if (expirationDate !== '') {
-          console.log(expirationDate + "-01");
-          formatDate = encrypt(expirationDate + "-01");
-        }
-        
+    const password = (encrypt(plainPassword));
 
-        const userData = {
-          email,
-          password,
-          fullName,
-          phoneNumber,
-          homeCity,
-          homeState,
-          homeStreet,
-          homeZipCode,
-          subscribe,
-          includeCreditCardInfo,
-          creditCardNumber,
-          formatDate,
-          street,
-          city,
-          state,
-          zipCode,
-        };
+    if (plainCreditCardNumber !== '') {
+      creditCardNumber = encrypt(plainCreditCardNumber);
+    }
 
-        console.log(userData);
+    if (expirationDate !== '') {
+      console.log(expirationDate + "-01");
+      formatDate = encrypt(expirationDate + "-01");
+    }
 
-        fetch('http://localhost:8000/api/register', {
-          method: 'POST',
-          body: JSON.stringify(userData),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then(function (response) {
-          if (response.status === 200) {
-            navigate('/emailverification'); // redirecting to email verification page
 
-            return response.json();
-          } else if (response.status === 406) {
+    const userData = {
+      email,
+      password,
+      fullName,
+      phoneNumber,
+      homeCity,
+      homeState,
+      homeStreet,
+      homeZipCode,
+      subscribe,
+      includeCreditCardInfo,
+      creditCardNumber,
+      formatDate,
+      street,
+      city,
+      state,
+      zipCode,
+    };
 
-            setShowEmailExistsModal(true); // Show the email exists modal
+    console.log(userData);
 
-            console.error('Request failed with status: ', response);
-          } else {
-            
-            navigate('/notfound'); // redirecting to not found page
-
-            console.error('Request failed with status: ', response.status);
-            return Promise.reject('request fail');
-          }
-        });
+    fetch('http://localhost:8000/api/register', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+      headers: {
+        'Content-Type': 'application/json'
       }
+    }).then(function (response) {
+      if (response.status === 200) {
+        navigate('/emailverification'); // redirecting to email verification page
 
-      return (
-        <div className="auth-container">
-          <div className="form-box">
-            <form className="register-form" onSubmit={handleSubmit}>
-              {/* Full Name */}
+        return response.json();
+      } else if (response.status === 406) {
+
+        setShowEmailExistsModal(true); // Show the email exists modal
+
+        console.error('Request failed with status: ', response);
+      } else {
+
+        navigate('/notfound'); // redirecting to not found page
+
+        console.error('Request failed with status: ', response.status);
+        return Promise.reject('request fail');
+      }
+    });
+  }
+
+  return (
+    <div className="auth-container">
+      <div className="form-box">
+        <form className="register-form" onSubmit={handleSubmit}>
+          {/* Full Name */}
+          <div className={`form-groups ${includeCreditCardInfo ? 'form-groups-height-selected' :'form-groups-height'}`}>
+            <div class="form-group-panel">
               <div className="label-container">
                 <label htmlFor="fullName">Full Name *</label>
                 <input
@@ -107,7 +109,7 @@
                   name="fullName"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="input-field" 
+                  className="input-field"
                   placeholder="Full Name"
                   required
                 />
@@ -122,7 +124,7 @@
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="input-field" 
+                  className="input-field"
                   placeholder="youremail@gmail.com"
                   required
                 />
@@ -137,7 +139,7 @@
                   name="password"
                   value={plainPassword}
                   onChange={(e) => setPlainPassword(e.target.value)}
-                  className="input-field" 
+                  className="input-field"
                   placeholder="********"
                   required
                 />
@@ -152,103 +154,83 @@
                   name="phoneNumber"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="input-field" 
+                  className="input-field"
                   placeholder="111-111-1111"
                   required
                 />
               </div>
+            </div>
+            <div class="form-group-break"></div>
+            <div class="form-group-panel">
 
-              {showEmailExistsModal && (
-          <div className="modal">
-          <div className="modal-content">
-          <p>Your email has already been used. Please choose a different email.</p>
-          <button onClick={() => setShowEmailExistsModal(false)}>Close</button>
-      </div>
-    </div>
-  )}
+              {/* Home Address */}
+              <div className="label-container">
 
+                <div className="address-container">
+                  {/* Street */}
+                  <div className="label-container">
+                    <label htmlFor="street">Street</label>
+                    <input
+                      type="text"
+                      id="street"
+                      name="street"
+                      value={homeStreet}
+                      onChange={(e) => setHomeStreet(e.target.value)}
+                      className="input-field"
+                      placeholder="Street"
+                    />
+                  </div>
 
-          {/* Home Address */}
-    <div className="label-container">
-      <label htmlFor="homeAddress" style={{ textDecoration: includeCreditCardInfo ? 'underline' : 'none' }}>Home Address</label>
-      <div className="address-container">
-        {/* Street */}
-        <div className="label-container">
-          <label htmlFor="street">Street</label>
-          <input
-            type="text"
-            id="street"
-            name="street"
-            value={homeStreet}
-            onChange={(e) => setHomeStreet(e.target.value)}
-            className="input-field"
-            placeholder="Street"
-          />
-        </div>
+                  {/* City */}
+                  <div className="label-container">
+                    <label htmlFor="city">City</label>
+                    <input
+                      type="text"
+                      id="city"
+                      name="city"
+                      value={homeCity}
+                      onChange={(e) => setHomeCity(e.target.value)}
+                      className="input-field"
+                      placeholder="City"
+                    />
+                  </div>
 
-        {/* City */}
-        <div className="label-container">
-          <label htmlFor="city">City</label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            value={homeCity}
-            onChange={(e) => setHomeCity(e.target.value)}
-            className="input-field"
-            placeholder="City"
-          />
-        </div>
+                  {/* State */}
+                  <div className="label-container">
+                    <label htmlFor="state">State</label>
+                    <input
+                      type="text"
+                      id="state"
+                      name="state"
+                      value={homeState}
+                      onChange={(e) => setHomeState(e.target.value)}
+                      className="input-field"
+                      placeholder="State"
+                    />
+                  </div>
 
-        {/* State */}
-        <div className="label-container">
-          <label htmlFor="state">State</label>
-          <input
-            type="text"
-            id="state"
-            name="state"
-            value={homeState}
-            onChange={(e) => setHomeState(e.target.value)}
-            className="input-field"
-            placeholder="State"
-          />
-        </div>
-
-        {/* Zip Code */}
-        <div className="label-container">
-          <label htmlFor="zipCode">Zip Code</label>
-          <input
-            type="text"
-            id="zipCode"
-            name="zipCode"
-            value={homeZipCode}
-            onChange={(e) => setHomeZipCode(e.target.value)}
-            className="input-field"
-            placeholder="Zip Code"
-          />
-        </div>
-      </div>
-    </div>
-
-
-
-              
-              
-
-              {/* Checkbox for including Credit Card Info & Address*/}
-              <div className="subscribe-checkbox">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={includeCreditCardInfo}
-                    onChange={(e) => setIncludeCreditCardInfo(e.target.checked)}
-                  />
-                  Include Credit Card Information & Billing Address
-                </label>
+                  {/* Zip Code */}
+                  <div className="label-container">
+                    <label htmlFor="zipCode">Zip Code</label>
+                    <input
+                      type="text"
+                      id="zipCode"
+                      name="zipCode"
+                      value={homeZipCode}
+                      onChange={(e) => setHomeZipCode(e.target.value)}
+                      className="input-field"
+                      placeholder="Zip Code"
+                    />
+                  </div>
+                </div>
               </div>
 
+            </div>
+            
+            {includeCreditCardInfo &&<div class="form-group-break"></div>}
+            {includeCreditCardInfo && <div class="form-group-panel">
               {/* Credit Card Number (conditionally rendered) */}
-              {includeCreditCardInfo && (
+              
                 <div className="label-container">
                   <label htmlFor="creditCardNumber">Credit Card Number</label>
                   <input
@@ -258,14 +240,13 @@
                     name="creditCardNumber"
                     value={plainCreditCardNumber}
                     onChange={(e) => setPlainCreditCardNumber(e.target.value)}
-                    className="input-field" 
+                    className="input-field"
                     placeholder="XXXX-XXXX-XXXX-XXXX"
                   />
                 </div>
-              )}
 
               {/* Expiration Date (conditionally rendered) */}
-              {includeCreditCardInfo && (
+        
                 <div className="label-container">
                   <label htmlFor="expirationDate">Expiration Date</label>
                   <input
@@ -275,14 +256,14 @@
                     name="expirationDate"
                     value={expirationDate}
                     onChange={(e) => setExpirationDate(e.target.value)}
-                    className="input-field" 
+                    className="input-field"
                     placeholder="YYYY-MM"
                   />
                 </div>
-              )}
+              
 
               {/* Street (conditionally rendered) */}
-              {includeCreditCardInfo && (
+           
                 <div className="label-container">
                   <label htmlFor="street">Street</label>
                   <input
@@ -292,14 +273,14 @@
                     required
                     value={street}
                     onChange={(e) => setStreet(e.target.value)}
-                    className="input-field" 
+                    className="input-field"
                     placeholder="Street"
                   />
                 </div>
-              )}
+              
 
               {/* City (conditionally rendered) */}
-              {includeCreditCardInfo && (
+            
                 <div className="label-container">
                   <label htmlFor="city">City</label>
                   <input
@@ -309,14 +290,14 @@
                     name="city"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    className="input-field" 
+                    className="input-field"
                     placeholder="City"
                   />
                 </div>
-              )}
+              
 
               {/* State (conditionally rendered) */}
-              {includeCreditCardInfo && (
+            
                 <div className="label-container">
                   <label htmlFor="state">State</label>
                   <input
@@ -326,52 +307,78 @@
                     required
                     value={state}
                     onChange={(e) => setState(e.target.value)}
-                    className="input-field" 
+                    className="input-field"
                     placeholder="State"
                   />
                 </div>
-              )}
+              
 
               {/* Zip Code (conditionally rendered) */}
-              {includeCreditCardInfo && (
+           
                 <div className="label-container">
                   <label htmlFor="zipCode">Zip Code</label>
                   <input
                     type="text"
                     id="zipCode"
-                    required  
+                    required
                     name="zipCode"
                     value={zipCode}
                     onChange={(e) => setZipCode(e.target.value)}
-                    className="input-field" 
+                    className="input-field"
                     placeholder="Zip Code"
                   />
                 </div>
-              )}
-
-            
-
-              {/* Submit button */}
-              <button type="submit">Create Account</button>
-            </form>
+              
+            </div>}
           </div>
 
-          {/* Checkbox for promotional emails */}
-          <div className="subscribe-checkbox">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={subscribe}
-                    onChange={(e) => setSubscribe(e.target.checked)}
-                  />
-                  Subscribe to promotional emails
-                </label>
-              </div>
 
-          {/* Login link */}
-          <button className="link-btn" onClick={() => navigate('/login')}>
-            Already have an account? Login here.
-          </button>
-        </div>
-      );
-    }
+          {showEmailExistsModal && (
+            <div className="modal">
+              <div className="modal-content">
+                <p>Your email has already been used. Please choose a different email.</p>
+                <button onClick={() => setShowEmailExistsModal(false)}>Close</button>
+              </div>
+            </div>
+          )}
+
+          {/* Checkbox for including Credit Card Info & Address*/}
+          <div className="subscribe-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                checked={includeCreditCardInfo}
+                onChange={(e) => setIncludeCreditCardInfo(e.target.checked)}
+              />
+              Include Credit Card Information & Billing Address
+            </label>
+          </div>
+
+
+
+
+
+          {/* Submit button */}
+          <button type="submit">Create Account</button>
+        </form>
+      </div>
+
+      {/* Checkbox for promotional emails */}
+      <div className="subscribe-checkbox">
+        <label>
+          <input
+            type="checkbox"
+            checked={subscribe}
+            onChange={(e) => setSubscribe(e.target.checked)}
+          />
+          Subscribe to promotional emails
+        </label>
+      </div>
+
+      {/* Login link */}
+      <button className="link-btn" onClick={() => navigate('/login')}>
+        Already have an account? Login here.
+      </button>
+    </div>
+  );
+}
