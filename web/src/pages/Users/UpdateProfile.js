@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { encrypt } from './encryption';
 import "./UpdateProfile.css";
 
 export const UpdateProfile = (props) => {
