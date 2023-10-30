@@ -18,7 +18,14 @@ export const UpdateProfile = (props) => {
 
         // ToDO: function to load the user's existing information 
         const loadUserProfile = () => {
-            // Fetch user's existing information
+            fetch('http://localhost:8000/api/loadprofile', {
+                method: 'GET'
+            })
+                .then((response) => response.text())
+                .then((data) => {
+                    const parsedData = JSON.parse(data);
+                })
+
         };
 
         // TODO: function to update the user's information
@@ -27,8 +34,30 @@ export const UpdateProfile = (props) => {
             // Check if password and confirmPassword match and update the user's password
             if (password === confirmPassword) {
                 // Update the user's password here
+                const pass = encrypt(password);
+                
+                const changeInfo = {
+                    fullName,
+                    email,
+                    phoneNumber,
+                    subscribe,
+                    creditCardNumber,
+                    expirationDate,
+                    pass,
+                    confirmPassword,
+                    selectedPaymentCard
+                };
+                console.log(changeInfo)
+                fetch('http://localhost:8000/api/updateprofile', {
+                    method: 'POST',
+                    body: JSON.stringify(loginInfo),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
             } else {
                 // Display an error message indicating that passwords do not match
+                console.error('Password does not match with confirm password');
             }
         };
 
