@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import './Forgotpass.css'
 
 function Forgotpass() {
-    const [currentPassword, setCurrentPassword] = useState('');
+    const [email, setEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
-    const handleCurrentPasswordChange = (event) => {
-        setCurrentPassword(event.target.value);
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
     };
 
     const handleNewPasswordChange = (event) => {
@@ -26,8 +26,8 @@ function Forgotpass() {
     return (
         <form onSubmit={handleSubmit} className="forgot-pass">
             <label>
-                Current Password:
-                <input type="password" value={currentPassword} onChange={handleCurrentPasswordChange} />
+                Email:
+                <input type="email" value={email} onChange={handleEmailChange} />
             </label>
             <label>
                 New Password:
