@@ -1,11 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Joan&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Joan', serif;
-}
+
 
 body {
     background-color: black;
@@ -13,6 +8,7 @@ body {
     display:grid;
     /* grid-template-columns: 1000px; */
     justify-content: space-evenly;
+    
 }
 
 h2 {
