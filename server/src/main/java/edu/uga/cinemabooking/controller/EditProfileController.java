@@ -34,7 +34,7 @@ public class EditProfileController {
      * 
      */
     @GetMapping("/updateprofile")
-    public ResponseEntity<String> updateInfo() {
+    public ResponseEntity<String> getUserInfo() {
 
         ObjectMapper objectMapper = new ObjectMapper();
         User user = null;
@@ -45,13 +45,31 @@ public class EditProfileController {
             cards = cdb.getLoggedInCard(signin.getID());
             String jsonUserProfile = objectMapper.writeValueAsString(user);
             return ResponseEntity.ok(jsonUserProfile);
-
-            // if something wrongs going on
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Error converting movies to JSON");
+            return ResponseEntity.status(500).body("Error getting profile info.");
         }
 
     }
+
+    @PostMapping("/updateprofile")
+    public ResponseEntity<String> updateUserInfo(@RequestBody String data) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(data);
+            String fullName = jsonNode.get("fullName").asText();
+            String phoneNumber = jsonNode.get("phoneNumber").asText();
+            String subscribe = jsonNode.get("subscribe").asText();
+            String creditCardNumber = jsonNode.get("creditCardNumber").asText();
+            String expirationDate = jsonNode.get("expirationDate").asText();
+            String password = jsonNode.get("password").asText();
+            String confirmPassword = jsonNode.get("confirmPassword").asText();
+            return ResponseEntity.ok("");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error getting profile info.");
+        } // try
+        
+    }  // updateUserInfo
 
 }
