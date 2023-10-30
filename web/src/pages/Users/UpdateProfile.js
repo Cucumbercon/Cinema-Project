@@ -22,22 +22,21 @@ const [homeCity, setHomeCity] = useState('');
 
 
 
-  // ToDO: function to load the user's existing information
-  const loadUserProfile = () => {
-    // Fetch user's existing information, including street, city, state, and zip code
-    // Update the corresponding state variables (street, city, state, and zipCode) with the retrieved data
-  };
+        // ToDO: function to load the user's existing information 
+        const loadUserProfile = () => {
+            // Fetch user's existing information
+        };
 
-  // TODO: function to update the user's information
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Check if password and confirmPassword match and update the user's password
-    if (password === confirmPassword) {
-      // Update the user's password here
-    } else {
-      // Display an error message indicating that passwords do not match
-    }
-  };
+        // TODO: function to update the user's information
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            // Check if password and confirmPassword match and update the user's password
+            if (password === confirmPassword) {
+                // Update the user's password here
+            } else {
+                // Display an error message indicating that passwords do not match
+            }
+        };
 
   // Calls the loadUserProfile function when the component mounts to load existing data
   useEffect(() => {

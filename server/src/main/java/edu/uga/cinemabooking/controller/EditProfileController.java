@@ -33,7 +33,7 @@ public class EditProfileController {
     /**
      * 
      */
-    @GetMapping("/updateprofile")
+    @GetMapping("/loadprofile")
     public ResponseEntity<String> getUserInfo() {
 
         ObjectMapper objectMapper = new ObjectMapper();
