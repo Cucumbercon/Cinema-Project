@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import './Forgotpass.css'
 
 function Forgotpass() {
-    const [currentPassword, setCurrentPassword] = useState('');
+    const [email, setEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
-    const handleCurrentPasswordChange = (event) => {
-        setCurrentPassword(event.target.value);
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
     };
 
     const handleNewPasswordChange = (event) => {
@@ -20,14 +22,25 @@ function Forgotpass() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // TODO: handle password change logic
+        if (email !== 'example@example.com') { // TODO: check if email exists in database
+            // TODO: check if email exists in database
+            setErrorMessage('This email is not registered');
+            // TODO: check if email exists in database
+
+
+        } else if (newPassword !== confirmNewPassword) {
+            setErrorMessage('Passwords do not match');
+        } else {
+            // TODO: handle password change logic
+            setSuccessMessage('Password successfully changed!');
+        }
     };
 
     return (
         <form onSubmit={handleSubmit} className="forgot-pass">
             <label>
-                Current Password:
-                <input type="password" value={currentPassword} onChange={handleCurrentPasswordChange} />
+                Email:
+                <input type="email" value={email} onChange={handleEmailChange} />
             </label>
             <label>
                 New Password:
@@ -37,6 +50,8 @@ function Forgotpass() {
                 Re-Type New Password:
                 <input type="password" value={confirmNewPassword} onChange={handleConfirmNewPasswordChange} />
             </label>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            {successMessage && <p className="success-message">{successMessage}</p>}
             <button type="submit">Confirm</button>
         </form>
     );
