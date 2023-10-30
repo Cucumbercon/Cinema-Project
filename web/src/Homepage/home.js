@@ -251,7 +251,7 @@ function MovieBooking() {
                     </div>
                     {/* this part include both current movie and future movie*/}
                     <div className="movies-container">
-                        <p className='separate'>Up-coming Movies</p>
+                        <p className='separate'>Upcoming Movies</p>
                         <div className="future-movies">
 
                             {/*另起一行 */}
