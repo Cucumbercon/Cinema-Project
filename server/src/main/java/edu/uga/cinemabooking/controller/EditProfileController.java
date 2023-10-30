@@ -13,6 +13,7 @@ import edu.uga.cinemabooking.entity.Card;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +33,8 @@ public class EditProfileController {
     /**
      * 
      */
-    @PostMapping("/updateprofile")
-    public void updateInfo() {
+    @GetMapping("/updateprofile")
+    public ResponseEntity<String> updateInfo() {
 
         ObjectMapper objectMapper = new ObjectMapper();
         User user = null;
@@ -42,9 +43,13 @@ public class EditProfileController {
         try {
             user = udb.getLoggedInProfile(signin.getID());
             cards = cdb.getLoggedInCard(signin.getID());
+            String jsonUserProfile = objectMapper.writeValueAsString(user);
+            return ResponseEntity.ok(jsonUserProfile);
+
             // if something wrongs going on
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.status(500).body("Error converting movies to JSON");
         }
 
     }
