@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SigninController {
 
     UserDB udb = new UserDB();
+    int loggedID;
 
     /**
      * This method is to validate the login
@@ -42,10 +43,12 @@ public class SigninController {
 
             if (udb.emailExist(email)) {
                 user = udb.loginValidation(email, password);
-
+                int userID = user.getId();
                 if (user != null) {
                     String jsonUser = objectMapper.writeValueAsString(user);
                     System.out.println("logged in");
+                    System.out.println(jsonUser);
+                    setID(userID);
                     return ResponseEntity.ok(jsonUser);
                 } else {
                     System.out.println("logged fail");
@@ -64,6 +67,14 @@ public class SigninController {
             return new ResponseEntity<>("Invalid data format", HttpStatus.BAD_REQUEST);
         }
 
-    }
+    } // fetchData
+
+    public void setID(int id) {
+        loggedID = id;
+    } // setID
+
+    public int getID() {
+        return loggedID;
+    } // getID
 
 }

@@ -167,7 +167,7 @@ function MovieBooking() {
                         {/* <img src={require('./assests/images/movieCart.jpg')} alt="" className="cart"/> */}
                         {/* <img src={require('./moviefilter.jpg')} alt="" className="filter"/> */}
                         {/* <img src={require('./movieCart.jpg')} alt="" className="cart" /> */}
-                        <div className="profile-img-box" onClick={toggleUserPopup} className = {isPopupOpen ? 'profile-img-box open' : 'profile-img-box'}>
+                        <div className="profile-img-box" onClick={toggleUserPopup} className= {isPopupOpen ? 'profile-img-box open' : 'profile-img-box'}>
                             {isLoggedIn ? (
                                 <img src={require('./baseUserIcon.png')} alt="User's Profile" />
                             ) : (

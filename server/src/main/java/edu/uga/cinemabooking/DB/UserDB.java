@@ -203,4 +203,33 @@ public class UserDB {
 
         return false;
     }
+    /*
+     * Searches user by their ID
+     * To be used for edit profile
+     */
+    public User getLoggedInProfile(int id) {
+        User user = null;
+        String sql = "SELECT * FROM user WHERE ID = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                user = new User();
+                user.setFullName(resultSet.getString("name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPhoneNumber(resultSet.getString("phone"));
+                user.setPassword(resultSet.getString("password"));
+                user.setSubscribe(resultSet.getInt("subscribe"));
+                user.setStreet(resultSet.getString("street"));
+                user.setCity(resultSet.getString("city"));
+                user.setState(resultSet.getString("state"));
+                user.setZipCode(resultSet.getString("zipcode"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+        } // try
+        return user;
+    } // getLoggedInProfile()
 }

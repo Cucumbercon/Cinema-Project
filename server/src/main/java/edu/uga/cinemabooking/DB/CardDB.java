@@ -3,11 +3,17 @@ package edu.uga.cinemabooking.DB;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import edu.uga.cinemabooking.Decryption;
+import edu.uga.cinemabooking.entity.User;
+import edu.uga.cinemabooking.entity.Card;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CardDB {
@@ -72,5 +78,34 @@ public class CardDB {
         }
 
 
-    }
+    } // addCard()
+
+    /*
+     * Searches user by their ID
+     * To be used for edit profile
+     */
+    public List<Card> getLoggedInCard(int id) {
+        List<Card> cards = null;
+        String sql = "SELECT * FROM payment WHERE ID = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Card card = new Card();
+                card.setCardNumber(resultSet.getString("card_number"));
+                card.setExpDate(resultSet.getString("exp_date"));
+                card.setBillingZipCode(resultSet.getString("zipcode"));
+                card.setBillingStreet(resultSet.getString("street"));
+                card.setBillingCity(resultSet.getString("city"));
+                card.setBillingState(resultSet.getString("state"));
+
+                cards.add(card);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+        } // try
+        return cards;
+    } // getLoggedInCard()
 }
