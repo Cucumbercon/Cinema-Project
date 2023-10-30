@@ -64,10 +64,12 @@ public class EditProfileController {
             String expirationDate = jsonNode.get("expirationDate").asText();
             String password = jsonNode.get("password").asText();
             String confirmPassword = jsonNode.get("confirmPassword").asText();
+
+            udb.updateInfo(signin.getID(), fullName, subscribe, confirmPassword, phoneNumber, false, creditCardNumber, expirationDate, password, confirmPassword);
             return ResponseEntity.ok("");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Error getting profile info.");
+            return ResponseEntity.status(500).body("Error updating profile info.");
         } // try
         
     }  // updateUserInfo

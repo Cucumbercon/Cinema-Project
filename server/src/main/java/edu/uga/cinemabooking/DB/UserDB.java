@@ -232,4 +232,27 @@ public class UserDB {
         } // try
         return user;
     } // getLoggedInProfile()
+
+    public void updateInfo(int id, String name, String email, String password,
+            String phone, boolean subscribe, String homeCity,
+            String homeState, String homeStreet, String homeZipCode) {
+        String sql = "UPDATE user SET (user_name, email, password_hash, phone, subscribe, " +
+                "city, state, street, zipcode) VALUES (?,?,?,?,?,?,?,?,?) WHERE ID = " + id;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, email);
+            preparedStatement.setString(3, password);
+            preparedStatement.setString(4, phone);
+            preparedStatement.setBoolean(5, subscribe);
+            preparedStatement.setString(6, homeCity);
+            preparedStatement.setString(7, homeState);
+            preparedStatement.setString(8, homeStreet);
+            preparedStatement.setString(9, homeZipCode);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
