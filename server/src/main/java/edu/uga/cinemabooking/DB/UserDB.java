@@ -233,11 +233,11 @@ public class UserDB {
         return user;
     } // getLoggedInProfile()
 
-    public void updateInfo(int id, String name, String email, String password,
+    public void updateInfo(String name, String email, String password,
             String phone, boolean subscribe, String homeCity,
             String homeState, String homeStreet, String homeZipCode) {
         String sql = "UPDATE user SET (user_name, email, password_hash, phone, subscribe, " +
-                "city, state, street, zipcode) VALUES (?,?,?,?,?,?,?,?,?) WHERE ID = " + id;
+                "city, state, street, zipcode) VALUES (?,?,?,?,?,?,?,?,?) WHERE email = " + email;
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, email);

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { encrypt } from './encryption';
 import './Forgotpass.css'
 
 function Forgotpass() {
@@ -32,6 +33,8 @@ function Forgotpass() {
             setErrorMessage('Passwords do not match');
         } else {
             // TODO: handle password change logic
+            const pass = encrypt(newPassword);
+
             setSuccessMessage('Password successfully changed!');
         }
     };
