@@ -33,8 +33,19 @@ function Forgotpass() {
             setErrorMessage('Passwords do not match');
         } else {
             // TODO: handle password change logic
-            const pass = encrypt(newPassword);
+            const pass = (encrypt(newPassword));
+            const userData = {
+                email, newPassword, confirmNewPassword
+            };
+            console.log(userData);
 
+            fetch('http://localhost:8000/api/forgotpassword', {
+                method: 'POST',
+                body: JSON.stringify(userData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             setSuccessMessage('Password successfully changed!');
         }
     };
