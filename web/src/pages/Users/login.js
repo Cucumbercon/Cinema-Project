@@ -57,6 +57,7 @@ export const Login = (props) => {
            * 
            * 
            * */ 
+          alert('Email and/or password do not match, please try again');
           console.error('Request failed with status: ', response);
         } else {
           /**
@@ -65,7 +66,7 @@ export const Login = (props) => {
            * 
            * 
            *  */ 
-
+          alert('request failed');
           console.error('Request failed with status: ', response.status);
           return Promise.reject('request fail');
         }

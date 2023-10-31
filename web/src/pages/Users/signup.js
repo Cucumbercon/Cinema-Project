@@ -147,7 +147,7 @@ export const Signup = (props) => {
               </div>
 
               <div className="label-container">
-                <label htmlFor="currentpassword">Current Password *</label>
+                <label htmlFor="currentpassword">Re-type Password *</label>
                 <input
                   type="password"
                   id="currentpassword"
