@@ -20,6 +20,7 @@ export const UpdateProfile = (props) => {
   const [homeCity, setHomeCity] = useState('');
   const [homeState, setHomeState] = useState('');
   const [homeZipCode, setHomeZipCode] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
 
 
   // ToDO: function to load the user's existing information 
@@ -72,6 +73,8 @@ export const UpdateProfile = (props) => {
     e.preventDefault();
     // Check if password and confirmPassword match and update the user's password
     if (password === confirmPassword) {
+
+      
       // Update the user's password here
       const pass = encrypt(password);
 
@@ -116,7 +119,7 @@ export const UpdateProfile = (props) => {
               <label htmlFor="email">Email</label>
               <input
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                readOnly
                 type="updateemail"
                 placeholder="Email"
                 id="email"
@@ -146,6 +149,18 @@ export const UpdateProfile = (props) => {
                 placeholder="111-111-1111"
                 id="phoneNumber"
                 name="phoneNumber"
+              />
+            </div>
+            {/* Current Password */}
+            <div className="input-container">
+              <label htmlFor="currentPassword">Current Password</label>
+              <input
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                type="currentpassword" // Use type "password" to hide entered characters
+                placeholder="Current Password"
+                id="currentPassword"
+                name="currentPassword"
               />
             </div>
             {/* Password */}

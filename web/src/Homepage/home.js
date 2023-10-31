@@ -66,7 +66,12 @@ const MovieBooking = (props) => {
     };
 
     const goToProfilePage = () => {
-        navigate('/updateprofile');
+        if (props.isAdmin) {
+            navigate('/adminpanel');
+        } else {
+            navigate('/updateprofile');
+        }
+        
     };
 
     const handleLogout = () => {
