@@ -75,6 +75,15 @@ public class EditProfileController {
             String homeState = jsonNode.get("homeState").asText();
             String homeZipCode = jsonNode.get("homeZipCode").asText();
 
+            String[] nullBeGone = {fullName, email, phoneNumber, creditCardNumber, expirationDate, password, confirmPassword
+            , street, city, state, zipCode, homeStreet, homeCity, homeState, homeZipCode};
+
+            for (String s : nullBeGone) {
+                if (s == null) {
+                    s = "";
+                }
+            } // for
+
             udb.updateInfo(fullName, email, password, phoneNumber, subscribe, homeCity, homeState, homeStreet, homeZipCode);
             cdb.updateInfo(signin.getID(), creditCardNumber, expirationDate, zipCode, street, city, state);
             return ResponseEntity.ok("");
