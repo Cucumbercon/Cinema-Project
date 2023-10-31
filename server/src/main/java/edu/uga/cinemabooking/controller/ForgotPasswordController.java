@@ -34,17 +34,15 @@ public class ForgotPasswordController {
             JsonNode jsonNode = objectMapper.readTree(data);
             String email = jsonNode.get("email").asText();
             if (udb.emailExist(email)) {
-                String password = jsonNode.get("newPassword").asText();
-                String confirmPassword = jsonNode.get("confirmNewPassword").asText();
-                if (password.equals(confirmPassword)) {
-                    udb.changePassword(email, confirmPassword);
-                } else {
-                    return ResponseEntity.status(501).body("Passwords much match.");
-                }
+                System.out.println("This works!");
+                String password = jsonNode.get("pass").asText();
+                String confirmPassword = jsonNode.get("confirmPass").asText();
+                udb.changePassword(email, password);
+                System.out.println("This works! Again.");
+                return ResponseEntity.ok("");
             } else {
                 return ResponseEntity.status(502).body("Email does not exist.");
             }
-            return ResponseEntity.ok("");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error occured.");

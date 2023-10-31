@@ -23,19 +23,14 @@ function Forgotpass() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (email !== 'example@example.com') { // TODO: check if email exists in database
-            // TODO: check if email exists in database
-            setErrorMessage('This email is not registered');
-            // TODO: check if email exists in database
-
-
-        } else if (newPassword !== confirmNewPassword) {
+        if (newPassword !== confirmNewPassword) {
             setErrorMessage('Passwords do not match');
         } else {
             // TODO: handle password change logic
             const pass = (encrypt(newPassword));
+            const confirmPass = (encrypt(confirmNewPassword));
             const userData = {
-                email, newPassword, confirmNewPassword
+                email, pass, confirmPass
             };
             console.log(userData);
 
