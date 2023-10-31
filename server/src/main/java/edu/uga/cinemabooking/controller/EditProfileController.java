@@ -76,7 +76,7 @@ public class EditProfileController {
             String homeZipCode = jsonNode.get("homeZipCode").asText();
 
             udb.updateInfo(fullName, email, password, phoneNumber, subscribe, homeCity, homeState, homeStreet, homeZipCode);
-            cdb.updateInfo(signin.getID(), creditCardNumber, state, homeState, homeStreet, homeZipCode, homeCity);
+            cdb.updateInfo(signin.getID(), creditCardNumber, expirationDate, zipCode, street, city, state);
             return ResponseEntity.ok("");
         } catch (Exception e) {
             e.printStackTrace();
