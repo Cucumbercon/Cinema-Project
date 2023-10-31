@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Signup = (props) => {
   const navigate = useNavigate();
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
 
 
   // State variables
@@ -37,6 +38,13 @@ export const Signup = (props) => {
     e.preventDefault();
 
     const password = (encrypt(plainPassword));
+    
+
+    if (plainPassword !== currentPassword) {
+      // Passwords do not match, set the error
+      alert('Passwords do not match');
+      return;
+    }
 
     if (plainCreditCardNumber !== '') {
       creditCardNumber = encrypt(plainCreditCardNumber);
