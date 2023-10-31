@@ -91,15 +91,15 @@ export const UpdateProfile = (props) => {
           <div class="form-group-panel">
             {/* Email */}
             <div className="input-container">
-              <label htmlFor="email">Email</label>
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="updateemail"
-                placeholder="Email"
-                id="email"
-                name="email"
-              />
+                <label htmlFor="email">Email</label>
+                <input
+                    value={email}
+                    readOnly
+                    type="updateemail"
+                    placeholder="Email"
+                    id="email"
+                    name="email"
+                />
             </div>
             {/* Full Name */}
             <div className="input-container">
