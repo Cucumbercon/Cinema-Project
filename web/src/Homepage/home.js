@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import './home.css';
 
 
-function MovieBooking() {
+const MovieBooking = (props) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [availableMovie, setAvailableMovie] = useState([]);
@@ -16,10 +16,12 @@ function MovieBooking() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false); 
+    // const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
     const navigate = useNavigate();
 
+    console.log(props.isLoggedIn);
+    console.log(props.isAdmin);
     const toggleUserPopup = () => {
         setIsPopupOpen(!isPopupOpen);
     };
@@ -47,7 +49,7 @@ function MovieBooking() {
 
     const handleLogout = () => {
         localStorage.removeItem('authToken');
-        setIsLoggedIn(false);
+        props.setIsLoggedIn(false);
         navigate('/');
     };
 
@@ -168,7 +170,7 @@ function MovieBooking() {
                         {/* <img src={require('./moviefilter.jpg')} alt="" className="filter"/> */}
                         {/* <img src={require('./movieCart.jpg')} alt="" className="cart" /> */}
                         <div className="profile-img-box" onClick={toggleUserPopup} className= {isPopupOpen ? 'profile-img-box open' : 'profile-img-box'}>
-                            {isLoggedIn ? (
+                            {props.isLoggedIn ? (
                                 <img src={require('./baseUserIcon.png')} alt="User's Profile" />
                             ) : (
                                 <img src={require('./movieUserIcon.jpg')} alt="Signin/Join" />
@@ -177,7 +179,7 @@ function MovieBooking() {
                         {isPopupOpen && (
                             <div className="user-popup">
                                 <div className="popup-content">
-                                    {isLoggedIn ? (
+                                    {props.isLoggedIn ? (
                                         <div>
                                             <h3>Welcome back, [Username]!</h3>
                                             <button onClick={goToProfilePage}>Update Profile</button>

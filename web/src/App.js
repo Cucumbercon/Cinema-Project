@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import Navbar from './components/Navbar';
 import { Login } from './pages/Users/login';
@@ -22,45 +22,26 @@ import Forgotpass from './pages/Users/Forgotpass';
 
 
 function App() {
- // return (
 
-  //<MovieBooking />
-  // <MovieDetails />
-  // <MovieSeatBooking />
-  // <OrderSummary/>
-  // <Checkout/>
-  // <ConfirmationPage />
-  // <AdminPanel />
-  // <DashBoard />
-  // <Promotion />
-  // <OrderSummary/>
-  //<Checkout/>
-  //<ConfirmationPage />
-  // <AdminPanel /> 
-  //  <Login />  
-  // <Signup /> 
-  // < NotFound /> 
- // <UpdateProfile />
-
-  //);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MovieBooking />} />
-        <Route path="/dashboard" element={<DashBoard />} />
+        <Route path="/" element={<MovieBooking isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>} />
+        <Route path="/dashboard" element={<DashBoard isAdmin={isAdmin}/>} />
         <Route path="/moviebooking" element={<MovieBooking />} />
         <Route path="/moviedetails" element={<MovieDetails />} />
         <Route path="/movieseatbooking" element={<MovieSeatBooking />} />
-        <Route path="/adminpanel" element={<AdminPanel />} />
-        <Route path="/moviemanagement" element={<MovieManagement />} />
-        <Route path="/promotion" element={<Promotion />} />
+        <Route path="/adminpanel" element={<AdminPanel isAdmin={isAdmin}/>} />
+        <Route path="/moviemanagement" element={<MovieManagement isAdmin={isAdmin}/>} />
+        <Route path="/promotion" element={<Promotion isAdmin={isAdmin}/>} />
         <Route path="/ordersummary" element={<OrderSummary />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/confirmationpage" element={<ConfirmationPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin}/>} />
+        <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path="/notfound" element={<NotFound />} />
         <Route path="/updateprofile" element={<UpdateProfile/>} />
         <Route path="/emailverification" element={<EmailVerification/>} />
