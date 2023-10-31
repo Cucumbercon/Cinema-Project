@@ -334,8 +334,11 @@ public class UserDB {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, password);
             preparedStatement.setString(2, email);
-        } catch (Exception e) {
 
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
         } // try
     }
 
