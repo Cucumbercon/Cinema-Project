@@ -35,7 +35,7 @@ function Forgotpass() {
             // TODO: handle password change logic
             const pass = (encrypt(newPassword));
             const userData = {
-                email, pass
+                email, newPassword, confirmNewPassword
             };
             console.log(userData);
 
