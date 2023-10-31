@@ -18,26 +18,31 @@ const MovieBooking = (props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [hasDisplayedToast, setHasDisplayedToast] = useState(false);
     // const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
     const navigate = useNavigate();
 
-    console.log(props.isLoggedIn);
-    console.log(props.isAdmin);
+    // console.log(props.isLoggedIn);
+    // console.log(props.isAdmin);
 
     useEffect(() => {
-        if(props.isLoggedIn)
-        toast.success("Login successful!", {
-          position: "bottom-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      }, []);
+        console.log("isloggedin: " + localStorage.getItem('isLoggedIn'));
+        console.log("hasDisplayedToast: " + hasDisplayedToast);
+        if (localStorage.getItem('isLoggedIn') === 'true' && !hasDisplayedToast) {
+            toast.success("Login successful!", {
+                position: "bottom-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            setHasDisplayedToast(true); 
+        }
+    }, [hasDisplayedToast]);
 
     const toggleUserPopup = () => {
         setIsPopupOpen(!isPopupOpen);
@@ -66,8 +71,9 @@ const MovieBooking = (props) => {
 
     const handleLogout = () => {
         localStorage.removeItem('authToken');
+        localStorage.setItem('isLoggedIn', 'false');
         props.setIsAdmin(false);
-        props.setIsLoggedIn(false);
+        setHasDisplayedToast(false);
         toast.success('Logout successful!', {
             position: "bottom-center",
             autoClose: 1000,
@@ -77,7 +83,7 @@ const MovieBooking = (props) => {
             draggable: true,
             progress: undefined,
             theme: "colored",
-          })
+        })
         navigate('/');
     };
 
@@ -122,10 +128,10 @@ const MovieBooking = (props) => {
                         setUpComingMovie(prevUpcoming => [...prevUpcoming, movie]);
                     }
                 });
-                console.log(availableMovie.length);
+                // console.log(availableMovie.length);
 
                 // setSearchResults(parsedData); // 存储搜索结果
-                console.log('Search results:', data);
+                // console.log('Search results:', data);
             })
             .catch((error) => {
                 console.error('Error searching movies:', error);
@@ -141,7 +147,7 @@ const MovieBooking = (props) => {
             .then((data) => {
                 const parsedData = JSON.parse(data);
                 setAvailableMovie(parsedData);
-                console.log('availableMoviedata:', parsedData);
+                // console.log('availableMoviedata:', parsedData);
             })
             .catch((error) => {
                 console.error('Error sending message to Spring:', error);
@@ -155,7 +161,7 @@ const MovieBooking = (props) => {
                 // transfer Json from string to Obj
                 const parsedData = JSON.parse(data);
                 setUpComingMovie(parsedData); // 存储数据在 upComingMovie 状态中
-                console.log('upComingMovie:', parsedData);
+                // console.log('upComingMovie:', parsedData);
             })
             .catch((error) => {
                 console.error('Error sending message to Spring:', error);
@@ -198,7 +204,7 @@ const MovieBooking = (props) => {
                         {/* <img src={require('./moviefilter.jpg')} alt="" className="filter"/> */}
                         {/* <img src={require('./movieCart.jpg')} alt="" className="cart" /> */}
                         <div className="profile-img-box" onClick={toggleUserPopup} className={isPopupOpen ? 'profile-img-box open' : 'profile-img-box'}>
-                            {props.isLoggedIn ? (
+                            {localStorage.getItem('isLoggedIn') === 'true' ? (
                                 <img src={require('./baseUserIcon.png')} alt="User's Profile" />
                             ) : (
                                 <img src={require('./movieUserIcon.jpg')} alt="Signin/Join" />
@@ -207,7 +213,7 @@ const MovieBooking = (props) => {
                         {isPopupOpen && (
                             <div className="user-popup">
                                 <div className="popup-content">
-                                    {props.isLoggedIn ? (
+                                    {localStorage.getItem('isLoggedIn') === 'true' ? (
                                         <div>
                                             <h3>Welcome back, {props.name}!</h3>
                                             <button onClick={goToProfilePage}>Update Profile</button>

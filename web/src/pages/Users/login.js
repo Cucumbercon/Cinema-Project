@@ -29,7 +29,7 @@ export const Login = (props) => {
         if (response.status === 200) {
           response.json()
             .then(function (jsonUser) {
-              props.setIsLoggedIn(true);
+              localStorage.setItem('isLoggedIn', 'true');
               if (jsonUser.type === 1)
                 props.setIsAdmin(true);
               props.setName(jsonUser.fullName);

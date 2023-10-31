@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import Navbar from './components/Navbar';
 import { Login } from './pages/Users/login';
@@ -24,14 +24,17 @@ import { AdminSignup } from './pages/Admin/adminSignup';
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [name, setName] = useState("");
+
+  useEffect(() => {
+    const storedIsLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  }, []);
 
   return (
     <Router>
       <Routes>
-      <Route path="/" element={<MovieBooking isLoggedIn={isLoggedIn} isAdmin={isAdmin} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} name={name}/>} />        <Route path="/dashboard" element={<DashBoard isAdmin={isAdmin}/>} />
+      <Route path="/" element={<MovieBooking isAdmin={isAdmin} setIsAdmin={setIsAdmin} name={name}/>} />        <Route path="/dashboard" element={<DashBoard isAdmin={isAdmin}/>} />
         <Route path="/moviebooking" element={<MovieBooking />} />
         <Route path="/moviedetails" element={<MovieDetails />} />
         <Route path="/movieseatbooking" element={<MovieSeatBooking />} />
@@ -41,9 +44,9 @@ function App() {
         <Route path="/ordersummary" element={<OrderSummary />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/confirmationpage" element={<ConfirmationPage />} />
-        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} setName={setName}/>} />
-        <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn}/>} />
-        <Route path="/adminSignup" element={<AdminSignup setIsLoggedIn={setIsLoggedIn}/>} />
+        <Route path="/login" element={<Login setIsAdmin={setIsAdmin} setName={setName}/>} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/adminSignup" element={<AdminSignup />} />
         <Route path="/notfound" element={<NotFound />} />
         <Route path="/updateprofile" element={<UpdateProfile/>} />
         <Route path="/emailverification" element={<EmailVerification/>} />
