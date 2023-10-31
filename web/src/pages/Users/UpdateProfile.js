@@ -11,7 +11,6 @@ export const UpdateProfile = (props) => {
   const [expirationDate, setExpirationDate] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
   const [selectedPaymentCard, setSelectedPaymentCard] = useState('');
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
@@ -92,15 +91,15 @@ export const UpdateProfile = (props) => {
           <div class="form-group-panel">
             {/* Email */}
             <div className="input-container">
-                <label htmlFor="email">Email</label>
-                <input
-                    value={email}
-                    readOnly
-                    type="updateemail"
-                    placeholder="Email"
-                    id="email"
-                    name="email"
-                />
+              <label htmlFor="email">Email</label>
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type="updateemail"
+                placeholder="Email"
+                id="email"
+                name="email"
+              />
             </div>
             {/* Full Name */}
             <div className="input-container">
@@ -127,21 +126,9 @@ export const UpdateProfile = (props) => {
                 name="phoneNumber"
               />
             </div>
-            {/* Current Password */}
-            <div className="input-container">
-              <label htmlFor="Curpassword">Current Password</label>
-              <input
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                type="updatepassword"
-                placeholder="Current Password"
-                id="Current password"
-                name="Current_password"
-              />
-            </div>
             {/* Password */}
             <div className="input-container">
-              <label htmlFor="password">New Password</label>
+              <label htmlFor="password">Password</label>
               <input
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -153,7 +140,7 @@ export const UpdateProfile = (props) => {
             </div>
             {/* Confirm Password */}
             <div className="input-container">
-              <label htmlFor="confirmPassword">Confirm New Password</label>
+              <label htmlFor="confirmPassword">Confirm Password</label>
               <input
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
