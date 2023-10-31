@@ -6,31 +6,26 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.uga.cinemabooking.DB.MovieDB;
+import edu.uga.cinemabooking.DB.UserDB;
 import edu.uga.cinemabooking.entity.Movie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.Authenticator;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Session;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
 import java.util.Random;
 @RestController
@@ -50,8 +45,10 @@ public class EmailController {
      * This method is used to get the available movies
      * @return the list of movies
      */
-    @GetMapping("/sendEmail")
+    @PostMapping("/sendEmail")
     public ResponseEntity<String> sendEmail(@RequestBody String data) {
+        UserDB udb = new UserDB();
+        System.out.println("Received a request to send an email.");
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JsonNode jsonNode = objectMapper.readTree(data);
@@ -60,10 +57,18 @@ public class EmailController {
 
             switch (emailType) {
                 case 1:
-                    String verifyCode = generateVerificationCode();
+                    //String verifyCode = generateVerificationCode();
                     // Store verifyCode in the database associated with the email
-                    sendEmailMessage(email, "Verification Code", "Your verification code is: " + verifyCode);
-                    System.out.println("success.");
+                    //sendEmailMessage(email, "Verification Code", "Your verification code is: " + verifyCode);
+                    //System.out.println("success.\n");
+                    if (udb.emailExist(email)) {
+                        String verifyCode = generateVerificationCode();
+                        // Store verifyCode in the database associated with the email
+                        udb.updateVerificationCode(email, verifyCode);
+                        sendEmailMessage(email, "Verification Code", "Your verification code is: " + verifyCode);
+                    } else {
+                        return ResponseEntity.status(400).body("Email does not exist in the database.");
+                    }
                     break;
                 case 2:
                     sendEmailMessage(email, "Signup Successful", "Congratulations on signing up!");
@@ -93,7 +98,7 @@ public class EmailController {
     
         // Get the Session object.
         Session session = Session.getInstance(properties,
-                new javax.mail.Authenticator() {
+                new jakarta.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(senderEmail, senderPassword);
                     }

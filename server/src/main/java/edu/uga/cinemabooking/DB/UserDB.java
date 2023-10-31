@@ -284,6 +284,22 @@ public class UserDB {
             // Consider logging this exception or propagating it further.
         }
         return false;
+    }// not test
+
+
+    public boolean updateVerificationCode(String email, String code) {
+        String sql = "UPDATE user SET verify_code = ? WHERE email = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, code);
+            preparedStatement.setString(2, email);
+            int updatedRows = preparedStatement.executeUpdate();
+            return updatedRows > 0; // returns true if at least one row was updated
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+            return false; // returns false if there was an error
+        }
     }
 
     // public void getUserInfo(int id) {
