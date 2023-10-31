@@ -43,8 +43,8 @@ public class SigninController {
 
             if (udb.emailExist(email)) {
                 user = udb.loginValidation(email, password);
-                int userID = user.getId();
                 if (user != null) {
+                    int userID = user.getId();
                     String jsonUser = objectMapper.writeValueAsString(user);
                     System.out.println("logged in");
                     System.out.println(jsonUser);

@@ -57,12 +57,12 @@ public class EmailController {
 
             switch (emailType) {
                 case 1:
-                    //String verifyCode = generateVerificationCode();
+                    String verifyCode = generateVerificationCode();
                     // Store verifyCode in the database associated with the email
-                    //sendEmailMessage(email, "Verification Code", "Your verification code is: " + verifyCode);
+                    sendEmailMessage(email, "Verification Code", "Your verification code is: " + verifyCode);
                     //System.out.println("success.\n");
                     if (udb.emailExist(email)) {
-                        String verifyCode = generateVerificationCode();
+                        //String verifyCode = generateVerificationCode();
                         // Store verifyCode in the database associated with the email
                         udb.updateVerificationCode(email, verifyCode);
                         sendEmailMessage(email, "Verification Code", "Your verification code is: " + verifyCode);
