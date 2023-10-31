@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./registration.css";
-import { encrypt } from './encryption';
+import "./adminSignup.css";
+import { encrypt } from 'web/src/pages/Users/encryption.js';
 import { useNavigate } from "react-router-dom";
 
-export const Signup = (props) => {
+export const adminSignup = (props) => {
   const navigate = useNavigate();
 
 
@@ -11,7 +11,6 @@ export const Signup = (props) => {
   const [email, setEmail] = useState('');
   const [showEmailExistsModal, setShowEmailExistsModal] = useState(false);
   const [plainPassword, setPlainPassword] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [subscribe, setSubscribe] = useState(false);
@@ -146,19 +145,6 @@ export const Signup = (props) => {
                 />
               </div>
 
-              <div className="label-container">
-                <label htmlFor="currentpassword">Current Password *</label>
-                <input
-                  type="password"
-                  id="currentpassword"
-                  name="currentpassword"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="input-field"
-                  placeholder="********"
-                  required
-                />
-              </div>
               {/* Phone Number */}
               <div className="label-container">
                 <label htmlFor="phoneNumber">Phone Number *</label>
