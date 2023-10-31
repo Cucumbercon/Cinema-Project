@@ -41,9 +41,10 @@ public class EditProfileController {
         List<Card> cards = null;
 
         try {
-            user = udb.getLoggedInProfile(signin.getID());
-            cards = cdb.getLoggedInCard(signin.getID());
+            user = udb.getLoggedInProfile(18);
+            cards = cdb.getLoggedInCard(18);
             String jsonUserProfile = objectMapper.writeValueAsString(user);
+
             return ResponseEntity.ok(jsonUserProfile);
         } catch (Exception e) {
             e.printStackTrace();

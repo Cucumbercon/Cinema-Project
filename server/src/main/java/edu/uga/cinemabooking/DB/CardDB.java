@@ -86,8 +86,8 @@ public class CardDB {
      * To be used for edit profile
      */
     public List<Card> getLoggedInCard(int id) {
-        List<Card> cards = null;
-        String sql = "SELECT * FROM payment WHERE ID = ?";
+        List<Card> cards = new ArrayList<>();
+        String sql = "SELECT * FROM payment WHERE user_id = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
