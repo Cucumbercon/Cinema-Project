@@ -44,7 +44,7 @@ const MovieBooking = (props) => {
     };
     
     const goToProfilePage = () => {
-        navigate('/profile');
+        navigate('/updateprofile');
     };
 
     const handleLogout = () => {
