@@ -55,11 +55,11 @@ export const UpdateProfile = (props) => {
         const parsedData = JSON.parse(data);
         setCreditCardNumber(parsedData.cardNumber);
         setExpirationDate(parsedData.expDate);
-        setStreet(parsedData.street);
-        setCity(parsedData.city);
-        setState(parsedData.state);
-        setZipCode(parsedData.zipCode);
-        
+        setStreet(parsedData.billingStreet);
+        setCity(parsedData.billingCity);
+        setState(parsedData.billingState);
+        setZipCode(parsedData.billingZipCode);
+
         console.log('loadprofilecard', creditCardNumber)
       })
       .catch((error) => {

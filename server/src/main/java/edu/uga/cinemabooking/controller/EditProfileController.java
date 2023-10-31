@@ -88,23 +88,61 @@ public class EditProfileController {
         getID();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
+            User user = udb.getLoggedInProfile(id);
+            List<Card> cards = cdb.getLoggedInCard(id);
+            Card card = cards.get(0);
+            String fullName = "";
+            String email = "";
+            String phoneNumber = "";
+            String creditCardNumber = "";
+            String expirationDate = "";
+            String password = "";
+            String confirmPassword = "";
+            String street = "";
+            String city = "";
+            String state = "";
+            String zipCode = "";
+            String homeStreet = "";
+            String homeCity = "";
+            String homeState = "";
+            String homeZipCode = "";
             JsonNode jsonNode = objectMapper.readTree(data);
-            String fullName = jsonNode.get("fullName").asText();
-            String email = jsonNode.get("email").asText();
-            String phoneNumber = jsonNode.get("phoneNumber").asText();
+            if (jsonNode.get("fullName").asText() != null) {
+                fullName = jsonNode.get("fullName").asText();
+            } else {
+                fullName = user.getFullName();
+            }
+
+            if (jsonNode.get("email").asText() != null) {
+                email = jsonNode.get("email").asText();
+            } else {
+                email = user.getEmail();
+            }
+
+            if (jsonNode.get("phoneNumber").asText() != null) {
+                phoneNumber = jsonNode.get("phoneNumber").asText();
+            } else {
+                phoneNumber = user.getPhoneNumber();
+            }
+
+            if (jsonNode.get("").asText() != null) {
+                creditCardNumber = jsonNode.get("creditCardNumber").asText();
+            } else {
+                creditCardNumber = card.getCardNumber();
+            }
             boolean subscribe = jsonNode.get("subscribe").asBoolean();
-            String creditCardNumber = jsonNode.get("creditCardNumber").asText();
-            String expirationDate = jsonNode.get("expirationDate").asText();
-            String password = jsonNode.get("password").asText();
-            String confirmPassword = jsonNode.get("confirmPassword").asText();
-            String street = jsonNode.get("street").asText();
-            String city = jsonNode.get("city").asText();
-            String state = jsonNode.get("state").asText();
-            String zipCode = jsonNode.get("zipCode").asText();
-            String homeStreet = jsonNode.get("homeStreet").asText();
-            String homeCity = jsonNode.get("homeCity").asText();
-            String homeState = jsonNode.get("homeState").asText();
-            String homeZipCode = jsonNode.get("homeZipCode").asText();
+            creditCardNumber = jsonNode.get("creditCardNumber").asText();
+            expirationDate = jsonNode.get("expirationDate").asText();
+            password = jsonNode.get("password").asText();
+            confirmPassword = jsonNode.get("confirmPassword").asText();
+            street = jsonNode.get("street").asText();
+            city = jsonNode.get("city").asText();
+            state = jsonNode.get("state").asText();
+            zipCode = jsonNode.get("zipCode").asText();
+            homeStreet = jsonNode.get("homeStreet").asText();
+            homeCity = jsonNode.get("homeCity").asText();
+            homeState = jsonNode.get("homeState").asText();
+            homeZipCode = jsonNode.get("homeZipCode").asText();
 
             String[] nullBeGone = {fullName, email, phoneNumber, creditCardNumber, expirationDate, password, confirmPassword
             , street, city, state, zipCode, homeStreet, homeCity, homeState, homeZipCode};
