@@ -47,10 +47,10 @@ public class UserDB {
      */
     public int addUser(String name, String email, String password,
             String phone, boolean subscribe, String homeCity,
-            String homeState, String homeStreet, String homeZipCode) {
+            String homeState, String homeStreet, String homeZipCode, int type) {
 
         String sql = "INSERT INTO user (user_name, email, password_hash, phone, subscribe, " +
-                "city, state, street, zipcode) VALUES (?,?,?,?,?,?,?,?,?)";
+                "city, state, street, zipcode, type) VALUES (?,?,?,?,?,?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, email);
@@ -61,6 +61,7 @@ public class UserDB {
             preparedStatement.setString(7, homeState);
             preparedStatement.setString(8, homeStreet);
             preparedStatement.setString(9, homeZipCode);
+            preparedStatement.setInt(10, type);
 
             preparedStatement.executeUpdate();
 

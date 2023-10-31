@@ -181,7 +181,7 @@ const MovieBooking = (props) => {
                                 <div className="popup-content">
                                     {props.isLoggedIn ? (
                                         <div>
-                                            <h3>Welcome back, [Username]!</h3>
+                                            <h3>Welcome back, {props.name}!</h3>
                                             <button onClick={goToProfilePage}>Update Profile</button>
                                             <button onClick={handleLogout}>Logout</button>
                                         </div>

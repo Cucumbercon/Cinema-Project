@@ -26,11 +26,12 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [name, setName] = useState("");
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MovieBooking isLoggedIn={isLoggedIn} isAdmin={isAdmin} setIsLoggedIn={setIsLoggedIn}/>} />
+        <Route path="/" element={<MovieBooking isLoggedIn={isLoggedIn} isAdmin={isAdmin} setIsLoggedIn={setIsLoggedIn} name={name}/>} />
         <Route path="/dashboard" element={<DashBoard isAdmin={isAdmin}/>} />
         <Route path="/moviebooking" element={<MovieBooking />} />
         <Route path="/moviedetails" element={<MovieDetails />} />
@@ -41,7 +42,7 @@ function App() {
         <Route path="/ordersummary" element={<OrderSummary />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/confirmationpage" element={<ConfirmationPage />} />
-        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin}/>} />
+        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} setName={setName}/>} />
         <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path="/adminSignup" element={<AdminSignup setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path="/notfound" element={<NotFound />} />
@@ -49,7 +50,7 @@ function App() {
         <Route path="/emailverification" element={<EmailVerification/>} />
         <Route path="/registrationsuccess" element={<RegistrationSuccessPage/>} />
         <Route path="/forgotpass" element={<Forgotpass/>} />
-
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
 

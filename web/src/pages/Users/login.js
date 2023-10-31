@@ -32,6 +32,7 @@ export const Login = (props) => {
               props.setIsLoggedIn(true);
               if (jsonUser.type === 1)
                 props.setIsAdmin(true);
+              props.setName(jsonUser.fullName);
               return navigate("/");
 
               /**

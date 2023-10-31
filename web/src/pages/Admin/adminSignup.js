@@ -68,7 +68,7 @@ export const AdminSignup = (props) => {
 
     console.log(userData);
 
-    fetch('http://localhost:8000/api/register', {
+    fetch('http://localhost:8000/api/adminRegister', {
       method: 'POST',
       body: JSON.stringify(userData),
       headers: {
