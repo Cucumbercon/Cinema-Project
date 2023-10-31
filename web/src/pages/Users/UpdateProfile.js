@@ -38,6 +38,12 @@ export const UpdateProfile = (props) => {
         setHomeCity(parsedData.city);
         setHomeState(parsedData.state);
         setHomeZipCode(parsedData.zipCode);
+        setCreditCardNumber(parsedData.creditCardNumber);
+        setExpirationDate(parsedData.expirationDate);
+        setStreet(parsedData.street);
+        setCity(parsedData.city);
+        setState(parsedData.state);
+        setZipCode(parsedData.zipCode);
 
         console.log('loadprofile', fullName)
       })

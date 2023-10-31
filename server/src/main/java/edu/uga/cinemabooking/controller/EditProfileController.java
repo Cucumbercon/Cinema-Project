@@ -10,6 +10,10 @@ import edu.uga.cinemabooking.DB.CardDB;
 import edu.uga.cinemabooking.entity.User;
 import edu.uga.cinemabooking.entity.Card;
 
+import java.io.File;  
+import java.io.FileNotFoundException; 
+import java.util.Scanner;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +32,7 @@ public class EditProfileController {
 
     UserDB udb = new UserDB();
     CardDB cdb = new CardDB();
+    int id;
     SigninController signin = new SigninController();
 
     /**
@@ -35,14 +40,14 @@ public class EditProfileController {
      */
     @GetMapping("/loadprofile")
     public ResponseEntity<String> getUserInfo() {
-
+        getID();
         ObjectMapper objectMapper = new ObjectMapper();
         User user = null;
         List<Card> cards = null;
 
         try {
-            user = udb.getLoggedInProfile(18);
-            cards = cdb.getLoggedInCard(18);
+            user = udb.getLoggedInProfile(id);
+            cards = cdb.getLoggedInCard(id);
             String jsonUserProfile = objectMapper.writeValueAsString(user);
 
             return ResponseEntity.ok(jsonUserProfile);
@@ -55,6 +60,7 @@ public class EditProfileController {
 
     @PostMapping("/updateprofile")
     public ResponseEntity<String> updateUserInfo(@RequestBody String data) {
+        getID();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JsonNode jsonNode = objectMapper.readTree(data);
@@ -85,7 +91,7 @@ public class EditProfileController {
             //} // for
 
             udb.updateInfo(fullName, email, password, phoneNumber, subscribe, homeCity, homeState, homeStreet, homeZipCode);
-            cdb.updateInfo(signin.getID(), creditCardNumber, expirationDate, zipCode, street, city, state);
+            cdb.updateInfo(id, creditCardNumber, expirationDate, zipCode, street, city, state);
             return ResponseEntity.ok("");
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,5 +99,18 @@ public class EditProfileController {
         } // try
         
     }  // updateUserInfo
+
+    public void getID() {
+        try {
+            File idstore = new File("idstore.txt");
+            Scanner scan = new Scanner(idstore);
+            String idString;
+            idString = scan.next();
+            id = Integer.parseInt(idString);
+            scan.close();
+        } catch (FileNotFoundException e)  {
+            System.out.println("Cannot read file");
+        }
+    }
 
 }

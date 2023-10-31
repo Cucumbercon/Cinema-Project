@@ -8,6 +8,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.uga.cinemabooking.DB.UserDB;
 import edu.uga.cinemabooking.entity.User;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -49,6 +53,9 @@ public class SigninController {
                     System.out.println("logged in");
                     System.out.println(jsonUser);
                     setID(userID);
+                    System.out.println(userID);
+                    idStore(userID);
+                    System.out.println("Stored in file");
                     return ResponseEntity.ok(jsonUser);
                 } else {
                     System.out.println("logged fail");
@@ -76,5 +83,15 @@ public class SigninController {
     public int getID() {
         return loggedID;
     } // getID
+
+    public void idStore(int id) {
+        try {
+            FileWriter myWriter = new FileWriter("idstore.txt");
+            myWriter.write(Integer.toString(id));
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("Error writing file.");
+        }
+    }
 
 }
