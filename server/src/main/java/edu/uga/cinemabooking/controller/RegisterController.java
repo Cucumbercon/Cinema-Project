@@ -108,20 +108,10 @@ public class RegisterController {
                 String homeStreet = jsonNode.get("homeStreet").asText();
                 String homeZipCode = jsonNode.get("homeZipCode").asText();
                 boolean subscribe = jsonNode.get("subscribe").asBoolean();
-                boolean includeCreditCardInfo = jsonNode.get("includeCreditCardInfo").asBoolean();
 
-                int id = udb.addUser(fullName, email, password, phoneNumber, subscribe,
+                udb.addUser(fullName, email, password, phoneNumber, subscribe,
                         homeCity, homeState, homeStreet, homeZipCode,1);
 
-                if (includeCreditCardInfo) {
-                    String creditCardNumber = jsonNode.get("creditCardNumber").asText();
-                    String expDate = jsonNode.get("formatDate").asText();
-                    String city = jsonNode.get("city").asText();
-                    String state = jsonNode.get("state").asText();
-                    String street = jsonNode.get("street").asText();
-                    String zipCode = jsonNode.get("zipCode").asText();
-                    cdb.addCard(id, creditCardNumber, expDate, state, street, zipCode, city);
-                }
 
             } else {
                 // if email already exists
