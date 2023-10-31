@@ -72,6 +72,8 @@ export const UpdateProfile = (props) => {
     e.preventDefault();
     // Check if password and confirmPassword match and update the user's password
     if (password === confirmPassword) {
+
+      
       // Update the user's password here
       const pass = encrypt(password);
 
