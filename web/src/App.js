@@ -29,7 +29,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MovieBooking isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>} />
+        <Route path="/" element={<MovieBooking isLoggedIn={isLoggedIn} isAdmin={isAdmin} setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path="/dashboard" element={<DashBoard isAdmin={isAdmin}/>} />
         <Route path="/moviebooking" element={<MovieBooking />} />
         <Route path="/moviedetails" element={<MovieDetails />} />
