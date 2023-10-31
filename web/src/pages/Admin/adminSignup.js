@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./registration.css";
-import { encrypt } from './encryption';
+import "./adminSignup.css";
+import { encrypt } from '../Users/encryption';
 import { useNavigate } from "react-router-dom";
 
-export const Signup = (props) => {
+export const AdminSignup = (props) => {
   const navigate = useNavigate();
 
 
@@ -11,7 +11,6 @@ export const Signup = (props) => {
   const [email, setEmail] = useState('');
   const [showEmailExistsModal, setShowEmailExistsModal] = useState(false);
   const [plainPassword, setPlainPassword] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [subscribe, setSubscribe] = useState(false);
@@ -146,19 +145,6 @@ export const Signup = (props) => {
                 />
               </div>
 
-              <div className="label-container">
-                <label htmlFor="currentpassword">Current Password *</label>
-                <input
-                  type="password"
-                  id="currentpassword"
-                  name="currentpassword"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="input-field"
-                  placeholder="********"
-                  required
-                />
-              </div>
               {/* Phone Number */}
               <div className="label-container">
                 <label htmlFor="phoneNumber">Phone Number *</label>
@@ -239,111 +225,8 @@ export const Signup = (props) => {
                 </div>
               </div>
 
-            </div>
-            
-            {includeCreditCardInfo &&<div class="form-group-break"></div>}
-            {includeCreditCardInfo && <div class="form-group-panel">
-              {/* Credit Card Number (conditionally rendered) */}
-              
-                <div className="label-container">
-                  <label htmlFor="creditCardNumber">Credit Card Number</label>
-                  <input
-                    type="text"
-                    required
-                    id="creditCardNumber"
-                    name="creditCardNumber"
-                    value={plainCreditCardNumber}
-                    onChange={(e) => setPlainCreditCardNumber(e.target.value)}
-                    className="input-field"
-                    placeholder="XXXX-XXXX-XXXX-XXXX"
-                  />
-                </div>
-
-              {/* Expiration Date (conditionally rendered) */}
+            </div>         
         
-                <div className="label-container">
-                  <label htmlFor="expirationDate">Expiration Date</label>
-                  <input
-                    type="text"
-                    required
-                    id="expirationDate"
-                    name="expirationDate"
-                    value={expirationDate}
-                    onChange={(e) => setExpirationDate(e.target.value)}
-                    className="input-field"
-                    placeholder="YYYY-MM"
-                  />
-                </div>
-              
-
-              {/* Street (conditionally rendered) */}
-           
-                <div className="label-container">
-                  <label htmlFor="street">Street</label>
-                  <input
-                    type="text"
-                    id="street"
-                    name="street"
-                    required
-                    value={street}
-                    onChange={(e) => setStreet(e.target.value)}
-                    className="input-field"
-                    placeholder="Street"
-                  />
-                </div>
-              
-
-              {/* City (conditionally rendered) */}
-            
-                <div className="label-container">
-                  <label htmlFor="city">City</label>
-                  <input
-                    type="text"
-                    id="city"
-                    required
-                    name="city"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    className="input-field"
-                    placeholder="City"
-                  />
-                </div>
-              
-
-              {/* State (conditionally rendered) */}
-            
-                <div className="label-container">
-                  <label htmlFor="state">State</label>
-                  <input
-                    type="text"
-                    id="state"
-                    name="state"
-                    required
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                    className="input-field"
-                    placeholder="State"
-                  />
-                </div>
-              
-
-              {/* Zip Code (conditionally rendered) */}
-           
-                <div className="label-container">
-                  <label htmlFor="zipCode">Zip Code</label>
-                  <input
-                    type="text"
-                    id="zipCode"
-                    required
-                    name="zipCode"
-                    value={zipCode}
-                    onChange={(e) => setZipCode(e.target.value)}
-                    className="input-field"
-                    placeholder="Zip Code"
-                  />
-                </div>
-              
-            </div>}
           </div>
 
 
@@ -356,37 +239,10 @@ export const Signup = (props) => {
             </div>
           )}
 
-          {/* Checkbox for including Credit Card Info & Address*/}
-          <div className="subscribe-checkbox">
-            <label>
-              <input
-                type="checkbox"
-                checked={includeCreditCardInfo}
-                onChange={(e) => setIncludeCreditCardInfo(e.target.checked)}
-              />
-              Include Credit Card Information & Billing Address
-            </label>
-          </div>
-
-
-
-
-
+         
           {/* Submit button */}
           <button type="submit">Create Account</button>
         </form>
-      </div>
-
-      {/* Checkbox for promotional emails */}
-      <div className="subscribe-checkbox">
-        <label>
-          <input
-            type="checkbox"
-            checked={subscribe}
-            onChange={(e) => setSubscribe(e.target.checked)}
-          />
-          Subscribe to promotional emails
-        </label>
       </div>
 
       {/* Login link */}
