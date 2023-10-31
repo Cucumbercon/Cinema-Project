@@ -1,5 +1,8 @@
 import React, {useState} from 'react'
+import { useNavigate } from 'react-router-dom';
+import { encrypt } from '../Users/encryption';
 import './adminPanel.css';
+
 
 function AdminPanel() {
 
@@ -10,6 +13,7 @@ function AdminPanel() {
         { id: 3, name: "Doe", icon: "/adminIcon4.png" }
     ];
     const [searchTerm, setSearchTerm] = useState('');
+    const navigate = useNavigate();
  
   return (
     <div>
@@ -44,7 +48,8 @@ function AdminPanel() {
                         </div>
                     ))}
                 </div>
-                <button onClick={() => alert('Add New Admin Functionality Here!')}>Add New Admin</button>
+                {/* <button onClick={() => alert('Add New Admin Functionality Here!')}>Add New Admin</button> */}
+                <button onClick={() => navigate('/adminsignup')}>Add New Admin</button>
             </div>
 
         <div>

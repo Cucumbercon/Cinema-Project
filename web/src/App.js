@@ -19,6 +19,7 @@ import { UpdateProfile } from './pages/Users/UpdateProfile';
 import EmailVerification from './pages/Users/EmailVerification';
 import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 import Forgotpass from './pages/Users/Forgotpass';
+import { AdminSignup } from './pages/Admin/adminSignup';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/confirmationpage" element={<ConfirmationPage />} />
         <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin}/>} />
         <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn}/>} />
+        <Route path="/adminSignup" element={<AdminSignup setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path="/notfound" element={<NotFound />} />
         <Route path="/updateprofile" element={<UpdateProfile/>} />
         <Route path="/emailverification" element={<EmailVerification/>} />
