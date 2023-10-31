@@ -29,7 +29,11 @@
           if (response.status === 200) {
             response.json()
               .then(function (jsonUser) {
-                console.log(jsonUser.fullName);
+                props.setIsLoggedIn(true);
+                if (jsonUser.type === 1)
+                  props.setIsAdmin(true);
+                return navigate("/");
+
                 /**
                  * you can receive user's name, id, and type(0 is customer, 1 is admin):
                  * jsonUser.fullName, jsonUser.id, jsonUser.type
