@@ -58,6 +58,31 @@ public class EditProfileController {
 
     }
 
+    /**
+     * 
+     */
+    @GetMapping("/loadprofilecard")
+    public ResponseEntity<String> getUserCard() {
+        getID();
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = null;
+        List<Card> cards = null;
+
+        try {
+            user = udb.getLoggedInProfile(id);
+            cards = cdb.getLoggedInCard(id);
+            Card card = cards.get(0);
+            String jsonUserProfile = objectMapper.writeValueAsString(card);
+            System.out.println("ran through here");
+
+            return ResponseEntity.ok(jsonUserProfile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error getting profile info.");
+        }
+
+    }
+
     @PostMapping("/updateprofile")
     public ResponseEntity<String> updateUserInfo(@RequestBody String data) {
         getID();

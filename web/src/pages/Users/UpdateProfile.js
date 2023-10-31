@@ -38,14 +38,29 @@ export const UpdateProfile = (props) => {
         setHomeCity(parsedData.city);
         setHomeState(parsedData.state);
         setHomeZipCode(parsedData.zipCode);
-        setCreditCardNumber(parsedData.creditCardNumber);
-        setExpirationDate(parsedData.expirationDate);
+
+        console.log('loadprofile', fullName)
+      })
+      .catch((error) => {
+        console.error('Error sending message to Spring:', error)
+      });
+  };
+
+  const loadUserCard = () => {
+    fetch('http://localhost:8000/api/loadprofilecard', {
+      method: 'GET'
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        const parsedData = JSON.parse(data);
+        setCreditCardNumber(parsedData.cardNumber);
+        setExpirationDate(parsedData.expDate);
         setStreet(parsedData.street);
         setCity(parsedData.city);
         setState(parsedData.state);
         setZipCode(parsedData.zipCode);
-
-        console.log('loadprofile', fullName)
+        
+        console.log('loadprofilecard', creditCardNumber)
       })
       .catch((error) => {
         console.error('Error sending message to Spring:', error)
@@ -88,6 +103,7 @@ export const UpdateProfile = (props) => {
   // Calls the loadUserProfile function when the component mounts to load existing data
   useEffect(() => {
     loadUserProfile();
+    loadUserCard();
   }, []);
 
   return (

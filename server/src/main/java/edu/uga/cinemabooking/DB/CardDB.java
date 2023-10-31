@@ -94,7 +94,7 @@ public class CardDB {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Card card = new Card();
-                card.setCardNumber(resultSet.getString("card_number"));
+                card.setCardNumber(decryption.decryptData(resultSet.getString("card_number")));
                 card.setExpDate(resultSet.getString("exp_date"));
                 card.setBillingZipCode(resultSet.getString("zipcode"));
                 card.setBillingStreet(resultSet.getString("street"));
