@@ -52,7 +52,7 @@ public class RegisterController {
                 boolean includeCreditCardInfo = jsonNode.get("includeCreditCardInfo").asBoolean();
 
                 int id = udb.addUser(fullName, email, password, phoneNumber, subscribe,
-                        homeCity, homeState, homeStreet, homeZipCode);
+                        homeCity, homeState, homeStreet, homeZipCode,0);
 
                 if (includeCreditCardInfo) {
                     String creditCardNumber = jsonNode.get("creditCardNumber").asText();
@@ -63,6 +63,55 @@ public class RegisterController {
                     String zipCode = jsonNode.get("zipCode").asText();
                     cdb.addCard(id, creditCardNumber, expDate, state, street, zipCode, city);
                 }
+
+            } else {
+                // if email already exists
+                System.out.println("Register fail: Email already exists");
+                return new ResponseEntity<>("Email already exists", HttpStatus.NOT_ACCEPTABLE);
+            }
+
+            // System.out.println(includeCreditCardInfo);
+
+            // if something wrongs going on
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Register fail: Something wrong");
+            return new ResponseEntity<>("Invalid data format", HttpStatus.BAD_REQUEST);
+        }
+        // if register successfully
+        return ResponseEntity.ok("Registration successful");
+    }
+
+    /**
+     * This method is used for signup function
+     * 
+     * @param data the data from frontend
+     * @return status code
+     */
+    @PostMapping("/adminRegister")
+    public ResponseEntity<String> adminRegister(@RequestBody String data) {
+        // Logic to fetch data
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            JsonNode jsonNode = objectMapper.readTree(data);
+            String email = jsonNode.get("email").asText();
+
+            // if email is valid
+            if (!udb.emailExist(email)) {
+
+                String fullName = jsonNode.get("fullName").asText();
+                String password = jsonNode.get("password").asText();
+                String phoneNumber = jsonNode.get("phoneNumber").asText();
+                String homeCity = jsonNode.get("homeCity").asText();
+                String homeState = jsonNode.get("homeState").asText();
+                String homeStreet = jsonNode.get("homeStreet").asText();
+                String homeZipCode = jsonNode.get("homeZipCode").asText();
+                boolean subscribe = jsonNode.get("subscribe").asBoolean();
+
+                udb.addUser(fullName, email, password, phoneNumber, subscribe,
+                        homeCity, homeState, homeStreet, homeZipCode,1);
+
 
             } else {
                 // if email already exists

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Slider from "react-slick";
 import Modal from "react-modal";
 import ReactPlayer from "react-player";
@@ -22,6 +24,21 @@ const MovieBooking = (props) => {
 
     console.log(props.isLoggedIn);
     console.log(props.isAdmin);
+
+    useEffect(() => {
+        if(props.isLoggedIn)
+        toast.success("Login successful!", {
+          position: "bottom-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }, []);
+
     const toggleUserPopup = () => {
         setIsPopupOpen(!isPopupOpen);
     };
@@ -42,14 +59,25 @@ const MovieBooking = (props) => {
     const goToSignupPage = () => {
         navigate('/signup');
     };
-    
+
     const goToProfilePage = () => {
         navigate('/updateprofile');
     };
 
     const handleLogout = () => {
         localStorage.removeItem('authToken');
+        props.setIsAdmin(false);
         props.setIsLoggedIn(false);
+        toast.success('Logout successful!', {
+            position: "bottom-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          })
         navigate('/');
     };
 
@@ -103,7 +131,7 @@ const MovieBooking = (props) => {
                 console.error('Error searching movies:', error);
             });
     };
-    
+
     useEffect(() => {
         // get the onshow movie from db
         fetch('http://localhost:8000/api/getAvailableMovie', {
@@ -169,26 +197,26 @@ const MovieBooking = (props) => {
                         {/* <img src={require('./assests/images/movieCart.jpg')} alt="" className="cart"/> */}
                         {/* <img src={require('./moviefilter.jpg')} alt="" className="filter"/> */}
                         {/* <img src={require('./movieCart.jpg')} alt="" className="cart" /> */}
-                        <div className="profile-img-box" onClick={toggleUserPopup} className= {isPopupOpen ? 'profile-img-box open' : 'profile-img-box'}>
+                        <div className="profile-img-box" onClick={toggleUserPopup} className={isPopupOpen ? 'profile-img-box open' : 'profile-img-box'}>
                             {props.isLoggedIn ? (
                                 <img src={require('./baseUserIcon.png')} alt="User's Profile" />
                             ) : (
                                 <img src={require('./movieUserIcon.jpg')} alt="Signin/Join" />
-                                )}
+                            )}
                         </div>
                         {isPopupOpen && (
                             <div className="user-popup">
                                 <div className="popup-content">
                                     {props.isLoggedIn ? (
                                         <div>
-                                            <h3>Welcome back, [Username]!</h3>
+                                            <h3>Welcome back, {props.name}!</h3>
                                             <button onClick={goToProfilePage}>Update Profile</button>
                                             <button onClick={handleLogout}>Logout</button>
                                         </div>
                                     ) : (
                                         <div>
                                             <h3>Hello, There!</h3>
-                                            <button onClick= {goToLoginPage}>Login</button>
+                                            <button onClick={goToLoginPage}>Login</button>
                                             {/* <button onClick={handleLogin}>Login</button> */}
                                             <button onClick={goToSignupPage}>Signup</button>
                                             <div className="admin-login" onClick={goToLoginPage}> Login As Admin
@@ -196,9 +224,9 @@ const MovieBooking = (props) => {
 
                                         </div>
                                     )}
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                         <img src={require('./movieMenu.png')} alt="" className="menu" />
                     </div>
                 </section>
@@ -361,40 +389,53 @@ const MovieBooking = (props) => {
 
                     </div>
 
-                    
+
                 </section>
 
             </div>
             <Modal
-                        isOpen={modalIsOpen}
-                        onRequestClose={closeModal}
-                        contentLabel='Video Modal'
-                        style= {{
-                            overlay: {
-                                backgroundColor: ""
-                            },
-                            content: {
-                                width: "1050px",
-                                height: "85vh",
-                                margin: "auto",
-                                padding: "0px",
-                                border: "none",
-                                overflow: "hidden"
-                            },
-                        }}
-                        >
-                        {selectedMovie && ( 
-                        <div>
-                            <ReactPlayer
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel='Video Modal'
+                style={{
+                    overlay: {
+                        backgroundColor: ""
+                    },
+                    content: {
+                        width: "1050px",
+                        height: "85vh",
+                        margin: "auto",
+                        padding: "0px",
+                        border: "none",
+                        overflow: "hidden"
+                    },
+                }}
+            >
+                {selectedMovie && (
+                    <div>
+                        <ReactPlayer
                             url={selectedMovie.trailerPath}
                             height='85vh'
                             width='1050px'
                             controls={true}
-                            className = 'modal-popup'
+                            className='modal-popup'
                         />
-                        </div>
-                        )}
-                    </Modal>
+                    </div>
+                )}
+            </Modal>
+
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </div>
 
     );
