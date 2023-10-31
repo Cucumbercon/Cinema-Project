@@ -329,4 +329,14 @@ public class UserDB {
     //     }
     // }
 
+    public void changePassword(String email, String password) {
+        String sql = "UPDATE user SET password_hash = ? WHERE email = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, password);
+            preparedStatement.setString(2, email);
+        } catch (Exception e) {
+
+        } // try
+    }
+
 }

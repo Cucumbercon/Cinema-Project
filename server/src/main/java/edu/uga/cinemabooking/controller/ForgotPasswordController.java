@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ForgotPasswordController {
 
     UserDB udb = new UserDB();
-    int loggedID;
 
     /**
      * 
@@ -30,11 +29,25 @@ public class ForgotPasswordController {
     public ResponseEntity<String> fetchData(@RequestBody String data) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        
-        try {
 
+        try {
+            JsonNode jsonNode = objectMapper.readTree(data);
+            String email = jsonNode.get("email").asText();
+            if (udb.emailExist(email)) {
+                String password = jsonNode.get("newPassword").asText();
+                String confirmPassword = jsonNode.get("confirmNewPassword").asText();
+                if (password.equals(confirmPassword)) {
+                    udb.changePassword(email, confirmPassword);
+                } else {
+                    return ResponseEntity.status(501).body("Passwords much match.");
+                }
+            } else {
+                return ResponseEntity.status(502).body("Email does not exist.");
+            }
+            return ResponseEntity.ok("");
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.status(500).body("Error occured.");
         } 
 
     }
