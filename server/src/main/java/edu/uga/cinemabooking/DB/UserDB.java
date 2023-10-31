@@ -258,6 +258,34 @@ public class UserDB {
         }
     }
 
+/**
+     * Checks if a given email and verification code match in the database.
+     *
+     * @param email       The email to be checked.
+     * @param verifyCode  The verification code to be matched.
+     * @return true if there's a match, false otherwise.
+     */
+    public boolean isEmailAndCodeMatched(String email, String verifyCode) {
+        String sql = "SELECT * FROM user WHERE email = ? AND verify_code = ?";
+        try (
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, verifyCode);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return true;  // Matching email and verify_code found
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Consider logging this exception or propagating it further.
+        }
+        return false;
+    }
+
     // public void getUserInfo(int id) {
     //     String sql = "SELECT id FROM user WHERE ID = ?";
     //     User user = null;
