@@ -206,7 +206,7 @@ export const UpdateProfile = (props) => {
             </div>
             {/* Text for current password */}
             <p className="password-description" style={{color: "red"}}>
-                Please input <u>current password</u> to change.
+                Please input <u>current password</u> to change passwords.
               </p>
             </div>
               
