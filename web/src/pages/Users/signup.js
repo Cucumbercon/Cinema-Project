@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./registration.css";
 import { encrypt } from './encryption';
 import { useNavigate } from "react-router-dom";
-
+import { FaHome } from 'react-icons/fa';
 
 
 export const Signup = (props) => {
@@ -135,6 +135,7 @@ export const Signup = (props) => {
 
   return (
     <div className="auth-container">
+        <button className="home-btn" onClick={() => navigate('/')} style={{backgroundColor: '#ff6600'}}><FaHome size={24}/></button>
       <div className="form-box">
         <form className="register-form" onSubmit={handleSubmit}>
           {/* Full Name */}

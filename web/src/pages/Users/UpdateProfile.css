@@ -1,13 +1,12 @@
 /* Apply the 'Joan' font-family to the whole form */
 .update-profile-form {
-    display:grid;
-    flex-direction: column;
+
     align-items: center;
     padding: 20px;
     background-color: #121212;
 
     border: 1px solid #ccc;
-    margin:  10 auto;
+
 }
 
 .update-profile-form {

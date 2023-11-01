@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // import useHistory hook
 import { encrypt } from './encryption';
 import './Forgotpass.css'
+import { FaHome } from 'react-icons/fa';
 
 function Forgotpass() {
     const [email, setEmail] = useState('');
@@ -9,6 +10,7 @@ function Forgotpass() {
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    
     const navigate = useNavigate();
 
     const handleEmailChange = (event) => {
@@ -52,7 +54,9 @@ function Forgotpass() {
     };
 
     return (
+        
         <form onSubmit={handleSubmit} className="forgot-pass">
+             <button className="home-btn" onClick={() => navigate('/')} style={{backgroundColor: '#ff6600'}}><FaHome size={24}/></button>
             <label>
                 Email:
                 <input type="email" value={email} onChange={handleEmailChange} />

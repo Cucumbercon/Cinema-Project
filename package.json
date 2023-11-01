@@ -4,6 +4,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "jsencrypt": "^3.3.2",
+    "react-icons": "^4.11.0",
     "react-modal": "^3.16.1",
     "react-player": "^2.13.0",
     "react-slick": "^0.29.0",

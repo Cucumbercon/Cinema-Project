@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { encrypt } from './encryption';
 import {useNavigate}from 'react-router-dom';
+import { FaHome } from 'react-icons/fa';
 
 import './login2.css';
 
@@ -76,8 +77,12 @@ export const Login = (props) => {
     }
 
     return (
+
         <div className="auth-form-container">
+
             <form className="login-form" onSubmit={handleSubmit}>
+            <button className="home-btn" onClick={() => navigate('/')} style={{backgroundColor: '#ff6600'}}><FaHome size={24}/></button>
+
                 <label htmlFor="email">Email</label>
                 <input
                   value={email}
