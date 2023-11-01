@@ -21,6 +21,7 @@ export const UpdateProfile = (props) => {
   const [homeState, setHomeState] = useState('');
   const [homeZipCode, setHomeZipCode] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
+  const [updateSuccess, setUpdateSuccess] = useState(false);
 
 
   // ToDO: function to load the user's existing information 
@@ -104,6 +105,16 @@ export const UpdateProfile = (props) => {
         headers: {
           'Content-Type': 'application/json'
         }
+      })
+      .then((response) => {
+        if (response.ok) {
+          setUpdateSuccess(true); // Sets success message to true
+        } else {
+          console.error('Failed to update profile');
+        }
+      })
+      .catch((error) => {
+        console.error('Error sending message to Spring:', error);
       });
     } else {
       // Display an error message indicating that passwords do not match
@@ -339,7 +350,12 @@ export const UpdateProfile = (props) => {
               />
             </div>
           </div>
-
+        {/* Success Message */}
+        {updateSuccess && (
+          <div className="success-message">
+            You have successfully updated your profile!
+          </div>
+        )}
 
 
         </div>
