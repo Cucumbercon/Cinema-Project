@@ -108,7 +108,7 @@ public class EditProfileController {
             String email = "";
             String phoneNumber = "";
             String creditCardNumber = "";
-            String expirationDate = "";
+            String expirationDate = "1900-01-01";
             String password = "";
             String confirmPassword = "";
             String street = "";
