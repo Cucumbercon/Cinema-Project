@@ -15,9 +15,9 @@ function AdminPanel(props) {
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
-    // if (!props.isAdmin) {
-    //     return <div>You do not have the permission to access this page.</div>;
-    // }
+    if (!props.isAdmin) {
+        return <div>You do not have the permission to access this page!!</div>;
+    }
  
   return (
     <div>

@@ -20,9 +20,9 @@ function MovieManagement(props) {
         rating: '',
     });
 
-    // if (!props.isAdmin) {
-    //     return <div>You do not have the permission to access this page.</div>;
-    // }    
+    if (!props.isAdmin) {
+        return <div>You do not have the permission to access this page.</div>;
+    }    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
