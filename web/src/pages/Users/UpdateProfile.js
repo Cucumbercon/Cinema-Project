@@ -81,6 +81,8 @@ export const UpdateProfile = (props) => {
       
       // Update the user's password here
       const pass = encrypt(password);
+      const passConfirm = encrypt(confirmPassword);
+      const passCurrent = encrypt(currentPassword);
 
       const changeInfo = {
         fullName,
@@ -90,7 +92,7 @@ export const UpdateProfile = (props) => {
         creditCardNumber,
         expirationDate,
         pass,
-        confirmPassword,
+        passConfirm,
         selectedPaymentCard,
         street,
         city,
@@ -99,7 +101,8 @@ export const UpdateProfile = (props) => {
         homeStreet,
         homeCity,
         homeState,
-        homeZipCode
+        homeZipCode,
+        passCurrent,
       };
       console.log(changeInfo)
       fetch('http://localhost:8000/api/updateprofile', {
@@ -350,7 +353,12 @@ export const UpdateProfile = (props) => {
               />
             </div>
           </div>
-       
+        {/* Success Message */}
+        {updateSuccess && (
+          <div className="success-message">
+            You have successfully updated your profile!
+          </div>
+        )}
 
 
         </div>
