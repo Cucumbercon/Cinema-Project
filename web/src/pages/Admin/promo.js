@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './promo.css';
 
-function Promotion() {
+function Promotion(props) {
     const [showAddPromo, setShowAddPromo] = useState(false);
     const [promoCodes, setPromoCodes] = useState([
         {
@@ -14,6 +14,10 @@ function Promotion() {
     const handleAddPromo = () => {
         setShowAddPromo(!showAddPromo);
     };
+
+    if (!props.isAdmin) {
+        return <div>You do not have the permission to access this page!</div>;
+    }
 
     return (
         <div className="promotion-page">
