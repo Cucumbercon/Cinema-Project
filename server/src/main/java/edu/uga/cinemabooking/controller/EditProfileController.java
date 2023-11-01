@@ -9,6 +9,7 @@ import edu.uga.cinemabooking.DB.UserDB;
 import edu.uga.cinemabooking.DB.CardDB;
 import edu.uga.cinemabooking.entity.User;
 import edu.uga.cinemabooking.entity.Card;
+import edu.uga.cinemabooking.Decryption;
 
 import java.io.File;  
 import java.io.FileNotFoundException; 
@@ -235,7 +236,8 @@ public class EditProfileController {
                 }
             }
 
-            if (currentPassword.equals(user.getPassword())) {
+            Decryption decrypt = new Decryption();
+            if (decrypt.decryptData(currentPassword).equals(decrypt.decryptData(user.getPassword()))) {
                 if (password.equals(confirmPassword)) {
 
                 }
@@ -244,10 +246,11 @@ public class EditProfileController {
             }
             boolean subscribe = jsonNode.get("subscribe").asBoolean();
             System.out.println("Checkpoint 2");
-            System.out.println(fullName);
-            System.out.println(email);
-            System.out.println(id);
+            System.out.println("Current password: " + currentPassword);
+            System.out.println("Password: " + password);
+            System.out.println("Confirm Password: " + confirmPassword);
             System.out.println(creditCardNumber);
+            System.out.println("User.password: " + user.getPassword());
             udb.updateUserName(fullName, email);
             udb.updatePassword(password, email);
             udb.updatePhone(phoneNumber, email);
