@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // import useHistory hook
 import { encrypt } from './encryption';
 import './Forgotpass.css'
 
@@ -8,6 +9,7 @@ function Forgotpass() {
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -45,6 +47,10 @@ function Forgotpass() {
         }
     };
 
+    const handleLoginClick = () => {
+        navigate('/login'); // redirect to login page
+    };
+
     return (
         <form onSubmit={handleSubmit} className="forgot-pass">
             <label>
@@ -61,7 +67,9 @@ function Forgotpass() {
             </label>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
             {successMessage && <p className="success-message">{successMessage}</p>}
+            {successMessage && <p>Go to <a href="/login" style={{color: '#ff6600', textDecoration: 'underline'}}>Login</a></p>} {/* added link to redirect to login page */}
             <button type="submit">Confirm</button>
+            
         </form>
     );
 }
