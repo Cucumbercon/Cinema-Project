@@ -60,6 +60,15 @@ const MovieBooking = (props) => {
     const handleProfileUpdate = () => {
     };
 
+    const goToMoiveManagement = () =>{
+        navigate('/moviemanagement');
+    }
+
+    const goToPromotion = () =>{
+        navigate('/promotion');
+    }
+
+
     const goToLoginPage = () => {
         navigate('/login');
     };
@@ -227,6 +236,12 @@ const MovieBooking = (props) => {
                                         <div>
                                             <h3>Welcome back, {localStorage.getItem('name')}!</h3>
                                             <button onClick={goToProfilePage}>Update Profile</button>
+                                    {props.isAdmin && (
+                                        <div>
+                                            <button onClick={goToMoiveManagement}>Movie Manage</button>
+                                            <button onClick={goToPromotion}>Promotion</button>
+                                        </div>
+                                    )}
                                             <button onClick={handleLogout}>Logout</button>
                                         </div>
                                     ) : (
