@@ -3,10 +3,11 @@ import "./registration.css";
 import { encrypt } from './encryption';
 import { useNavigate } from "react-router-dom";
 
+
+
 export const Signup = (props) => {
   const navigate = useNavigate();
   const [passwordMatchError, setPasswordMatchError] = useState(false);
-
 
   // State variables
   const [email, setEmail] = useState('');
@@ -85,7 +86,8 @@ export const Signup = (props) => {
       }
     }).then(function (response) {
       if (response.status === 200) {
-        navigate('/emailverification'); // redirecting to email verification page
+        sendEmailToServer();
+        navigate('/emailverification', { state: { email: email } }); // redirecting to email verification page
 
         return response.json();
       } else if (response.status === 406) {
@@ -101,7 +103,35 @@ export const Signup = (props) => {
         return Promise.reject('request fail');
       }
     });
+    
   }
+  const sendEmailToServer = async () => {
+    const requestData = {
+        email: email, // 使用之前从state中获取的email
+        type: 1
+    };
+
+    try {
+        const response = await fetch('http://localhost:8000/api/sendEmail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log(responseData);
+            // 处理响应数据，例如显示成功消息或进行其他操作
+        } else {
+            console.error('Request failed:', response.statusText);
+            // 处理错误情况，例如显示错误消息
+        }
+    } catch (error) {
+        console.error('There was an error sending the request:', error);
+    }
+};
 
   return (
     <div className="auth-container">
@@ -358,7 +388,7 @@ export const Signup = (props) => {
           {showEmailExistsModal && (
             <div className="modal">
               <div className="modal-content">
-                <p>Your email has already been used. Please choose a different email.</p>
+                <p style={{color: "black"}}>Your email has already been used. Please choose a different email.</p>
                 <button onClick={() => setShowEmailExistsModal(false)}>Close</button>
               </div>
             </div>

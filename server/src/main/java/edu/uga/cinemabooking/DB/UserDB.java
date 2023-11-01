@@ -303,6 +303,24 @@ public class UserDB {
         }
     }
 
+    public void updateIsActivity(String email) {
+        String sql = "UPDATE user SET is_activity = 1 WHERE email = ?";
+    
+        try (
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
+            preparedStatement.setString(1, email);
+            preparedStatement.executeUpdate();
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Consider logging this exception or propagating it further.
+        }
+    }
+
+    
+    
+
     // public void getUserInfo(int id) {
     //     String sql = "SELECT id FROM user WHERE ID = ?";
     //     User user = null;

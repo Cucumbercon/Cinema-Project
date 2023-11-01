@@ -123,11 +123,37 @@ public class EmailController {
         }
     }
 
-private String generateVerificationCode() {
-    Random random = new Random();
-    int code = random.nextInt(900000) + 100000; // This ensures the code is always 6 digits
-    return String.valueOf(code);
-}
+
+    private String generateVerificationCode() {
+        Random random = new Random();
+        int code = random.nextInt(900000) + 100000; // This ensures the code is always 6 digits
+        return String.valueOf(code);
+    }
+
+    @PostMapping("/verifyCode")
+    public ResponseEntity<String> verifyCode(@RequestBody String data) {
+        UserDB udb = new UserDB();
+        System.out.println("Received a request to verifyCode.");
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(data);
+            String email = jsonNode.get("email").asText();
+            String Code = jsonNode.get("code").asText();
+            System.out.println(email);
+            System.out.println(Code);
+            if(udb.isEmailAndCodeMatched(email, Code)){
+                udb.updateIsActivity(email); //set is_activity = 1
+                udb.updateVerificationCode(email, "");
+                return ResponseEntity.ok("Verification success!");
+
+            }
+            else
+                return ResponseEntity.status(500).body("Verification fail.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error from Verification.");
+        }
+    }
 
 
 
