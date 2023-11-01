@@ -95,8 +95,13 @@ public class EditProfileController {
         try {
             User user = udb.getLoggedInProfile(id);
             List<Card> cards = cdb.getLoggedInCard(id);
+            Card card;
             if (cards.size() != 0) {
-                Card card = cards.get(0);
+                card = cards.get(0);
+            } else {
+                cdb.addCard(id, "", "", "", "", "", "");
+                cards = cdb.getLoggedInCard(id);
+                card = cards.get(0);
             }
             String fullName = "";
             String email = "";
@@ -113,65 +118,126 @@ public class EditProfileController {
             String homeCity = "";
             String homeState = "";
             String homeZipCode = "";
+            String currentPassword = "";
             JsonNode jsonNode = objectMapper.readTree(data);
             if (jsonNode.get("fullName").asText() != null) {
                 fullName = jsonNode.get("fullName").asText();
+                if (fullName == null) {
+                    fullName = user.getFullName();
+                }
             }
 
             if (jsonNode.get("email").asText() != null) {
                 email = jsonNode.get("email").asText();
+                if (email == null) {
+                    email = user.getEmail();
+                }
             }
 
             if (jsonNode.get("phoneNumber").asText() != null) {
                 phoneNumber = jsonNode.get("phoneNumber").asText();
+                if (phoneNumber == null) {
+                    phoneNumber = user.getPhoneNumber();
+                }
             }
 
             if (jsonNode.get("creditCardNumber").asText() != null) {
                 creditCardNumber = jsonNode.get("creditCardNumber").asText();
+                if (creditCardNumber == null) {
+                    creditCardNumber = card.getCardNumber();
+                }
             }
 
             if (jsonNode.get("expirationDate").asText() != null) {
                 expirationDate = jsonNode.get("expirationDate").asText();
+                if (expirationDate == null) {
+                    expirationDate = card.getExpDate();
+                }
             }
 
             if (jsonNode.get("pass").asText() != null) {
                 password = jsonNode.get("pass").asText();
+                if (password == null) {
+                    password = "";
+                }
             }
 
-            if (jsonNode.get("confirmPassword").asText() != null) {
-                confirmPassword = jsonNode.get("confirmPassword").asText();
+            if (jsonNode.get("passConfirm").asText() != null) {
+                confirmPassword = jsonNode.get("passConfirm").asText();
+                if (confirmPassword == null) {
+                    confirmPassword = " ";
+                }
             }
 
             if (jsonNode.get("street").asText() != null) {
                 street = jsonNode.get("street").asText();
+                if (street == null) {
+                    street = card.getBillingStreet();
+                }
             }
 
             if (jsonNode.get("city").asText() != null) {
                 city = jsonNode.get("city").asText();
+                if (city == null) {
+                    city = card.getBillingCity();
+                }
             }
 
             if (jsonNode.get("state").asText() != null) {
                 state = jsonNode.get("state").asText();
+                if (state == null) {
+                    state = card.getBillingState();
+                }
             }
 
             if (jsonNode.get("zipCode").asText() != null) {
                 zipCode = jsonNode.get("zipCode").asText();
+                if (zipCode == null) {
+                    zipCode = card.getBillingZipCode();
+                }
             }
 
             if (jsonNode.get("homeStreet").asText() != null) {
                 homeStreet = jsonNode.get("homeStreet").asText();
+                if (homeStreet == null) {
+                    homeStreet = user.getStreet();
+                }
             }
 
             if (jsonNode.get("homeCity").asText() != null) {
                 homeCity = jsonNode.get("homeCity").asText();
+                if (homeCity == null) {
+                    homeCity = user.getCity();
+                }
             }
 
              if (jsonNode.get("homeState").asText() != null) {
                 homeState = jsonNode.get("homeState").asText();
+                if (homeState == null) {
+                    homeState = user.getState();
+                }
             }
 
              if (jsonNode.get("homeZipCode").asText() != null) {
                 homeZipCode = jsonNode.get("homeZipCode").asText();
+                if (homeZipCode == null) {
+                    homeZipCode = user.getZipCode();
+                }
+            }
+
+            if (jsonNode.get("passCurrent").asText() != null) {
+                currentPassword = jsonNode.get("passCurrent").asText();
+                if (currentPassword == null) {
+                    currentPassword = "";
+                }
+            }
+
+            if (currentPassword.equals(user.getPassword())) {
+                if (password.equals(confirmPassword)) {
+
+                }
+            } else {
+                password = user.getPassword();
             }
             boolean subscribe = jsonNode.get("subscribe").asBoolean();
 
@@ -182,7 +248,7 @@ public class EditProfileController {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error updating profile info.");
         } // try
-        
+
         
     }  // updateUserInfo
 
