@@ -40,7 +40,7 @@ export const UpdateProfile = (props) => {
         setHomeState(parsedData.state);
         setHomeZipCode(parsedData.zipCode);
 
-        console.log('loadprofile', fullName)
+        console.log('loadUserProfile', fullName)
       })
       .catch((error) => {
         console.error('Error sending message to Spring:', error)
@@ -61,7 +61,7 @@ export const UpdateProfile = (props) => {
         setState(parsedData.billingState);
         setZipCode(parsedData.billingZipCode);
 
-        console.log('loadprofilecard', creditCardNumber)
+        console.log('loadUserCard', creditCardNumber)
       })
       .catch((error) => {
         console.error('Error sending message to Spring:', error)
