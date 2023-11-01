@@ -32,7 +32,7 @@ export const Login = (props) => {
               localStorage.setItem('isLoggedIn', 'true');
               if (jsonUser.type === 1)
                 props.setIsAdmin(true);
-              props.setName(jsonUser.fullName);
+              localStorage.setItem('name', jsonUser.fullName);
               return navigate("/");
 
               /**
