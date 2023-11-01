@@ -109,49 +109,64 @@ public class EditProfileController {
             JsonNode jsonNode = objectMapper.readTree(data);
             if (jsonNode.get("fullName").asText() != null) {
                 fullName = jsonNode.get("fullName").asText();
-            } else {
-                fullName = user.getFullName();
             }
 
             if (jsonNode.get("email").asText() != null) {
                 email = jsonNode.get("email").asText();
-            } else {
-                email = user.getEmail();
             }
 
             if (jsonNode.get("phoneNumber").asText() != null) {
                 phoneNumber = jsonNode.get("phoneNumber").asText();
-            } else {
-                phoneNumber = user.getPhoneNumber();
             }
 
-            if (jsonNode.get("").asText() != null) {
+            if (jsonNode.get("creditCardNumber").asText() != null) {
                 creditCardNumber = jsonNode.get("creditCardNumber").asText();
-            } else {
-                creditCardNumber = card.getCardNumber();
+            }
+
+            if (jsonNode.get("expirationDate").asText() != null) {
+                expirationDate = jsonNode.get("expirationDate").asText();
+            }
+
+            if (jsonNode.get("password").asText() != null) {
+                password = jsonNode.get("password").asText();
+            }
+
+            if (jsonNode.get("confirmPassword").asText() != null) {
+                confirmPassword = jsonNode.get("confirmPassword").asText();
+            }
+
+            if (jsonNode.get("street").asText() != null) {
+                street = jsonNode.get("street").asText();
+            }
+
+            if (jsonNode.get("city").asText() != null) {
+                city = jsonNode.get("city").asText();
+            }
+
+            if (jsonNode.get("state").asText() != null) {
+                state = jsonNode.get("state").asText();
+            }
+
+            if (jsonNode.get("zipCode").asText() != null) {
+                zipCode = jsonNode.get("zipCode").asText();
+            }
+
+            if (jsonNode.get("homeStreet").asText() != null) {
+                homeStreet = jsonNode.get("homeStreet").asText();
+            }
+
+            if (jsonNode.get("homeCity").asText() != null) {
+                homeCity = jsonNode.get("homeCity").asText();
+            }
+
+             if (jsonNode.get("homeState").asText() != null) {
+                homeState = jsonNode.get("homeState").asText();
+            }
+
+             if (jsonNode.get("homeZipCode").asText() != null) {
+                homeZipCode = jsonNode.get("homeZipCode").asText();
             }
             boolean subscribe = jsonNode.get("subscribe").asBoolean();
-            creditCardNumber = jsonNode.get("creditCardNumber").asText();
-            expirationDate = jsonNode.get("expirationDate").asText();
-            password = jsonNode.get("password").asText();
-            confirmPassword = jsonNode.get("confirmPassword").asText();
-            street = jsonNode.get("street").asText();
-            city = jsonNode.get("city").asText();
-            state = jsonNode.get("state").asText();
-            zipCode = jsonNode.get("zipCode").asText();
-            homeStreet = jsonNode.get("homeStreet").asText();
-            homeCity = jsonNode.get("homeCity").asText();
-            homeState = jsonNode.get("homeState").asText();
-            homeZipCode = jsonNode.get("homeZipCode").asText();
-
-            String[] nullBeGone = {fullName, email, phoneNumber, creditCardNumber, expirationDate, password, confirmPassword
-            , street, city, state, zipCode, homeStreet, homeCity, homeState, homeZipCode};
-
-            //for (String s : nullBeGone) {
-            //    if (s == null) {
-            //        s = "";
-            //    }
-            //} // for
 
             udb.updateInfo(fullName, email, password, phoneNumber, subscribe, homeCity, homeState, homeStreet, homeZipCode);
             cdb.updateInfo(id, creditCardNumber, expirationDate, zipCode, street, city, state);
