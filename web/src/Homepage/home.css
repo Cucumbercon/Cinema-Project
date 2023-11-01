@@ -171,7 +171,7 @@ body {
 }
 
 .popup-content {
-    padding: 15px;
+    padding: 30px;
     text-align: center;
     background-color: gray;
     border-radius: 1rem;
@@ -180,6 +180,10 @@ body {
 }
 
 .popup-content button{
+    display: inline-block;
+    /* justifyContent:space-between; */
+    width: 100px;
+    height: 65px;
     background-color: white;
     color: black;
     font-weight: bold;
