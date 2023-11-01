@@ -80,6 +80,7 @@ const MovieBooking = (props) => {
     const handleLogout = () => {
         localStorage.removeItem('authToken');
         localStorage.setItem('isLoggedIn', 'false');
+        localStorage.setItem('name', '')
         props.setIsAdmin(false);
         setHasDisplayedToast(false);
         toast.success('Logout successful!', {
@@ -224,7 +225,7 @@ const MovieBooking = (props) => {
                                 <div className="popup-content">
                                     {localStorage.getItem('isLoggedIn') === 'true' ? (
                                         <div>
-                                            <h3>Welcome back, {props.name}!</h3>
+                                            <h3>Welcome back, {localStorage.getItem('name')}!</h3>
                                             <button onClick={goToProfilePage}>Update Profile</button>
                                             <button onClick={handleLogout}>Logout</button>
                                         </div>

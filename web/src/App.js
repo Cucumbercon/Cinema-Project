@@ -25,16 +25,17 @@ import { AdminSignup } from './pages/Admin/adminSignup';
 function App() {
 
   const [isAdmin, setIsAdmin] = useState(false);
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
 
   useEffect(() => {
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const storedName = localStorage.getItem('name') === '';
   }, []);
 
   return (
     <Router>
       <Routes>
-      <Route path="/" element={<MovieBooking isAdmin={isAdmin} setIsAdmin={setIsAdmin} name={name}/>} />        <Route path="/dashboard" element={<DashBoard isAdmin={isAdmin}/>} />
+      <Route path="/" element={<MovieBooking isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />        <Route path="/dashboard" element={<DashBoard isAdmin={isAdmin}/>} />
         <Route path="/moviebooking" element={<MovieBooking />} />
         <Route path="/moviedetails" element={<MovieDetails />} />
         <Route path="/movieseatbooking" element={<MovieSeatBooking />} />
@@ -44,7 +45,7 @@ function App() {
         <Route path="/ordersummary" element={<OrderSummary />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/confirmationpage" element={<ConfirmationPage />} />
-        <Route path="/login" element={<Login setIsAdmin={setIsAdmin} setName={setName}/>} />
+        <Route path="/login" element={<Login setIsAdmin={setIsAdmin} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/adminSignup" element={<AdminSignup />} />
         <Route path="/notfound" element={<NotFound />} />
