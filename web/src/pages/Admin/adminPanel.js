@@ -4,7 +4,7 @@ import { encrypt } from '../Users/encryption';
 import './adminPanel.css';
 
 
-function AdminPanel() {
+function AdminPanel(props) {
 
     const adminUsername = "Admin321";
     const teamMembers = [
@@ -14,6 +14,10 @@ function AdminPanel() {
     ];
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
+
+    // if (!props.isAdmin) {
+    //     return <div>You do not have the permission to access this page.</div>;
+    // }
  
   return (
     <div>

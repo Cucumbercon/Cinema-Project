@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './MovieM.css';
 
-function MovieManagement() {
+function MovieManagement(props) {
     const [movieDetails, setMovieDetails] = useState({
         id: crypto.randomUUID(),
         title: '',
@@ -19,6 +19,10 @@ function MovieManagement() {
         synopsis: '',
         rating: '',
     });
+
+    // if (!props.isAdmin) {
+    //     return <div>You do not have the permission to access this page.</div>;
+    // }    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
