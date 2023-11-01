@@ -142,8 +142,8 @@ public class EditProfileController {
                 }
             }
 
-            if (jsonNode.get("creditCardNumber").asText() != null) {
-                creditCardNumber = jsonNode.get("creditCardNumber").asText();
+            if (jsonNode.get("cardNumber").asText() != null) {
+                creditCardNumber = jsonNode.get("cardNumber").asText();
                 if (creditCardNumber == null) {
                     creditCardNumber = card.getCardNumber();
                 }
