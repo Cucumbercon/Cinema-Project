@@ -18,7 +18,8 @@ const MovieBooking = (props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [hasDisplayedToast, setHasDisplayedToast] = useState(false);
+    const [hasDisplayedToast, setHasDisplayedToast] = useState(localStorage.getItem('hasDisplayedToast') === 'true');
+    // const [hasDisplayedToast, setHasDisplayedToast] = useState(false);
     // const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
     const navigate = useNavigate();
@@ -41,8 +42,10 @@ const MovieBooking = (props) => {
                 theme: "colored",
             });
             setHasDisplayedToast(true); 
+            localStorage.setItem('hasDisplayedToast', 'true');
         }
-    }, [hasDisplayedToast]);
+        }, []);
+    // }, [hasDisplayedToast]);
 
     const toggleUserPopup = () => {
         setIsPopupOpen(!isPopupOpen);
@@ -90,6 +93,7 @@ const MovieBooking = (props) => {
             theme: "colored",
         })
         navigate('/');
+        localStorage.setItem('hasDisplayedToast', 'false');
     };
 
 
