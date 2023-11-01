@@ -83,13 +83,14 @@ export const UpdateProfile = (props) => {
       const pass = encrypt(password);
       const passConfirm = encrypt(confirmPassword);
       const passCurrent = encrypt(currentPassword);
+      const cardNumber = encrypt(creditCardNumber);
 
       const changeInfo = {
         fullName,
         email,
         phoneNumber,
         subscribe,
-        creditCardNumber,
+        cardNumber,
         expirationDate,
         pass,
         passConfirm,
