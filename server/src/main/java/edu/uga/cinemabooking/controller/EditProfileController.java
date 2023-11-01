@@ -152,7 +152,7 @@ public class EditProfileController {
             if (jsonNode.get("expirationDate").asText() != null) {
                 expirationDate = jsonNode.get("expirationDate").asText();
                 if (expirationDate == null) {
-                    expirationDate = card.getExpDate();
+                    expirationDate = "1900-01-01";
                 }
             }
 

@@ -116,7 +116,6 @@ public class CardDB {
         // reformat the java string to sql's date
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date utilDate = null;
-        expDate = decryption.decryptData(expDate);
 
         try {
             utilDate = sdf.parse(expDate);
