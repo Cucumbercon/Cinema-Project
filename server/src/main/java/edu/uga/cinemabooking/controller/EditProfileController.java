@@ -244,6 +244,10 @@ public class EditProfileController {
             }
             boolean subscribe = jsonNode.get("subscribe").asBoolean();
             System.out.println("Checkpoint 2");
+            System.out.println(fullName);
+            System.out.println(email);
+            System.out.println(id);
+            System.out.println(creditCardNumber);
             udb.updateInfo(fullName, email, password, phoneNumber, subscribe, homeCity, homeState, homeStreet, homeZipCode);
             cdb.updateInfo(id, creditCardNumber, expirationDate, zipCode, street, city, state);
             System.out.println("Checkpoint 3");
