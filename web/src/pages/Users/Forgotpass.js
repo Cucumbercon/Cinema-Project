@@ -5,7 +5,6 @@ import './Forgotpass.css'
 
 function Forgotpass() {
     const [email, setEmail] = useState('');
-    const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -20,10 +19,6 @@ function Forgotpass() {
         setNewPassword(event.target.value);
     };
 
-    const handleCurrentPasswordChange = (event) => {
-        setCurrentPassword(event.target.value);
-    }
-
     const handleConfirmNewPasswordChange = (event) => {
         setConfirmNewPassword(event.target.value);
     };
@@ -35,10 +30,9 @@ function Forgotpass() {
         } else {
             // TODO: handle password change logic
             const pass = (encrypt(newPassword));
-            const currentPass = (encrypt(currentPassword));
             const confirmPass = (encrypt(confirmNewPassword));
             const userData = {
-                email, currentPass, pass, confirmPass
+                email, pass, confirmPass
             };
             console.log(userData);
 
@@ -62,10 +56,6 @@ function Forgotpass() {
             <label>
                 Email:
                 <input type="email" value={email} onChange={handleEmailChange} />
-            </label>
-            <label>
-                Current Password:
-                <input type="password" value={currentPassword} onChange={handleCurrentPasswordChange} />
             </label>
             <label>
                 New Password:

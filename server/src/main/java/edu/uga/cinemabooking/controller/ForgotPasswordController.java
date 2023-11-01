@@ -35,9 +35,9 @@ public class ForgotPasswordController {
             String email = jsonNode.get("email").asText();
             if (udb.emailExist(email)) {
                 System.out.println("This works!");
-                String currentPassword = jsonNode.get("currentPass").asText();
                 String password = jsonNode.get("pass").asText();
-                udb.changePassword(email, currentPassword, password);
+                String confirmPassword = jsonNode.get("confirmPass").asText();
+                udb.changePassword(email, password);
                 System.out.println("This works! Again.");
                 return ResponseEntity.ok("");
             } else {
