@@ -87,7 +87,15 @@ export const UpdateProfile = (props) => {
         expirationDate,
         pass,
         confirmPassword,
-        selectedPaymentCard
+        selectedPaymentCard,
+        street,
+        city,
+        state,
+        zipCode,
+        homeStreet,
+        homeCity,
+        homeState,
+        homeZipCode
       };
       console.log(changeInfo)
       fetch('http://localhost:8000/api/updateprofile', {

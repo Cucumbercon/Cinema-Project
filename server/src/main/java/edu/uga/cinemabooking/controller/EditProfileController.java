@@ -71,7 +71,12 @@ public class EditProfileController {
         try {
             user = udb.getLoggedInProfile(id);
             cards = cdb.getLoggedInCard(id);
-            Card card = cards.get(0);
+            Card card;
+            if (cards.size() != 0) {
+                card = cards.get(0);
+            } else {
+                card = new Card();
+            }
             String jsonUserProfile = objectMapper.writeValueAsString(card);
             System.out.println("ran through here");
 
@@ -90,7 +95,9 @@ public class EditProfileController {
         try {
             User user = udb.getLoggedInProfile(id);
             List<Card> cards = cdb.getLoggedInCard(id);
-            Card card = cards.get(0);
+            if (cards.size() != 0) {
+                Card card = cards.get(0);
+            }
             String fullName = "";
             String email = "";
             String phoneNumber = "";
@@ -127,8 +134,8 @@ public class EditProfileController {
                 expirationDate = jsonNode.get("expirationDate").asText();
             }
 
-            if (jsonNode.get("password").asText() != null) {
-                password = jsonNode.get("password").asText();
+            if (jsonNode.get("pass").asText() != null) {
+                password = jsonNode.get("pass").asText();
             }
 
             if (jsonNode.get("confirmPassword").asText() != null) {
