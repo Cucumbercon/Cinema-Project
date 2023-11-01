@@ -154,7 +154,7 @@ public class CardDB {
     } // addCard()
 
     public void updateCreditCard(String input, int id) {
-        String sql = "UPDATE user SET card_number = ? WHERE user_id = ?";
+        String sql = "UPDATE payment SET card_number = ? WHERE user_id = ?";
         //System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, input);
@@ -167,7 +167,7 @@ public class CardDB {
     }
 
     public void updateExpDate(String input, int id) {
-        String sql = "UPDATE user SET exp_date = ? WHERE user_id = ?";
+        String sql = "UPDATE payment SET exp_date = ? WHERE user_id = ?";
         //System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, input);
@@ -180,7 +180,7 @@ public class CardDB {
     }
 
     public void updateZipCode(String input, int id) {
-        String sql = "UPDATE user SET zipcode = ? WHERE user_id = ?";
+        String sql = "UPDATE payment SET zipcode = ? WHERE user_id = ?";
         //System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, input);
@@ -193,7 +193,7 @@ public class CardDB {
     }
 
     public void updateStreet(String input, int id) {
-        String sql = "UPDATE user SET street = ? WHERE user_id = ?";
+        String sql = "UPDATE payment SET street = ? WHERE user_id = ?";
         //System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, input);
@@ -206,7 +206,7 @@ public class CardDB {
     }
 
     public void updateCity(String input, int id) {
-        String sql = "UPDATE user SET city = ? WHERE user_id = ?";
+        String sql = "UPDATE payment SET city = ? WHERE user_id = ?";
         //System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, input);
@@ -219,7 +219,7 @@ public class CardDB {
     }
 
     public void updateState(String input, int id) {
-        String sql = "UPDATE user SET state = ? WHERE user_id = ?";
+        String sql = "UPDATE payment SET state = ? WHERE user_id = ?";
         //System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, input);
