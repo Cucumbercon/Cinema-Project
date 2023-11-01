@@ -99,10 +99,11 @@ public class EditProfileController {
             if (cards.size() != 0) {
                 card = cards.get(0);
             } else {
-                cdb.addCard(id, "", "", "", "", "", "");
+                cdb.addCard(id, "", "1900-01-01", "", "", "", "");
                 cards = cdb.getLoggedInCard(id);
                 card = cards.get(0);
             }
+            System.out.println("Checkpoint 1");
             String fullName = "";
             String email = "";
             String phoneNumber = "";
@@ -240,9 +241,10 @@ public class EditProfileController {
                 password = user.getPassword();
             }
             boolean subscribe = jsonNode.get("subscribe").asBoolean();
-
+            System.out.println("Checkpoint 2");
             udb.updateInfo(fullName, email, password, phoneNumber, subscribe, homeCity, homeState, homeStreet, homeZipCode);
             cdb.updateInfo(id, creditCardNumber, expirationDate, zipCode, street, city, state);
+            System.out.println("Checkpoint 3");
             return ResponseEntity.ok("");
         } catch (Exception e) {
             e.printStackTrace();
