@@ -105,6 +105,7 @@ export const UpdateProfile = (props) => {
         passCurrent,
       };
       console.log(changeInfo)
+      alert('You have successfully updated your profile!');
       fetch('http://localhost:8000/api/updateprofile', {
         method: 'POST',
         body: JSON.stringify(changeInfo),
@@ -114,6 +115,7 @@ export const UpdateProfile = (props) => {
       });
     } else {
       // Display an error message indicating that passwords do not match
+      alert('Password does not match with confirm password');
       console.error('Password does not match with confirm password');
     }
   };
