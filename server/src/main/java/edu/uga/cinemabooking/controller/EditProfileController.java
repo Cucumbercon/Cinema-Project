@@ -99,15 +99,16 @@ public class EditProfileController {
             if (cards.size() != 0) {
                 card = cards.get(0);
             } else {
-                cdb.addCard(id, "", "", "", "", "", "");
+                cdb.addCard(id);
                 cards = cdb.getLoggedInCard(id);
                 card = cards.get(0);
             }
+            System.out.println("Checkpoint 1");
             String fullName = "";
             String email = "";
             String phoneNumber = "";
             String creditCardNumber = "";
-            String expirationDate = "";
+            String expirationDate = "1900-01-01";
             String password = "";
             String confirmPassword = "";
             String street = "";
@@ -151,7 +152,9 @@ public class EditProfileController {
             if (jsonNode.get("expirationDate").asText() != null) {
                 expirationDate = jsonNode.get("expirationDate").asText();
                 if (expirationDate == null) {
-                    expirationDate = card.getExpDate();
+                    expirationDate = "1900-01-01";
+                } else if (expirationDate.equals("")) {
+                    expirationDate = "1900-01-01";
                 }
             }
 
@@ -240,9 +243,10 @@ public class EditProfileController {
                 password = user.getPassword();
             }
             boolean subscribe = jsonNode.get("subscribe").asBoolean();
-
+            System.out.println("Checkpoint 2");
             udb.updateInfo(fullName, email, password, phoneNumber, subscribe, homeCity, homeState, homeStreet, homeZipCode);
             cdb.updateInfo(id, creditCardNumber, expirationDate, zipCode, street, city, state);
+            System.out.println("Checkpoint 3");
             return ResponseEntity.ok("");
         } catch (Exception e) {
             e.printStackTrace();

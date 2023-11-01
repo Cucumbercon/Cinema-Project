@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { encrypt } from './encryption';
 import "./UpdateProfile.css";
+import { FaHome } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 
 export const UpdateProfile = (props) => {
+  const navigate = useNavigate();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -74,7 +77,7 @@ export const UpdateProfile = (props) => {
     e.preventDefault();
     // Check if password and confirmPassword match and update the user's password
     if (password === confirmPassword) {
-
+      
       
       // Update the user's password here
       const pass = encrypt(password);
@@ -102,6 +105,7 @@ export const UpdateProfile = (props) => {
         passCurrent,
       };
       console.log(changeInfo)
+      alert('You have successfully updated your profile!');
       fetch('http://localhost:8000/api/updateprofile', {
         method: 'POST',
         body: JSON.stringify(changeInfo),
@@ -111,6 +115,7 @@ export const UpdateProfile = (props) => {
       });
     } else {
       // Display an error message indicating that passwords do not match
+      alert('Password does not match with confirm password');
       console.error('Password does not match with confirm password');
     }
   };
@@ -124,6 +129,7 @@ export const UpdateProfile = (props) => {
   return (
     <div className="form-box">
       <form className="update-profile-form" onSubmit={handleSubmit}>
+      <button className="home-btn" onClick={() => navigate('/')} style={{backgroundColor: '#ff6600'}}><FaHome size={24}/></button>
         <div className="form-groups">
           <div class="form-group-panel">
             {/* Email */}
@@ -175,6 +181,7 @@ export const UpdateProfile = (props) => {
                 name="currentPassword"
               />
             </div>
+           
             {/* Password */}
             <div className="input-container">
               <label htmlFor="password">Password</label>
@@ -199,7 +206,12 @@ export const UpdateProfile = (props) => {
                 name="confirmPassword"
               />
             </div>
-          </div>
+            {/* Text for current password */}
+            <p className="password-description" style={{color: "red"}}>
+                Please input <u>current password</u> to change passwords.
+              </p>
+            </div>
+              
 
           <div class="form-group-break"></div>
           <div class="form-group-panel">
