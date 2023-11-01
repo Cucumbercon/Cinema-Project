@@ -77,7 +77,7 @@ export const UpdateProfile = (props) => {
     e.preventDefault();
     // Check if password and confirmPassword match and update the user's password
     if (password === confirmPassword) {
-
+      
       
       // Update the user's password here
       const pass = encrypt(password);
@@ -179,6 +179,7 @@ export const UpdateProfile = (props) => {
                 name="currentPassword"
               />
             </div>
+           
             {/* Password */}
             <div className="input-container">
               <label htmlFor="password">Password</label>
@@ -203,7 +204,12 @@ export const UpdateProfile = (props) => {
                 name="confirmPassword"
               />
             </div>
-          </div>
+            {/* Text for current password */}
+            <p className="password-description" style={{color: "red"}}>
+                Please input <u>current password</u> to change passwords.
+              </p>
+            </div>
+              
 
           <div class="form-group-break"></div>
           <div class="form-group-panel">
