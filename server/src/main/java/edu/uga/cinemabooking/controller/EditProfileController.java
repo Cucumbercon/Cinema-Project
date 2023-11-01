@@ -153,6 +153,8 @@ public class EditProfileController {
                 expirationDate = jsonNode.get("expirationDate").asText();
                 if (expirationDate == null) {
                     expirationDate = "1900-01-01";
+                } else if (expirationDate.equals("")) {
+                    expirationDate = "1900-01-01";
                 }
             }
 
