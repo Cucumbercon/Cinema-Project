@@ -99,7 +99,7 @@ public class EditProfileController {
             if (cards.size() != 0) {
                 card = cards.get(0);
             } else {
-                cdb.addCard(id, "", "1900-01-01", "", "", "", "");
+                cdb.addCard(id);
                 cards = cdb.getLoggedInCard(id);
                 card = cards.get(0);
             }

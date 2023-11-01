@@ -138,4 +138,19 @@ public class CardDB {
             e.printStackTrace();
         }
     }
+
+    public void addCard(int userID) {
+        String sql = "INSERT INTO payment (user_id) " +
+        "VALUES (?)";        
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, userID);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    } // addCard()
 }
