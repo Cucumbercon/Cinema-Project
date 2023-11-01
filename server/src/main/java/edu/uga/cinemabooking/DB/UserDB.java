@@ -259,24 +259,23 @@ public class UserDB {
         }
     }
 
-/**
+    /**
      * Checks if a given email and verification code match in the database.
      *
-     * @param email       The email to be checked.
-     * @param verifyCode  The verification code to be matched.
+     * @param email      The email to be checked.
+     * @param verifyCode The verification code to be matched.
      * @return true if there's a match, false otherwise.
      */
     public boolean isEmailAndCodeMatched(String email, String verifyCode) {
         String sql = "SELECT * FROM user WHERE email = ? AND verify_code = ?";
         try (
-            PreparedStatement preparedStatement = connection.prepareStatement(sql)
-        ) {
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, verifyCode);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return true;  // Matching email and verify_code found
+                    return true; // Matching email and verify_code found
                 }
             }
 
@@ -287,10 +286,9 @@ public class UserDB {
         return false;
     }// not test
 
-
     public boolean updateVerificationCode(String email, String code) {
         String sql = "UPDATE user SET verify_code = ? WHERE email = ?";
-        //System.out.println("update verify code");
+        // System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, code);
             preparedStatement.setString(2, email);
@@ -305,56 +303,69 @@ public class UserDB {
 
     public void updateIsActivity(String email) {
         String sql = "UPDATE user SET is_activity = 1 WHERE email = ?";
-    
+
         try (
-            PreparedStatement preparedStatement = connection.prepareStatement(sql)
-        ) {
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, email);
             preparedStatement.executeUpdate();
-    
+
         } catch (SQLException e) {
             e.printStackTrace();
             // Consider logging this exception or propagating it further.
         }
     }
 
-    
-    
-
     // public void getUserInfo(int id) {
-    //     String sql = "SELECT id FROM user WHERE ID = ?";
-    //     User user = null;
+    // String sql = "SELECT id FROM user WHERE ID = ?";
+    // User user = null;
 
-    //     try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-    //         preparedStatement.setInt(1, id);
-    //         ResultSet resultSet = preparedStatement.executeQuery();
-    //         if (resultSet.next()) {
-    //             user = new User();
-    //             user.setFullName(resultSet.getString("name"));
-    //             user.setEmail(resultSet.getString("email"));
-    //             user.setPhoneNumber(resultSet.getString("phone"));
-    //             user.setPassword(resultSet.getString("password"));
-    //             user.setSubscribe(resultSet.getInt("subscribe"));
-    //             user.setStreet(resultSet.getString("street"));
-    //             user.setCity(resultSet.getString("city"));
-    //             user.setState(resultSet.getString("state"));
-    //             user.setZipCode(resultSet.getString("zipcode"));
-    //         }
-
-    //         preparedStatement.executeUpdate();
-
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //     }
+    // try (PreparedStatement preparedStatement = connection.prepareStatement(sql))
+    // {
+    // preparedStatement.setInt(1, id);
+    // ResultSet resultSet = preparedStatement.executeQuery();
+    // if (resultSet.next()) {
+    // user = new User();
+    // user.setFullName(resultSet.getString("name"));
+    // user.setEmail(resultSet.getString("email"));
+    // user.setPhoneNumber(resultSet.getString("phone"));
+    // user.setPassword(resultSet.getString("password"));
+    // user.setSubscribe(resultSet.getInt("subscribe"));
+    // user.setStreet(resultSet.getString("street"));
+    // user.setCity(resultSet.getString("city"));
+    // user.setState(resultSet.getString("state"));
+    // user.setZipCode(resultSet.getString("zipcode"));
     // }
 
-    public void changePassword(String email, String password) {
-        String sql = "UPDATE user SET password_hash = ? WHERE email = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, password);
-            preparedStatement.setString(2, email);
+    // preparedStatement.executeUpdate();
 
-            preparedStatement.executeUpdate();
+    // } catch (SQLException e) {
+    // e.printStackTrace();
+    // }
+    // }
+
+    public void changePassword(String email, String currentPassword, String password) {
+        String sql = "SELECT * FROM user WHERE email = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String oldPass = decryption.decryptData(resultSet.getString("password_hash"));
+                String newPass = decryption.decryptData(password);
+                if (oldPass.equals(newPass)) {
+                    /**
+                     * 
+                     * update the new password to db
+                     * 
+                     * String updateSql = "UPDATE user SET..."
+                     * 
+                     * 
+                     * 
+                     *  */ 
+                    
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e);
