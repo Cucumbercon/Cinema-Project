@@ -152,4 +152,83 @@ public class CardDB {
 
 
     } // addCard()
+
+    public void updateCreditCard(String input, int id) {
+        String sql = "UPDATE user SET card_number = ? WHERE user_id = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+    public void updateExpDate(String input, int id) {
+        String sql = "UPDATE user SET exp_date = ? WHERE user_id = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+    public void updateZipCode(String input, int id) {
+        String sql = "UPDATE user SET zipcode = ? WHERE user_id = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+    public void updateStreet(String input, int id) {
+        String sql = "UPDATE user SET street = ? WHERE user_id = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+    public void updateCity(String input, int id) {
+        String sql = "UPDATE user SET city = ? WHERE user_id = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+    public void updateState(String input, int id) {
+        String sql = "UPDATE user SET state = ? WHERE user_id = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
 }

@@ -248,8 +248,20 @@ public class EditProfileController {
             System.out.println(email);
             System.out.println(id);
             System.out.println(creditCardNumber);
-            udb.updateInfo(fullName, email, password, phoneNumber, subscribe, homeCity, homeState, homeStreet, homeZipCode);
-            cdb.updateInfo(id, creditCardNumber, expirationDate, zipCode, street, city, state);
+            udb.updateUserName(fullName, email);
+            udb.updatePassword(password, email);
+            udb.updatePhone(phoneNumber, email);
+            udb.updateSubscribe(subscribe, email);
+            udb.updateHomeCity(homeCity, email);
+            udb.updateHomeState(homeState, email);
+            udb.updateHomeStreet(homeStreet, email);
+            udb.updateHomeZipCode(homeZipCode, email);
+            cdb.updateCreditCard(creditCardNumber, id);
+            cdb.updateExpDate(expirationDate, id);
+            cdb.updateZipCode(zipCode, id);
+            cdb.updateStreet(street, id);
+            cdb.updateCity(city, id);
+            cdb.updateState(state, id);
             System.out.println("Checkpoint 3");
             return ResponseEntity.ok("");
         } catch (Exception e) {

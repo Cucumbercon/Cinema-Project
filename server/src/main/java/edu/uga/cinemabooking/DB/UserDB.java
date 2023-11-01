@@ -360,4 +360,113 @@ public class UserDB {
         } // try
     }
 
+    public void updateUserName(String input, String email) {
+        String sql = "UPDATE user SET user_name = ? WHERE email = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setString(2, email);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+    public void updatePassword(String input, String email) {
+        String sql = "UPDATE user SET password_hash = ? WHERE email = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setString(2, email);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+    public void updatePhone(String input, String email) {
+        String sql = "UPDATE user SET phone = ? WHERE email = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setString(2, email);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+    public void updateSubscribe(boolean input, String email) {
+        String sql = "UPDATE user SET subscribe = ? WHERE email = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setBoolean(1, input);
+            preparedStatement.setString(2, email);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+    public void updateHomeCity(String input, String email) {
+        String sql = "UPDATE user SET city = ? WHERE email = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setString(2, email);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+    public void updateHomeState(String input, String email) {
+        String sql = "UPDATE user SET state = ? WHERE email = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setString(2, email);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+    public void updateHomeStreet(String input, String email) {
+        String sql = "UPDATE user SET street = ? WHERE email = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setString(2, email);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+    public void updateHomeZipCode(String input, String email) {
+        String sql = "UPDATE user SET zipcode = ? WHERE email = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setString(2, email);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
+
+
+
+
+
 }
