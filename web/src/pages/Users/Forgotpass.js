@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // import useHistory hook
+import { useNavigate } from 'react-router-dom';
 import { encrypt } from './encryption';
-import './Forgotpass.css'
+import './Forgotpass.css';
 import { FaHome } from 'react-icons/fa';
 
 function Forgotpass() {
     const [email, setEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const [verificationCode, setVerificationCode] = useState('');
+    const [showVerificationPopup, setShowVerificationPopup] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-    
+
     const navigate = useNavigate();
 
     const handleEmailChange = (event) => {
@@ -25,40 +27,62 @@ function Forgotpass() {
         setConfirmNewPassword(event.target.value);
     };
 
+    const handleVerificationCodeChange = (event) => {
+        setVerificationCode(event.target.value);
+    };
+
+    const sendVerificationCode = () => {
+        // TODO: Send the verification code to the user's email 
+        // For now, generating a random 5-digit code
+        const randomCode = Math.floor(10000 + Math.random() * 90000);
+        console.log('Verification code sent to email:', randomCode);
+
+        // Show the verification code popup
+        setShowVerificationPopup(true);
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         if (newPassword !== confirmNewPassword) {
             setErrorMessage('Passwords do not match');
         } else {
-            // TODO: handle password change logic
-            const pass = (encrypt(newPassword));
-            const confirmPass = (encrypt(confirmNewPassword));
+
+            sendVerificationCode();
+        }
+    };
+
+    const handleVerificationSubmit = () => {
+        // checks the verification code please replace this with the actual verification logic
+        if (verificationCode === '12345') { // Replace '12345' with the actual code
+            
+            const pass = encrypt(newPassword);
+            const confirmPass = encrypt(confirmNewPassword);
             const userData = {
-                email, pass, confirmPass
+                email,
+                pass,
+                confirmPass,
             };
+
             console.log(userData);
 
-            fetch('http://localhost:8000/api/forgotpassword', {
-                method: 'POST',
-                body: JSON.stringify(userData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+            //  the password change message
+            setSuccessMessage('Password successfully changed! <a href="/login">Login</a>');
 
-            
-            setSuccessMessage('Password successfully changed!');
+        } else {
+            //wrong verification code
+            setErrorMessage('Invalid verification code');
         }
     };
 
     const handleLoginClick = () => {
-        navigate('/login'); // redirect to login page
+        navigate('/login');
     };
 
     return (
-        
-        <form onSubmit={handleSubmit} className="forgot-pass">
-             <button className="home-btn" onClick={() => navigate('/')} style={{backgroundColor: '#ff6600'}}><FaHome size={24}/></button>
+        <form onSubmit={showVerificationPopup ? handleVerificationSubmit : handleSubmit} className="forgot-pass">
+            <button className="home-btn" onClick={() => navigate('/')} style={{ backgroundColor: '#ff6600' }}>
+                <FaHome size={24} />
+            </button>
             <label>
                 Email:
                 <input type="email" value={email} onChange={handleEmailChange} />
@@ -71,11 +95,24 @@ function Forgotpass() {
                 Re-Type New Password:
                 <input type="password" value={confirmNewPassword} onChange={handleConfirmNewPasswordChange} />
             </label>
+            {showVerificationPopup && (
+                <label className="verification-code-label">
+                    Verification Code:
+                    <input type="text" value={verificationCode} onChange={handleVerificationCodeChange} placeholder="XXXXX" />
+                </label>
+            )}
+
             {errorMessage && <p className="error-message">{errorMessage}</p>}
-            {successMessage && <p className="success-message">{successMessage}</p>}
-            {successMessage && <p>Go to <a href="/login" style={{color: '#ff6600', textDecoration: 'underline'}}>Login</a></p>} {/* added link to redirect to login page */}
-            <button type="submit">Confirm</button>
-            
+            {successMessage && (
+                <p className="success-message" dangerouslySetInnerHTML={{ __html: successMessage }}></p>
+            )}
+            {showVerificationPopup ? (
+                <button type="button" onClick={handleVerificationSubmit} style={{ backgroundColor: '#ff6600' }}>
+                    Confirm Code
+                </button>
+            ) : (
+                <button type="submit">Send Email</button>
+            )}
         </form>
     );
 }
