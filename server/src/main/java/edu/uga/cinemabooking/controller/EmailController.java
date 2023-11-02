@@ -155,6 +155,30 @@ public class EmailController {
         }
     }
 
+    @PostMapping("/verifyForgotCode")
+    public ResponseEntity<String> verifyForgotCode(@RequestBody String data) {
+        UserDB udb = new UserDB();
+        System.out.println("Received a request to verifyForgotCode.");
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(data);
+            String email = jsonNode.get("email").asText();
+            String Code = jsonNode.get("code").asText();
+            System.out.println(email);
+            System.out.println(Code);
+            if(udb.isEmailAndCodeMatched(email, Code)){
+                udb.updateVerificationCode(email, "");
+                return ResponseEntity.ok("Verification success!");
+
+            }
+            else
+                return ResponseEntity.status(500).body("Verification fail.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error from Verification.");
+        }
+    }
+
 
 
 
