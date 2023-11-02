@@ -12,7 +12,6 @@ function Forgotpass() {
     const [showVerificationPopup, setShowVerificationPopup] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-    const [isValidCode, setIsValidCode] = useState(true);
 
     const navigate = useNavigate();
 
@@ -30,19 +29,6 @@ function Forgotpass() {
 
     const handleVerificationCodeChange = (event) => {
         setVerificationCode(event.target.value);
-
-        const codeRegex = /^\d{6}$/;
-        setIsValidCode(codeRegex.test(verificationCode));
-    };
-
-    const sendVerificationCode = () => {
-        // TODO: Send the verification code to the user's email 
-        // For now, generating a random 5-digit code
-        const randomCode = Math.floor(10000 + Math.random() * 90000);
-        console.log('Verification code sent to email:', randomCode);
-
-        // Show the verification code popup
-        setShowVerificationPopup(true);
     };
 
     const handleSubmit = async (event) => {
@@ -77,8 +63,9 @@ function Forgotpass() {
 
     const handleVerificationSubmit = async (e) => {
         e.preventDefault();
+        const codeRegex = /^\d{6}$/;
         // checks the verification code please replace this with the actual verification logic
-        if (isValidCode) { // Replace '12345' with the actual code
+        if (codeRegex.test(verificationCode)) { // Replace '12345' with the actual code
             
             const pass = encrypt(newPassword);
             const userData = {
