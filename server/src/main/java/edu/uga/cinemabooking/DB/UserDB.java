@@ -97,6 +97,13 @@ public class UserDB {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
+                System.out.println("activity: " +resultSet.getInt("is_activity"));
+                if (resultSet.getInt("is_activity") == 0) {
+                    user = new User();
+                    user.setFullName("notActivity");
+                    return user;
+                }
+                    
                 String dbPassword = resultSet.getString("password_hash");
                 if (decryption.decryptData(dbPassword).equals(decryption.decryptData(password))) {
                     user = new User();
