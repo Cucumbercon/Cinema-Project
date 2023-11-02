@@ -4,6 +4,7 @@ public class User {
 
     int id;
     int type;
+    int is_activity;
     String fullName;
     String email;
     String password;
@@ -19,6 +20,14 @@ public class User {
     // empty contrusctor
     public User() {
 
+    }
+
+    public int getIs_activity() {
+        return is_activity;
+    }
+
+    public void setIs_activity(int is_activity) {
+        this.is_activity = is_activity;
     }
 
     public void setCity(String city) {

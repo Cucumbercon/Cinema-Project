@@ -61,6 +61,16 @@ export const Login = (props) => {
            * */ 
           alert('Email and/or password do not match, please try again');
           console.error('Request failed with status: ', response);
+        } else if (response.status === 401) {
+          /**
+           * 
+           * means the user is not active
+           * Need to do something here
+           * 
+           * 
+           */
+          alert('Sorry, you account is inactive');
+          console.error('Request failed with status: ', response);
         } else {
           /**
            * other errors
