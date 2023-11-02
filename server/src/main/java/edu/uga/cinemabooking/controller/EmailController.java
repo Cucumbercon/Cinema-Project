@@ -189,7 +189,6 @@ public class EmailController {
         try {
             JsonNode jsonNode = objectMapper.readTree(data);
             String email = jsonNode.get("email").asText();
-            int emailType = jsonNode.get("type").asInt();
             if (udb.emailExist(email)) {
                 String verifyCode = generateVerificationCode();
                 // Store verifyCode in the database associated with the email

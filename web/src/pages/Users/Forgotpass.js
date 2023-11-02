@@ -12,6 +12,7 @@ function Forgotpass() {
     const [showVerificationPopup, setShowVerificationPopup] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [isValidCode, setIsValidCode] = useState(true);
 
     const navigate = useNavigate();
 
@@ -29,6 +30,9 @@ function Forgotpass() {
 
     const handleVerificationCodeChange = (event) => {
         setVerificationCode(event.target.value);
+
+        const codeRegex = /^\d{6}$/;
+        setIsValidCode(codeRegex.test(verificationCode));
     };
 
     const sendVerificationCode = () => {
@@ -74,7 +78,7 @@ function Forgotpass() {
     const handleVerificationSubmit = async (e) => {
         e.preventDefault();
         // checks the verification code please replace this with the actual verification logic
-        if (verificationCode === '12345') { // Replace '12345' with the actual code
+        if (isValidCode) { // Replace '12345' with the actual code
             
             const pass = encrypt(newPassword);
             const userData = {
@@ -92,12 +96,18 @@ function Forgotpass() {
             });
             console.log(userData);
 
+            if (response.ok) {
+
+            } else {
+                console.error('Invalid verification code');
+            }
+
             //  the password change message
             setSuccessMessage('Password successfully changed! <a href="/login">Login</a>');
 
         } else {
             //wrong verification code
-            setErrorMessage('Invalid verification code');
+            setErrorMessage('Invalid verification code format');
         }
     };
 
