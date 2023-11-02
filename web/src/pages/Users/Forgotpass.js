@@ -45,6 +45,8 @@ function Forgotpass() {
                     'Content-Type': 'application/json'
                 }
             });
+
+            
             setSuccessMessage('Password successfully changed!');
         }
     };
