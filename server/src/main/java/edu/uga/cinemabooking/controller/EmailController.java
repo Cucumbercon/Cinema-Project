@@ -163,12 +163,14 @@ public class EmailController {
         try {
             JsonNode jsonNode = objectMapper.readTree(data);
             String email = jsonNode.get("email").asText();
-            String Code = jsonNode.get("code").asText();
+            String Code = jsonNode.get("verificationCode").asText();
+            String password = jsonNode.get("pass").asText();
             System.out.println(email);
             System.out.println(Code);
             if(udb.isEmailAndCodeMatched(email, Code)){
                 udb.updateVerificationCode(email, "");
-                return ResponseEntity.ok("Verification success!");
+                udb.updatePassword(password, email);
+                return ResponseEntity.ok("Verification success! Password changed.");
 
             }
             else
@@ -176,6 +178,30 @@ public class EmailController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error from Verification.");
+        }
+    }
+
+    @PostMapping("/sendForgotEmail")
+    public ResponseEntity<String> sendForgotEmail(@RequestBody String data) {
+        UserDB udb = new UserDB();
+        System.out.println("Received a request to send an email.");
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(data);
+            String email = jsonNode.get("email").asText();
+            int emailType = jsonNode.get("type").asInt();
+            if (udb.emailExist(email)) {
+                String verifyCode = generateVerificationCode();
+                // Store verifyCode in the database associated with the email
+                udb.updateVerificationCode(email, verifyCode);
+                sendEmailMessage(email, "Verification Code", "Your verification code is: " + verifyCode);
+            } else {
+                return ResponseEntity.status(400).body("Email does not exist in the database.");
+            }
+            return ResponseEntity.ok("Email sent successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error from send forgot email.");
         }
     }
 

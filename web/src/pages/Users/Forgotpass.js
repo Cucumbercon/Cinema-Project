@@ -41,28 +41,55 @@ function Forgotpass() {
         setShowVerificationPopup(true);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (newPassword !== confirmNewPassword) {
             setErrorMessage('Passwords do not match');
         } else {
-
-            sendVerificationCode();
+            const requestData = {
+                email: email
+            };
+            try {
+                const response = await fetch('http://localhost:8000/api/sendForgotEmail', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+        
+                if (response.ok) {
+                    const responseData = await response.json();
+                    console.log(responseData);
+                } else {
+                    console.error('Request failed:', response.statusText);
+                }
+            } catch (error) {
+                console.error('There was an error sending the request:', error);
+            }
+            setShowVerificationPopup(true);
         }
     };
 
-    const handleVerificationSubmit = () => {
+    const handleVerificationSubmit = async (e) => {
+        e.preventDefault();
         // checks the verification code please replace this with the actual verification logic
         if (verificationCode === '12345') { // Replace '12345' with the actual code
             
             const pass = encrypt(newPassword);
-            const confirmPass = encrypt(confirmNewPassword);
             const userData = {
                 email,
                 pass,
-                confirmPass,
+                verificationCode,
             };
 
+            const response = await fetch('http://localhost:8000/api/verifyForgotCode', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
             console.log(userData);
 
             //  the password change message
