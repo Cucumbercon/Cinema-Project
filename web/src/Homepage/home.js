@@ -192,7 +192,7 @@ const MovieBooking = (props) => {
         <div className="homepagebackground">
             <div>
 
-                <section className="top-bar">
+                <section className="home-top-bar">
                     {/* this part is building left content of top bar */}
                     <div className="left-content">
                         <h2 className="title">WELCOME!</h2>
