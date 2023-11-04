@@ -9,7 +9,7 @@
 
 .homepagebackground {
     background-color: black;
-    margin-top: 30px;
+    /* margin-top: 30px; */
     display: grid;
     height: 100%;
     width: 100%;
@@ -50,15 +50,16 @@ body {
 }
 
 
-.top-bar {
+.home-top-bar {
     background-color: #000;
     display: flex;
     /* position:relative; */
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem 1rem;
-    
 }
+
+
 
 .left-content{
     padding-top: 15px;
@@ -237,6 +238,7 @@ img {
 }
 
 .sidebar-groups {
+    display:grid;
     margin-bottom: 2rem;
     
 }
@@ -248,6 +250,16 @@ img {
 
 input {
     margin-bottom: .6rem;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center; 
+    margin-bottom: 5px; 
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 3px; 
 }
 
 input[type=checkbox]:checked {

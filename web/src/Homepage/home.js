@@ -192,7 +192,7 @@ const MovieBooking = (props) => {
         <div className="homepagebackground">
             <div>
 
-                <section className="top-bar">
+                <section className="home-top-bar">
                     {/* this part is building left content of top bar */}
                     <div className="left-content">
                         <h2 className="title">WELCOME!</h2>
@@ -269,40 +269,64 @@ const MovieBooking = (props) => {
                         <form action="#">
                             <div className="sidebar-groups">
                                 <h3 className="sg-title">Categories</h3>
+                                <div className="checkbox-container">
                                 <input type="checkbox" id="adventure" name="adventure" value="adventure" />
                                 <label htmlFor="adventure">Adventure</label>
+                                </div>
+                                <div className="checkbox-container">
                                 <input type="checkbox" id="action" name="action" value="action" />
                                 <label htmlFor="action">Action</label>
+                                </div>
+                                <div className="checkbox-container">
                                 <input type="checkbox" id="animation" name="animation" value="animation" />
                                 <label htmlFor="animation">Animation</label>
+                                </div>
+                                <div className="checkbox-container">
                                 <input type="checkbox" id="comedy" name="comedy" value="comedy" />
                                 <label htmlFor="comedy">Comedy</label>
+                                </div>
+                                <div className="checkbox-container">
                                 <input type="checkbox" id="thriller" name="thriller" value="thriller" />
                                 <label htmlFor="thriller">Thriller</label>
+                                </div>
+                                <div className="checkbox-container">
                                 <input type="checkbox" id="fantasy" name="fantasy" value="fantasy" />
                                 <label htmlFor="fantasy">Fantasy</label>
+                                </div>
 
                             </div>
 
                             {/* this part is for Language */}
                             <div className="sidebar-groups">
                                 <h3 className="sg-title">Language</h3>
+                                <div className="checkbox-container">
                                 <input type="checkbox" id="english" name="english" value="english" />
                                 <label htmlFor="english">English</label>
+                                </div>
+                                <div className="checkbox-container">
                                 <input type="checkbox" id="spanish" name="spanish" value="spanish" />
                                 <label htmlFor="spanish">Spanish</label>
+                                </div>
+                                <div className="checkbox-container">
                                 <input type="checkbox" id="chinese" name="chinese" value="chinese" />
                                 <label htmlFor="chinese">Chinese</label>
+                                </div>
                             </div>
                             {/* this part is for Details */}
                             <div className="sidebar-groups">
                                 <h3 className="sg-title">Details</h3>
+                                <div className="checkbox-container">
                                 <input type="checkbox" id="ratescore" name="ratescore" value="ratescore" />
                                 <label htmlFor="ratescore">RateScore</label>
+                                </div>
+                                <div className="checkbox-container">
                                 <input type="checkbox" id="numofviewers" name="numofviewers" value="numofviewers" />
                                 <label htmlFor="numofviewers">Numofviewers</label>
+                                </div>
+                                <div className="checkbox-container">
                                 <input type="checkbox" id="mostleased" name="mostleased" value="mostleased" />
                                 <label htmlFor="mostleased">Mostleased</label>
+                                </div>
                             </div>
                             {/* this part is for apply filters */}
                             <div className="sidebar-groups">
