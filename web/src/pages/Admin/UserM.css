@@ -4,9 +4,10 @@
     height: 100vh;
 }
 
-h1 {
+.user-management-container h1 {
+    color: black;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .users-table {
@@ -31,7 +32,7 @@ h1 {
     background-color: grey;
 }
 
-.edit-btn, .edit-order-btn, .delete-btn {
+.edit-btn, .edit-order-btn, .remove-btn {
     padding: 0.5rem 1rem;
     margin-right: 0.5rem;
     margin-left: 0.5rem ;
@@ -52,7 +53,7 @@ h1 {
     color: #fff;
 }
 
-.delete-btn{
+.remove-btn{
     background-color: red;
     color: #fff;
 }
@@ -66,6 +67,6 @@ h1 {
 }
 
 
-.delete-btn :hover{
+.remove-btn :hover{
     background-color: red;
 }

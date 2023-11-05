@@ -29,6 +29,7 @@ const MovieBooking = (props) => {
 
     useEffect(() => {
         console.log("isloggedin: " + localStorage.getItem('isLoggedIn'));
+        // console.log("Adminisloggedin: " + localStorage.getItem('AdminisLoggedIn'));
         console.log("hasDisplayedToast: " + hasDisplayedToast);
         if (localStorage.getItem('isLoggedIn') === 'true' && !hasDisplayedToast) {
             toast.success("Login successful!", {
@@ -60,6 +61,10 @@ const MovieBooking = (props) => {
     const handleProfileUpdate = () => {
     };
 
+    const goToUserManagement = () =>{
+        navigate('/usermanagement');
+    }
+
     const goToMoiveManagement = () =>{
         navigate('/moviemanagement');
     }
@@ -89,6 +94,7 @@ const MovieBooking = (props) => {
     const handleLogout = () => {
         localStorage.removeItem('authToken');
         localStorage.setItem('isLoggedIn', 'false');
+        // localStorage.setItem('isAdminLoggedIn', 'false');
         localStorage.setItem('name', '')
         props.setIsAdmin(false);
         setHasDisplayedToast(false);
@@ -238,6 +244,8 @@ const MovieBooking = (props) => {
                                             <button onClick={goToProfilePage}>Update Profile</button>
                                     {props.isAdmin && (
                                         <div>
+                                            <button onClick={goToUserManagement}>User Manage</button>
+                                            
                                             <button onClick={goToMoiveManagement}>Movie Manage</button>
                                             <button onClick={goToPromotion}>Promotion</button>
                                         </div>

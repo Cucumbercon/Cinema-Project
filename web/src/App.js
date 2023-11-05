@@ -5,7 +5,7 @@ import DashBoard from './pages/Admin/DashBoard';
 import MovieBooking from './Homepage/home';
 import MovieDetails from './pages/MovieDetails/MovieDetails';
 import MovieManagement from './pages/Admin/MovieM';
-//import UserManagement from './pages/Admin/UserM';
+import UserManagement from './pages/Admin/UserM';
 import ConfirmationPage from './pages/ConfirmationPage/ConfirmationPage'
 import Promotion from './pages/Admin/promo';
 import MovieSeatBooking from './pages/TicketProcess/seatsSelecting';
@@ -28,6 +28,7 @@ function App() {
 
   useEffect(() => {
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    // const storedAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
     const storedName = localStorage.getItem('name') === '';
   }, []);
 
@@ -39,7 +40,9 @@ function App() {
         <Route path="/moviedetails" element={<MovieDetails />} />
         <Route path="/movieseatbooking" element={<MovieSeatBooking />} />
         <Route path="/adminpanel" element={<AdminPanel isAdmin={isAdmin}/>} />
+        <Route path="/dashboard" element={<DashBoard isAdmin={isAdmin}/>} />
         <Route path="/moviemanagement" element={<MovieManagement isAdmin={isAdmin}/>} />
+        <Route path="/usermanagement" element={<UserManagement isAdmin={isAdmin}/>} />
         <Route path="/promotion" element={<Promotion isAdmin={isAdmin}/>} />
         <Route path="/ordersummary" element={<OrderSummary />} />
         <Route path="/checkout" element={<Checkout />} />

@@ -18,6 +18,25 @@ function AdminPanel(props) {
     if (!props.isAdmin) {
         return <div>You do not have the permission to access this page!!</div>;
     }
+
+    const goToPromotion = () =>{
+        navigate('/promotion');
+    }
+
+    const goToMoiveManagement = () =>{
+        navigate('/moviemanagement');
+    }
+
+    const goToDashboard = () =>{
+        navigate('/dashboard');
+    }
+
+    const goToUserManagement = () =>{
+        navigate('/usermanagement');
+    }
+
+
+
  
   return (
     <div>
@@ -65,10 +84,14 @@ function AdminPanel(props) {
         <div className="adminpermission">
                 <h2>Admin Permissions</h2>
                 <div className="permissions-grid">
-                    <div className="permission-box">Dashboard</div>
-                    <div className="permission-box">User Management</div>
-                    <div className="permission-box">Movie Management</div>
-                    <div className="permission-box">Promotion & Ticket Management</div>
+                <button className="permission-box" onClick={goToDashboard}>DashBoard
+                </button>
+                <button className="permission-box" onClick={goToUserManagement}>User Management
+                </button>
+                <button className="permission-box" onClick={goToMoiveManagement}>Movie Management
+                </button>
+                <button className="permission-box" onClick={goToPromotion}>Promotion & Ticket Management
+                </button>
                 </div>
             </div>
         </div>
