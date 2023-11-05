@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import './MovieM.css';
 
 function MovieManagement(props) {
+
+    const [releaseDay, setReleaseDay] = useState("");
+
     const [movieDetails, setMovieDetails] = useState({
         id: crypto.randomUUID(),
         title: '',
@@ -20,76 +24,112 @@ function MovieManagement(props) {
         rating: '',
     });
 
+    useEffect(() => {
+        setMovieDetails((prevMovieDetails) => ({
+            ...prevMovieDetails,
+            release_day: releaseDay, // 更新 movieDetails 中的 release_day
+        }));
+    }, [releaseDay]);
+
     if (!props.isAdmin) {
         return <div>You do not have the permission to access this page.</div>;
-    }    
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setMovieDetails(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleDayChange = (e) => {
+        let inputValue = e.target.value;
+        if (/^\d{0,4}(-\d{0,2}(-\d{0,2})?)?$/.test(inputValue)) {
+            if (inputValue.length === 4 || inputValue.length === 7) {
+                inputValue += "-";
+            }
+            setReleaseDay(inputValue);
+        }
+
+        console.log("e: " + e.target.value);
+        console.log("releaseday: " + releaseDay);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Backspace") {
+            setReleaseDay("");
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch('http://localhost:8000/api/addMovie', {
-            method: 'POST', 
-            body: JSON.stringify(movieDetails),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(function(response) {
-            if (response.status === 200) {
-                // if 200，direct to homepage，and update the page
-                return response.json();
-            } else if (response.status === 400) {
-                // if 400, to inform the admin that the movie already exists in the db (popupwindow,or somethingelse)
-            } else {
-                // if return other HTTP status, inform the admin as well
-                console.error('Request failed with status:', response.status);
-                return Promise.reject('Request failed');
-            }
-        })
-        .catch(function(error) {
-            // if error occurs other than http, direct to error page or something else
-            console.error('Error:', error);
-        });   
-        
+        if (/^\d{4}-\d{2}-\d{2}$/.test(releaseDay) === false) {
+            alert("Sorry, the format of release_day is incorrect");
+        } else {
+
+            // console.log(movieDetails);
+            fetch('http://localhost:8000/api/addMovie', {
+                method: 'POST',
+                body: JSON.stringify(movieDetails),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(function (response) {
+                    if (response.status === 200) {
+                        // if 200，direct to homepage，and update the page
+                        return response.json();
+                    } else if (response.status === 400) {
+                        // if 400, to inform the admin that the movie already exists in the db (popupwindow,or somethingelse)
+                    } else {
+                        // if return other HTTP status, inform the admin as well
+                        console.error('Request failed with status:', response.status);
+                        return Promise.reject('Request failed');
+                    }
+                })
+                .catch(function (error) {
+                    // if error occurs other than http, direct to error page or something else
+                    console.error('Error:', error);
+                });
+
+        }
+
     }
-
-
-    const handleCheckbox = (e) => {
-        const { name, checked } = e.target;
-        setMovieDetails(prev => ({ ...prev, [name]: checked }));
-    };
 
     return (
         <div className='movManBackground'>
-        <div className="movie-management">
-            <h2>Movie Details</h2>
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="title" placeholder="Movie Title" onChange={handleChange} required/>
-                <input type="text" name="language" placeholder="Language" onChange={handleChange} required/>
-                <input type="text" name="popularity" placeholder="Popularity" onChange={handleChange} required/>
-                <input type="text" name="poster_path" placeholder="Poster_path" onChange={handleChange} required/>
-                <input type="text" name="release_day" placeholder="Release_day" onChange={handleChange} required/>
-                <textarea name="synopsis" placeholder="Synopsis" onChange={handleChange}></textarea>
-                <input type="text" name="state" placeholder="State" onChange={handleChange} required/>
-                <input type="text" name="category" placeholder="Category" onChange={handleChange} required/>
-                <input type="text" name="rating" placeholder="Rating" onChange={handleChange} required/>
-                <input type="text" name="trailer_path" placeholder="Trailer_path" onChange={handleChange} required/>
-                <input type="text" name="cast" placeholder="Cast" onChange={handleChange} required/>
-                <input type="text" name="director" placeholder="Director" onChange={handleChange} required/>
-                <input type="text" name="producer" placeholder="Producer" onChange={handleChange} required/>
+            <div className="movie-management">
+                <h2>Movie Details</h2>
+                <form onSubmit={handleSubmit}>
+                    <input type="text" name="title" placeholder="Movie Title" onChange={handleChange} required />
+                    <input type="text" name="language" placeholder="Language" onChange={handleChange} required />
+                    <input type="text" name="popularity" placeholder="Popularity" onChange={handleChange} required />
+                    <input type="text" name="poster_path" placeholder="Poster_path" onChange={handleChange} required />
+                    <input
+                        type="text"
+                        name="release_day"
+                        placeholder="Release_day in YYYY-MM-DD format"
+                        value={releaseDay}
+                        onChange={handleDayChange}
+                        onKeyDown={handleKeyDown}
 
-                {/* <label>
+                        required
+                    />
+                    <textarea name="synopsis" placeholder="Synopsis" onChange={handleChange}></textarea>
+                    <input type="text" name="state" placeholder="State" onChange={handleChange} required />
+                    <input type="text" name="category" placeholder="Category" onChange={handleChange} required />
+                    <input type="text" name="rating" placeholder="Rating" onChange={handleChange} required />
+                    <input type="text" name="trailer_path" placeholder="Trailer_path" onChange={handleChange} required />
+                    <input type="text" name="cast" placeholder="Cast" onChange={handleChange} required />
+                    <input type="text" name="director" placeholder="Director" onChange={handleChange} required />
+                    <input type="text" name="producer" placeholder="Producer" onChange={handleChange} required />
+
+                    {/* <label>
                     Archived:
                     <input type="checkbox" name="archived" onChange={handleCheckbox} />
                 </label> */}
-                <button type="submit">Update Movie Details</button>
-            </form>
-        </div>
+                    <button type="submit">Update Movie Details</button>
+                </form>
+            </div>
         </ div>
     );
 }
