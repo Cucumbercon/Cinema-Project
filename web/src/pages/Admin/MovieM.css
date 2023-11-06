@@ -7,8 +7,6 @@
 } */
 
 .movManBackground {
-    /* background-color: black; */
-    /* display: grid; */
     display:flex;
     justify-content: center;
     align-items: center;
@@ -17,14 +15,32 @@
     justify-content: space-evenly;
 }
 
+.movieField {
+    display: flex;
+    flex-direction: column;
+}
+
+.grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
+    
+}
+
+.synosis {
+    width: 100%;
+    gap: 20px; 
+}
 
 .movie-management {
     /* display:contents; */
-    display: flow-root;
+    /* display: flow-root; */
+    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    width: 250%;
+    width: 100%;
     margin: 50px;
     padding: 2rem;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);

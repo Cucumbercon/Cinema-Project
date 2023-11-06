@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 import './MovieM.css';
 
 function MovieManagement(props) {
+
+    const navigate = useNavigate();
 
     const [releaseDay, setReleaseDay] = useState("");
 
@@ -77,6 +81,7 @@ function MovieManagement(props) {
                 .then(function (response) {
                     if (response.status === 200) {
                         // if 200，direct to homepage，and update the page
+                        navigate('/');
                         return response.json();
                     } else if (response.status === 400) {
                         // if 400, to inform the admin that the movie already exists in the db (popupwindow,or somethingelse)
@@ -98,30 +103,88 @@ function MovieManagement(props) {
     return (
         <div className='movManBackground'>
             <div className="movie-management">
-                <h2>Movie Details</h2>
+                <h2 className='movieMh2'>Movie Details</h2>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" name="title" placeholder="Movie Title" onChange={handleChange} required />
-                    <input type="text" name="language" placeholder="Language" onChange={handleChange} required />
-                    <input type="text" name="popularity" placeholder="Popularity" onChange={handleChange} required />
-                    <input type="text" name="poster_path" placeholder="Poster_path" onChange={handleChange} required />
-                    <input
-                        type="text"
-                        name="release_day"
-                        placeholder="Release_day in YYYY-MM-DD format"
-                        value={releaseDay}
-                        onChange={handleDayChange}
-                        onKeyDown={handleKeyDown}
+                    <div className='movieField grid'>
+                        <div className='movieField'>
+                            Title
+                            <input type="text" name="title" placeholder="Movie Title" onChange={handleChange} required />
+                        </div>
+                        <div className='movieField'>
+                            Language
+                            <input type="text" name="language" placeholder="Language" onChange={handleChange} required />
+                        </div>
+                    </div>
 
-                        required
-                    />
-                    <textarea name="synopsis" placeholder="Synopsis" onChange={handleChange}></textarea>
-                    <input type="text" name="state" placeholder="State" onChange={handleChange} required />
-                    <input type="text" name="category" placeholder="Category" onChange={handleChange} required />
-                    <input type="text" name="rating" placeholder="Rating" onChange={handleChange} required />
-                    <input type="text" name="trailer_path" placeholder="Trailer_path" onChange={handleChange} required />
-                    <input type="text" name="cast" placeholder="Cast" onChange={handleChange} required />
-                    <input type="text" name="director" placeholder="Director" onChange={handleChange} required />
-                    <input type="text" name="producer" placeholder="Producer" onChange={handleChange} required />
+                    <div className='movieField grid'>
+                        <div className='movieField'>
+                            Popularity
+                            <input type="text" name="popularity" placeholder="Popularity" onChange={handleChange} required />
+                        </div>
+                        <div className='movieField'>
+                            Poster Path
+                            <input type="text" name="poster_path" placeholder="Poster_path" onChange={handleChange} required />
+
+                        </div>
+                    </div>
+
+                    <div className='movieField grid'>
+                        <div className='movieField'>
+                            Release Day
+                            <input
+                                type="text"
+                                name="release_day"
+                                placeholder="Release_day in YYYY-MM-DD format"
+                                value={releaseDay}
+                                onChange={handleDayChange}
+                                onKeyDown={handleKeyDown}
+
+                                required
+                            />
+                        </div>
+                        <div className='movieField'>
+                            State
+                            <input type="text" name="state" placeholder="State" onChange={handleChange} required />
+                        </div>
+                    </div>
+
+                    <div className='movieField grid'>
+                        <div className='movieField'>
+                            Category
+                            <input type="text" name="category" placeholder="Category" onChange={handleChange} required />
+                        </div>
+                        <div className='movieField'>
+                            Rating
+                            <input type="text" name="rating" placeholder="Rating" onChange={handleChange} required />
+                        </div>
+                    </div>
+
+                    <div className='movieField grid'>
+                        <div className='movieField'>
+                            Trailer Path
+                            <input type="text" name="trailer_path" placeholder="Trailer_path" onChange={handleChange} required />
+                        </div>
+                        <div className='movieField'>
+                            Cast
+                            <input type="text" name="cast" placeholder="Cast" onChange={handleChange} required />
+                        </div>
+                    </div>
+
+                    <div className='movieField grid'>
+                        <div className='movieField'>
+                            Director
+                            <input type="text" name="director" placeholder="Director" onChange={handleChange} required />
+                        </div>
+                        <div className='movieField'>
+                            Producer
+                            <input type="text" name="producer" placeholder="Producer" onChange={handleChange} required />
+                        </div>
+                    </div>
+
+                    <div className='synosis'>
+                        Synopsis
+                        <textarea name="synopsis" placeholder="Synopsis" onChange={handleChange}></textarea>
+                    </div>
 
                     {/* <label>
                     Archived:
