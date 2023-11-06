@@ -15,7 +15,7 @@ function Promotion(props) {
         setShowAddPromo(!showAddPromo);
     };
 
-    if (!props.isAdmin) {
+    if (localStorage.getItem('isAdmin') != 'true') {
         return <div>You do not have the permission to access this page!</div>;
     }
 

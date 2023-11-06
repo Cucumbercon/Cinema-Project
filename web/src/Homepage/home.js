@@ -28,9 +28,9 @@ const MovieBooking = (props) => {
     // console.log(props.isAdmin);
 
     useEffect(() => {
-        console.log("isloggedin: " + localStorage.getItem('isLoggedIn'));
+        // console.log("isloggedin: " + localStorage.getItem('isLoggedIn'));
         // console.log("Adminisloggedin: " + localStorage.getItem('AdminisLoggedIn'));
-        console.log("hasDisplayedToast: " + hasDisplayedToast);
+        // console.log("hasDisplayedToast: " + hasDisplayedToast);
         if (localStorage.getItem('isLoggedIn') === 'true' && !hasDisplayedToast) {
             toast.success("Login successful!", {
                 position: "bottom-center",
@@ -42,10 +42,10 @@ const MovieBooking = (props) => {
                 progress: undefined,
                 theme: "colored",
             });
-            setHasDisplayedToast(true); 
+            setHasDisplayedToast(true);
             localStorage.setItem('hasDisplayedToast', 'true');
         }
-        }, []);
+    }, []);
     // }, [hasDisplayedToast]);
 
     const toggleUserPopup = () => {
@@ -61,16 +61,16 @@ const MovieBooking = (props) => {
     const handleProfileUpdate = () => {
     };
 
-    const goToUserManagement = () =>{
-        navigate('/usermanagement');
-    }
+    // const goToUserManagement = () => {
+    //     navigate('/usermanagement');
+    // }
 
-    const goToMoiveManagement = () =>{
-        navigate('/moviemanagement');
-    }
+    // const goToMoiveManagement = () => {
+    //     navigate('/moviemanagement');
+    // }
 
-    const goToPromotion = () =>{
-        navigate('/promotion');
+    const goToAdminPanel = () => {
+        navigate('/adminpanel');
     }
 
 
@@ -83,20 +83,15 @@ const MovieBooking = (props) => {
     };
 
     const goToProfilePage = () => {
-        if (props.isAdmin) {
-            navigate('/adminpanel');
-        } else {
-            navigate('/updateprofile');
-        }
-        
+        navigate('/updateprofile');
     };
 
     const handleLogout = () => {
         localStorage.removeItem('authToken');
         localStorage.setItem('isLoggedIn', 'false');
+        localStorage.setItem('isAdmin', 'false');
         // localStorage.setItem('isAdminLoggedIn', 'false');
         localStorage.setItem('name', '')
-        props.setIsAdmin(false);
         setHasDisplayedToast(false);
         toast.success('Logout successful!', {
             position: "bottom-center",
@@ -241,16 +236,18 @@ const MovieBooking = (props) => {
                                     {localStorage.getItem('isLoggedIn') === 'true' ? (
                                         <div>
                                             <h3>Welcome back, {localStorage.getItem('name')}!</h3>
-                                            <button onClick={goToProfilePage}>Update Profile</button>
-                                    {props.isAdmin && (
-                                        <div>
-                                            <button onClick={goToUserManagement}>User Manage</button>
-                                            
-                                            <button onClick={goToMoiveManagement}>Movie Manage</button>
-                                            <button onClick={goToPromotion}>Promotion</button>
-                                        </div>
-                                    )}
-                                            <button onClick={handleLogout}>Logout</button>
+                                            {localStorage.getItem('isAdmin') === 'true' ? (
+                                                <div>
+                                                    <button onClick={goToAdminPanel}>Admin Panel</button>
+                                                    <button onClick={handleLogout}>Logout</button>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <button onClick={goToProfilePage}>Update Profile</button>
+                                                    <button onClick={handleLogout}>Logout</button>
+                                                </div>
+                                            )}
+
                                         </div>
                                     ) : (
                                         <div>
@@ -278,28 +275,28 @@ const MovieBooking = (props) => {
                             <div className="sidebar-groups">
                                 <h3 className="sg-title">Categories</h3>
                                 <div className="checkbox-container">
-                                <input type="checkbox" id="adventure" name="adventure" value="adventure" />
-                                <label htmlFor="adventure">Adventure</label>
+                                    <input type="checkbox" id="adventure" name="adventure" value="adventure" />
+                                    <label htmlFor="adventure">Adventure</label>
                                 </div>
                                 <div className="checkbox-container">
-                                <input type="checkbox" id="action" name="action" value="action" />
-                                <label htmlFor="action">Action</label>
+                                    <input type="checkbox" id="action" name="action" value="action" />
+                                    <label htmlFor="action">Action</label>
                                 </div>
                                 <div className="checkbox-container">
-                                <input type="checkbox" id="animation" name="animation" value="animation" />
-                                <label htmlFor="animation">Animation</label>
+                                    <input type="checkbox" id="animation" name="animation" value="animation" />
+                                    <label htmlFor="animation">Animation</label>
                                 </div>
                                 <div className="checkbox-container">
-                                <input type="checkbox" id="comedy" name="comedy" value="comedy" />
-                                <label htmlFor="comedy">Comedy</label>
+                                    <input type="checkbox" id="comedy" name="comedy" value="comedy" />
+                                    <label htmlFor="comedy">Comedy</label>
                                 </div>
                                 <div className="checkbox-container">
-                                <input type="checkbox" id="thriller" name="thriller" value="thriller" />
-                                <label htmlFor="thriller">Thriller</label>
+                                    <input type="checkbox" id="thriller" name="thriller" value="thriller" />
+                                    <label htmlFor="thriller">Thriller</label>
                                 </div>
                                 <div className="checkbox-container">
-                                <input type="checkbox" id="fantasy" name="fantasy" value="fantasy" />
-                                <label htmlFor="fantasy">Fantasy</label>
+                                    <input type="checkbox" id="fantasy" name="fantasy" value="fantasy" />
+                                    <label htmlFor="fantasy">Fantasy</label>
                                 </div>
 
                             </div>
@@ -308,32 +305,32 @@ const MovieBooking = (props) => {
                             <div className="sidebar-groups">
                                 <h3 className="sg-title">Language</h3>
                                 <div className="checkbox-container">
-                                <input type="checkbox" id="english" name="english" value="english" />
-                                <label htmlFor="english">English</label>
+                                    <input type="checkbox" id="english" name="english" value="english" />
+                                    <label htmlFor="english">English</label>
                                 </div>
                                 <div className="checkbox-container">
-                                <input type="checkbox" id="spanish" name="spanish" value="spanish" />
-                                <label htmlFor="spanish">Spanish</label>
+                                    <input type="checkbox" id="spanish" name="spanish" value="spanish" />
+                                    <label htmlFor="spanish">Spanish</label>
                                 </div>
                                 <div className="checkbox-container">
-                                <input type="checkbox" id="chinese" name="chinese" value="chinese" />
-                                <label htmlFor="chinese">Chinese</label>
+                                    <input type="checkbox" id="chinese" name="chinese" value="chinese" />
+                                    <label htmlFor="chinese">Chinese</label>
                                 </div>
                             </div>
                             {/* this part is for Details */}
                             <div className="sidebar-groups">
                                 <h3 className="sg-title">Details</h3>
                                 <div className="checkbox-container">
-                                <input type="checkbox" id="ratescore" name="ratescore" value="ratescore" />
-                                <label htmlFor="ratescore">RateScore</label>
+                                    <input type="checkbox" id="ratescore" name="ratescore" value="ratescore" />
+                                    <label htmlFor="ratescore">RateScore</label>
                                 </div>
                                 <div className="checkbox-container">
-                                <input type="checkbox" id="numofviewers" name="numofviewers" value="numofviewers" />
-                                <label htmlFor="numofviewers">Numofviewers</label>
+                                    <input type="checkbox" id="numofviewers" name="numofviewers" value="numofviewers" />
+                                    <label htmlFor="numofviewers">Numofviewers</label>
                                 </div>
                                 <div className="checkbox-container">
-                                <input type="checkbox" id="mostleased" name="mostleased" value="mostleased" />
-                                <label htmlFor="mostleased">Mostleased</label>
+                                    <input type="checkbox" id="mostleased" name="mostleased" value="mostleased" />
+                                    <label htmlFor="mostleased">Mostleased</label>
                                 </div>
                             </div>
                             {/* this part is for apply filters */}

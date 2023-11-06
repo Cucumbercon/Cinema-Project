@@ -28,33 +28,33 @@ function App() {
 
   useEffect(() => {
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    // const storedAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
+    const storedAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
     const storedName = localStorage.getItem('name') === '';
   }, []);
 
   return (
     <Router>
       <Routes>
-      <Route path="/" element={<MovieBooking isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />        <Route path="/dashboard" element={<DashBoard isAdmin={isAdmin}/>} />
+        <Route path="/" element={<MovieBooking />} />
         <Route path="/moviebooking" element={<MovieBooking />} />
         <Route path="/moviedetails" element={<MovieDetails />} />
         <Route path="/movieseatbooking" element={<MovieSeatBooking />} />
-        <Route path="/adminpanel" element={<AdminPanel isAdmin={isAdmin}/>} />
-        <Route path="/dashboard" element={<DashBoard isAdmin={isAdmin}/>} />
-        <Route path="/moviemanagement" element={<MovieManagement isAdmin={isAdmin}/>} />
-        <Route path="/usermanagement" element={<UserManagement isAdmin={isAdmin}/>} />
-        <Route path="/promotion" element={<Promotion isAdmin={isAdmin}/>} />
+        <Route path="/adminpanel" element={<AdminPanel />} />
+        <Route path="/dashboard" element={<DashBoard isAdmin={isAdmin} />} />
+        <Route path="/moviemanagement" element={<MovieManagement />} />
+        <Route path="/usermanagement" element={<UserManagement isAdmin={isAdmin} />} />
+        <Route path="/promotion" element={<Promotion />} />
         <Route path="/ordersummary" element={<OrderSummary />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/confirmationpage" element={<ConfirmationPage />} />
-        <Route path="/login" element={<Login setIsAdmin={setIsAdmin} />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/adminSignup" element={<AdminSignup />} />
         <Route path="/notfound" element={<NotFound />} />
-        <Route path="/updateprofile" element={<UpdateProfile/>} />
-        <Route path="/emailverification" element={<EmailVerification/>} />
-        <Route path="/registrationsuccess" element={<RegistrationSuccessPage/>} />
-        <Route path="/forgotpass" element={<Forgotpass/>} />
+        <Route path="/updateprofile" element={<UpdateProfile />} />
+        <Route path="/emailverification" element={<EmailVerification />} />
+        <Route path="/registrationsuccess" element={<RegistrationSuccessPage />} />
+        <Route path="/forgotpass" element={<Forgotpass />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
