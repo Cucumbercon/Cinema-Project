@@ -471,6 +471,21 @@ public class UserDB {
         }
     }
 
+    public List<String> getAllSubscribedUserEmails() {
+        List<String> emails = new ArrayList<>();
+        String sql = "SELECT email FROM user WHERE subscribe = 1";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                emails.add(resultSet.getString("email"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return emails;
+    }
 
 
 

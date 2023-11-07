@@ -76,8 +76,20 @@ public class EmailController {
                 case 3:
                     sendEmailMessage(email, "Profile Updated", "Your profile has been successfully updated.");
                     break;
-            }
+                    case 4:
+                    // promoCodeinfo
+                    String promoCodeInfo = jsonNode.has("promoCodeInfo") ? jsonNode.get("promoCodeInfo").asText() : "NONE";
 
+                    List<String> subscribedEmails = udb.getAllSubscribedUserEmails(); // neeed to implement
+                    System.out.println(subscribedEmails);
+                    for (String subscribedEmail : subscribedEmails) {
+                        sendEmailMessage(subscribedEmail, "Promotion", "Here is your Promotion information:" + promoCodeInfo);
+                    }
+                    break;
+                
+
+            }
+            
             return ResponseEntity.ok("Email sent successfully!");
 
         } catch (Exception e) {

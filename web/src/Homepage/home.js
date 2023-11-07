@@ -129,7 +129,7 @@ const MovieBooking = (props) => {
         autoplaySpeed: 3000,
     };
     const handleSearch = () => {
-        // 发起搜索请求
+        // request search
         fetch(`http://localhost:8000/api/searchMovieByName?movieName=${searchTerm}`, {
             method: 'GET',
         })
@@ -163,7 +163,7 @@ const MovieBooking = (props) => {
         fetch('http://localhost:8000/api/getAvailableMovie', {
             method: 'GET',
         })
-            .then((response) => response.text()) // 解析响应为JSON
+            .then((response) => response.text()) // JSON
             .then((data) => {
                 const parsedData = JSON.parse(data);
                 setAvailableMovie(parsedData);
@@ -176,11 +176,11 @@ const MovieBooking = (props) => {
         fetch('http://localhost:8000/api/getUpComingMovie', {
             method: 'GET',
         })
-            .then((response) => response.text()) // 解析响应为 JSON 格式
+            .then((response) => response.text()) // Goto JSON structure
             .then((data) => {
                 // transfer Json from string to Obj
                 const parsedData = JSON.parse(data);
-                setUpComingMovie(parsedData); // 存储数据在 upComingMovie 状态中
+                setUpComingMovie(parsedData); // storage the data in upComingMovie
                 // console.log('upComingMovie:', parsedData);
             })
             .catch((error) => {
