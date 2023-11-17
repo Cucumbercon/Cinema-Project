@@ -190,7 +190,7 @@ function MovieManagement(props) {
                     Archived:
                     <input type="checkbox" name="archived" onChange={handleCheckbox} />
                 </label> */}
-                    <button type="submit">Update Movie Details</button>
+                    <button type="submit">Add New Movie</button>
                 </form>
             </div>
         </ div>
