@@ -3,19 +3,21 @@ import './promo.css';
 
 function Promotion(props) {
     const [showAddPromo, setShowAddPromo] = useState(false);
-    // 初始化状态时包含示例促销代码
-    const [promoCodes, setPromoCodes] = useState([
-        {
-            promotionCode: "SAMPLEPROMO",
-            description: "This is a sample promotion description.",
-            discountAmount:0.9,
-            startDate: "2023-12-31",
-            endDate:"2024-01-01",
-            status: true
-        }
-    ]);
+    const [promoCodes, setPromoCodes] = useState([]);
+    const [newPromo, setNewPromo] = useState({
+        promotionCode: '',
+        description: '',
+        discountAmount: '',
+        startDate: '',
+        endDate: '',
+        status: false // init is false
+    });
 
+    
     useEffect(() => {
+        fetchPromotion();
+    }, []);
+    const fetchPromotion = () =>{
         fetch('http://localhost:8000/api/promotions', {
             method: 'GET',
         })
@@ -29,10 +31,71 @@ function Promotion(props) {
             .catch((error) => {
                 console.error('Error in fetch promo:', error);
             });
-    }, []);
-
+    }
     const handleAddPromo = () => {
         setShowAddPromo(!showAddPromo);
+    };
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewPromo(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        fetch('http://localhost:8000/api/addpromotion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newPromo)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            
+            // send promo code if success added
+            const userEmail = "null@null.test"; 
+            sendPromotionEmail(userEmail, newPromo.promotionCode);
+            alert('Promotion sended successfully');
+            fetchPromotion();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error adding promotion');
+        });
+    };
+    
+    const sendPromotionEmail = (email, promoCode) => {
+        fetch('http://localhost:8000/api/sendEmail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                type: 4, // 假设4代表发送促销信息
+                promoCodeInfo: promoCode
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log('Promotion email sent successfully');
+        })
+        .catch(error => {
+            console.error('Error in send promo email:', error);
+        });
     };
 
     if (localStorage.getItem('isAdmin') !== 'true') {
@@ -40,17 +103,57 @@ function Promotion(props) {
     }
 
     return (
+        
         <div className="promotion-page">
             <div className="add-promo-bar" onClick={handleAddPromo}>
                 Add Promotion
             </div>
             {showAddPromo && (
-                <div className="add-promo-form">
-                    <input placeholder="Promo Code" />
-                    <input type="date" placeholder="Promo Validity" />
-                    <input type="number" placeholder="Discount Percentage" />
-                    <button>Submit</button>
-                </div>
+                <form className="add-promo-form" onSubmit={handleFormSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="promotionCode">Promo Code:</label>
+                        <input 
+                            name="promotionCode"
+                            placeholder="Promo Code" 
+                            onChange={handleInputChange} />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="description">Description:</label>
+                        <textarea 
+                            name="description"
+                            placeholder="Promo Description" 
+                            onChange={handleInputChange} />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="discountAmount">Discount Amount:</label>
+                        <input 
+                            name="discountAmount"
+                            type="number"
+                            placeholder="Discount Amount" 
+                            min="0"
+                            max="1"
+                            step="0.01" // min step 0.01
+                            onChange={handleInputChange} 
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="startDate">Start Date:</label>
+                        <input 
+                            name="startDate"
+                            type="date"
+                            placeholder="Start Date" 
+                            onChange={handleInputChange} />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="endDate">End Date:</label>
+                        <input 
+                            name="endDate"
+                            type="date" 
+                            placeholder="End Date" 
+                            onChange={handleInputChange} />
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
             )}
             <table className="promo-table">
                 <thead>

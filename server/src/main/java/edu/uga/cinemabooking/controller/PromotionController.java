@@ -33,9 +33,29 @@ public class PromotionController {
 
     @GetMapping("/promotions")
     public List<Promotion> getAllPromotions() {
-        System.out.println("recieved get promotionlist requestion.");
+        //System.out.println("recieved get promotionlist requestion.");
         List<Promotion> promotionlists = pdb.getAllPromotions();
-        System.out.println(promotionlists);
+        //System.out.println(promotionlists);
         return promotionlists;
     }
+
+    @PostMapping("/addpromotion")
+    public ResponseEntity<?> addPromotion(@RequestBody String data) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(data);
+            String promotionCode = jsonNode.get("promotionCode").asText();
+            String description = jsonNode.get("description").asText();
+            double discountAmount = jsonNode.get("discountAmount").asDouble();
+            String startDate = jsonNode.get("startDate").asText();
+            String endDate = jsonNode.get("endDate").asText();
+            System.err.println("信息解析成功。");
+            pdb.addPromotion(promotionCode,description,discountAmount,startDate,endDate);
+            return ResponseEntity.ok("Promotion added successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding promotion");
+        }
+    }
+
 }

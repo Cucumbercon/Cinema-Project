@@ -21,15 +21,16 @@ public class PromoDB {
         }
     }
 
-    public void addPromotion(String promotion_code, String description, double discount_amount, Date startDate, Date endDate) {
+    public void addPromotion(String promotion_code, String description, double discount_amount, String startDate, String endDate) {
         String sql = "INSERT INTO promotion (promotion_code, description, discount_amount, start_date, end_date, status) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, promotion_code);
             preparedStatement.setString(2, description);
             preparedStatement.setDouble(3, discount_amount);
-            preparedStatement.setDate(4, startDate);
-            preparedStatement.setDate(5, endDate);
+            preparedStatement.setString(4, startDate);
+            preparedStatement.setString(5, endDate);
             preparedStatement.setInt(6, 0); // Assuming status 0 as default for new entries
+            //System.err.println(sql);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
