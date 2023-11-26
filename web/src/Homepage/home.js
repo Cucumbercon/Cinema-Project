@@ -24,8 +24,24 @@ const MovieBooking = (props) => {
 
     const navigate = useNavigate();
 
-    // console.log(props.isLoggedIn);
-    // console.log(props.isAdmin);
+    const [movieDetails, setMovieDetails] = useState({
+        id: crypto.randomUUID(),
+        title: '',
+        language: '',
+        popularity: '',
+        poster_path: '',
+        backdrop_path: '',
+        release_day: '',
+        state: '',
+        category: '',
+        trailer_path: '',
+        cast: '',
+        director: '',
+        producer: '',
+        synopsis: '',
+        rating: '',
+    });
+
 
     useEffect(() => {
         // console.log("isloggedin: " + localStorage.getItem('isLoggedIn'));
@@ -54,6 +70,37 @@ const MovieBooking = (props) => {
 
     const handleLogin = () => {
     };
+
+    const handleViewDetail = (movie) => {
+        fetch(`http://localhost:8000/api/ViewMovieDetail?id=${movie.id}`, {
+            method: 'GET',
+        }).then((response) => response.text())
+            .then((data) => {
+                const parsedData = JSON.parse(data);
+                setMovieDetails({
+                    id: parsedData.id,
+                    title: parsedData.title,
+                    language: parsedData.language,
+                    popularity: parsedData.popularity,
+                    poster_path: parsedData.poster_path,
+                    backdrop_path: parsedData.backdrop_path,
+                    release_day: parsedData.release_day,
+                    state: parsedData.state,
+                    category: parsedData.category,
+                    trailer_path: parsedData.trailer_path,
+                    cast: parsedData.cast,
+                    director: parsedData.director,
+                    producer: parsedData.producer,
+                    synopsis: parsedData.synopsis,
+                    rating: parsedData.rating,
+                });
+                console.log(parsedData);
+            })
+
+            .catch((error) => {
+                console.error('Error searching movies:', error);
+            });
+    }
 
     const handleSignup = () => {
     };
@@ -353,7 +400,7 @@ const MovieBooking = (props) => {
                                         </div>
                                         <h3 className="movie-title">{movie.title}</h3>
                                         <div className="booking">
-                                            <a href="#" className="btn">View Details</a>
+                                            <a href="#" className="btn" onClick={() => handleViewDetail(movie)}>View Details</a>
                                         </div>
                                         <div className="booking">
                                             <a
@@ -383,7 +430,7 @@ const MovieBooking = (props) => {
                                         </div>
                                         <h3 className="movie-title">{movie.title}</h3>
                                         <div className="booking">
-                                            <a href="#" className="btn">Veiw Details</a>
+                                            <a href="#" className="btn" onClick={() => handleViewDetail(movie)}>Veiw Details</a>
                                         </div>
                                         <div className="booking">
                                             <a
@@ -429,7 +476,7 @@ const MovieBooking = (props) => {
                                         </div>
                                         <h3 className="movie-title">{movie.title}</h3>
                                         <div className="booking">
-                                            <a href="#" className="btn">View Details</a>
+                                            <a href="#" className="btn" onClick={() => handleViewDetail(movie)}>View Details</a>
                                         </div>
                                         <div className="booking">
                                             <a href="#" className="btn">Play Trailer</a>
