@@ -23,12 +23,16 @@ function AdminPanel(props) {
         navigate('/promotion');
     }
 
+    const goToMoiveDetail = () =>{
+        navigate('/promotion');
+    }
+
     const goToMoiveManagement = () =>{
         navigate('/moviemanagement');
     }
 
-    const goToDashboard = () =>{
-        navigate('/dashboard');
+    const goToScheduleMoive = () =>{
+        navigate('/scheduleMovie');
     }
 
     const goToUserManagement = () =>{
@@ -50,19 +54,19 @@ function AdminPanel(props) {
             </div>
             {/* this part is for admin to search the key word of the permisson */}
             {/* the priority is low tho, we can delete it if it's not nesscesary */}
-            <div className="search-bar-container">
+            {/* <div className="search-bar-container">
                         <input 
                             type="text" 
                             placeholder="Search anything..." 
                             value={searchTerm} 
                             onChange={(e) => setSearchTerm(e.target.value)}
                             />
-            </div>
+            </div> */}
         </selection>
 
         {/* this selection is for admin to check his team, and able to add or delete the admin */}
         <div className="team-section">
-                <h2>My Team</h2>
+                {/* <h2>My Team</h2>
                 <div className="team-grid">
                     {teamMembers.map(member => (
                         <div key={member.id} className="team-member">
@@ -70,7 +74,7 @@ function AdminPanel(props) {
                             <p>{member.name}</p>
                         </div>
                     ))}
-                </div>
+                </div> */}
                 {/* <button onClick={() => alert('Add New Admin Functionality Here!')}>Add New Admin</button> */}
                 <button onClick={() => navigate('/adminsignup')}>Add New Admin</button>
             </div>
@@ -84,11 +88,13 @@ function AdminPanel(props) {
         <div className="adminpermission">
                 <h2>Admin Permissions</h2>
                 <div className="permissions-grid">
-                <button className="permission-box" onClick={goToDashboard}>DashBoard
+                <button className="permission-box" onClick={goToMoiveDetail}>Update Movie Details
+                </button>
+                <button className="permission-box" onClick={goToScheduleMoive}>Schedule Movie
                 </button>
                 <button className="permission-box" onClick={goToUserManagement}>User Management
                 </button>
-                <button className="permission-box" onClick={goToMoiveManagement}>Movie Management
+                <button className="permission-box" onClick={goToMoiveManagement}>Add Movie
                 </button>
                 <button className="permission-box" onClick={goToPromotion}>Promotion & Ticket Management
                 </button>
