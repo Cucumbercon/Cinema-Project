@@ -41,7 +41,7 @@ function MovieDetails() {
                 <p><strong>Description:</strong> {movie.description}</p>
                 <p><strong>Genre:</strong> {movie.genre}</p>
                 <p><strong>Releasedate:</strong> {movie.releasedate}</p>
-                {/* Check if castAndCrew exists before accessing its properties */}
+                {/* Check if the castAndCrew exists before accessing its properties */}
                 {movie.castAndCrew && (
                     <p><strong>Cast & Crew:</strong> {movie.castAndCrew.join(', ')}</p>
                 )}
