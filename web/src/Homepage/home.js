@@ -24,25 +24,6 @@ const MovieBooking = (props) => {
 
     const navigate = useNavigate();
 
-    const [movieDetails, setMovieDetails] = useState({
-        id: crypto.randomUUID(),
-        title: '',
-        language: '',
-        popularity: '',
-        poster_path: '',
-        backdrop_path: '',
-        release_day: '',
-        state: '',
-        category: '',
-        trailer_path: '',
-        cast: '',
-        director: '',
-        producer: '',
-        synopsis: '',
-        rating: '',
-    });
-
-
     useEffect(() => {
         // console.log("isloggedin: " + localStorage.getItem('isLoggedIn'));
         // console.log("Adminisloggedin: " + localStorage.getItem('AdminisLoggedIn'));
@@ -77,23 +58,6 @@ const MovieBooking = (props) => {
         }).then((response) => response.text())
             .then((data) => {
                 const parsedData = JSON.parse(data);
-                setMovieDetails({
-                    id: parsedData.id,
-                    title: parsedData.title,
-                    language: parsedData.language,
-                    popularity: parsedData.popularity,
-                    poster_path: parsedData.poster_path,
-                    backdrop_path: parsedData.backdrop_path,
-                    release_day: parsedData.release_day,
-                    state: parsedData.state,
-                    category: parsedData.category,
-                    trailer_path: parsedData.trailer_path,
-                    cast: parsedData.cast,
-                    director: parsedData.director,
-                    producer: parsedData.producer,
-                    synopsis: parsedData.synopsis,
-                    rating: parsedData.rating,
-                });
                 navigate(`/moviedetails/${parsedData.id}`, { state: { data: parsedData} });
 
             })

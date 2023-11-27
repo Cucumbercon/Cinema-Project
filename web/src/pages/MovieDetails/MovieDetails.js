@@ -7,6 +7,7 @@ function MovieDetails() {
     const { state } = useLocation();
 
     const [movie, setMovie] = useState(state.data);
+    console.log(movie);
 
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
@@ -36,7 +37,7 @@ function MovieDetails() {
             {/* Movie Details */}
             <div className="details-section">
                 <h2>{movie.title}</h2>
-                <p><strong>Duration:</strong> {movie.duration}</p>
+                <p><strong>Duration:</strong> {movie.backdropPath}  minutes</p>
                 <p><strong>Description:</strong> {movie.synopsis}</p>
                 <p><strong>Genre:</strong> {movie.category}</p>
                 <p><strong>Releasedate:</strong> {movie.date}</p>
