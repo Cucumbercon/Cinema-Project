@@ -32,7 +32,7 @@
     background-color: grey;
 }
 
-.edit-btn, .edit-order-btn, .remove-btn {
+.edit-btn, .edit-order-btn, .remove-btn, .toggle-status-btn {
     padding: 0.5rem 1rem;
     margin-right: 0.5rem;
     margin-left: 0.5rem ;
@@ -58,6 +58,11 @@
     color: #fff;
 }
 
+.toggle-status-btn{
+    background-color:palevioletred;
+    color: #fff;
+}
+
 .edit-btn:hover {
     background-color: #0056b3;
 }
@@ -69,4 +74,8 @@
 
 .remove-btn :hover{
     background-color: red;
+}
+
+.toggle-status-btn :hover{
+    background-color: palevioletred;
 }
