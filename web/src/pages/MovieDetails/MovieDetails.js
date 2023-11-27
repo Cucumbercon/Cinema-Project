@@ -3,12 +3,14 @@ import './MovieDetails.css';
 
 function MovieDetails() {
     const [movie, setMovie] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedTime, setSelectedTime] = useState(null);
 
     useEffect(() => {
         // API call to fetch movie information such as title, duration, etc.
         const fetchMovieData = async () => {
             try {
-                //replace 'the_api_endpoint_here' with the actual API endpoint
+                // Replace 'the_api_endpoint_here' with the actual API endpoint
                 const response = await fetch('the_api_endpoint_here');
                 const data = await response.json();
                 setMovie(data);
@@ -26,9 +28,6 @@ function MovieDetails() {
 
     const dates = ["10/01", "10/02", "10/03"];
     const times = ["12:00pm", "3:15pm", "6:30pm", "9:45pm"];
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [selectedTime, setSelectedTime] = useState(null);
-
 
     const handleDateClick = (date) => {
         setSelectedDate(date);
@@ -59,7 +58,7 @@ function MovieDetails() {
             </div>
 
             <div className="showtime-section">
-            <h2>Showing Times</h2>
+                <h2>Showing Times</h2>
                 <div className="date-selector">
                     {dates.map((date, index) => (
                         <button
