@@ -26,6 +26,17 @@ function MovieDetails() {
 
     const dates = ["10/01", "10/02", "10/03"];
     const times = ["12:00pm", "3:15pm", "6:30pm", "9:45pm"];
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedTime, setSelectedTime] = useState(null);
+
+
+    const handleDateClick = (date) => {
+        setSelectedDate(date);
+    };
+
+    const handleTimeClick = (time) => {
+        setSelectedTime(time);
+    };
 
     return (
         <div className="movie-details-container">
@@ -48,15 +59,27 @@ function MovieDetails() {
             </div>
 
             <div className="showtime-section">
-                <h2>Showing Times</h2>
+            <h2>Showing Times</h2>
                 <div className="date-selector">
                     {dates.map((date, index) => (
-                        <button key={index} className="date-button">{date}</button>
+                        <button
+                            key={index}
+                            className={`date-button ${selectedDate === date ? 'selected' : ''}`}
+                            onClick={() => handleDateClick(date)}
+                        >
+                            {date}
+                        </button>
                     ))}
                 </div>
                 <div className="time-selector">
                     {times.map((time, index) => (
-                        <button key={index} className="time-button">{time}</button>
+                        <button
+                            key={index}
+                            className={`time-button ${selectedTime === time ? 'selected' : ''}`}
+                            onClick={() => handleTimeClick(time)}
+                        >
+                            {time}
+                        </button>
                     ))}
                 </div>
             </div>

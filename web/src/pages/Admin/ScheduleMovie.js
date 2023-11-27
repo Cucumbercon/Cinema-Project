@@ -1,0 +1,95 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './ScheduleMovie.css';
+
+function ScheduleMovie() {
+    const [selectedMovie, setSelectedMovie] = useState('');
+    const [date, setDate] = useState('');
+    const [startTime, setStartTime] = useState('');
+    const [endTime, setEndTime] = useState('');
+    const [ticketPrice, setTicketPrice] = useState('');
+
+    // Dummy movie list - replace with actual data from backend and database.
+    const navigate = useNavigate();
+    const movies = [
+        { id: 1, title: "Movie 1" },
+        { id: 2, title: "Movie 2" },
+        // gotta connect to db
+    ];
+
+    // I came up the method to connect with the backend and db    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // you are also able to seaching by movie title               !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    // useEffect(() => { fetchMovies();}, []);
+    // useEffect(() => { filterMovies(searchTerm);}, [movies, searchTerm]);
+
+    // const fetchMovies = async () => {
+    //     try {
+    //         const response = await fetch('http://backend-url/api/movies');
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         const data = await response.json();
+    //         setMovies(data);
+    //         setFilteredMovies(data);
+    //     } catch (error) {
+    //         console.error('Fetch error:', error);
+    //     }
+    // };
+    // const filterMovies = (searchTerm) => {
+    //     if (!searchTerm) {
+    //         setFilteredMovies(movies);
+    //         return;
+    //     }
+    //     const filtered = movies.filter(movie => 
+    //         movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+    //     );
+    //     setFilteredMovies(filtered);
+    // };
+
+     const handleSubmit = (e) => {
+         e.preventDefault();
+         console.log({ selectedMovie, date, startTime, endTime, ticketPrice });
+     };
+
+    return (
+        <div className="schedule-movie-container">
+            <h1>Schedule a Movie</h1>
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="movieSelect">Select Movie:</label>
+                    <select id="movieSelect" value={selectedMovie} onChange={e => setSelectedMovie(e.target.value)}>
+                        <option value="">--Select a Movie--</option>
+                        {movies.map(movie => (
+                            <option key={movie.id} value={movie.id}>{movie.title}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="date">Date:</label>
+                    <input type="date" id="date" value={date} onChange={e => setDate(e.target.value)} />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="startTime">Start Time:</label>
+                    <input type="time" id="startTime" value={startTime} onChange={e => setStartTime(e.target.value)} />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="endTime">End Time:</label>
+                    <input type="time" id="endTime" value={endTime} onChange={e => setEndTime(e.target.value)} />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="ticketPrice">Ticket Price ($):</label>
+                    <input type="number" id="ticketPrice" value={ticketPrice} onChange={e => setTicketPrice(e.target.value)} />
+                </div>
+
+                <button type="submit" className="submit-btn">Schedule Movie</button>
+            </form>
+        </div>
+    );
+}
+
+export default ScheduleMovie;

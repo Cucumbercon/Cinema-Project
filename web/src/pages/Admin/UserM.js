@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './UserM.css';
 
@@ -9,13 +10,29 @@ function UserManagement() {
     ]);
 
     // const [users, setUsers] = useState([]);
-
-    const removeUser = (userId) => {        
-        setUsers(users.filter(user => user.id !== userId));
+    useEffect(() => {fetchUsers();}, []);
+    
+    const fetchUsers = async () => {
+        try {
+            const response = await axios.get('/api/users'); // Replace with your actual API endpoint
+            setUsers(response.data);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
     };
 
-    const navigate = useNavigate();
+    const removeUser = async (userId) => {
+        try {
+            await axios.delete(`/api/users/${userId}`); // API call to delete the user
+            setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+        } catch (error) {
+            console.error('Error removing user:', error);
+        }
+    };
 
+    // const removeUser = (userId) => {        
+    //     setUsers(users.filter(user => user.id !== userId));
+    // };
     const editProfile = (userId) => {
         // Navigate to edit profile page with the user's ID
         navigate('/updateprofile');
@@ -25,6 +42,19 @@ function UserManagement() {
         // Navigate to edit order page with the user's ID
         navigate('/updateprofile');
     };
+
+    //need to update the backend to handle the suspension status of a user.
+    const toggleUserStatus = async (userId, isActive) => {
+        try {
+            await axios.post(`/api/users/${userId}/toggleStatus`, { active: !isActive }); // Replace with actual API endpoint
+            setUsers(prevUsers => prevUsers.map(user => user.id === userId ? { ...user, status: isActive ? 'Inactive' : 'Active' } : user));
+        } catch (error) {
+            console.error('Error toggling user status:', error);
+        }
+    };
+    
+
+    const navigate = useNavigate();
 
 
     
@@ -53,6 +83,7 @@ function UserManagement() {
                             <td>
                                 <button className="edit-btn" onClick={editProfile}>Edit Profile</button>
                                 <button className="edit-order-btn" onClick={editOrder}>Edit Order</button>
+                                <button className="toggle-status-btn" onClick={() => toggleUserStatus(user.id, user.status === 'Active')}>{user.status === 'Active' ? 'Suspend' : 'Unsuspend'}</button>
                                 <button className="remove-btn" onClick={() => removeUser(user.id)}>Remove</button>
                             </td>
                         </tr>

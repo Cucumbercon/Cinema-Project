@@ -1,10 +1,9 @@
 import React from 'react';
-import './OrderSummary.css';
+import './OrderSummary';
 
-function OrderSummary() {
+function Checkout() {
     const movieDetails = {
-        poster: './MoviePoster.png',
-        title: "The Creator",
+        title: "Avatar",
         adultTicket: 3,
         seniorTicket: 0,
         childTicket: 1,
@@ -13,29 +12,42 @@ function OrderSummary() {
     };
 
     return (
-        <div className="order-summary-container">
-            <div className="movie-section">
-                <img src={require('./MoviePoster.png')} alt="" className="movie-poster"/>
-                {/* <img src={movieDetails.poster} alt={movieDetails.title + ' poster'} className="movie-poster"/> */}
-                <h2>{movieDetails.title}</h2>
+        <div className="checkout-container">
+            <div className="payment-section">
+                <h1>Payment Information</h1>
+                <p>Credit/Debit Card</p>
+                <div className="card-input">
+                    <input type="text" placeholder="Card Number" />
+                    <button className="use-saved-card-btn">+ Use Saved Card</button>
+                </div>
+                <div className="card-details">
+                    <input type="text" placeholder="MM/YY" />
+                    <input type="text" placeholder="Security Number" />
+                    <input type="text" placeholder="ZIP Code" />
+                </div>
+                <div className="promo-code-input">
+                    <input type="text" placeholder="Promo Code" />
+                    <button className="apply-promo-btn">Apply</button>
+                </div>
+                <div className="checkout-buttons">
+                    <button className="checkout-btn">Checkout</button>
+                    <button className="cancel-btn">Cancel</button>
+                </div>
             </div>
-            <div className="summary-section">
+            <div className="order-summary-section">
                 <h1>Order Summary</h1>
+                <p>{movieDetails.title}</p>
                 <div className="ticket-details">
                     <p>Adult Ticket x {movieDetails.adultTicket}</p>
                     <p>Senior Ticket x {movieDetails.seniorTicket}</p>
                     <p>Child Ticket x {movieDetails.childTicket}</p>
                     <p>Taxes: ${movieDetails.tax.toFixed(2)}</p>
-                    <hr/>
+                    <hr />
                     <p className="total">Total: ${movieDetails.total.toFixed(2)}</p>
-                </div>
-                <div className="buttons">
-                    <button className="confirm-btn">Confirm</button>
-                    <button className="cancel-btn">Cancel</button>
                 </div>
             </div>
         </div>
     );
 }
 
-export default OrderSummary;
+export default Checkout;
