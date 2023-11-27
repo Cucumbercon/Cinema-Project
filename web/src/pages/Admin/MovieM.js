@@ -143,7 +143,7 @@ function MovieManagement(props) {
                             />
                         </div>
                         <div className='movieField'>
-                            State
+                            State (Upcoming: 0, Available: 1)
                             <input type="text" name="state" placeholder="State" onChange={handleChange} required />
                         </div>
                     </div>
@@ -181,10 +181,21 @@ function MovieManagement(props) {
                         </div>
                     </div>
 
-                    <div className='synosis'>
+                    <div className='movieField grid'>
+                        <div className='movieField'>
+                            Duration(Minutes)
+                            <input type="text" name="backdrop_path" placeholder="Duration" onChange={handleChange} required />
+                        </div>
+                        <div className='movieField'>
+                            synosis
+                            <input type="text" name="synopsis" placeholder="Synopsis" onChange={handleChange} required />
+                        </div>
+                    </div>
+
+                    {/* <div className='synosis'>
                         Synopsis
                         <textarea name="synopsis" placeholder="Synopsis" onChange={handleChange}></textarea>
-                    </div>
+                    </div> */}
 
                     {/* <label>
                     Archived:
