@@ -94,7 +94,8 @@ const MovieBooking = (props) => {
                     synopsis: parsedData.synopsis,
                     rating: parsedData.rating,
                 });
-                console.log(parsedData);
+                navigate(`/moviedetails/${parsedData.id}`, { state: { data: parsedData} });
+
             })
 
             .catch((error) => {
