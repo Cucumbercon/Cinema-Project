@@ -1,5 +1,5 @@
 import React from 'react';
-import './OrderSummary';
+import './OrderSummary.css';
 
 function Checkout() {
     const movieDetails = {
