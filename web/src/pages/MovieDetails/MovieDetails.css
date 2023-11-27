@@ -86,13 +86,14 @@
 
 .next-step button {
     padding: 15px 30px;
-    background-color: #007bff;
+    background-color: #ff6600;
     color: #fff;
-    border: none;
     margin-top: 50px;
-    margin-left: 650px;
     margin-bottom: 3rem;
-    border-radius: 5px;
-    cursor: pointer;
     transition: background-color 0.3s;
+    background-color: #ff6600;
+}
+
+.next-step button:hover {
+    background-color: #ff3300;
 }

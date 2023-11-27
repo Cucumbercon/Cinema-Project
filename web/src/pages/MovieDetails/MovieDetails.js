@@ -1,30 +1,39 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react';
 import './MovieDetails.css';
 
 function MovieDetails() {
-    
-    const movie = {
+    const [movie, setMovie] = useState(null);
 
-        title: "THE CREATOR",
-        duration: "2h 13m",
-        description: "A thief who enters the dreams of others to obtain secrets finds his task complicated by a mysterious rival.",
-        genre: "Action/Adventure, Sci-Fi/Fantasy",
-        releasedate: "Friday,Sep 29,2023",
-        castAndCrew: ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"]
+    useEffect(() => {
+        // API call to fetch movie information such as title, duration, etc.
+        const fetchMovieData = async () => {
+            try {
+                //replace 'the_api_endpoint_here' with the actual API endpoint
+                const response = await fetch('the_api_endpoint_here');
+                const data = await response.json();
+                setMovie(data);
+            } catch (error) {
+                console.error('Error fetching movie data:', error);
+            }
+        };
+
+        fetchMovieData();
+    }, []);
+
+    if (!movie) {
+        return <div>Loading...</div>;
     }
 
     const dates = ["10/01", "10/02", "10/03"];
     const times = ["12:00pm", "3:15pm", "6:30pm", "9:45pm"];
 
     return (
-        
-
         <div className="movie-details-container">
             {/* Trailer Section */}
             <div className="trailer-section">
-                <iframe title="movieTrailer" width="100%" height="400"src="https://www.youtube.com/embed/ex3C1-5Dhb8?si=BdOtxV-4tg0npeZB" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe title="movieTrailer" width="100%" height="400" src="https://www.youtube.com/embed/ex3C1-5Dhb8?si=BdOtxV-4tg0npeZB" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
             </div>
-            
+
             {/* Movie Details */}
             <div className="details-section">
                 <h2>{movie.title}</h2>
@@ -32,9 +41,11 @@ function MovieDetails() {
                 <p><strong>Description:</strong> {movie.description}</p>
                 <p><strong>Genre:</strong> {movie.genre}</p>
                 <p><strong>Releasedate:</strong> {movie.releasedate}</p>
-                <p><strong>Cast & Crew:</strong> {movie.castAndCrew.join(', ')}</p>
+                {/* Check if castAndCrew exists before accessing its properties */}
+                {movie.castAndCrew && (
+                    <p><strong>Cast & Crew:</strong> {movie.castAndCrew.join(', ')}</p>
+                )}
             </div>
-
 
             <div className="showtime-section">
                 <h2>Showing Times</h2>
@@ -57,6 +68,5 @@ function MovieDetails() {
         </div>
     );
 }
-
 
 export default MovieDetails;
