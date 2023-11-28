@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.uga.cinemabooking.DB.MovieDB;
+import edu.uga.cinemabooking.DB.ScheduleDB;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @CrossOrigin(origins = "*")
 public class ScheduleMovieController {
 
-    MovieDB mdb = new MovieDB();
+    ScheduleDB sdb = new ScheduleDB();
 
     
     @PostMapping("/scheduleMovie")
@@ -34,22 +34,13 @@ public class ScheduleMovieController {
             System.out.println(data);
 
             JsonNode jsonNode = objectMapper.readTree(data);
-            String title = jsonNode.get("title").asText();
-            String language = jsonNode.get("language").asText();
-            double popularity = jsonNode.get("popularity").asDouble();
-            String posterPath = jsonNode.get("poster_path").asText();
-            String backdropPath = jsonNode.get("backdrop_path").asText();
-            String releaseDay = jsonNode.get("release_day").asText();
-            int state = jsonNode.get("state").asInt();
-            String category = jsonNode.get("category").asText();
-            String trailerPath = jsonNode.get("trailer_path").asText();
-            String synopsis = jsonNode.get("synopsis").asText();
-            String cast = jsonNode.get("cast").asText();
-            String director = jsonNode.get("director").asText();
-            String producer = jsonNode.get("producer").asText();
-            double rating = jsonNode.get("rating").asDouble();
+            int movie_id = jsonNode.get("selectedMovie").asInt();
+            int showroom_id = 1;
+            String start_date = jsonNode.get("startTime").asText();
+            String end_date = jsonNode.get("endTime").asText();
+            int ticketPrice = jsonNode.get("ticketPrice").asInt();
 
-            mdb.addMovie(language, title, popularity, posterPath, backdropPath, releaseDay, state, category, trailerPath, synopsis, cast, rating, director, producer);
+            sdb.addSchedule(movie_id, showroom_id, start_date, end_date);
 
         } catch (IOException e) {
             e.printStackTrace();

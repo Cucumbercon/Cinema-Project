@@ -1,7 +1,6 @@
 package edu.uga.cinemabooking.entity;
 
 public class Schedule {
-    int id;
     int movie_id;
     int showroom_id;
     String start_time;
@@ -11,15 +10,10 @@ public class Schedule {
 
     }
     public Schedule(int id, int movie_id, int showroom_id, String start_time, String end_time) {
-        this.id = id;
         this.movie_id = movie_id;
         this.showroom_id = showroom_id;
         this.start_time = start_time;
         this.end_time = end_time;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public int getMovieId() {
@@ -36,10 +30,6 @@ public class Schedule {
 
     public String getEndTime() {
         return end_time;
-    }
-
-    public void setId() {
-        this.id = id;
     }
 
     public void setMovieId() {

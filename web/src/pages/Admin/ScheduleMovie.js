@@ -17,6 +17,14 @@ function ScheduleMovie() {
         // gotta connect to db
     ];
 
+    const scheduleData = {
+        selectedMovie,
+        date,
+        startTime,
+        endTime,
+        ticketPrice
+    };
+
     // I came up the method to connect with the backend and db    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // you are also able to seaching by movie title               !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -50,6 +58,18 @@ function ScheduleMovie() {
      const handleSubmit = (e) => {
          e.preventDefault();
          console.log({ selectedMovie, date, startTime, endTime, ticketPrice });
+         fetch('http://localhost:8000/api/scheduleMovie', {
+                method: 'POST',
+                body: JSON.stringify(scheduleData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .catch(function (error) {
+                    // if error occurs other than http, direct to error page or something else
+                    console.error('Error:', error);
+                });
+
      };
 
     return (

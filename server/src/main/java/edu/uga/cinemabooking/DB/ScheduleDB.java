@@ -29,26 +29,27 @@ public class ScheduleDB {
         }
     }
 
-    public void addSchedule(int id, int movie_id, int showroom_id, String start_time, String end_time) {
+    public void addSchedule(int movie_id, int showroom_id, String start_time, String end_time) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date utilDate = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        java.util.Date utilStart = null;
+        java.util.Date utilEnd = null;
         try {
-            utilDate = sdf.parse(start_time);
+            utilStart = sdf.parse(start_time);
+            utilEnd = sdf.parse(end_time);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        java.sql.Date sqlDate1 = new java.sql.Date(utilStart.getTime());
+        java.sql.Date sqlDate2 = new java.sql.Date(utilEnd.getTime());
 
-        String sql = "INSERT INTO schedule (language, title, popularity, poster_path, backdrop_path, " +
-                "release_day, state, category, trailer_path, synopsis, cast, rating, director, producer) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO schedule (movie_id, showroom_id, start_time, end_time) " +
+                "VALUES (?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, language);
-            preparedStatement.setString(2, title);
-            preparedStatement.setDouble(3, popularity);
-            preparedStatement.setString(4, posterPath);
-            preparedStatement.setString(5, backdropPath);
+            preparedStatement.setInt(1, movie_id);
+            preparedStatement.setInt(2, showroom_id);
+            preparedStatement.setDate(3, sqlDate1);
+            preparedStatement.setDate(4, sqlDate2);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
