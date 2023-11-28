@@ -49,6 +49,13 @@ const MovieBooking = (props) => {
         setIsPopupOpen(!isPopupOpen);
     };
 
+    const handleCartClick = () => {
+        // Navigate to the shopping cart page or open a cart dropdown
+        console.log("Cart clicked");
+        // Example: navigate('/cart');
+    };
+    
+
     const handleLogin = () => {
     };
 
@@ -235,6 +242,9 @@ const MovieBooking = (props) => {
                         {/* <img src={require('./assests/images/movieCart.jpg')} alt="" className="cart"/> */}
                         {/* <img src={require('./moviefilter.jpg')} alt="" className="filter"/> */}
                         {/* <img src={require('./movieCart.jpg')} alt="" className="cart" /> */}
+                        {localStorage.getItem('isLoggedIn') === 'true' && (
+                            <img src={require('./movieCart.jpg')} alt="Shopping Cart" className="cart" onClick={handleCartClick} />
+                                )}
                         <div className="profile-img-box" onClick={toggleUserPopup} className={isPopupOpen ? 'profile-img-box open' : 'profile-img-box'}>
                             {localStorage.getItem('isLoggedIn') === 'true' ? (
                                 <img src={require('./baseUserIcon.png')} alt="User's Profile" />

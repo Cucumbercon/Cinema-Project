@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate} from 'react-router-dom';
 import './MovieDetails.css';
 
 function MovieDetails() {
 
     const { state } = useLocation();
+    const navigate = useNavigate();
 
     const [movie, setMovie] = useState(state.data);
     console.log(movie);
@@ -25,6 +26,14 @@ function MovieDetails() {
 
     const handleTimeClick = (time) => {
         setSelectedTime(time);
+    };
+
+
+
+    //function to handle the logic for adding the show clickable show times and navigating to movie seat booking
+    const handleViewSeatsClick = () => {
+        // Use navigate function to go to "/movieseatsbooking"
+        navigate('/movieseatbooking');
     };
 
     return (
@@ -75,7 +84,7 @@ function MovieDetails() {
 
             {/* Next Step Button */}
             <div className="next-step">
-                <button onClick={() => alert('Redirect to Showtimes')}>View Seats</button>
+            <button onClick={handleViewSeatsClick}>View Seats</button>
             </div>
         </div>
     );

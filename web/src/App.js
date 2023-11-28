@@ -45,7 +45,7 @@ function App() {
         <Route path="/moviemanagement" element={<MovieManagement />} />
         <Route path="/usermanagement" element={<UserManagement isAdmin={isAdmin} />} />
         <Route path="/promotion" element={<Promotion />} />
-        <Route path="/ordersummay" element={<OrderSummary />} />
+        <Route path="/ordersummary" element={<OrderSummary />} />
         <Route path="/confirmationpage" element={<ConfirmationPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './seatsSelecting.css';
 
 function MovieSeatBooking() {
+    const navigate = useNavigate();
+
     // These are the state variables
     const [seats, setSeats] = useState(generateSeats());
     const [selectedMovie, setSelectedMovie] = useState({ index: 0, price: 5 });
@@ -95,7 +97,10 @@ function MovieSeatBooking() {
 
     // Function to handle the checkout process
     const handleCheckout = () => {
-        
+
+
+
+        navigate('/ordersummary');
     };
 
     return (
@@ -136,7 +141,7 @@ function MovieSeatBooking() {
 
             {/* Checkout button */}
             <button className="checkout-button" onClick={handleCheckout}>
-                Checkout
+                Confirm Seats
             </button>
         </div>
     );
