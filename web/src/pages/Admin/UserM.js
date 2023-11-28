@@ -10,29 +10,34 @@ function UserManagement() {
     ]);
 
     // const [users, setUsers] = useState([]);
-    useEffect(() => {fetchUsers();}, []);
+    useEffect(() => {
     
-    const fetchUsers = async () => {
-        try {
-            const response = await axios.get('/api/users'); // Replace with your actual API endpoint
-            setUsers(response.data);
-        } catch (error) {
-            console.error('Error fetching users:', error);
-        }
-    };
+    fetch('http://localhost:8000/api/getUsers', {
+            method: 'GET',
+        })
+            .then((response) => response.text()) // JSON
+            .then((data) => {
+                const parsedData = JSON.parse(data);
+                console.log('availableMoviedata:', parsedData);
+            })
+            .catch((error) => {
+                console.error('Error sending message to Spring:', error);
+            });
 
-    const removeUser = async (userId) => {
-        try {
-            await axios.delete(`/api/users/${userId}`); // API call to delete the user
-            setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
-        } catch (error) {
-            console.error('Error removing user:', error);
-        }
-    };
+        }, []);
 
-    // const removeUser = (userId) => {        
-    //     setUsers(users.filter(user => user.id !== userId));
+    // const removeUser = async (userId) => {
+    //     try {
+    //         await axios.delete(`/api/users/${userId}`); // API call to delete the user
+    //         setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+    //     } catch (error) {
+    //         console.error('Error removing user:', error);
+    //     }
     // };
+
+    const removeUser = (userId) => {        
+        setUsers(users.filter(user => user.id !== userId));
+    };
     const editProfile = (userId) => {
         // Navigate to edit profile page with the user's ID
         navigate('/updateprofile');
