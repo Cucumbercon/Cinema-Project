@@ -17,14 +17,15 @@ h2 {
 }
 
 .top-bar{
-    background-color: rgb(41, 39, 39); 
+    /* background-color: rgb(41, 39, 39);  */
     color: white;
+    font-size: x-large;
     display: flex;
     align-items: center; 
-    justify-content: space-between;
+    justify-content: center;
     padding: 1.5rem 5rem;
     width: 100%;
-    margin-bottom: 150px;
+    /* margin-bottom: 150px; */
     /* margin-top: 50px; */
     box-sizing: border-box; 
 }
@@ -103,6 +104,7 @@ h2 {
     padding: 20px 15px; 
     border: none;
     background-color: #007BFF;
+    font-size: large;
     color: white;
     border-radius: 20px;
     cursor: pointer;
@@ -123,6 +125,8 @@ button:hover {
 
 .adminpermission h2{
     padding-top: 30px;
+    padding-bottom: 15px;
+    font-size: x-large;
     color: whitesmoke;
 }
 
