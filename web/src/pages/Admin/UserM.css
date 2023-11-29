@@ -1,5 +1,14 @@
+.parent-container {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
 .user-management-container {
-    padding: 2rem;
+    justify-content: center;
+    align-items: center;
+    width: 60vw; 
+    margin: 0; 
+    padding: 1rem;
     background-color: #f4f4f4;
     height: 100vh;
 }

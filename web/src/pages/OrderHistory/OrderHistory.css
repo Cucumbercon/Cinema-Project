@@ -1,0 +1,41 @@
+.order-history-container {
+    display: flex;
+    flex-direction: column;
+    padding: 200px 200px 500px 200px ;
+    margin: 50px;
+    color: #333;
+    background-color: gray;
+    align-items: center; /* Centers the content along the cross axis */
+}
+
+.order-history-container h1 {
+    color: black;
+    text-align: center;
+    width: 100%; /* Ensures the heading takes full width */
+}
+
+.orders {
+    display: flex;
+    margin: 70px;
+    margin-right: 300px;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%; /* Takes full width of the container */
+}
+
+.order {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 80%; /* Adjust as per design requirements */
+}
+
+.order h3 {
+    margin: 0;
+    color: #cd8c38;
+}
+
+.order p {
+    margin: 5px 0;
+}

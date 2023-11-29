@@ -5,8 +5,8 @@ import './UserM.css';
 
 function UserManagement() {
     const [users, setUsers] = useState([
-        {id: 1, name: "John Doe", email: "john@example.com", status: "Active", lastOrder: "2023-04-10"},
-        {id: 2, name: "Elon Musk", email: "MuskX@example.com", status: "Active", lastOrder: "2023-05-21"}, 
+        {id: 1, name: "John Doe", email: "john@example.com", status: "Active", type: "User"},
+        {id: 2, name: "Elon Musk", email: "MuskX@example.com", status: "Active", type: "Admin"}, 
     ]);
 
     // const [users, setUsers] = useState([]);
@@ -64,6 +64,7 @@ function UserManagement() {
 
     
     return (
+        <div className="parent-container">
         <div className="user-management-container">
             <h1>User Management</h1>
             <table className="users-table">
@@ -73,7 +74,7 @@ function UserManagement() {
                         <th>Name</th>
                         <th>Email</th>
                         <th>Status</th>
-                        <th>Last Order</th>
+                        <th>Type</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -84,7 +85,7 @@ function UserManagement() {
                             <td>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.status}</td>
-                            <td>{user.lastOrder}</td>
+                            <td>{user.type}</td>
                             <td>
                                 <button className="edit-btn" onClick={editProfile}>Edit Profile</button>
                                 <button className="edit-order-btn" onClick={editOrder}>Edit Order</button>
@@ -95,6 +96,7 @@ function UserManagement() {
                     ))}
                 </tbody>
             </table>
+        </div>
         </div>
     );
 }

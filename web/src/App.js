@@ -12,6 +12,7 @@ import Promotion from './pages/Admin/promo';
 import MovieSeatBooking from './pages/TicketProcess/seatsSelecting';
 import AdminPanel from './pages/Admin/adminPanel';
 import OrderSummary from './pages/OrderSummary/OrderSummary';
+import OrderHistory from './pages/OrderHistory/OrderHistory';
 import { Signup } from './pages/Users/signup';
 import { NotFound } from './pages/Users/NotFound';
 import { UpdateProfile } from './pages/Users/UpdateProfile';
@@ -46,6 +47,7 @@ function App() {
         <Route path="/usermanagement" element={<UserManagement isAdmin={isAdmin} />} />
         <Route path="/promotion" element={<Promotion />} />
         <Route path="/ordersummary" element={<OrderSummary />} />
+        <Route path="/orderhistory" element={<OrderHistory />} />
         <Route path="/confirmationpage" element={<ConfirmationPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
