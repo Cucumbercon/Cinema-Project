@@ -19,6 +19,10 @@ function AdminPanel(props) {
         return <div>You do not have the permission to access this page!!</div>;
     }
 
+    const goToUpdateMovie = () => {
+        navigate('/updatemovie');
+    }
+
     const goToPromotion = () => {
         navigate('/promotion');
     }
@@ -88,7 +92,7 @@ function AdminPanel(props) {
             <div className="adminpermission">
                 <h2>Admin Permissions</h2>
                 <div className="permissions-grid">
-                    <button className="permission-box" onClick={goToMoiveDetail}>Update Movie Details
+                    <button className="permission-box" onClick={goToUpdateMovie}>Update Movie Details
                     </button>
                     <button className="permission-box" onClick={goToScheduleMoive}>Schedule Movie
                     </button>

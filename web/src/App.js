@@ -20,6 +20,7 @@ import EmailVerification from './pages/Users/EmailVerification';
 import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 import Forgotpass from './pages/Users/Forgotpass';
 import { AdminSignup } from './pages/Admin/adminSignup';
+import  UpdateMovie  from './pages/Admin/UpdateMovie';
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
         <Route path="/emailverification" element={<EmailVerification />} />
         <Route path="/registrationsuccess" element={<RegistrationSuccessPage />} />
         <Route path="/forgotpass" element={<Forgotpass />} />
+        <Route path="/updatemovie" element={<UpdateMovie />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
