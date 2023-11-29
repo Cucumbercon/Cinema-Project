@@ -33,6 +33,7 @@
     gap: 20px; 
 }
 
+
 .movie-management {
     /* display:contents; */
     /* display: flow-root; */
@@ -68,7 +69,20 @@
     width: 100%;
     resize: none;
 }
-
+.remove-movie-button {
+    background-color: #ff0000; /* Red color */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .remove-movie-button:hover {
+    background-color: #cc0000; /* Darker red on hover */
+  }
+  
 .movie-management button {
     align-self: center;
     padding: 10px 15px;
@@ -78,6 +92,8 @@
     color: #fff;
     cursor: pointer;
 }
+
+
 
 .movie-management button:hover {
     background-color: #45a049;
