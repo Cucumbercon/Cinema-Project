@@ -26,13 +26,13 @@ public class UserController {
      * @return the list of movies
      */
     @GetMapping("/getUsers")
-    public ResponseEntity<String> receiveAvailable() {
+    public ResponseEntity<String> getUsers() {
         //System.out.println("ajdgaujhgdhjagdvjhasgdajdhasgjdghjb");
 
-        List<User> movies = udb.getUsers();
+        List<User> user = udb.getUsers();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            String jsonMovies = objectMapper.writeValueAsString(movies);
+            String jsonMovies = objectMapper.writeValueAsString(user);
             return ResponseEntity.ok(jsonMovies);
         } catch (Exception e) {
             e.printStackTrace();
