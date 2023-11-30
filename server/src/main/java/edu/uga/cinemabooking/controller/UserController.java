@@ -27,7 +27,6 @@ public class UserController {
      */
     @GetMapping("/getUsers")
     public ResponseEntity<String> getUsers() {
-        //System.out.println("ajdgaujhgdhjagdvjhasgdajdhasgjdghjb");
 
         List<User> user = udb.getUsers();
         ObjectMapper objectMapper = new ObjectMapper();

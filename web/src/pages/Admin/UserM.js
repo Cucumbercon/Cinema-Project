@@ -4,27 +4,27 @@ import { useNavigate } from 'react-router-dom';
 import './UserM.css';
 
 function UserManagement() {
-    const [users, setUsers] = useState([
-        {id: 1, name: "John Doe", email: "john@example.com", status: "Active", type: "User"},
-        {id: 2, name: "Elon Musk", email: "MuskX@example.com", status: "Active", type: "Admin"}, 
-    ]);
+    const [users, setUsers] = useState([]);
 
     // const [users, setUsers] = useState([]);
     useEffect(() => {
-    
-    fetch('http://localhost:8000/api/getUsers', {
+
+        fetch('http://localhost:8000/api/getUsers', {
             method: 'GET',
         })
             .then((response) => response.text()) // JSON
             .then((data) => {
                 const parsedData = JSON.parse(data);
-                console.log('availableMoviedata:', parsedData);
+                setUsers(parsedData);
+                // console.log(parsedData);
+
             })
             .catch((error) => {
                 console.error('Error sending message to Spring:', error);
             });
 
-        }, []);
+    }, []);
+    console.log(users);
 
     // const removeUser = async (userId) => {
     //     try {
@@ -35,7 +35,7 @@ function UserManagement() {
     //     }
     // };
 
-    const removeUser = (userId) => {        
+    const removeUser = (userId) => {
         setUsers(users.filter(user => user.id !== userId));
     };
     const editProfile = (userId) => {
@@ -57,46 +57,46 @@ function UserManagement() {
             console.error('Error toggling user status:', error);
         }
     };
-    
+
 
     const navigate = useNavigate();
 
 
-    
+
     return (
         <div className="parent-container">
-        <div className="user-management-container">
-            <h1>User Management</h1>
-            <table className="users-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Type</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map(user => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.status}</td>
-                            <td>{user.type}</td>
-                            <td>
-                                <button className="edit-btn" onClick={editProfile}>Edit Profile</button>
-                                <button className="edit-order-btn" onClick={editOrder}>Edit Order</button>
-                                <button className="toggle-status-btn" onClick={() => toggleUserStatus(user.id, user.status === 'Active')}>{user.status === 'Active' ? 'Suspend' : 'Unsuspend'}</button>
-                                <button className="remove-btn" onClick={() => removeUser(user.id)}>Remove</button>
-                            </td>
+            <div className="user-management-container">
+                <h1>User Management</h1>
+                <table className="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Type</th>
+                            <th>Action</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {users.map(user => (
+                            <tr key={user.id}>
+                                <td>{user.id}</td>
+                                <td>{user.fullName}</td>
+                                <td>{user.email}</td>
+                                <td>{user.is_activity === 1 ? 'Active' : 'Deactive'}</td>
+                                <td>{user.type === 1 ? 'Admin' : 'User'}</td>
+                                <td>
+                                    <button className="edit-btn" onClick={editProfile}>Edit Profile</button>
+                                    <button className="edit-order-btn" onClick={editOrder}>Edit Order</button>
+                                    <button className="toggle-status-btn" onClick={() => toggleUserStatus(user.id, user.is_activity === 1)}>{user.is_activity === 1 ? 'Suspend' : 'Unsuspend'}</button>
+                                    <button className="remove-btn" onClick={() => removeUser(user.id)}>Remove</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

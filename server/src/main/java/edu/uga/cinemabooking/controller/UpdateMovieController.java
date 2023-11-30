@@ -1,66 +1,66 @@
-package edu.uga.cinemabooking.controller;
+// package edu.uga.cinemabooking.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+// import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+// import com.fasterxml.jackson.databind.JsonNode;
+// import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.uga.cinemabooking.DB.MovieDB;
+// import edu.uga.cinemabooking.DB.MovieDB;
 
-import java.io.IOException;
+// import java.io.IOException;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.http.HttpStatus;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.CrossOrigin;
+// import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.RequestBody;
+// import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
-@RequestMapping("/api")
-@CrossOrigin(origins = "*")
-public class UpdateMovieController {
+// @RestController
+// @RequestMapping("/api")
+// @CrossOrigin(origins = "*")
+// public class UpdateMovieController {
 
-    MovieDB mdb = new MovieDB();
+//     MovieDB mdb = new MovieDB();
 
-    /**
-     * This class is used to add the movie to the db
-     * @param data A JSON string representing the movie data to be added.
-     * @return A response entity indicating the result of the operation.
-     */
-    @PostMapping("/addMovie")
-    public ResponseEntity<String> fetchData(@RequestBody String data) {
+//     /**
+//      * This class is used to add the movie to the db
+//      * @param data A JSON string representing the movie data to be added.
+//      * @return A response entity indicating the result of the operation.
+//      */
+//     @PostMapping("/addMovie")
+//     public ResponseEntity<String> fetchData(@RequestBody String data) {
 
-        ObjectMapper objectMapper = new ObjectMapper();
+//         ObjectMapper objectMapper = new ObjectMapper();
 
-        try {
+//         try {
 
-            System.out.println(data);
+//             System.out.println(data);
 
-            JsonNode jsonNode = objectMapper.readTree(data);
-            String title = jsonNode.get("title").asText();
-            String language = jsonNode.get("language").asText();
-            double popularity = jsonNode.get("popularity").asDouble();
-            String posterPath = jsonNode.get("poster_path").asText();
-            String backdropPath = jsonNode.get("backdrop_path").asText();
-            String releaseDay = jsonNode.get("release_day").asText();
-            int state = jsonNode.get("state").asInt();
-            String category = jsonNode.get("category").asText();
-            String trailerPath = jsonNode.get("trailer_path").asText();
-            String synopsis = jsonNode.get("synopsis").asText();
-            String cast = jsonNode.get("cast").asText();
-            String director = jsonNode.get("director").asText();
-            String producer = jsonNode.get("producer").asText();
-            double rating = jsonNode.get("rating").asDouble();
+//             JsonNode jsonNode = objectMapper.readTree(data);
+//             String title = jsonNode.get("title").asText();
+//             String language = jsonNode.get("language").asText();
+//             double popularity = jsonNode.get("popularity").asDouble();
+//             String posterPath = jsonNode.get("poster_path").asText();
+//             String backdropPath = jsonNode.get("backdrop_path").asText();
+//             String releaseDay = jsonNode.get("release_day").asText();
+//             int state = jsonNode.get("state").asInt();
+//             String category = jsonNode.get("category").asText();
+//             String trailerPath = jsonNode.get("trailer_path").asText();
+//             String synopsis = jsonNode.get("synopsis").asText();
+//             String cast = jsonNode.get("cast").asText();
+//             String director = jsonNode.get("director").asText();
+//             String producer = jsonNode.get("producer").asText();
+//             double rating = jsonNode.get("rating").asDouble();
 
-            mdb.addMovie(language, title, popularity, posterPath, backdropPath, releaseDay, state, category, trailerPath, synopsis, cast, rating, director, producer);
+//             mdb.addMovie(language, title, popularity, posterPath, backdropPath, releaseDay, state, category, trailerPath, synopsis, cast, rating, director, producer);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("Invalid data format", HttpStatus.BAD_REQUEST);
-        }
+//         } catch (IOException e) {
+//             e.printStackTrace();
+//             return new ResponseEntity<>("Invalid data format", HttpStatus.BAD_REQUEST);
+//         }
 
-        return ResponseEntity.ok("Added movies successful");
+//         return ResponseEntity.ok("Added movies successful");
 
-    }
-}
+//     }
+// }
