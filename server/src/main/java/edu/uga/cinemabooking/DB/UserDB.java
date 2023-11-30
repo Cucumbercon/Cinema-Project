@@ -356,6 +356,15 @@ public class UserDB {
         }
     }
 
+    public List<User> deletUsers(int id) {
+
+        List<User> users = new ArrayList<>();
+
+
+
+        return users;
+
+    }
     
     
 
