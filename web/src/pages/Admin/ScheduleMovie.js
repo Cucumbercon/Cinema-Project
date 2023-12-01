@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import './ScheduleMovie.css';
 
@@ -8,14 +8,14 @@ function ScheduleMovie() {
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [ticketPrice, setTicketPrice] = useState('');
-
+    const [movies, setMovies] = useState([]);
     // Dummy movie list - replace with actual data from backend and database.
     const navigate = useNavigate();
-    const movies = [
-        { id: 1, title: "Movie 1" },
-        { id: 2, title: "Movie 2" },
-        // gotta connect to db
-    ];
+   // const movies = [
+   //     { id: 1, title: "Movie 1" },
+   //     { id: 2, title: "Movie 2" },
+   //     // gotta connect to db
+   //  ];
 
     const scheduleData = {
         selectedMovie,
@@ -25,6 +25,44 @@ function ScheduleMovie() {
         ticketPrice
     };
 
+    const fetchMovies = async () => {
+        try {
+            // available
+            const availableResponse = await fetch('http://localhost:8000/api/getAvailableMovie');
+            if (!availableResponse.ok) {
+                throw new Error('response fail');
+            }
+            const availableMovies = await availableResponse.json();
+            //console.log(availableMovies);
+    
+            // upcoming
+            const upcomingResponse = await fetch('http://localhost:8000/api/getUpComingMovie');
+            if (!upcomingResponse.ok) {
+                throw new Error('response fail');
+            }
+            const upcomingMovies = await upcomingResponse.json();
+    
+            // combine two lists
+            const categorizedMovies = [
+                { id: 'available', title: '===Available Movies===', isCategory: true },
+                ...availableMovies,
+                { id: 'upcoming', title: '===Upcoming Movies===', isCategory: true },
+                ...upcomingMovies
+            ];
+    
+            return categorizedMovies;
+        } catch (error) {
+            console.error('Fetch error:', error);
+            return []; // error
+        }
+    };
+    
+    useEffect(() => {
+        fetchMovies().then(movies => {
+            // update movies
+            setMovies(movies);
+        });
+    }, []);
     // I came up the method to connect with the backend and db    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // you are also able to seaching by movie title               !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -80,9 +118,16 @@ function ScheduleMovie() {
                     <label htmlFor="movieSelect">Select Movie:</label>
                     <select id="movieSelect" value={selectedMovie} onChange={e => setSelectedMovie(e.target.value)}>
                         <option value="">--Select a Movie--</option>
-                        {movies.map(movie => (
-                            <option key={movie.id} value={movie.id}>{movie.title}</option>
-                        ))}
+                        {movies.map(movie => {
+                             if (movie.isCategory) {
+                                // separator
+                                return <option key={movie.id} disabled>{movie.title}</option>;
+                            } else {
+                                // movie info
+                                return <option key={movie.id} value={movie.id}>{movie.title}</option>;
+                            }
+
+                        })}
                     </select>
                 </div>
 
