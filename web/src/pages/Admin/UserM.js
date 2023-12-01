@@ -87,10 +87,17 @@ function UserManagement() {
                                 <td>{user.is_activity === 1 ? 'Active' : 'Deactive'}</td>
                                 <td>{user.type === 1 ? 'Admin' : 'User'}</td>
                                 <td>
+                                <div className="action-buttons">
                                     <button className="edit-btn" onClick={editProfile}>Edit Profile</button>
                                     <button className="edit-order-btn" onClick={editOrder}>Edit Order</button>
-                                    <button className="toggle-status-btn" onClick={() => toggleUserStatus(user.id, user.is_activity === 1)}>{user.is_activity === 1 ? 'Suspend' : 'Unsuspend'}</button>
+                                    {/* <button className="toggle-status-btn" onClick={() => toggleUserStatus(user.id, user.is_activity === 1)}>{user.is_activity === 1 ? 'Suspend' : 'Unsuspend'}</button> */}
+                                    <button 
+                                    className={`toggle-status-btn ${user.is_activity === 1 ? 'suspend' : 'unsuspend'}`} 
+                                        onClick={() => toggleUserStatus(user.id, user.is_activity === 1)}
+                                    >{user.is_activity === 1 ? 'Suspend' : 'Unsuspend'}
+                                    </button>
                                     <button className="remove-btn" onClick={() => removeUser(user.id)}>Remove</button>
+                                </div>    
                                 </td>
                             </tr>
                         ))}

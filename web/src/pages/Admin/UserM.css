@@ -1,16 +1,18 @@
 .parent-container {
-    display: grid;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
 }
 .user-management-container {
-    justify-content: center;
-    align-items: center;
-    width: 60vw; 
-    margin: 0; 
-    padding: 1rem;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    width: 120%; 
+    margin: auto; 
+    padding: 20px;
     background-color: #f4f4f4;
-    height: 100vh;
+    min-height: calc(100vh);
 }
 
 .user-management-container h1 {
@@ -23,6 +25,7 @@
     width: 100%;
     border-collapse: collapse;
     background-color: #fff;
+
 }
 
 .users-table thead {
@@ -37,8 +40,12 @@
 }
 
 .users-table td {
-    /* background-color: #f9f9f9; */
     background-color: grey;
+}
+
+.action-buttons {
+    display: flex; 
+    justify-content: flex-start; 
 }
 
 .edit-btn, .edit-order-btn, .remove-btn, .toggle-status-btn {
@@ -50,6 +57,17 @@
     cursor: pointer;
     outline: none;
     transition: 0.3s;
+}
+
+.suspend {
+    background-color: orange; 
+    color: white;
+    
+}
+
+.unsuspend {
+    background-color: rgb(31, 25, 25); 
+    color: white;
 }
 
 .edit-btn {
@@ -67,10 +85,10 @@
     color: #fff;
 }
 
-.toggle-status-btn{
+/* .toggle-status-btn{
     background-color:palevioletred;
     color: #fff;
-}
+} */
 
 .edit-btn:hover {
     background-color: #ff3300;
@@ -85,6 +103,6 @@
     background-color: red;
 }
 
-.toggle-status-btn :hover{
+/* .toggle-status-btn :hover{
     background-color: palevioletred;
-}
+} */
