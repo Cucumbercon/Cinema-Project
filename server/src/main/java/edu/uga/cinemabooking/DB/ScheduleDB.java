@@ -25,7 +25,7 @@ public class ScheduleDB {
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (Exception e) {
-            // TODO: handle exception
+            // TODO: handle exceptio
         }
     }
 
