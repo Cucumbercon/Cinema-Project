@@ -339,6 +339,7 @@ const MovieBooking = (props) => {
                                     <label htmlFor="chinese">Chinese</label>
                                 </div>
                             </div>
+                            
                             {/* this part is for Details */}
                             <div className="sidebar-groups">
                                 <h3 className="sg-title">Details</h3>

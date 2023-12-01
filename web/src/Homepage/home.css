@@ -276,7 +276,10 @@ input {
 }
 
 .checkbox-container input[type="checkbox"] {
-    margin-right: 3px; 
+    margin-right: 10px;
+    max-width: 20px;
+    flex-shrink: 0;
+    /* margin-right: 3px;  */
 }
 
 input[type=checkbox]:checked {
@@ -290,8 +293,9 @@ input[type=radio]:checked {
     
 }
 
-label {
-    margin-left: .5rem;
+.checkbox-container label {
+    margin-left: .2rem;
+    padding: 2px 0; /* This is optional, adjust as needed */
 }
 
 
