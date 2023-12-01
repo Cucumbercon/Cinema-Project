@@ -16,7 +16,7 @@ public class Movie {
     String director;
     String producer;
     double rating;
-
+    int duration;
     public Movie() {
 
     }
@@ -24,7 +24,7 @@ public class Movie {
     public Movie(int id, String titile, String language, double popularity,
             String posterPath, String backdropPath, String date,
             int state, String category, String trailerPath, String synopsis,
-            String cast, String director, String producer, double rating) {
+            String cast, String director, String producer, double rating, int duration) {
         this.id = id;
         this.title = titile;
         this.language = language;
@@ -40,6 +40,7 @@ public class Movie {
         this.director = director;
         this.producer = producer;
         this.rating = rating;
+        this.duration = duration;
     }
 
     public String getBackdropPath() {
@@ -162,6 +163,14 @@ public class Movie {
         this.trailerPath = trailerPath;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
@@ -180,6 +189,7 @@ public class Movie {
                 ", director='" + director + '\'' +
                 ", producer='" + producer + '\'' +
                 ", rating=" + rating +
+                ", duration=" + duration +
                 '}';
     }
 

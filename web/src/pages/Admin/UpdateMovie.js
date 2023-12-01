@@ -5,52 +5,62 @@
 
     function MovieManagement(props) {
         const navigate = useNavigate();
-
-        const [releaseDay, setReleaseDay] = useState("");
+        const [archivedMovies, setArchivedMovies] = useState([]);
+        const [currentMovies, setCurrentMovies] = useState([]);
+        const [upcomingMovies, setUpcomingMovies] = useState([]);
         const [moviesList, setMoviesList] = useState([]);
         const [movieDetails, setMovieDetails] = useState({
-            id: crypto.randomUUID(),
+            id: '',
             title: '',
             language: '',
             popularity: '',
-            poster_path: '',
-            backdrop_path: '',
-            release_day: '',
+            posterPath: '',
+            backdropPath: '',
+            date: '',
             state: '',
             category: '',
-            trailer_path: '',
+            trailerPath: '',
+            synopsis: '',
             cast: '',
             director: '',
             producer: '',
-            synopsis: '',
             rating: '',
+            duration: ''
         });
+        const fetchMovies = async () => {
+            try {
+                const archivedResponse = await fetch('http://localhost:8000/api/getArchiveMovie');
+                const archivedMovies = await archivedResponse.json();
+                
+                const currentResponse = await fetch('http://localhost:8000/api/getAvailableMovie');
+                const currentMovies = await currentResponse.json();
 
-        useEffect(() => {
-            setMovieDetails((prevMovieDetails) => ({
-                ...prevMovieDetails,
-                release_day: releaseDay,
-            }));
-        }, [releaseDay]);
+                const upcomingResponse = await fetch('http://localhost:8000/api/getUpComingMovie');
+                const upcomingMovies = await upcomingResponse.json();
+                console.log(currentMovies)
+                const combinedMovies = [
+                    { id:"AM", title: '=== Archived Movies ===', isCategory: true },
+                    ...archivedMovies,
+                    { id:"CM", title: '=== Current Movies ===', isCategory: true },
+                    ...currentMovies,
+                    { id:"UM", title: '=== Upcoming Movies ===', isCategory: true },
+                    ...upcomingMovies
+                ];
 
+                setMoviesList(combinedMovies);
+            } catch (error) {
+                console.error('Error fetching movies:', error);
+            }
+        };
         useEffect(() => {
-            fetch('http://localhost:8000/api/getMovies')
-                .then(response => response.json())
-                .then(data => {
-                    setMoviesList(data);
-                })
-                .catch(error => console.error('Error fetching movies:', error));
+            fetchMovies();
         }, []);
 
-        const handleMovieSelect = async (selectedMovieId) => {
-            try {
-                const response = await fetch(`http://localhost:8000/api/getMovie/${selectedMovieId}`);
-                const selectedMovieDetails = await response.json();
 
-                setMovieDetails(selectedMovieDetails);
-                setReleaseDay(selectedMovieDetails.release_day);
-            } catch (error) {
-                console.error('Error fetching selected movie details:', error);
+        const handleMovieSelect = (selectedMovieId) => {
+            const selectedMovie = moviesList.find(movie => movie.id && movie.id.toString() === selectedMovieId);
+            if (selectedMovie) {
+                setMovieDetails(selectedMovie);
             }
         };
 
@@ -59,29 +69,14 @@
             setMovieDetails(prev => ({ ...prev, [name]: value }));
         };
 
-        const handleDayChange = (e) => {
-            let inputValue = e.target.value;
-            if (/^\d{0,4}(-\d{0,2}(-\d{0,2})?)?$/.test(inputValue)) {
-                if (inputValue.length === 4 || inputValue.length === 7) {
-                    inputValue += "-";
-                }
-                setReleaseDay(inputValue);
-            }
-        };
-
-        const handleKeyDown = (e) => {
-            if (e.key === "Backspace") {
-                setReleaseDay("");
-            }
-        };
 
         const handleSubmit = (e) => {
             e.preventDefault();
-
-            if (/^\d{4}-\d{2}-\d{2}$/.test(releaseDay) === false) {
+            console.log(movieDetails.date)
+            if (/^\d{4}-\d{2}-\d{2}$/.test(movieDetails.date) === false) {
                 alert("Sorry, the format of release_day is incorrect");
             } else {
-                fetch('http://localhost:8000/api/addMovie', {
+                fetch('http://localhost:8000/api/updateMovieInfo', {
                     method: 'POST',
                     body: JSON.stringify(movieDetails),
                     headers: {
@@ -90,7 +85,8 @@
                 })
                     .then(function (response) {
                         if (response.status === 200) {
-                            navigate('/');
+                            alert('Movie updated successfully!');
+                            fetchMovies();
                             return response.json();
                         } else if (response.status === 400) {
                             // Handle movie already exists in the db
@@ -105,22 +101,30 @@
             }
         };
 
-        const handleRemoveMovie = () => {
-            const confirmRemove = window.confirm("Are you sure you want to remove this movie?");
-            if (confirmRemove) {
-                // Send a request to remove the selected movie from the database
-                fetch(`http://localhost:8000/api/removeMovie/${movieDetails.id}`, {
-                    method: 'DELETE',
-                })
-                    .then(response => {
-                        if (response.status === 200) {
-                            navigate('/');
-                        } else {
-                            console.error('Failed to remove movie. Status:', response.status);
+        const handleArchiveMovie = () => {
+            const ArchiveMovie = async () => {
+                const movieToUpdate = { ...movieDetails, state: -1 };
+                try {
+                    const response = await fetch('http://localhost:8000/api/updateMovieInfo', {
+                        method: 'POST',
+                        body: JSON.stringify(movieToUpdate),
+                        headers: {
+                            'Content-Type': 'application/json'
                         }
-                    })
-                    .catch(error => console.error('Error removing movie:', error));
-            }
+                    });
+                    if (response.ok) {
+                        alert('Movie archived successfully!');
+                        fetchMovies();
+                        movieDetails.state=-1;
+                    } else {
+                        alert(`Failed to archive movie.`);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error archiving movie');
+                }
+            };
+            ArchiveMovie();
         };
 
         return (
@@ -131,34 +135,38 @@
                     <div>
                         <label>Select Movie:</label>
                         <select onChange={(e) => handleMovieSelect(e.target.value)}>
-                            <option value="" disabled>Select a movie</option>
-                            {moviesList.map(movie => (
-                                <option key={movie.id} value={movie.id}>
-                                    {movie.title}
-                                </option>
-                            ))}
+                            <option value="" disabled selected>Select a movie</option>
+                            {moviesList.map(movie => {
+                                 if (movie.isCategory) {
+                                    // separator
+                                    return <option key={movie.id} disabled>{movie.title}</option>;
+                                } else {
+                                    // movie info
+                                    return <option key={movie.id} value={movie.id}>{movie.title}</option>;
+                                }
+                            })}
                         </select>
                     </div>
                     <form onSubmit={handleSubmit}>
                         <div className='movieField grid'>
                             <div className='movieField'>
                                 Title
-                                <input type="text" name="title" placeholder="Movie Title" onChange={handleChange} required />
+                                <input type="text" name="title" value={movieDetails.title || ''} placeholder="Title" onChange={handleChange} required/>
                             </div>
                             <div className='movieField'>
                                 Language
-                                <input type="text" name="language" placeholder="Language" onChange={handleChange} required />
+                                <input type="text" name="language" value={movieDetails.language || ''} placeholder="Language" onChange={handleChange} required />
                             </div>
                         </div>
 
                         <div className='movieField grid'>
                             <div className='movieField'>
                                 Popularity
-                                <input type="text" name="popularity" placeholder="Popularity" onChange={handleChange} required />
+                                <input type="text" name="popularity" value={movieDetails.popularity || '0' }placeholder="Popularity" onChange={handleChange} required />
                             </div>
                             <div className='movieField'>
                                 Poster Path
-                                <input type="text" name="poster_path" placeholder="Poster_path" onChange={handleChange} required />
+                                <input type="text" name="poster_path" value={movieDetails.posterPath || ''} placeholder="Poster_path" onChange={handleChange} required />
 
                             </div>
                         </div>
@@ -170,77 +178,66 @@
                                     type="text"
                                     name="release_day"
                                     placeholder="Release_day in YYYY-MM-DD format"
-                                    value={releaseDay}
-                                    onChange={handleDayChange}
-                                    onKeyDown={handleKeyDown}
+                                    value={movieDetails.date}
 
                                     required
                                 />
                             </div>
                             <div className='movieField'>
-                                State (Upcoming: 0, Available: 1)
-                                <input type="text" name="state" placeholder="State" onChange={handleChange} required />
+                                State (Archive: -1, Upcoming: 0, Available: 1)
+                                <input type="text" name="state" value={movieDetails.state} placeholder="State" onChange={handleChange} required />
                             </div>
                         </div>
 
                         <div className='movieField grid'>
                             <div className='movieField'>
                                 Category
-                                <input type="text" name="category" placeholder="Category" onChange={handleChange} required />
+                                <input type="text" name="category" value={movieDetails.category||''} placeholder="Category" onChange={handleChange} required />
                             </div>
                             <div className='movieField'>
                                 Rating
-                                <input type="text" name="rating" placeholder="Rating" onChange={handleChange} required />
+                                <input type="text" name="rating" value={movieDetails.rating||''} placeholder="Rating" onChange={handleChange} />
                             </div>
                         </div>
 
                         <div className='movieField grid'>
                             <div className='movieField'>
                                 Trailer Path
-                                <input type="text" name="trailer_path" placeholder="Trailer_path" onChange={handleChange} required />
+                                <input type="text" name="trailer_path" value={movieDetails.trailerPath||''} placeholder="Trailer_path" onChange={handleChange} required />
                             </div>
                             <div className='movieField'>
                                 Cast
-                                <input type="text" name="cast" placeholder="Cast" onChange={handleChange} required />
+                                <input type="text" name="cast" value={movieDetails.cast||''} placeholder="Cast" onChange={handleChange} required />
                             </div>
                         </div>
 
                         <div className='movieField grid'>
                             <div className='movieField'>
                                 Director
-                                <input type="text" name="director" placeholder="Director" onChange={handleChange} required />
+                                <input type="text" name="director" value={movieDetails.director||''} placeholder="Director" onChange={handleChange} required />
                             </div>
                             <div className='movieField'>
                                 Producer
-                                <input type="text" name="producer" placeholder="Producer" onChange={handleChange} required />
+                                <input type="text" name="producer" value={movieDetails.producer||''} placeholder="Producer" onChange={handleChange} required />
                             </div>
                         </div>
 
                         <div className='movieField grid'>
                             <div className='movieField'>
                                 Duration(Minutes)
-                                <input type="text" name="backdrop_path" placeholder="Duration" onChange={handleChange} required />
+                                <input type="text" name="duration" value={movieDetails.duration|| '0'} placeholder="Duration" onChange={handleChange} required />
                             </div>
                             <div className='movieField'>
-                                synosis
-                                <input type="text" name="synopsis" placeholder="Synopsis" onChange={handleChange} required />
+                                Synosis
+                                <input type="text" name="synopsis" value={movieDetails.synopsis ||''} placeholder="Synopsis" onChange={handleChange} required />
                             </div>
                         </div>
 
-                        {/* <div className='synosis'>
-                            Synopsis
-                            <textarea name="synopsis" placeholder="Synopsis" onChange={handleChange}></textarea>
-                        </div> */}
-
-                        {/* <label>
-                        Archived:
-                        <input type="checkbox" name="archived" onChange={handleCheckbox} />
-                    </label> */}
                         <button type="submit">Update Movie</button>
                         {/* Button to remove the selected movie */}
     <button
     type="button"
-    onClick={handleRemoveMovie}
+    onClick={handleArchiveMovie}
     style={{
         backgroundColor: '#ff0000', // Red color
         color: 'white',
@@ -252,7 +249,7 @@
         width: '100%',
     }}
     >
-    Remove Movie
+    Archive Movie
     </button>
 
                     </form>

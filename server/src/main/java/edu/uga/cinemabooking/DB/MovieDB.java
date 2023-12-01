@@ -119,6 +119,7 @@ public class MovieDB {
                 movie.setRating(resultSet.getDouble("rating"));
                 movie.setDirector(resultSet.getString("director"));
                 movie.setProducer(resultSet.getString("producer"));
+                movie.setDuration(resultSet.getInt("duration"));
             }
 
         } catch (SQLException e) {
@@ -162,13 +163,14 @@ public class MovieDB {
                 movie.setRating(resultSet.getDouble("rating"));
                 movie.setDirector(resultSet.getString("director"));
                 movie.setProducer(resultSet.getString("producer"));
+                movie.setDuration(resultSet.getInt("duration"));
 
                 movies.add(movie);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        //System.out.println(movies);
         return movies;
 
     }
@@ -205,7 +207,7 @@ public class MovieDB {
                 movie.setRating(resultSet.getDouble("rating"));
                 movie.setDirector(resultSet.getString("director"));
                 movie.setProducer(resultSet.getString("producer"));
-
+                movie.setDuration(resultSet.getInt("duration"));
                 movies.add(movie);
             }
 
@@ -221,6 +223,53 @@ public class MovieDB {
 
     }
 
+    /**
+     * This method is used to search for the archive movie from db
+     * 
+     * @return the lis of movies
+     */
+    public List<Movie> getArchiveMovie() {
+        String sql = "SELECT * FROM movie WHERE state = ?";
+        List<Movie> movies = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, -1);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            movies = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Movie movie = new Movie();
+                movie.setId(resultSet.getInt("id"));
+                movie.setLanguage(resultSet.getString("language"));
+                movie.setTitle(resultSet.getString("title"));
+                movie.setState(resultSet.getInt("state"));
+                movie.setPopularity(resultSet.getDouble("popularity"));
+                movie.setPosterPath(resultSet.getString("poster_path"));
+                movie.setBackdropPath(resultSet.getString("backdrop_path"));
+                movie.setDate(resultSet.getString("release_day"));
+                movie.setCategory(resultSet.getString("category"));
+                movie.setTrailerPath(resultSet.getString("trailer_path"));
+                movie.setSynopsis(resultSet.getString("synopsis"));
+                movie.setCast(resultSet.getString("cast"));
+                movie.setRating(resultSet.getDouble("rating"));
+                movie.setDirector(resultSet.getString("director"));
+                movie.setProducer(resultSet.getString("producer"));
+                movie.setDuration(resultSet.getInt("duration"));
+                movies.add(movie);
+            }
+
+            // for (Movie movie : movies) {
+            // System.out.println(movie.toString());
+            // }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return movies;
+
+    }
     // this method is for delete movie
     // public void deleteMovie(int id) {
     // String sql = "DELETE FROM movie WHERE ID = ?";
@@ -273,4 +322,34 @@ public class MovieDB {
 
         return movies;
     }
+
+    public boolean updateMovieInfo(Movie movie) {
+        String sql = "UPDATE movie SET language = ?, title = ?, state = ?, popularity = ?, poster_path = ?, backdrop_path = ?, release_day = ?, category = ?, trailer_path = ?, synopsis = ?, cast = ?, rating = ?, director = ?, producer = ?, duration = ? WHERE id = ?";
+    
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, movie.getLanguage());
+            preparedStatement.setString(2, movie.getTitle());
+            preparedStatement.setInt(3, movie.getState());
+            preparedStatement.setDouble(4, movie.getPopularity());
+            preparedStatement.setString(5, movie.getPosterPath());
+            preparedStatement.setString(6, movie.getBackdropPath());
+            preparedStatement.setString(7, movie.getDate());
+            preparedStatement.setString(8, movie.getCategory());
+            preparedStatement.setString(9, movie.getTrailerPath());
+            preparedStatement.setString(10, movie.getSynopsis());
+            preparedStatement.setString(11, movie.getCast());
+            preparedStatement.setDouble(12, movie.getRating());
+            preparedStatement.setString(13, movie.getDirector());
+            preparedStatement.setString(14, movie.getProducer());
+            preparedStatement.setInt(15, movie.getDuration());
+            preparedStatement.setInt(16, movie.getId());
+    
+            int updatedRows = preparedStatement.executeUpdate();
+            return updatedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
 }
