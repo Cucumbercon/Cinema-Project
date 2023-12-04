@@ -15,6 +15,11 @@ body {
     font-family: 'Lato', 'sans-serif';
 }
 
+#movie{
+    width:fit-content;
+    margin: 0 auto;
+}
+
 .seat {
     background-color: #535363;
     height: 12px;
@@ -83,12 +88,11 @@ body {
 
 .screen {
     background-color: white;
-    /* align-items: center;
-    justify-content: center; */
-    height: 85px;
-    /* width: 300px; */
-    width: 100%;
-    margin: 15px 0 50px 0;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 4%;
+    height: 120px;
+    width: 40%;
     box-shadow: 0 30px 50px rgba(225, 225, 225, 0.75);
 }
 
@@ -103,6 +107,13 @@ p.text {
 
 p.text span {
     color: #e0d6d6;
+}
+
+.title {
+    font-family: 'Permanent Marker', cursive;
+    text-align: center;
+    font-size: 230%;
+    padding-bottom: 30px;
 }
 
 /* Checkout button styles */
