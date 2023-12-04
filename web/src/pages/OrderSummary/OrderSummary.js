@@ -1,10 +1,15 @@
-import React from 'react';
 import './OrderSummary.css';
-import { useLocation } from 'react-router-dom';
+import { React, useState, useEffect } from 'react';
+import { useLocation, } from 'react-router-dom';
 
 function Checkout() {
     const selectedSeatsCount = (useLocation().state.selectedSeatsCount);
-    console.log(selectedSeatsCount);
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+    const [cardsList, setCardsList] = useState([]);
+
+    const toggleDropdown = () => {
+        setIsDropdownVisible(!isDropdownVisible);
+    };
 
     const movieDetails = {
         title: "Avatar",
@@ -16,9 +21,29 @@ function Checkout() {
             (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5)
     };
 
-    console.log(localStorage.getItem('id'));
 
     const saveCardButton = () => {
+        const userID = localStorage.getItem('id');
+        console.log(userID);
+        if (!isDropdownVisible) {
+            fetch(`http://localhost:8000/api/fetchCardInfo?id=${userID}`, {
+                method: 'GET',
+            }).then((response) => response.text())
+                .then((data) => {
+                    const parsedData = JSON.parse(data);
+
+                    const cardNumbers = parsedData.map(card => card.cardNumber);
+
+                    // Now set cardsList to the entire array
+                    setCardsList(cardNumbers);
+                    // console.log(cardNumbers[0]);
+
+                })
+                .catch((error) => {
+                    console.error('Error searching movies:', error);
+                });
+        }
+        console.log(cardsList);
 
     }
 
@@ -35,7 +60,24 @@ function Checkout() {
             <div className="payment-section">
                 <h1>Payment Information</h1>
                 <p id="card">Credit/Debit Card</p>
-                <button className="use-saved-card-btn" onClick={saveCardButton}>+ Use Saved Card</button>
+                <button className="use-saved-card-btn" onClick={() => {
+                    toggleDropdown();
+                    saveCardButton();
+                }}>
+                    + Use Saved Card
+                </button>
+
+                {isDropdownVisible && (
+                    <div>
+                        <ul className="dropdown-list">
+                            {cardsList.map((card, index) => (
+                                <li id="cardList" key={index} onClick={() => console.log(`Selected Card: ${card}`)}>
+                                    {card}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
                 <hr />
 
                 <div className="checkout-buttons" >

@@ -138,3 +138,9 @@
 .ticket-details p {
     color: #333; /* Adjusted to make the text visible */
 }
+
+#cardList {
+    color: black;
+    font-size: medium;
+    list-style-type: none;
+}

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import edu.uga.cinemabooking.DB.CardDB;
 import edu.uga.cinemabooking.DB.UserDB;
+import edu.uga.cinemabooking.entity.Card;
 import edu.uga.cinemabooking.entity.Movie;
 import edu.uga.cinemabooking.entity.User;
 
@@ -19,11 +21,13 @@ import edu.uga.cinemabooking.entity.User;
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class UserController {
-    
+
     UserDB udb = new UserDB();
-    
+    CardDB cdb = new CardDB();
+
     /**
      * This method is used to get the all the users
+     * 
      * @return the list of movies
      */
     @GetMapping("/getUsers")
@@ -41,21 +45,50 @@ public class UserController {
     }
 
     /**
-     * This method is used to delete the user
+     * This method is to fetch the user's payment card
+     * 
      * @return the list of movies
      */
-    @GetMapping("/deleteUser")
-    public ResponseEntity<String> deleteUser(@RequestParam int userId) {
+    @GetMapping("/fetchCardInfo")
+    public ResponseEntity<String> getCards(int id) {
 
-        List<User> user = udb.deleteUser();
+        List<Card> cards = cdb.getLoggedInCard(id);
         ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            String jsonMovies = objectMapper.writeValueAsString(user);
-            return ResponseEntity.ok(jsonMovies);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Error converting movies to JSON");
+        if (cards != null) {
+            try {
+                String cardsJson = objectMapper.writeValueAsString(cards);
+                System.out.println(cardsJson);
+                return ResponseEntity.ok(cardsJson);
+            } catch (Exception e) {
+                e.printStackTrace(); // Handle exception as needed
+            }
+            // try {
+            // String jsonMovies = objectMapper.writeValueAsString(user);
+            // return ResponseEntity.ok(jsonMovies);
+            // } catch (Exception e) {
+            // e.printStackTrace();
+            // return ResponseEntity.status(500).body("Error converting movies to JSON");
+            // }
         }
+        return ResponseEntity.status(500).body("Error occurs");
     }
+
+    // /**
+    // * This method is used to delete the user
+    // * @return the list of movies
+    // */
+    // @GetMapping("/deleteUser")
+    // public ResponseEntity<String> deleteUser(@RequestParam int userId) {
+
+    // List<User> user = udb.deleteUser();
+    // ObjectMapper objectMapper = new ObjectMapper();
+    // try {
+    // String jsonMovies = objectMapper.writeValueAsString(user);
+    // return ResponseEntity.ok(jsonMovies);
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // return ResponseEntity.status(500).body("Error converting movies to JSON");
+    // }
+    // }
 
 }
