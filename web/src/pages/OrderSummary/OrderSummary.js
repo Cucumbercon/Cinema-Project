@@ -4,6 +4,7 @@ import { useLocation, } from 'react-router-dom';
 
 function Checkout() {
     const selectedSeatsCount = (useLocation().state.selectedSeatsCount);
+    const [promoText, setPromoText] = useState('');
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [cardsList, setCardsList] = useState([]);
 
@@ -11,20 +12,40 @@ function Checkout() {
         setIsDropdownVisible(!isDropdownVisible);
     };
 
-    const movieDetails = {
-        title: "Avatar",
+    const [movieDetails, setMovieDetails] = useState({
+        title: useLocation().state.movie.title,
         adultTicket: selectedSeatsCount.adult,
         seniorTicket: selectedSeatsCount.senior,
         childTicket: selectedSeatsCount.child,
         tax: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) * 0.06,
+        discount: 0,
         total: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) * 0.06 +
             (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5)
-    };
+    });
+
+    const applyPromoButton = () => {
+        fetch(`http://localhost:8000/api/applyPromotion?code=${promoText}`, {
+            method: 'GET',
+        }).then((response) => response.text())
+            .then((data) => {
+                const parsedData = JSON.parse(data);
+                if (parsedData.prom != 0) {
+                    setMovieDetails((prevDetails) => ({
+                        ...prevDetails,
+                        discount: parsedData,
+                        total: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) * 0.06 +
+                            (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) - parsedData
+                    }));
+                }
+            })
+            .catch((error) => {
+                console.error('Error searching movies:', error);
+            });
+    }
 
 
     const saveCardButton = () => {
         const userID = localStorage.getItem('id');
-        console.log(userID);
         if (!isDropdownVisible) {
             fetch(`http://localhost:8000/api/fetchCardInfo?id=${userID}`, {
                 method: 'GET',
@@ -69,7 +90,7 @@ function Checkout() {
 
                 {isDropdownVisible && (
                     <div>
-                        <ul className="dropdown-list">
+                        <ul >
                             {cardsList.map((card, index) => (
                                 <li id="cardList" key={index} onClick={() => console.log(`Selected Card: ${card}`)}>
                                     {card}
@@ -90,10 +111,7 @@ function Checkout() {
                             <input type="text" placeholder="Security Number" required />
                             <input type="text" placeholder="ZIP Code" required />
                         </div>
-                        <div className="promo-code-input">
-                            <input id="promoText" type="text" placeholder="Promo Code" />
-                            <button className="apply-promo-btn">Apply</button>
-                        </div>
+
                         <div className="checanButton">
                             <div className='checkoutDiv'>
                                 <button className="checkout-btn" type="submit">Checkout</button>
@@ -110,11 +128,17 @@ function Checkout() {
             </div>
             <div className="order-summary-section">
                 <h1>Order Summary</h1>
-                <p>{movieDetails.title}</p>
+                <p id="summaryTitle">{useLocation().state.movie.title}</p>
                 <div className="ticket-details">
-                    <p>Adult Ticket x {movieDetails.adultTicket}</p>
-                    <p>Senior Ticket x {movieDetails.seniorTicket}</p>
-                    <p>Child Ticket x {movieDetails.childTicket}</p>
+                    <div className="promo-code-input">
+                        <input id="promoText" type="text" placeholder="Promo Code" onChange={(e) => setPromoText(e.target.value)}
+                        />
+                        <button className="apply-promo-btn" onClick={applyPromoButton}>Apply</button>
+                    </div>
+                    <p>Adult Ticket x {movieDetails.adultTicket}: ${movieDetails.adultTicket * 15}</p>
+                    <p>Senior Ticket x {movieDetails.seniorTicket}: ${movieDetails.seniorTicket * 8}</p>
+                    <p>Child Ticket x {movieDetails.childTicket}: ${movieDetails.childTicket * 5}</p>
+                    <p>Discount: -${movieDetails.discount}</p>
                     <p>Taxes: ${movieDetails.tax.toFixed(2)}</p>
                     <hr />
                     <p className="total">Total: ${movieDetails.total.toFixed(2)}</p>

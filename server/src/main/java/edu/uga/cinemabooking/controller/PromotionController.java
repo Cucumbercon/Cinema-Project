@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import edu.uga.cinemabooking.entity.Promotion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,14 +31,19 @@ import java.util.List;
 public class PromotionController {
 
     PromoDB pdb = new PromoDB();
-    
 
     @GetMapping("/promotions")
     public List<Promotion> getAllPromotions() {
-        //System.out.println("recieved get promotionlist requestion.");
+        // System.out.println("recieved get promotionlist requestion.");
         List<Promotion> promotionlists = pdb.getAllPromotions();
-        //System.out.println(promotionlists);
+        // System.out.println(promotionlists);
         return promotionlists;
+    }
+
+    @GetMapping("/applyPromotion")
+    public ResponseEntity<Double> applyPromotion(@RequestParam String code) {
+        double discount = pdb.getDisount(code);
+        return ResponseEntity.ok(discount);
     }
 
     @PostMapping("/addpromotion")
@@ -50,7 +57,7 @@ public class PromotionController {
             String startDate = jsonNode.get("startDate").asText();
             String endDate = jsonNode.get("endDate").asText();
             System.err.println("信息解析成功。");
-            pdb.addPromotion(promotionCode,description,discountAmount,startDate,endDate);
+            pdb.addPromotion(promotionCode, description, discountAmount, startDate, endDate);
             return ResponseEntity.ok("Promotion added successfully");
         } catch (Exception e) {
             e.printStackTrace();

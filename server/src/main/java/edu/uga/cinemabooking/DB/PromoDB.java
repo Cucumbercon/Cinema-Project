@@ -21,6 +21,22 @@ public class PromoDB {
         }
     }
 
+    public double getDisount(String code) {
+        String sql = "SELECT * FROM promotion WHERE promotion_code = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, code);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Double.parseDouble(resultSet.getString("discount_amount"));
+                }
+            }
+        } catch (SQLException e) {
+            // Handle SQL exceptions
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public void addPromotion(String promotion_code, String description, double discount_amount, String startDate, String endDate) {
         String sql = "INSERT INTO promotion (promotion_code, description, discount_amount, start_date, end_date, status) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

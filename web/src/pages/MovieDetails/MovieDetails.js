@@ -33,6 +33,7 @@ function MovieDetails() {
     //function to handle the logic for adding the show clickable show times and navigating to movie seat booking
     const handleViewSeatsClick = () => {
         // Use navigate function to go to "/movieseatsbooking"
+        console.log(movie);
         navigate('/movieseatbooking',
             {
                 state: {movie},

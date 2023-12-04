@@ -4,7 +4,7 @@ import './seatsSelecting.css';
 
 function MovieSeatBooking() {
     const navigate = useNavigate();
-    console.log(useLocation());
+    const movie = (useLocation().state.movie);
     // These are the state variables
     const [seats, setSeats] = useState(generateSeats());
     const [selectedMovie, setSelectedMovie] = useState({ index: 0, price: 5 });
@@ -99,7 +99,7 @@ function MovieSeatBooking() {
     const handleCheckout = () => {
         if (selectedSeatsCount.adult > 0 || selectedSeatsCount.senior > 0 || selectedSeatsCount.child > 0) {
             navigate('/ordersummary', {
-                state: { selectedSeatsCount }
+                state: { selectedSeatsCount, movie}
             });
         }
     }
