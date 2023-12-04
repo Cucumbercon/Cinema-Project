@@ -31,7 +31,7 @@ public class ShowroomDB {
 
     public void addShowroom(int seat_amount, String information, String name) {
 
-        String sql = "INSERT INTO schedule (seat_amount, information, name) " +
+        String sql = "INSERT INTO showroom (seat_amount, information, name) " +
                 "VALUES (?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, seat_amount);
