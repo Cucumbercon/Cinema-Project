@@ -12,8 +12,8 @@ function Checkout() {
         seniorTicket: selectedSeatsCount.senior,
         childTicket: selectedSeatsCount.child,
         tax: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) * 0.06,
-        total: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5)* 0.06+ 
-               (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5)
+        total: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) * 0.06 +
+            (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5)
     };
 
     console.log(movieDetails);
@@ -22,10 +22,12 @@ function Checkout() {
         <div className="checkout-container">
             <div className="payment-section">
                 <h1>Payment Information</h1>
-                <p>Credit/Debit Card</p>
+                <p id="card">Credit/Debit Card</p>
+                <button className="use-saved-card-btn">+ Use Saved Card</button>
+                <hr/>
                 <div className="card-input">
+
                     <input type="text" placeholder="Card Number" />
-                    <button className="use-saved-card-btn">+ Use Saved Card</button>
                 </div>
                 <div className="card-details">
                     <input type="text" placeholder="MM/YY" />
@@ -33,7 +35,7 @@ function Checkout() {
                     <input type="text" placeholder="ZIP Code" />
                 </div>
                 <div className="promo-code-input">
-                    <input type="text" placeholder="Promo Code" />
+                    <input id= "promoText" type="text" placeholder="Promo Code" />
                     <button className="apply-promo-btn">Apply</button>
                 </div>
                 <div className="checkout-buttons">
