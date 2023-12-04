@@ -216,8 +216,24 @@ public class EmailController {
         }
     }
 
-
-
-
+    @PostMapping("/sendOrderConfirmation")
+    public ResponseEntity<String> sendOrderConfirmation(@RequestBody String data) {
+        UserDB udb = new UserDB();
+        System.out.println("Received a request to send an email.");
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(data);
+            String email = jsonNode.get("email").asText();
+            if (udb.emailExist(email)) {
+                sendEmailMessage(email, "Order Confirmation", "Your Order Confirmation Code: 1000340 ");
+            } else {
+                return ResponseEntity.status(400).body("Email does not exist in the database.");
+            }
+            return ResponseEntity.ok("Email sent successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error from send Order Confirmation.");
+        }
+    }
 }
 
