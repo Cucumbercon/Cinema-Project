@@ -97,10 +97,10 @@ function MovieSeatBooking() {
 
     // Function to handle the checkout process
     const handleCheckout = () => {
-
-
-
-        navigate('/ordersummary');
+        console.log(selectedSeatsCount);
+        navigate('/ordersummary', {
+            state: {selectedSeatsCount}
+        });
     };
 
     return (

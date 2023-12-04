@@ -1,15 +1,22 @@
 import React from 'react';
 import './OrderSummary.css';
+import { useLocation } from 'react-router-dom';
 
 function Checkout() {
+    const selectedSeatsCount = (useLocation().state.selectedSeatsCount);
+    console.log(selectedSeatsCount);
+
     const movieDetails = {
         title: "Avatar",
-        adultTicket: 3,
-        seniorTicket: 0,
-        childTicket: 1,
-        tax: 2.5,
-        total: 45
+        adultTicket: selectedSeatsCount.adult,
+        seniorTicket: selectedSeatsCount.senior,
+        childTicket: selectedSeatsCount.child,
+        tax: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) * 0.06,
+        total: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5)* 0.06+ 
+               (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5)
     };
+
+    console.log(movieDetails);
 
     return (
         <div className="checkout-container">
