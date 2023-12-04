@@ -23,7 +23,24 @@
     color: #333; /* Fix for visibility */
 }
 
-.card-input, .card-details, .promo-code-input {
+.card-input {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+
+.card-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+
+.promo-code-input {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -68,10 +85,11 @@
 .checkout-buttons {
     display: flex;
     justify-content: space-between;
-    margin-top: 2rem;
+    /* margin-top: 1rem; */
 }
 
-.checkout-btn, .cancel-btn {
+.checkout-btn,
+.cancel-btn {
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
@@ -79,24 +97,42 @@
     font-size: 1rem;
     outline: none;
     transition: 0.3s;
-}
-
-.checkout-btn {
-    background-color: green;
-    color: white;
+    width: 98%;
+    height: 40px; /* Set a fixed height for both buttons */
 }
 
 .cancel-btn {
-    background-color: red;
-    color: white;
+    margin-bottom: 4px;
+
 }
+
+
+.checanButton {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Center the buttons horizontally */
+    align-items: center; /* Center the buttons vertically */
+}
+
+.checkoutDiv,
+.cancelDiv {
+    width: 100%;
+    margin-left: 10px;
+    height: auto;
+}
+
+#cardNumber {
+    width: 100%;
+    margin: 0;
+}
+
 
 .checkout-btn:hover {
     background-color: darkgreen;
 }
 
 .cancel-btn:hover {
-    background-color: darkred;
+    background-color: rgb(25, 0, 139);
 }
 
 .ticket-details p {

@@ -16,31 +16,54 @@ function Checkout() {
             (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5)
     };
 
-    console.log(movieDetails);
+    console.log(localStorage.getItem('id'));
+
+    const saveCardButton = () => {
+
+    }
+
+    const cancelButton = () => {
+        window.history.back();
+    }
+
+    const checkoutButton = () => {
+
+    }
 
     return (
         <div className="checkout-container">
             <div className="payment-section">
                 <h1>Payment Information</h1>
                 <p id="card">Credit/Debit Card</p>
-                <button className="use-saved-card-btn">+ Use Saved Card</button>
-                <hr/>
-                <div className="card-input">
+                <button className="use-saved-card-btn" onClick={saveCardButton}>+ Use Saved Card</button>
+                <hr />
 
-                    <input type="text" placeholder="Card Number" />
-                </div>
-                <div className="card-details">
-                    <input type="text" placeholder="MM/YY" />
-                    <input type="text" placeholder="Security Number" />
-                    <input type="text" placeholder="ZIP Code" />
-                </div>
-                <div className="promo-code-input">
-                    <input id= "promoText" type="text" placeholder="Promo Code" />
-                    <button className="apply-promo-btn">Apply</button>
-                </div>
-                <div className="checkout-buttons">
-                    <button className="checkout-btn">Checkout</button>
-                    <button className="cancel-btn">Cancel</button>
+                <div className="checkout-buttons" >
+                    <form onSubmit={checkoutButton}>
+                        <div className="card-input">
+                            <input type="text" id="cardNumber" placeholder="Card Number" required />
+                        </div>
+                        <div className="card-details" >
+                            <input type="text" placeholder="MM/YY" required />
+                            <input type="text" placeholder="Security Number" required />
+                            <input type="text" placeholder="ZIP Code" required />
+                        </div>
+                        <div className="promo-code-input">
+                            <input id="promoText" type="text" placeholder="Promo Code" />
+                            <button className="apply-promo-btn">Apply</button>
+                        </div>
+                        <div className="checanButton">
+                            <div className='checkoutDiv'>
+                                <button className="checkout-btn" type="submit">Checkout</button>
+                            </div>
+                            <div className='cancelDiv'>
+                                <button className="cancel-btn" onClick={cancelButton}>Cancel</button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                    {/* <button className="checkout-btn" type="submit" >Checkout</button> */}
                 </div>
             </div>
             <div className="order-summary-section">
