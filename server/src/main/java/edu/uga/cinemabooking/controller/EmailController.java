@@ -225,7 +225,7 @@ public class EmailController {
             JsonNode jsonNode = objectMapper.readTree(data);
             String email = jsonNode.get("email").asText();
             if (udb.emailExist(email)) {
-                sendEmailMessage(email, "Order Confirmation", "Your Order Confirmation Code: 1000340 ");
+                sendEmailMessage(email, "Order Confirmation", "Your Order Confirmation Code: 1000340 \n Ticket: Five Night's at Freddy's \n Cost Total: $69");
             } else {
                 return ResponseEntity.status(400).body("Email does not exist in the database.");
             }
