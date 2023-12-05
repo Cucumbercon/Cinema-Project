@@ -32,19 +32,19 @@ public class Schedule {
         return end_time;
     }
 
-    public void setMovieId() {
+    public void setMovieId(int movie_id) {
         this.movie_id = movie_id;
     }
 
-    public void setShowroomId() {
+    public void setShowroomId(int showroom_id) {
         this.showroom_id = showroom_id;
     }
 
-    public void setStartTime() {
+    public void setStartTime(String start_time) {
         this.start_time = start_time;
     }
 
-    public void setEndTime() {
+    public void setEndTime(String end_time) {
         this.end_time = end_time;
     }
 }

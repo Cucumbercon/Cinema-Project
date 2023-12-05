@@ -10,7 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.uga.cinemabooking.entity.Movie;
 import edu.uga.cinemabooking.entity.Schedule;
+import edu.uga.cinemabooking.entity.Showroom;
 
 public class ShowroomDB {
     final static String URL = "jdbc:mysql://sg-cdb-kpa6dm3n.sql.tencentcdb.com:63965/ebooking";
@@ -42,6 +44,50 @@ public class ShowroomDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    public Showroom getShowroomID(String movie_title) {
+
+        String sql = "SELECT * FROM showroom WHERE name = ?";
+        Showroom showroom = new Showroom();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, movie_title);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+
+            while (resultSet.next()) {
+                showroom.setId(resultSet.getInt("id"));
+                showroom.setSeatAmount(resultSet.getInt("seat_amount"));
+                showroom.setInformation(resultSet.getString("information"));
+                showroom.setName(resultSet.getString("name"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return showroom;
+
+    }
+    
+    public boolean startTimeExist(String information) {
+
+        String sql = "SELECT * FROM showroom WHERE information = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, information);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+
+        }
+
+        return false;
     }
 }

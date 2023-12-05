@@ -5,8 +5,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import edu.uga.cinemabooking.DB.MovieDB;
 import edu.uga.cinemabooking.DB.ScheduleDB;
 import edu.uga.cinemabooking.DB.ShowroomDB;
+import edu.uga.cinemabooking.entity.Movie;
+import edu.uga.cinemabooking.entity.Showroom;
 
 import java.io.IOException;
 
@@ -24,6 +27,7 @@ public class ScheduleMovieController {
 
     ScheduleDB sdb = new ScheduleDB();
     ShowroomDB shdb = new ShowroomDB();
+    MovieDB mdb = new MovieDB();
     
     @PostMapping("/scheduleMovie")
     public ResponseEntity<String> fetchData(@RequestBody String data) {
@@ -31,12 +35,20 @@ public class ScheduleMovieController {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-
             System.out.println(data);
             JsonNode jsonNode = objectMapper.readTree(data);
+
+            // Gets the movie name and uses it to get movieID
+            String movie_name = jsonNode.get("selectedMovie").asText();
+            Movie movie = mdb.getMovieID(movie_name);
+            int movie_id = movie.getId();
+            // Create a showroom
             shdb.addShowroom(63, jsonNode.get("startTime").asText(), jsonNode.get("selectedMovie").asText());
-            int movie_id = jsonNode.get("selectedMovie").asInt();
-            int showroom_id = 1;
+
+            // Gets the movie name and uses it to get showroomID
+            Showroom showroom = shdb.getShowroomID(movie_name);
+            int showroom_id = showroom.getId();
+
             String start_date = jsonNode.get("startTime").asText();
             String end_date = jsonNode.get("endTime").asText();
 
@@ -47,7 +59,7 @@ public class ScheduleMovieController {
             return new ResponseEntity<>("Invalid data format", HttpStatus.BAD_REQUEST);
         }
 
-        return ResponseEntity.ok("Added movies successful");
+        return ResponseEntity.ok("Schedule movies successful");
 
     }
 }

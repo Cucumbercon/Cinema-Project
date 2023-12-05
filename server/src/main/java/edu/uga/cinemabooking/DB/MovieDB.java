@@ -351,5 +351,42 @@ public class MovieDB {
             return false;
         }
     }
+
+    public Movie getMovieID(String movie_title) {
+
+        String sql = "SELECT * FROM movie WHERE title = ?";
+        Movie movie = new Movie();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, movie_title);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+
+            while (resultSet.next()) {
+                movie.setId(resultSet.getInt("id"));
+                movie.setLanguage(resultSet.getString("language"));
+                movie.setTitle(resultSet.getString("title"));
+                movie.setState(resultSet.getInt("state"));
+                movie.setPopularity(resultSet.getDouble("popularity"));
+                movie.setPosterPath(resultSet.getString("poster_path"));
+                movie.setBackdropPath(resultSet.getString("backdrop_path"));
+                movie.setDate(resultSet.getString("release_day"));
+                movie.setCategory(resultSet.getString("category"));
+                movie.setTrailerPath(resultSet.getString("trailer_path"));
+                movie.setSynopsis(resultSet.getString("synopsis"));
+                movie.setCast(resultSet.getString("cast"));
+                movie.setRating(resultSet.getDouble("rating"));
+                movie.setDirector(resultSet.getString("director"));
+                movie.setProducer(resultSet.getString("producer"));
+                movie.setDuration(resultSet.getInt("duration"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return movie;
+
+    }
     
 }
