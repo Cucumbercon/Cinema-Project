@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './seatsSelecting.css';
 
 function MovieSeatBooking() {
+    const navigate = useNavigate();
+    const movie = (useLocation().state.movie);
     // These are the state variables
     const [seats, setSeats] = useState(generateSeats());
     const [selectedMovie, setSelectedMovie] = useState({ index: 0, price: 5 });
@@ -95,11 +97,16 @@ function MovieSeatBooking() {
 
     // Function to handle the checkout process
     const handleCheckout = () => {
-        
-    };
+        if (selectedSeatsCount.adult > 0 || selectedSeatsCount.senior > 0 || selectedSeatsCount.child > 0) {
+            navigate('/ordersummary', {
+                state: { selectedSeatsCount, movie}
+            });
+        }
+    }
 
     return (
         <div>
+            <div className='title'>{useLocation().state.movie.title}</div>
             <div className="movie-container">
                 <label>Please Select a seat</label>
                 <br />
@@ -113,15 +120,15 @@ function MovieSeatBooking() {
 
             <div className="centered-container">
                 <div className="container">
-                    <div className="screen"></div>
+                    <div className="screen">
+                    </div>
                     {seats.map((row, rowIndex) => (
                         <div key={rowIndex} className="row">
                             {row.map((seat, seatIndex) => (
                                 <div
                                     key={seatIndex}
-                                    className={`seat ${seat.selected ? 'selected' : ''} ${
-                                        seat.occupied ? 'occupied' : ''
-                                    }`}
+                                    className={`seat ${seat.selected ? 'selected' : ''} ${seat.occupied ? 'occupied' : ''
+                                        }`}
                                     onClick={() => toggleSeatSelection(rowIndex, seatIndex)}
                                 ></div>
                             ))}
@@ -136,7 +143,7 @@ function MovieSeatBooking() {
 
             {/* Checkout button */}
             <button className="checkout-button" onClick={handleCheckout}>
-                Checkout
+                Confirm Seats
             </button>
         </div>
     );

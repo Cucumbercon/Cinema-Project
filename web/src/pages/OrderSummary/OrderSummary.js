@@ -1,41 +1,179 @@
-import React from 'react';
 import './OrderSummary.css';
+import { React, useState, useEffect } from 'react';
+import { useLocation, } from 'react-router-dom';
 
-function OrderSummary() {
-    const movieDetails = {
-        poster: './MoviePoster.png',
-        title: "The Creator",
-        adultTicket: 3,
-        seniorTicket: 0,
-        childTicket: 1,
-        tax: 2.5,
-        total: 45
+function Checkout() {
+    const selectedSeatsCount = (useLocation().state.selectedSeatsCount);
+    const [promoText, setPromoText] = useState('');
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+    const [cardsList, setCardsList] = useState([]);
+    const location = useLocation();
+
+    const toggleDropdown = () => {
+        setIsDropdownVisible(!isDropdownVisible);
     };
 
+    const [movieDetails, setMovieDetails] = useState({
+        title: location.state.movie.title,
+        adultTicket: selectedSeatsCount.adult,
+        seniorTicket: selectedSeatsCount.senior,
+        childTicket: selectedSeatsCount.child,
+        tax: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) * 0.06,
+        discount: 0,
+        total: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) * 0.06 +
+            (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5)
+    });
+
+    const applyPromoButton = () => {
+        fetch(`http://localhost:8000/api/applyPromotion?code=${promoText}`, {
+            method: 'GET',
+        }).then((response) => response.text())
+            .then((data) => {
+                const parsedData = JSON.parse(data);
+                if (parsedData.prom != 0) {
+                    setMovieDetails((prevDetails) => ({
+                        ...prevDetails,
+                        discount: parsedData,
+                        total: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) * 0.06 +
+                            (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) - parsedData
+                    }));
+                }
+            })
+            .catch((error) => {
+                console.error('Error searching movies:', error);
+            });
+    }
+
+
+    const saveCardButton = () => {
+        const userID = localStorage.getItem('id');
+        if (!isDropdownVisible) {
+            fetch(`http://localhost:8000/api/fetchCardInfo?id=${userID}`, {
+                method: 'GET',
+            }).then((response) => response.text())
+                .then((data) => {
+                    const parsedData = JSON.parse(data);
+
+                    const cardNumbers = parsedData.map(card => card.cardNumber);
+
+                    // Now set cardsList to the entire array
+                    setCardsList(cardNumbers);
+                    // console.log(cardNumbers[0]);
+
+                })
+                .catch((error) => {
+                    console.error('Error searching movies:', error);
+                });
+        }
+        console.log(cardsList);
+
+    }
+
+    function handleCardClick(card) {
+        const result = window.confirm(`Selected Card: ${card}. \nDo you want to proceed?`);
+
+        if (result) {
+            const movie = location.state.movie;
+            const userID = localStorage.getItem("id");
+            const price = movieDetails.total;
+            fetch(`http://localhost:8000/api/sendOrderConfirmation`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    movie,
+                    userID,
+                    price,
+                }),
+            }).then((response) => response.text())
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error('Error occurred:', error);
+                    alert('Error occurs: ', error);
+                });
+        } else {
+            alert(`Payment has been cancelled.`);
+        }
+    }
+
+    const cancelButton = () => {
+        window.history.back();
+    }
+
+    const checkoutButton = () => {
+
+    }
+
     return (
-        <div className="order-summary-container">
-            <div className="movie-section">
-                <img src={require('./MoviePoster.png')} alt="" className="movie-poster"/>
-                {/* <img src={movieDetails.poster} alt={movieDetails.title + ' poster'} className="movie-poster"/> */}
-                <h2>{movieDetails.title}</h2>
-            </div>
-            <div className="summary-section">
-                <h1>Order Summary</h1>
-                <div className="ticket-details">
-                    <p>Adult Ticket x {movieDetails.adultTicket}</p>
-                    <p>Senior Ticket x {movieDetails.seniorTicket}</p>
-                    <p>Child Ticket x {movieDetails.childTicket}</p>
-                    <p>Taxes: ${movieDetails.tax.toFixed(2)}</p>
-                    <hr/>
-                    <p className="total">Total: ${movieDetails.total.toFixed(2)}</p>
+        <div className="checkout-container">
+            <div className="payment-section">
+                <h1>Payment Information</h1>
+                <p id="card">Credit/Debit Card</p>
+                <button className="use-saved-card-btn" onClick={() => {
+                    toggleDropdown();
+                    saveCardButton();
+                }}>
+                    + Use Saved Card
+                </button>
+
+                {isDropdownVisible && (
+                    <div>
+                        <ul >
+                            {cardsList.map((card, index) => (
+                                <li id="cardList" key={index} onClick={() => handleCardClick(card)}>
+                                    {card}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+                <hr />
+
+                <div className="checkout-buttons" >
+                    <form onSubmit={checkoutButton}>
+                        <div className="card-input">
+                            <input type="text" id="cardNumber" placeholder="Card Number" required />
+                        </div>
+                        <div className="card-details" >
+                            <input type="text" placeholder="MM/YY" required />
+                            <input type="text" placeholder="Security Number" required />
+                            <input type="text" placeholder="ZIP Code" required />
+                        </div>
+
+                        <div className="checanButton">
+                            <div className='checkoutDiv'>
+                                <button className="checkout-btn" type="submit">Checkout</button>
+                            </div>
+                            <div className='cancelDiv'>
+                                <button className="cancel-btn" onClick={cancelButton}>Cancel</button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                    {/* <button className="checkout-btn" type="submit" >Checkout</button> */}
                 </div>
-                <div className="buttons">
-                    <button className="confirm-btn">Confirm</button>
-                    <button className="cancel-btn">Cancel</button>
+            </div>
+            <div className="order-summary-section">
+                <h1>Order Summary</h1>
+                <p id="summaryTitle">{location.state.movie.title}</p>
+                <div className="ticket-details">
+                    <div className="promo-code-input">
+                        <input id="promoText" type="text" placeholder="Promo Code" onChange={(e) => setPromoText(e.target.value)}
+                        />
+                        <button className="apply-promo-btn" onClick={applyPromoButton}>Apply</button>
+                    </div>
+                    <p>Adult Ticket x {movieDetails.adultTicket}: ${movieDetails.adultTicket * 15}</p>
+                    <p>Senior Ticket x {movieDetails.seniorTicket}: ${movieDetails.seniorTicket * 8}</p>
+                    <p>Child Ticket x {movieDetails.childTicket}: ${movieDetails.childTicket * 5}</p>
+                    <p>Discount: -${movieDetails.discount}</p>
+                    <p>Taxes: ${movieDetails.tax.toFixed(2)}</p>
+                    <hr />
+                    <p className="total">Total: ${movieDetails.total.toFixed(2)}</p>
                 </div>
             </div>
         </div>
     );
 }
 
-export default OrderSummary;
+export default Checkout;

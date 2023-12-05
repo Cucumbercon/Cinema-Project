@@ -123,6 +123,38 @@ public class UserDB {
     }
 
     /**
+     * This method will search for all the users
+     * 
+     * @return the list of users
+     */
+    public List<User> getUsers() {
+
+        String sql = "SELECT * FROM user";
+        List<User> users = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            users = new ArrayList<>();
+
+            while (resultSet.next()) {
+                User user = new User();
+                user.setFullName(resultSet.getString("user_name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setId(resultSet.getInt("id"));
+                user.setType(resultSet.getInt("type"));
+                user.setIs_activity(resultSet.getInt("is_activity"));
+
+                users.add(user);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    /**
      * This method will search for all the customers
      * 
      * @return the list of customers
@@ -324,6 +356,35 @@ public class UserDB {
         }
     }
 
+    public String getEmail(int id) {
+        String sql = "SELECT email FROM user WHERE ID = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("email");  
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Consider logging this exception or propagating it further.
+        }
+        return null;
+
+    }
+
+    public List<User> deletUsers(int id) {
+
+        List<User> users = new ArrayList<>();
+
+
+
+        return users;
+
+    }
     
     
 

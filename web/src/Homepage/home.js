@@ -24,9 +24,6 @@ const MovieBooking = (props) => {
 
     const navigate = useNavigate();
 
-    // console.log(props.isLoggedIn);
-    // console.log(props.isAdmin);
-
     useEffect(() => {
         // console.log("isloggedin: " + localStorage.getItem('isLoggedIn'));
         // console.log("Adminisloggedin: " + localStorage.getItem('AdminisLoggedIn'));
@@ -52,8 +49,30 @@ const MovieBooking = (props) => {
         setIsPopupOpen(!isPopupOpen);
     };
 
+    const handleCartClick = () => {
+        // Navigate to the shopping cart page or open a cart dropdown
+        console.log("Cart clicked");
+        // Example: navigate('/cart');
+    };
+    
+
     const handleLogin = () => {
     };
+
+    const handleViewDetail = (movie) => {
+        fetch(`http://localhost:8000/api/ViewMovieDetail?id=${movie.id}`, {
+            method: 'GET',
+        }).then((response) => response.text())
+            .then((data) => {
+                const parsedData = JSON.parse(data);
+                navigate(`/moviedetails/${parsedData.id}`, { state: { data: parsedData} });
+
+            })
+
+            .catch((error) => {
+                console.error('Error searching movies:', error);
+            });
+    }
 
     const handleSignup = () => {
     };
@@ -223,6 +242,9 @@ const MovieBooking = (props) => {
                         {/* <img src={require('./assests/images/movieCart.jpg')} alt="" className="cart"/> */}
                         {/* <img src={require('./moviefilter.jpg')} alt="" className="filter"/> */}
                         {/* <img src={require('./movieCart.jpg')} alt="" className="cart" /> */}
+                        {localStorage.getItem('isLoggedIn') === 'true' && (
+                            <img src={require('./movieCart.jpg')} alt="Shopping Cart" className="cart" onClick={handleCartClick} />
+                                )}
                         <div className="profile-img-box" onClick={toggleUserPopup} className={isPopupOpen ? 'profile-img-box open' : 'profile-img-box'}>
                             {localStorage.getItem('isLoggedIn') === 'true' ? (
                                 <img src={require('./baseUserIcon.png')} alt="User's Profile" />
@@ -317,6 +339,7 @@ const MovieBooking = (props) => {
                                     <label htmlFor="chinese">Chinese</label>
                                 </div>
                             </div>
+                            
                             {/* this part is for Details */}
                             <div className="sidebar-groups">
                                 <h3 className="sg-title">Details</h3>
@@ -353,7 +376,7 @@ const MovieBooking = (props) => {
                                         </div>
                                         <h3 className="movie-title">{movie.title}</h3>
                                         <div className="booking">
-                                            <a href="#" className="btn">View Details</a>
+                                            <a href="#" className="btn" onClick={() => handleViewDetail(movie)}>View Details</a>
                                         </div>
                                         <div className="booking">
                                             <a
@@ -383,7 +406,7 @@ const MovieBooking = (props) => {
                                         </div>
                                         <h3 className="movie-title">{movie.title}</h3>
                                         <div className="booking">
-                                            <a href="#" className="btn">Veiw Details</a>
+                                            <a href="#" className="btn" onClick={() => handleViewDetail(movie)}>Veiw Details</a>
                                         </div>
                                         <div className="booking">
                                             <a
@@ -429,7 +452,7 @@ const MovieBooking = (props) => {
                                         </div>
                                         <h3 className="movie-title">{movie.title}</h3>
                                         <div className="booking">
-                                            <a href="#" className="btn">View Details</a>
+                                            <a href="#" className="btn" onClick={() => handleViewDetail(movie)}>View Details</a>
                                         </div>
                                         <div className="booking">
                                             <a href="#" className="btn">Play Trailer</a>

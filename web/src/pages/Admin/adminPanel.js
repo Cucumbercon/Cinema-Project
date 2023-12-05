@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { encrypt } from '../Users/encryption';
 import './adminPanel.css';
@@ -19,50 +19,58 @@ function AdminPanel(props) {
         return <div>You do not have the permission to access this page!!</div>;
     }
 
-    const goToPromotion = () =>{
+    const goToUpdateMovie = () => {
+        navigate('/updatemovie');
+    }
+
+    const goToPromotion = () => {
         navigate('/promotion');
     }
 
-    const goToMoiveManagement = () =>{
+    const goToMoiveDetail = () => {
+        navigate('/promotion');
+    }
+
+    const goToMoiveManagement = () => {
         navigate('/moviemanagement');
     }
 
-    const goToDashboard = () =>{
-        navigate('/dashboard');
+    const goToScheduleMoive = () => {
+        navigate('/scheduleMovie');
     }
 
-    const goToUserManagement = () =>{
+    const goToUserManagement = () => {
         navigate('/usermanagement');
     }
 
 
 
- 
-  return (
-    <div>
-        {/* basically this selection is builing the top bar include Admin Icon, Admin Name */}
-        {/* and a seaching bar for user to seach the key word of permissions */}
-        <selection className = "top-bar">
-            {/* this part shows the Admin's Icon and username*/}
-            <div className="admin-info">
-                <img src={require('./adminIcon1.png')}alt="Admin Icon" className="admin-icon"/>
-                <span className="admin-username">{adminUsername}</span>
-            </div>
-            {/* this part is for admin to search the key word of the permisson */}
-            {/* the priority is low tho, we can delete it if it's not nesscesary */}
-            <div className="search-bar-container">
+
+    return (
+        <div>
+            {/* basically this selection is builing the top bar include Admin Icon, Admin Name */}
+            {/* and a seaching bar for user to seach the key word of permissions */}
+            <selection className="top-bar">
+                {/* this part shows the Admin's Icon and username*/}
+                <div className="admin-info">
+                    <img src={require('./adminIcon1.png')} alt="Admin Icon" className="admin-icon" />
+                    <span className="admin-username">{adminUsername}</span>
+                </div>
+                {/* this part is for admin to search the key word of the permisson */}
+                {/* the priority is low tho, we can delete it if it's not nesscesary */}
+                {/* <div className="search-bar-container">
                         <input 
                             type="text" 
                             placeholder="Search anything..." 
                             value={searchTerm} 
                             onChange={(e) => setSearchTerm(e.target.value)}
                             />
-            </div>
-        </selection>
+            </div> */}
+            </selection>
 
-        {/* this selection is for admin to check his team, and able to add or delete the admin */}
-        <div className="team-section">
-                <h2>My Team</h2>
+            {/* this selection is for admin to check his team, and able to add or delete the admin */}
+            {/* <div className="team-section"> */}
+                {/* <h2>My Team</h2>
                 <div className="team-grid">
                     {teamMembers.map(member => (
                         <div key={member.id} className="team-member">
@@ -70,28 +78,32 @@ function AdminPanel(props) {
                             <p>{member.name}</p>
                         </div>
                     ))}
-                </div>
+                </div> */}
                 {/* <button onClick={() => alert('Add New Admin Functionality Here!')}>Add New Admin</button> */}
-                <button onClick={() => navigate('/adminsignup')}>Add New Admin</button>
+                {/* <button onClick={() => navigate('/adminsignup')}>Add New Admin</button> */}
+            {/* </div> */}
+
+            <div>
+
             </div>
-
-        <div>
-
-        </div>
-        {/* this selection is working on the admin's permission */}
-        {/* admin's permission should include send movie promotion, view customer information, update ticket price
+            {/* this selection is working on the admin's permission */}
+            {/* admin's permission should include send movie promotion, view customer information, update ticket price
             update movie information  */}
-        <div className="adminpermission">
+            <div className="adminpermission">
                 <h2>Admin Permissions</h2>
                 <div className="permissions-grid">
-                <button className="permission-box" onClick={goToDashboard}>DashBoard
-                </button>
-                <button className="permission-box" onClick={goToUserManagement}>User Management
-                </button>
-                <button className="permission-box" onClick={goToMoiveManagement}>Movie Management
-                </button>
-                <button className="permission-box" onClick={goToPromotion}>Promotion & Ticket Management
-                </button>
+                    <button className="permission-box" onClick={goToUpdateMovie}>Update Movie Details
+                    </button>
+                    <button className="permission-box" onClick={goToScheduleMoive}>Schedule Movie
+                    </button>
+                    <button className="permission-box" onClick={goToUserManagement}>User Management
+                    </button>
+                    <button className="permission-box" onClick={goToMoiveManagement}>Add Movie
+                    </button>
+                    <button className="permission-box" onClick={goToPromotion}>Promotion & Ticket Management
+                    </button>
+                    <button className="permission-box" onClick={() => navigate('/adminsignup')}>Add New Admin
+                    </button>
                 </div>
             </div>
         </div>

@@ -73,5 +73,17 @@ public class Card {
         this.userID = userID;
     }
     
+    @Override
+    public String toString() {
+        return "YourClassName{" +
+                "cardNumber='" + cardNumber + '\'' +
+                ", expDate='" + expDate + '\'' +
+                ", billingState='" + billingState + '\'' +
+                ", billingStreet='" + billingStreet + '\'' +
+                ", billingZipCode='" + billingZipCode + '\'' +
+                ", billingCity='" + billingCity + '\'' +
+                ", userID=" + userID +
+                '}';
+    }
 
 }

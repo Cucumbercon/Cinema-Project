@@ -31,7 +31,6 @@ public class GetMovieController {
      */
     @GetMapping("/getAvailableMovie")
     public ResponseEntity<String> receiveAvailable() {
-        //System.out.println("ajdgaujhgdhjagdvjhasgdajdhasgjdghjb");
 
         List<Movie> movies = mdb.getAvailableMovie();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -77,6 +76,24 @@ public class GetMovieController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error converting movies to JSON");
+        }
+    }
+
+
+    /**
+     * This method is used to get all the movies
+     * @return the list of movies
+     */
+    @GetMapping("/getArchiveMovie")
+    public ResponseEntity<String> getArchiveMovie() {
+        List<Movie> movies = mdb.getArchiveMovie(); //calling getAllMovie()
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String jsonMovies = objectMapper.writeValueAsString(movies);
+            return ResponseEntity.ok(jsonMovies);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("[GetMovieContro/getArchiveMovie] Error converting movies to JSON");
         }
     }
 }

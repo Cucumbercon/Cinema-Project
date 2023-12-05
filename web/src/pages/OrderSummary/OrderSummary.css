@@ -1,95 +1,169 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #eee;
-}
-
-.order-summary-container {
+.checkout-container {
     display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    height: 100vh;
-    /* padding: 5% 10%; */
+    justify-content: space-between;
+    padding: 1rem;
 }
 
-/* .movie-section h2{
-    position:absolute;
-    margin-left: 200px;
-    color: white;
-} */
-
-.summary-section {
-    flex-basis: 55%; 
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    background-color: rgb(202, 190, 190);
-    padding: 2rem;
-    margin: 20px auto 5px  400px;
-    border-radius: 20px;
+.payment-section, .order-summary-section {
+    width: 100%; /* Adjusted for closer to screen edge */
+    background-color: #f7f7f7;
+    padding: 1.5rem 5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 30px;
+    margin-left: 80px;
 }
 
-.movie-poster {
-    max-width: 30%;
-    max-height: 900px;
-    display: block; 
-    margin: 20px auto 5px 50px;
-    border-radius: 10px;
+#card {
+    color: black;
 }
 
-.summary-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-    height: 50%;
-}
-
-.summary-section h1 {
+.checkout-container h1 {
     text-align: center;
-    color: #006400;
+    margin-bottom: 1rem;
+    color: #333; /* Fix for visibility */
 }
 
-.ticket-details {
-    text-align: left;
-}
-
-.ticket-details p, .ticket-details .total {
+.card-input {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
 }
 
-.buttons {
+
+.card-details {
     display: flex;
-    /* justify-content: space-between;  */
-    justify-content:right;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
-.confirm-btn, .cancel-btn {
-    padding: 0.5rem 2rem; 
+
+.promo-code-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.card-input {
+    margin-top: 10px;
+}
+
+.card-input input, .card-details input, .promo-code-input input {
+    flex: 1;
+    padding: 0.5rem;
+    margin-right: 0.5rem; /* Adjusted margin to fix overflow */
+}
+
+#promoText {
+    margin: 0;
+    margin-right: 10px;
+}
+
+.use-saved-card-btn, .apply-promo-btn {
+    background-color: transparent;
+    color: #333;
+    border: 1px solid #333;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin: 0;
+    transition: 0.3s;
+}
+
+.use-saved-card-btn {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.use-saved-card-btn:hover, .apply-promo-btn:hover {
+    background-color: #333;
+    color: #f7f7f7;
+}
+
+.checkout-buttons {
+    display: flex;
+    justify-content: space-between;
+    /* margin-top: 1rem; */
+}
+
+.checkout-btn,
+.cancel-btn {
+    padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
     cursor: pointer;
-    padding: 20px;
-    margin-left: 500px;
-    /* margin-bottom: 1px;
-    margin-right: 2px;
-    position:absolute; */
-    /* top:0;
-    right:0; */
-}
-
-.confirm-btn {
-    background-color: #4CAF50;
-    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+    width: 98%;
+    height: 40px; /* Set a fixed height for both buttons */
 }
 
 .cancel-btn {
-    background-color: #F44336;
-    color: white;
+    margin-bottom: 4px;
+
 }
 
-.confirm-btn:hover {
-    background-color: #45a049;
+
+.checanButton {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Center the buttons horizontally */
+    align-items: center; /* Center the buttons vertically */
+}
+
+.checkoutDiv,
+.cancelDiv {
+    width: 100%;
+    margin-left: 10px;
+    height: auto;
+}
+
+#cardNumber {
+    width: 100%;
+    margin: 0;
+}
+
+
+.checkout-btn:hover {
+    background-color: darkgreen;
 }
 
 .cancel-btn:hover {
-    background-color: #f32c2c;
+    background-color: rgb(25, 0, 139);
 }
+
+.ticket-details p {
+    color: #333; /* Adjusted to make the text visible */
+    text-align: end;
+}
+
+#cardList {
+    color: black;
+    margin-bottom: 10px;
+    background-color: lightblue;
+    border-radius: 3px;
+    height: 30px;
+    font-size: medium;
+    list-style-type: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+
+}
+
+.dropdown-list {
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+#summaryTitle {
+    font-size:xx-large;
+    text-align: center;
+    font-weight: bolder;
+    background-image: linear-gradient(176deg, #0075c9, #76c2b6);
+    -webkit-background-clip: text;
+    color: transparent;}

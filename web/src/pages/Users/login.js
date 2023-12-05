@@ -34,6 +34,7 @@ export const Login = (props) => {
             if (jsonUser.type === 1)
               localStorage.setItem('isAdmin', 'true');
             localStorage.setItem('name', jsonUser.fullName);
+            localStorage.setItem('id', jsonUser.id);
             return navigate("/");
 
             /**
