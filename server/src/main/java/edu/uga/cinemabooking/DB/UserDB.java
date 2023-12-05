@@ -356,6 +356,26 @@ public class UserDB {
         }
     }
 
+    public String getEmail(int id) {
+        String sql = "SELECT email FROM user WHERE ID = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("email");  
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Consider logging this exception or propagating it further.
+        }
+        return null;
+
+    }
+
     public List<User> deletUsers(int id) {
 
         List<User> users = new ArrayList<>();
