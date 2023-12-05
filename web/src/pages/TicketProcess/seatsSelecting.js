@@ -33,9 +33,11 @@ function MovieSeatBooking() {
         for (let i = 0; i < rows; i++) {
             let row = [];
             for (let j = 0; j < seatsInRow; j++) {
+                const seatId = `${i}_${j}`; // Unique ID for each seat
                 row.push({
+                    id: seatId,
                     selected: false,
-                    occupied: Math.random() < 0.3,
+                    occupied: false,
                 });
             }
             generatedSeats.push(row);
@@ -43,15 +45,38 @@ function MovieSeatBooking() {
         return generatedSeats;
     }
 
+    const saveSeatToDatabase = (seatId, selected) => {
+        fetch('/api/saveSeat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                seatId,
+                selected,
+           
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the server if needed
+                console.log('Seat saved to database:', data);
+            })
+            .catch(error => {
+                console.error('Error saving seat to database:', error);
+            });
+    };
+    
+
     // Function to toggle seat selection
     const toggleSeatSelection = (rowIndex, seatIndex) => {
         const updatedSeats = [...seats];
         const seat = updatedSeats[rowIndex][seatIndex];
-
+    
         if (!seat.occupied) {
             const seatType = getSeatType(selectedMovie.index);
             const updatedSelectedSeatsCount = { ...selectedSeatsCount };
-
+    
             if (!seat.selected) {
                 seat.selected = true;
                 updatedSelectedSeatsCount[seatType]++;
@@ -59,12 +84,15 @@ function MovieSeatBooking() {
                 seat.selected = false;
                 updatedSelectedSeatsCount[seatType]--;
             }
-
+    
             setSeats(updatedSeats);
             setSelectedSeatsCount(updatedSelectedSeatsCount);
-            localStorage.setItem('selectedSeats', JSON.stringify(updatedSeats));
+    
+            // call to save seat information to the database
+            saveSeatToDatabase(seat.id, seat.selected);
         }
     };
+    
 
     // This is to handle any movie selection change
     const handleMovieChange = (e) => {
