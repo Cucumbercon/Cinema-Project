@@ -52,7 +52,7 @@ const MovieBooking = (props) => {
     const handleCartClick = () => {
         // Navigate to the shopping cart page or open a cart dropdown
         console.log("Cart clicked");
-        // Example: navigate('/cart');
+        navigate('/shoppingcart');
     };
     
 

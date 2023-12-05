@@ -21,6 +21,9 @@ import RegistrationSuccessPage from './pages/Users/RegistrationSuccessPage';
 import Forgotpass from './pages/Users/Forgotpass';
 import { AdminSignup } from './pages/Admin/adminSignup';
 import  UpdateMovie  from './pages/Admin/UpdateMovie';
+import ShoppingCart from './pages/Users/shoppingcart';
+
+
 
 
 function App() {
@@ -40,6 +43,7 @@ function App() {
         <Route path="/" element={<MovieBooking />} />
         <Route path="/moviebooking" element={<MovieBooking />} />
         <Route path="/moviedetails/:id" element={<MovieDetails />} />
+        <Route path="/shoppingcart" element={<ShoppingCart />} /> 
         <Route path="/movieseatbooking" element={<MovieSeatBooking />} />
         <Route path="/adminpanel" element={<AdminPanel />} />
         <Route path="/dashboard" element={<DashBoard isAdmin={isAdmin} />} />

@@ -46,6 +46,7 @@ function MovieSeatBooking() {
     }
 
     const saveSeatToDatabase = (seatId, selected) => {
+        // This is to save the seat information to the database change the url to the created api
         fetch('/api/saveSeat', {
             method: 'POST',
             headers: {
