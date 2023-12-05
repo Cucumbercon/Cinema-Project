@@ -91,6 +91,9 @@ public class ScheduleDB {
 
     public boolean checkOverlapSchedule(String input_time, int movie_id) {
         List<Schedule> schedules = getSchedules(movie_id);
+        if (schedules == null) {
+            return false;
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (int i = 0; i < schedules.size(); i++) {
             Schedule schedule = schedules.get(i);
