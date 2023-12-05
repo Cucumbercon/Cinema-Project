@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.uga.cinemabooking.DB.ScheduleDB;
+import edu.uga.cinemabooking.DB.ShowroomDB;
 
 import java.io.IOException;
 
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ScheduleMovieController {
 
     ScheduleDB sdb = new ScheduleDB();
-
+    ShowroomDB shdb = new ShowroomDB();
     
     @PostMapping("/scheduleMovie")
     public ResponseEntity<String> fetchData(@RequestBody String data) {
@@ -32,13 +33,12 @@ public class ScheduleMovieController {
         try {
 
             System.out.println(data);
-
             JsonNode jsonNode = objectMapper.readTree(data);
+            shdb.addShowroom(63, jsonNode.get("startTime").asText(), jsonNode.get("selectedMovie").asText());
             int movie_id = jsonNode.get("selectedMovie").asInt();
             int showroom_id = 1;
             String start_date = jsonNode.get("startTime").asText();
             String end_date = jsonNode.get("endTime").asText();
-            int ticketPrice = jsonNode.get("ticketPrice").asInt();
 
             sdb.addSchedule(movie_id, showroom_id, start_date, end_date);
 
