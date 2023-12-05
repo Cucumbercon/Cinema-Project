@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Time;
+import java.util.Date;
 
 import edu.uga.cinemabooking.entity.Movie;
 import edu.uga.cinemabooking.entity.Schedule;
@@ -88,8 +89,27 @@ public class ScheduleDB {
 
     }
 
-    public boolean checkOverlapSchedule(String date_time, int movie_id) {
+    public boolean checkOverlapSchedule(String input_time, int movie_id) {
         List<Schedule> schedules = getSchedules(movie_id);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for (int i = 0; i < schedules.size(); i++) {
+            Schedule schedule = schedules.get(i);
+            try {
+                Date parsedStart = sdf.parse(schedule.getStartTime());
+                Date parsedEnd = sdf.parse(schedule.getEndTime());
+                Date parsedInput = sdf.parse(input_time);
+                Time startTime = new Time(parsedStart.getTime());
+                Time endTime = new Time(parsedEnd.getTime());
+                Time inputTime = new Time(parsedInput.getTime());
+                if (!inputTime.before(startTime) && !inputTime.after(endTime)) {
+
+                } else {
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return false;
     }
 }
