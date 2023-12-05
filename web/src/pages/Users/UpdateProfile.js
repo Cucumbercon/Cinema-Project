@@ -24,7 +24,8 @@ export const UpdateProfile = (props) => {
   const [homeState, setHomeState] = useState('');
   const [homeZipCode, setHomeZipCode] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
-   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [userCards, setUserCards] = useState([]);
 
 
   // ToDO: function to load the user's existing information 
@@ -44,7 +45,6 @@ export const UpdateProfile = (props) => {
         setHomeState(parsedData.state);
         setHomeZipCode(parsedData.zipCode);
 
-        console.log('loadUserProfile', fullName)
       })
       .catch((error) => {
         console.error('Error sending message to Spring:', error)
@@ -58,14 +58,8 @@ export const UpdateProfile = (props) => {
       .then((response) => response.text())
       .then((data) => {
         const parsedData = JSON.parse(data);
-        setCreditCardNumber(parsedData.cardNumber);
-        setExpirationDate(parsedData.expDate);
-        setStreet(parsedData.billingStreet);
-        setCity(parsedData.billingCity);
-        setState(parsedData.billingState);
-        setZipCode(parsedData.billingZipCode);
+        setUserCards(parsedData);
 
-        console.log('loadUserCard', creditCardNumber)
       })
       .catch((error) => {
         console.error('Error sending message to Spring:', error)
@@ -77,35 +71,35 @@ export const UpdateProfile = (props) => {
     e.preventDefault();
     // Check if password and confirmPassword match and update the user's password
     if (password === confirmPassword) {
-      
-      
-      // Update the user's password here
+
+
+    //   // Update the user's password here
       const pass = encrypt(password);
       const passConfirm = encrypt(confirmPassword);
       const passCurrent = encrypt(currentPassword);
       const cardNumber = encrypt(creditCardNumber);
 
       const changeInfo = {
+        userID: localStorage.getItem("id"),
         fullName,
         email,
         phoneNumber,
         subscribe,
-        cardNumber,
-        expirationDate,
+        cardNumber: encrypt(creditCardNumber),
+        expDate: expirationDate,
         pass,
         passConfirm,
         selectedPaymentCard,
-        street,
-        city,
-        state,
-        zipCode,
+        billingStreet: street,
+        billingCity: city,
+        billingState: state,
+        billingZipCode: zipCode,
         homeStreet,
         homeCity,
         homeState,
         homeZipCode,
         passCurrent,
       };
-      console.log(changeInfo)
       alert('You have successfully updated your profile!');
       fetch('http://localhost:8000/api/updateprofile', {
         method: 'POST',
@@ -127,10 +121,56 @@ export const UpdateProfile = (props) => {
     loadUserCard();
   }, []);
 
+  const handleCardSelect = (cardNumber) => {
+    const selectedCard = userCards.find((card) => card.cardNumber === cardNumber);
+
+    setSelectedPaymentCard(cardNumber);
+
+    if (selectedCard) {
+      setCreditCardNumber(selectedCard.cardNumber || '');
+      setExpirationDate(selectedCard.expDate || '');
+      setStreet(selectedCard.billingStreet || '');
+      setCity(selectedCard.billingCity || '');
+      setState(selectedCard.billingState || '');
+      setZipCode(selectedCard.billingZipCode || '');
+    } else {
+      // Handle empty card case, you can set default values or leave them empty
+      setCreditCardNumber('');
+      setExpirationDate('');
+      setStreet('');
+      setCity('');
+      setState('');
+      setZipCode('');
+    }
+  };
+
+  const renderCardOptions = () => {
+    const options = [];
+    let index = 1;
+
+    userCards.forEach((card) => {
+      options.push(
+        <option key={card.cardNumber} value={card.cardNumber}>
+          {`Card ${index++}`}
+        </option>,
+      );
+    });
+    for (let i = index; i <= 3; i++) {
+      options.push(
+        <option key={`empty-${i}`} value="" >
+          {`Empty Card`}
+        </option>
+      );
+    }
+
+    return options;
+
+  };
+
   return (
     <div className="form-box">
       <form className="update-profile-form" onSubmit={handleSubmit}>
-      <button className="home-btn" onClick={() => navigate('/')} style={{backgroundColor: '#ff6600'}}><FaHome size={24}/></button>
+        <button className="home-btn" onClick={() => navigate('/')} style={{ backgroundColor: '#ff6600' }}><FaHome size={24} /></button>
         <div className="form-groups">
           <div class="form-group-panel">
             {/* Email */}
@@ -182,7 +222,7 @@ export const UpdateProfile = (props) => {
                 name="currentPassword"
               />
             </div>
-           
+
             {/* Password */}
             <div className="input-container">
               <label htmlFor="password">Password</label>
@@ -208,11 +248,11 @@ export const UpdateProfile = (props) => {
               />
             </div>
             {/* Text for current password */}
-            <p className="password-description" style={{color: "red"}}>
-                Please input <u>current password</u> to change passwords.
-              </p>
-            </div>
-              
+            <p className="password-description" style={{ color: "red" }}>
+              Please input <u>current password</u> to change passwords.
+            </p>
+          </div>
+
 
           <div class="form-group-break"></div>
           <div class="form-group-panel">
@@ -221,15 +261,13 @@ export const UpdateProfile = (props) => {
               <label htmlFor="paymentCard">Payment Card</label>
               <select
                 value={selectedPaymentCard}
-                onChange={(e) => setSelectedPaymentCard(e.target.value)}
+                onChange={(e) => handleCardSelect(e.target.value)}
                 id="paymentCard"
                 name="paymentCard"
-                className="select-input"
-              >
-                <option value="">Select Payment Card</option>
-                <option value="Payment Card 1">Payment Card 1</option>
-                <option value="Payment Card 2">Payment Card 2</option>
-                <option value="Payment Card 3">Payment Card 3</option>
+                className="select-input">
+
+                {renderCardOptions()}
+
               </select>
             </div>
             {/* Credit Card Number */}
@@ -356,12 +394,12 @@ export const UpdateProfile = (props) => {
               />
             </div>
           </div>
-        {/* Success Message */}
-        {updateSuccess && (
-          <div className="success-message">
-            You have successfully updated your profile!
-          </div>
-        )}
+          {/* Success Message */}
+          {updateSuccess && (
+            <div className="success-message">
+              You have successfully updated your profile!
+            </div>
+          )}
 
 
         </div>
@@ -377,7 +415,7 @@ export const UpdateProfile = (props) => {
           </label>
         </div>
         <button type="submit">Update Profile</button>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 };
