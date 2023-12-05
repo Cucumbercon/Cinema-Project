@@ -7,13 +7,14 @@ function Checkout() {
     const [promoText, setPromoText] = useState('');
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [cardsList, setCardsList] = useState([]);
+    const location = useLocation();
 
     const toggleDropdown = () => {
         setIsDropdownVisible(!isDropdownVisible);
     };
 
     const [movieDetails, setMovieDetails] = useState({
-        title: useLocation().state.movie.title,
+        title: location.state.movie.title,
         adultTicket: selectedSeatsCount.adult,
         seniorTicket: selectedSeatsCount.senior,
         childTicket: selectedSeatsCount.child,
@@ -68,6 +69,33 @@ function Checkout() {
 
     }
 
+    function handleCardClick(card) {
+        const result = window.confirm(`Selected Card: ${card}. \nDo you want to proceed?`);
+
+        if (result) {
+            const movie = location.state.movie;
+            const userID = localStorage.getItem("id");
+            const price = movieDetails.total;
+            fetch(`http://localhost:8000/api/sendOrderConfirmation`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    movie,
+                    userID,
+                    price,
+                }),
+            }).then((response) => response.text())
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error('Error occurred:', error);
+                    alert('Error occurs: ', error);
+                });
+        } else {
+            alert(`Payment has been cancelled.`);
+        }
+    }
+
     const cancelButton = () => {
         window.history.back();
     }
@@ -92,7 +120,7 @@ function Checkout() {
                     <div>
                         <ul >
                             {cardsList.map((card, index) => (
-                                <li id="cardList" key={index} onClick={() => console.log(`Selected Card: ${card}`)}>
+                                <li id="cardList" key={index} onClick={() => handleCardClick(card)}>
                                     {card}
                                 </li>
                             ))}
@@ -128,7 +156,7 @@ function Checkout() {
             </div>
             <div className="order-summary-section">
                 <h1>Order Summary</h1>
-                <p id="summaryTitle">{useLocation().state.movie.title}</p>
+                <p id="summaryTitle">{location.state.movie.title}</p>
                 <div className="ticket-details">
                     <div className="promo-code-input">
                         <input id="promoText" type="text" placeholder="Promo Code" onChange={(e) => setPromoText(e.target.value)}
