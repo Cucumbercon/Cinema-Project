@@ -101,6 +101,8 @@ public class EditProfileController {
                 card = cards.get(0);
             } else {
                 cdb.addCard(id);
+                cdb.addCard(id);
+                cdb.addCard(id);
                 cards = cdb.getLoggedInCard(id);
                 card = cards.get(0);
             }
