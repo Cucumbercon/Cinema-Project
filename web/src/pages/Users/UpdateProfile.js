@@ -73,7 +73,7 @@ export const UpdateProfile = (props) => {
     if (password === confirmPassword) {
 
 
-    //   // Update the user's password here
+      //   // Update the user's password here
       const pass = encrypt(password);
       const passConfirm = encrypt(confirmPassword);
       const passCurrent = encrypt(currentPassword);
@@ -146,19 +146,18 @@ export const UpdateProfile = (props) => {
 
   const renderCardOptions = () => {
     const options = [];
-    let index = 1;
 
     userCards.forEach((card) => {
       options.push(
         <option key={card.cardNumber} value={card.cardNumber}>
-          {`Card ${index++}`}
+          {`${card.cardNumber}`}
         </option>,
       );
     });
-    for (let i = index; i <= 3; i++) {
+    for (let i = userCards.length; i <= 2; i++) {
       options.push(
         <option key={`empty-${i}`} value="" >
-          {`Empty Card`}
+          {`Add Card`}
         </option>
       );
     }
@@ -271,17 +270,20 @@ export const UpdateProfile = (props) => {
               </select>
             </div>
             {/* Credit Card Number */}
-            <div className="input-container">
-              <label htmlFor="creditCardNumber">Credit Card Number</label>
-              <input
-                value={creditCardNumber}
-                onChange={(e) => setCreditCardNumber(e.target.value)}
-                type="text"
-                placeholder="XXXX-XXXX-XXXX-XXXX"
-                id="creditCardNumber"
-                name="creditCardNumber"
-              />
-            </div>
+            {selectedPaymentCard === "" && (
+              <div className="input-container">
+                <label htmlFor="creditCardNumber">Credit Card Number</label>
+                <input
+                  value={creditCardNumber}
+                  onChange={(e) => setCreditCardNumber(e.target.value)}
+                  type="text"
+                  placeholder="XXXX-XXXX-XXXX-XXXX"
+                  id="creditCardNumber"
+                  name="creditCardNumber"
+                />
+              </div>
+
+            )}
             {/* Expiration Date */}
             <div className="input-container">
               <label htmlFor="expirationDate">Expiration Date</label>
