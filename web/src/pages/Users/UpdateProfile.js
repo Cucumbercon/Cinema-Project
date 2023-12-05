@@ -291,7 +291,7 @@ export const UpdateProfile = (props) => {
                 value={expirationDate}
                 onChange={(e) => setExpirationDate(e.target.value)}
                 type="text"
-                placeholder="MM/YYYY"
+                placeholder="YYYY-MM"
                 id="expirationDate"
                 name="expirationDate"
               />

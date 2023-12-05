@@ -49,25 +49,13 @@ public class CardDB {
     public void addCard(int userID, String cardNumber, String expDate, String state,
             String street, String zipcode, String city) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
-        java.util.Date utilDate = null;
-
-        try {
-            utilDate = sdf.parse(expDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        // Convert java.util.Date to java.sql.Date
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-
         String sql = "INSERT INTO payment (user_id, card_number, exp_date, zipcode, street, city, state) " +
                 "VALUES (?,?,?,?,?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, userID);
             preparedStatement.setString(2, cardNumber);
-            preparedStatement.setDate(3, sqlDate);
+            preparedStatement.setString(3, expDate);
             preparedStatement.setString(4, zipcode);
             preparedStatement.setString(5, street);
             preparedStatement.setString(6, city);
@@ -117,7 +105,7 @@ public class CardDB {
             String street, String zipcode, String city) {
 
         // reformat the java string to sql's date
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         java.util.Date utilDate = null;
 
         try {
