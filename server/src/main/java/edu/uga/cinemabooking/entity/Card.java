@@ -1,7 +1,10 @@
 package edu.uga.cinemabooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Card {
-    
+
     String cardNumber;
     String expDate;
     String billingState;
@@ -24,7 +27,7 @@ public class Card {
     public void setBillingCity(String billingCity) {
         this.billingCity = billingCity;
     }
-    
+
     public String getBillingState() {
         return billingState;
     }
@@ -72,7 +75,7 @@ public class Card {
     public void setUserID(int userID) {
         this.userID = userID;
     }
-    
+
     @Override
     public String toString() {
         return "YourClassName{" +

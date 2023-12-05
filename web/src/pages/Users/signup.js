@@ -51,8 +51,7 @@ export const Signup = (props) => {
     }
 
     if (expirationDate !== '') {
-      console.log(expirationDate + "-01");
-      formatDate = encrypt(expirationDate + "-01");
+      formatDate = expirationDate;
     }
 
 

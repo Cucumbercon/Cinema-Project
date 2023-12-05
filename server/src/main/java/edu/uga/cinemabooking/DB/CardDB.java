@@ -16,7 +16,6 @@ import edu.uga.cinemabooking.entity.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class CardDB {
 
     final static String URL = "jdbc:mysql://sg-cdb-kpa6dm3n.sql.tencentcdb.com:63965/ebooking";
@@ -38,46 +37,34 @@ public class CardDB {
 
     /**
      * This method will add the card to the userID
-     * @param userID userID
+     * 
+     * @param userID     userID
      * @param cardNumber card number
-     * @param expDate expiration date
-     * @param State state
-     * @param street street
-     * @param zipcode zipcode
-     * @param city city
+     * @param expDate    expiration date
+     * @param State      state
+     * @param street     street
+     * @param zipcode    zipcode
+     * @param city       city
      */
     public void addCard(int userID, String cardNumber, String expDate, String state,
             String street, String zipcode, String city) {
 
-        // reformat the java string to sql's date
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date utilDate = null;
-        expDate = decryption.decryptData(expDate);
-
-        try {
-            utilDate = sdf.parse(expDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-
         String sql = "INSERT INTO payment (user_id, card_number, exp_date, zipcode, street, city, state) " +
-        "VALUES (?,?,?,?,?,?,?)";        
+                "VALUES (?,?,?,?,?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, userID);
             preparedStatement.setString(2, cardNumber);
-            preparedStatement.setDate(3, sqlDate);
+            preparedStatement.setString(3, expDate);
             preparedStatement.setString(4, zipcode);
             preparedStatement.setString(5, street);
             preparedStatement.setString(6, city);
             preparedStatement.setString(7, state);
             preparedStatement.executeUpdate();
-
+            System.out.println("addcard");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
     } // addCard()
 
@@ -103,6 +90,10 @@ public class CardDB {
 
                 cards.add(card);
             }
+            // Card card = new Card();
+            // card.setUserID(24);
+            // card.setCardNumber("1234567891234569");
+            // cards.add(card);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e);
@@ -114,7 +105,7 @@ public class CardDB {
             String street, String zipcode, String city) {
 
         // reformat the java string to sql's date
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         java.util.Date utilDate = null;
 
         try {
@@ -123,7 +114,8 @@ public class CardDB {
             e.printStackTrace();
         }
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        String sql = "UPDATE payment SET (user_id, card_number, exp_date, zipcode, street, city, state) VALUES (?,?,?,?,?,?,?) WHERE user_id = " + userID;
+        String sql = "UPDATE payment SET (user_id, card_number, exp_date, zipcode, street, city, state) VALUES (?,?,?,?,?,?,?) WHERE user_id = "
+                + userID;
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             preparedStatement.setInt(1, userID);
             preparedStatement.setString(2, cardNumber);
@@ -140,7 +132,7 @@ public class CardDB {
 
     public void addCard(int userID) {
         String sql = "INSERT INTO payment (user_id) " +
-        "VALUES (?)";        
+                "VALUES (?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, userID);
@@ -150,12 +142,46 @@ public class CardDB {
             e.printStackTrace();
         }
 
-
     } // addCard()
+
+    public void checkNUpdateCard(int userID, String cardNumber, String expDate, String state,
+            String street, String zipcode, String city) {
+        String selectSQL = "SELECT * FROM payment WHERE user_id = ?";
+        String updateSQL = "UPDATE payment SET exp_date = ?, state = ?, street = ?, zipcode = ?, city = ? WHERE user_id = ? AND card_number = ?";
+
+        try (PreparedStatement selectStatement = connection.prepareStatement(selectSQL);
+                PreparedStatement updateStatement = connection.prepareStatement(updateSQL)) {
+            selectStatement.setInt(1, userID);
+            ResultSet resultSet = selectStatement.executeQuery();
+            int result = 0;
+            while (resultSet.next()) {
+
+                if (decryption.decryptData(resultSet.getString("card_number"))
+                        .equals(decryption.decryptData(cardNumber))) {
+                    updateStatement.setString(1, expDate);
+                    updateStatement.setString(2, state);
+                    updateStatement.setString(3, street);
+                    updateStatement.setString(4, zipcode);
+                    updateStatement.setString(5, city);
+                    updateStatement.setInt(6, userID);
+                    updateStatement.setString(7, resultSet.getString("card_number"));
+
+                    updateStatement.executeUpdate();
+                    result++;
+                    break;
+                }
+            }
+            if (result == 0) {
+                addCard(userID, cardNumber, expDate, state, street, zipcode, city);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     public void updateCreditCard(String input, int id) {
         String sql = "UPDATE payment SET card_number = ? WHERE user_id = ?";
-        //System.out.println("update verify code");
+        // System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, input);
             preparedStatement.setInt(2, id);
@@ -168,7 +194,7 @@ public class CardDB {
 
     public void updateExpDate(String input, int id) {
         String sql = "UPDATE payment SET exp_date = ? WHERE user_id = ?";
-        //System.out.println("update verify code");
+        // System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, input);
             preparedStatement.setInt(2, id);
@@ -181,7 +207,7 @@ public class CardDB {
 
     public void updateZipCode(String input, int id) {
         String sql = "UPDATE payment SET zipcode = ? WHERE user_id = ?";
-        //System.out.println("update verify code");
+        // System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, input);
             preparedStatement.setInt(2, id);
@@ -194,7 +220,7 @@ public class CardDB {
 
     public void updateStreet(String input, int id) {
         String sql = "UPDATE payment SET street = ? WHERE user_id = ?";
-        //System.out.println("update verify code");
+        // System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, input);
             preparedStatement.setInt(2, id);
@@ -207,7 +233,7 @@ public class CardDB {
 
     public void updateCity(String input, int id) {
         String sql = "UPDATE payment SET city = ? WHERE user_id = ?";
-        //System.out.println("update verify code");
+        // System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, input);
             preparedStatement.setInt(2, id);
@@ -220,7 +246,7 @@ public class CardDB {
 
     public void updateState(String input, int id) {
         String sql = "UPDATE payment SET state = ? WHERE user_id = ?";
-        //System.out.println("update verify code");
+        // System.out.println("update verify code");
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, input);
             preparedStatement.setInt(2, id);
