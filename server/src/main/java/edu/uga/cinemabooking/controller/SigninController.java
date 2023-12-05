@@ -47,7 +47,6 @@ public class SigninController {
 
             if (udb.emailExist(email)) {
                 user = udb.loginValidation(email, password);
-                System.out.println(user.getFullName());
                 if (user.getFullName().equals("notActivity")) {
                     return new ResponseEntity<>("The account is inactivity", HttpStatus.UNAUTHORIZED);
                 }

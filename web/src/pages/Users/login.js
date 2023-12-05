@@ -83,6 +83,9 @@ export const Login = (props) => {
         console.error('Request failed with status: ', response.status);
         return Promise.reject('request fail');
       }
+    })
+    .catch(function (error) {
+      console.error('Unhandled error:', error);
     });
 
   }
