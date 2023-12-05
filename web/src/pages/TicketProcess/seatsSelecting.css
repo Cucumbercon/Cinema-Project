@@ -47,6 +47,17 @@ body {
     margin: 5px 15px;
 }
 
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.row-label {
+    width: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
 .seat.selected {
     background-color: rgb(48, 193, 99);
 }
