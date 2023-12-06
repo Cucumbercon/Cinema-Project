@@ -48,6 +48,7 @@ public class ScheduleMovieController {
             String start_date = jsonNode.get("startTime").asText();
             String end_date = jsonNode.get("endTime").asText();
 
+
             if (sdb.checkOverlapSchedule(start_date, movie_id) || sdb.checkOverlapSchedule(end_date, movie_id)) {
 
             } else {

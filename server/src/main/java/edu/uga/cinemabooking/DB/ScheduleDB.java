@@ -115,4 +115,8 @@ public class ScheduleDB {
         }
         return false;
     }
+
+    public boolean movieExists() {
+        return false;
+    }
 }
