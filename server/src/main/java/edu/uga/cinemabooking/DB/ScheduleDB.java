@@ -77,8 +77,8 @@ public class ScheduleDB {
                 Schedule schedule = new Schedule();
                 schedule.setMovieId(resultSet.getInt("id"));
                 schedule.setShowroomId(resultSet.getInt("showroom_id"));
-                schedule.setStartTime(resultSet.getString("start_time"));
-                schedule.setEndTime(resultSet.getString("end_time"));
+                schedule.setStartTime(resultSet.getDate("start_time"));
+                schedule.setEndTime(resultSet.getDate("end_time"));
                 schedules.add(schedule);
             }
         } catch (SQLException e) {
@@ -98,17 +98,17 @@ public class ScheduleDB {
         for (int i = 0; i < schedules.size(); i++) {
             Schedule schedule = schedules.get(i);
             try {
-                Date parsedStart = sdf.parse(schedule.getStartTime());
-                Date parsedEnd = sdf.parse(schedule.getEndTime());
+                //Date parsedStart = sdf.parse(schedule.getStartTime());
+                //Date parsedEnd = sdf.parse(schedule.getEndTime());
                 Date parsedInput = sdf.parse(input_time);
-                Time startTime = new Time(parsedStart.getTime());
-                Time endTime = new Time(parsedEnd.getTime());
+                //Time startTime = new Time(parsedStart.getTime());
+                //Time endTime = new Time(parsedEnd.getTime());
                 Time inputTime = new Time(parsedInput.getTime());
-                if (!inputTime.before(startTime) && !inputTime.after(endTime)) {
+                //if (!inputTime.before(startTime) && !inputTime.after(endTime)) {
 
-                } else {
-                    return true;
-                }
+                //} else {
+                //    return true;
+                //}
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -119,4 +119,25 @@ public class ScheduleDB {
     public boolean movieExists() {
         return false;
     }
+
+    public Schedule getScheduleMovie(int movie_id) {
+        Schedule schedule = null;
+        String sql = "SELECT * FROM schedule WHERE movie_id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, movie_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                schedule = new Schedule();
+                schedule.setMovieId(resultSet.getInt("movie_id"));
+                schedule.setShowroomId(resultSet.getInt("showroom_id"));
+                schedule.setStartTime(resultSet.getDate("start_time"));
+                schedule.setEndTime(resultSet.getDate("end_time"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+        } // try
+        return schedule;
+    } // getLoggedInProfile()
 }
