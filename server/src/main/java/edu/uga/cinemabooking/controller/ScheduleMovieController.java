@@ -9,13 +9,16 @@ import edu.uga.cinemabooking.DB.MovieDB;
 import edu.uga.cinemabooking.DB.ScheduleDB;
 import edu.uga.cinemabooking.DB.ShowroomDB;
 import edu.uga.cinemabooking.entity.Movie;
+import edu.uga.cinemabooking.entity.Schedule;
 import edu.uga.cinemabooking.entity.Showroom;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,4 +74,24 @@ public class ScheduleMovieController {
         return ResponseEntity.ok("Schedule movies successful");
 
     }
+
+    @GetMapping("/getschedule")
+    public ResponseEntity<String> getUserInfo(@RequestBody String data) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Schedule schedule = null;
+
+        try {
+            JsonNode jsonNode = objectMapper.readTree(data);
+            int movie_id = jsonNode.get("movie_id").asInt();
+            schedule = sdb.getScheduleMovie(movie_id);
+            String jsonUserProfile = objectMapper.writeValueAsString(schedule);
+
+            return ResponseEntity.ok(jsonUserProfile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error getting schedule info.");
+        }
+
+    }
+
 }
