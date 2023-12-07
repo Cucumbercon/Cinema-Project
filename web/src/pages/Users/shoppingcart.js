@@ -46,7 +46,7 @@ const ShoppingCart = () => {
 
   return (
     <div className="shopping-cart-container">
-      <h2>Your Shopping Cart</h2>
+      <h2>Your Current Orders</h2>
       {cartItems.length === 0 ? (
         <p className="empty-cart-message">Your cart is empty.</p>
       ) : (
