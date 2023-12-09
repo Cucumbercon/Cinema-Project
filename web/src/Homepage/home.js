@@ -19,15 +19,20 @@ const MovieBooking = (props) => {
     const [selectedMovie, setSelectedMovie] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [hasDisplayedToast, setHasDisplayedToast] = useState(localStorage.getItem('hasDisplayedToast') === 'true');
+    const [categories, setCategories] = useState([]);
+    const [languages, setLanguages] = useState([]);
+    const [availableMovie_backup, setAvailableMovie_backup] = useState([]);
+    const [upComingMovie_backup, setUpComingMovie_backup] = useState([]);
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedLanguages, setSelectedLanguages] = useState([]);
+
     // const [hasDisplayedToast, setHasDisplayedToast] = useState(false);
     // const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        // console.log("isloggedin: " + localStorage.getItem('isLoggedIn'));
-        // console.log("Adminisloggedin: " + localStorage.getItem('AdminisLoggedIn'));
-        // console.log("hasDisplayedToast: " + hasDisplayedToast);
         if (localStorage.getItem('isLoggedIn') === 'true' && !hasDisplayedToast) {
             toast.success("Login successful!", {
                 position: "bottom-center",
@@ -167,10 +172,6 @@ const MovieBooking = (props) => {
                         setUpComingMovie(prevUpcoming => [...prevUpcoming, movie]);
                     }
                 });
-                // console.log(availableMovie.length);
-
-                // setSearchResults(parsedData); // 存储搜索结果
-                // console.log('Search results:', data);
             })
             .catch((error) => {
                 console.error('Error searching movies:', error);
@@ -178,35 +179,105 @@ const MovieBooking = (props) => {
     };
 
     useEffect(() => {
-        // get the onshow movie from db
-        fetch('http://localhost:8000/api/getAvailableMovie', {
-            method: 'GET',
+        Promise.all([
+            fetch('http://localhost:8000/api/getAvailableMovie').then(response => response.json()),
+            fetch('http://localhost:8000/api/getUpComingMovie').then(response => response.json())
+        ])
+        .then(([availableData, upcomingData]) => {
+            setAvailableMovie_backup(availableData);
+            setAvailableMovie(availableData);
+    
+            setUpComingMovie_backup(upcomingData);
+            setUpComingMovie(upcomingData);
+            setIsDataLoaded(true);
         })
-            .then((response) => response.text()) // JSON
-            .then((data) => {
-                const parsedData = JSON.parse(data);
-                setAvailableMovie(parsedData);
-                // console.log('availableMoviedata:', parsedData);
-            })
-            .catch((error) => {
-                console.error('Error sending message to Spring:', error);
-            });
-        // get the upcoming movie from db
-        fetch('http://localhost:8000/api/getUpComingMovie', {
-            method: 'GET',
-        })
-            .then((response) => response.text()) // Goto JSON structure
-            .then((data) => {
-                // transfer Json from string to Obj
-                const parsedData = JSON.parse(data);
-                setUpComingMovie(parsedData); // storage the data in upComingMovie
-                // console.log('upComingMovie:', parsedData);
-            })
-            .catch((error) => {
-                console.error('Error sending message to Spring:', error);
-            });
+        .catch(error => {
+            setIsDataLoaded(false);
+            console.error('Error fetching movies:', error);
+        });
     }, []);
+    useEffect(() => {
+        if (isDataLoaded) {
+            extractCategoriesAndLanguages(availableMovie, upComingMovie);
+        }
+    }, [isDataLoaded, availableMovie, upComingMovie]); 
+    const extractCategoriesAndLanguages = (availableMovies, upcomingMovies) => {
+        let extractedCategories = new Set();
+        let extractedLanguages = new Set();
+    
+        availableMovies.forEach(movie => {
+            movie.category.split(',').forEach(category => extractedCategories.add(category.trim()));
+            extractedLanguages.add(movie.language);
+        });
+    
+        upcomingMovies.forEach(movie => {
+            movie.category.split(',').forEach(category => extractedCategories.add(category.trim()));
+            extractedLanguages.add(movie.language);
+        });
+    
+        setCategories([...extractedCategories]);
+        setLanguages([...extractedLanguages]);
+    };
 
+    // handleCheckbox
+    const handleCheckboxChange = (type, value, checked) => {
+        if (type === "category") {
+            setSelectedCategories(prev => 
+                checked ? [...prev, value] : prev.filter(cat => cat !== value)
+            );
+        } else if (type === "language") {
+            setSelectedLanguages(prev => 
+                checked ? [...prev, value] : prev.filter(lang => lang !== value)
+            );
+        }
+    };
+    
+
+    // handleFliters
+    const handleApplyFilters = () => {
+        
+        let filteredAvailableMovies = [];
+        let filteredUpcomingMovies = [];
+    
+        if (selectedCategories.length === 0 && selectedLanguages.length === 0) {
+            // do not choose any options, recovery
+            setAvailableMovie(availableMovie_backup);
+            setUpComingMovie(upComingMovie_backup);
+        } else {
+            const filterMovies = (movies) => {
+                return movies.filter(movie => {
+                    const movieCategories = movie.category.split(',').map(cat => cat.trim());
+                    const categoryMatch = selectedCategories.length === 0 || movieCategories.some(cat => selectedCategories.includes(cat));
+                    const languageMatch = selectedLanguages.length === 0 || selectedLanguages.includes(movie.language);
+    
+                    return categoryMatch && languageMatch;
+                });
+            };
+    
+            filteredAvailableMovies = filterMovies(availableMovie_backup);
+            filteredUpcomingMovies = filterMovies(upComingMovie_backup);
+    
+            setAvailableMovie(filteredAvailableMovies);
+            setUpComingMovie(filteredUpcomingMovies);
+        }
+    };
+    
+    //handle reset filters
+    const handleResetFilters = () => {
+        setSelectedCategories([]);
+        setSelectedLanguages([]);
+        setAvailableMovie(availableMovie_backup);
+        setUpComingMovie(upComingMovie_backup);
+
+        //not recommand use this in React
+        document.querySelectorAll('.sidebar .checkbox-container input[type="checkbox"]').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+    };
+    
+
+
+    
     return (
         // this part is builing top bar
         <div className="homepagebackground">
@@ -245,7 +316,7 @@ const MovieBooking = (props) => {
                         {localStorage.getItem('isLoggedIn') === 'true' && (
                             <img src={require('./movieCart.jpg')} alt="Shopping Cart" className="cart" onClick={handleCartClick} />
                                 )}
-                        <div className="profile-img-box" onClick={toggleUserPopup} className={isPopupOpen ? 'profile-img-box open' : 'profile-img-box'}>
+                        <div onClick={toggleUserPopup} className={isPopupOpen ? 'profile-img-box open' : 'profile-img-box'}>
                             {localStorage.getItem('isLoggedIn') === 'true' ? (
                                 <img src={require('./baseUserIcon.png')} alt="User's Profile" />
                             ) : (
@@ -296,51 +367,37 @@ const MovieBooking = (props) => {
                         <form action="#">
                             <div className="sidebar-groups">
                                 <h3 className="sg-title">Categories</h3>
-                                <div className="checkbox-container">
-                                    <input type="checkbox" id="adventure" name="adventure" value="adventure" />
-                                    <label htmlFor="adventure">Adventure</label>
-                                </div>
-                                <div className="checkbox-container">
-                                    <input type="checkbox" id="action" name="action" value="action" />
-                                    <label htmlFor="action">Action</label>
-                                </div>
-                                <div className="checkbox-container">
-                                    <input type="checkbox" id="animation" name="animation" value="animation" />
-                                    <label htmlFor="animation">Animation</label>
-                                </div>
-                                <div className="checkbox-container">
-                                    <input type="checkbox" id="comedy" name="comedy" value="comedy" />
-                                    <label htmlFor="comedy">Comedy</label>
-                                </div>
-                                <div className="checkbox-container">
-                                    <input type="checkbox" id="thriller" name="thriller" value="thriller" />
-                                    <label htmlFor="thriller">Thriller</label>
-                                </div>
-                                <div className="checkbox-container">
-                                    <input type="checkbox" id="fantasy" name="fantasy" value="fantasy" />
-                                    <label htmlFor="fantasy">Fantasy</label>
-                                </div>
-
+                                    {categories.map(category => (
+                                        <div className="checkbox-container" key={category}>
+                                            <input 
+                                                type="checkbox" 
+                                                id={category} 
+                                                name={category} 
+                                                value={category} 
+                                                onChange={(e) => handleCheckboxChange('category', category, e.target.checked)}
+                                            />
+                                            <label htmlFor={category}>{category}</label>
+                                        </div>
+                                    ))}
                             </div>
-
-                            {/* this part is for Language */}
                             <div className="sidebar-groups">
-                                <h3 className="sg-title">Language</h3>
-                                <div className="checkbox-container">
-                                    <input type="checkbox" id="english" name="english" value="english" />
-                                    <label htmlFor="english">English</label>
+                            <h3 className="sg-title">Language</h3>
+                            {languages.map(language => (
+                                <div className="checkbox-container" key={language}>
+                                    <input 
+                                        type="checkbox" 
+                                        id={language} 
+                                        name={language} 
+                                        value={language} 
+                                        onChange={(e) => handleCheckboxChange('language', language, e.target.checked)}
+                                    />
+                                    <label htmlFor={language}>{language}</label>
                                 </div>
-                                <div className="checkbox-container">
-                                    <input type="checkbox" id="spanish" name="spanish" value="spanish" />
-                                    <label htmlFor="spanish">Spanish</label>
-                                </div>
-                                <div className="checkbox-container">
-                                    <input type="checkbox" id="chinese" name="chinese" value="chinese" />
-                                    <label htmlFor="chinese">Chinese</label>
-                                </div>
+                            ))}
                             </div>
-                            
-                            {/* this part is for Details */}
+
+                            {/*
+                            {this part is for Details }
                             <div className="sidebar-groups">
                                 <h3 className="sg-title">Details</h3>
                                 <div className="checkbox-container">
@@ -356,10 +413,15 @@ const MovieBooking = (props) => {
                                     <label htmlFor="mostleased">Mostleased</label>
                                 </div>
                             </div>
+                            */}
                             {/* this part is for apply filters */}
                             <div className="sidebar-groups">
-                                <a href="#" className="btn-l btn">Apply Filters</a>
+                                <a href="#" className="btn-l btn" onClick={handleResetFilters}>Reset Filters</a>
                             </div>
+                            <div className="sidebar-groups">
+                                <a href="#" className="btn-l btn" onClick={handleApplyFilters}>Apply Filters</a>
+                            </div>
+
                         </form>
                     </div>
                     {/* this part include both current movie and future movie*/}
@@ -423,26 +485,6 @@ const MovieBooking = (props) => {
                             ) : (
                                 ""
                             )}
-                            {/* 另起一行 */}
-                            {/* {searchResults.length <= 0 ? (
-                                upComingMovie.map((movie) => (
-                                    <div className="current-movie" key={movie.id}>
-                                        <div className="current-img-box">
-                                            <img src={movie.posterPath} alt={movie.title} />
-                                        </div>
-                                        <h3 className="movie-title">{movie.title}</h3>
-                                        <div className="booking">
-                                            <a href="#" className="btn">Veiw Details</a>
-                                        </div>
-                                        <div className="booking">
-                                            <a href="#" className="btn">Play Trailer</a>
-                                        </div>
-                                    </div>
-                                ))
-                            ) : (
-                                ""
-                            )} */}
-                            {/*另起一行 */}
 
                             {searchResults.length > 0 ? (
                                 searchResults.map((movie) => (
