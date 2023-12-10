@@ -20,6 +20,13 @@
     width: 100%;
 }
 
+.orange-underlined-link {
+    color: #ff6600;
+    text-decoration: underline;
+    margin-left: 275px;
+}
+
+
 .confirmation-page h2 {
     color: black;
     font-size: 1.5rem;

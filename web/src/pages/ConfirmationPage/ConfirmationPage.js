@@ -1,16 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Assuming you're using React Router
 import './ConfirmationPage.css';
 
 function ConfirmationPage() {
 
     const confirmationData = {
         confirmationNumber: "XXXXX-XXX-XXX-XXX",
-        movieTitle: " Avatar",
-        date: " 10/01/2023",
-        time: " 3:15pm",
-        seats: " A1, A2, B4, B5",
-        totalCost: " $40",
-        email: " example@example.com"
+        movieTitle: "Avatar",
+        date: "10/01/2023",
+        time: "3:15pm",
+        seats: "A1, A2, B4, B5",
+        totalCost: "$40",
+        email: "example@example.com"
     };
 
     return (
@@ -25,7 +26,13 @@ function ConfirmationPage() {
                 <p><strong>Seats:</strong> {confirmationData.seats}</p>
                 <p><strong>Total Cost:</strong> {confirmationData.totalCost}</p>
             </div>
-            <p> <h3>A copy of your ticket has been sent to </ h3> <span>{confirmationData.email}</span></p>
+            <p>
+                <h3>A copy of your ticket has been sent to </h3>
+                <span>{confirmationData.email}</span>
+            </p>
+            <p>
+                <Link to="/" className="orange-underlined-link">Go back to homepage</Link>
+            </p>
         </div>
     );
 }
