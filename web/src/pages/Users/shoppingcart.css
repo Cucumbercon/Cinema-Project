@@ -8,6 +8,12 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+
+  h2 {
+    text-align: center;
+    color: #ff6600;
+  }
+  
   
   .empty-cart-message {
     text-align: center;
@@ -17,6 +23,7 @@
   .cart-item {
     margin-bottom: 20px;
     padding: 10px;
+    color: #000000;
     border: 1px solid #ffffff;
     border-radius: 4px;
     background: #ff6600;
@@ -27,7 +34,7 @@
     width: 100%;
     padding: 10px;
     background-color: #ff6600;
-    color: #fff;
+    color: #000000;
     border: none;
     border-radius: 4px;
     cursor: pointer;
