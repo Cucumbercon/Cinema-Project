@@ -110,6 +110,10 @@ const MovieBooking = (props) => {
         navigate('/updateprofile');
     };
 
+    const goToOrderSummary = () => {
+        navigate('/ordersummary');
+    };
+
     const handleLogout = () => {
         localStorage.removeItem('authToken');
         localStorage.setItem('isLoggedIn', 'false');
@@ -336,6 +340,7 @@ const MovieBooking = (props) => {
                                                 </div>
                                             ) : (
                                                 <div>
+                                                    <button onClick={goToOrderSummary}>Order Summay</button>
                                                     <button onClick={goToProfilePage}>Update Profile</button>
                                                     <button onClick={handleLogout}>Logout</button>
                                                 </div>

@@ -33,13 +33,18 @@ function MovieDetails() {
     //function to handle the logic for adding the show clickable show times and navigating to movie seat booking
     const handleViewSeatsClick = () => {
         // Use navigate function to go to "/movieseatsbooking"
-        console.log(movie);
-        navigate('/movieseatbooking',
-            {
-                state: {movie},
-            });
-    };
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
+        console.log(movie);
+        
+        if (isLoggedIn) {
+            // If the user is logged in, navigate to the movie seat booking page
+            navigate('/movieseatbooking', { state: { movie } });
+        } else {
+            // If the user is not logged in, navigate to the login page
+            navigate('/login');
+        }
+    };
     return (
         <div className="movie-details-container">
             {/* Trailer Section */}
