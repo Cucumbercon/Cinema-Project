@@ -33,7 +33,7 @@ public class ScheduleMovieController {
     ScheduleDB sdb = new ScheduleDB();
     ShowroomDB shdb = new ShowroomDB();
     MovieDB mdb = new MovieDB();
-    
+
     @PostMapping("/scheduleMovie")
     public ResponseEntity<String> fetchData(@RequestBody String data) {
 
@@ -47,26 +47,24 @@ public class ScheduleMovieController {
             int movie_id = jsonNode.get("selectedMovie").asInt();
             System.out.println("Checkpoint 1" + movie_id);
 
-           
             String date = jsonNode.get("date").asText();
             String start_date = date + " " + jsonNode.get("startTime").asText() + ":00";
             String end_date = date + " " + jsonNode.get("endTime").asText() + ":00";
             System.out.println("Checkpoint 2" + start_date + "\n" + end_date);
 
-
-            if (sdb.checkOverlapScheduleMovie(start_date, movie_id) || sdb.checkOverlapScheduleMovie(end_date, movie_id)) {
+            if (sdb.checkOverlapScheduleMovie(start_date, movie_id)
+                    || sdb.checkOverlapScheduleMovie(end_date, movie_id)) {
                 System.out.println("Overlaps.");
             } else {
                 // Create a showroom
-             // Gets the movie name and uses it to get showroomID
-            //Showroom showroom = shdb.getShowroomID(movie_id);
-            Random random = new Random();
-            int showroom_id = random.nextInt(8) + 1;
-            
-            System.out.println("Checkpoint 3" + start_date + "\n" + end_date);
-            sdb.addSchedule(movie_id, showroom_id, start_date, end_date);
+                // Gets the movie name and uses it to get showroomID
+                // Showroom showroom = shdb.getShowroomID(movie_id);
+                Random random = new Random();
+                int showroom_id = random.nextInt(8) + 1;
+
+                System.out.println("Checkpoint 3" + start_date + "\n" + end_date);
+                sdb.addSchedule(movie_id, showroom_id, start_date, end_date);
             }
-            
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,15 +75,16 @@ public class ScheduleMovieController {
 
     }
 
-    @GetMapping("/getschedule")
-    public ResponseEntity<String> getUserInfo(@RequestParam String data) {
+    @GetMapping("/getSchedule")
+    public ResponseEntity<String> getMovieSchedule(@RequestParam String id) {
         ObjectMapper objectMapper = new ObjectMapper();
         List<Schedule> schedule = null;
 
         try {
-            int movie_id = Integer.parseInt(data);
+            int movie_id = Integer.parseInt(id);
             schedule = sdb.getScheduleMovie(movie_id);
             String jsonUserProfile = objectMapper.writeValueAsString(schedule);
+            System.out.println(jsonUserProfile);
 
             return ResponseEntity.ok(jsonUserProfile);
         } catch (Exception e) {

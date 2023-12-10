@@ -59,5 +59,15 @@ public class Schedule {
     public void setEndTime(String end_time) {
         this.end_time = end_time;
     }
+
+    @Override
+    public String toString() {
+        return "MovieSchedule{" +
+                "movie_id=" + movie_id +
+                ", showroom_id=" + showroom_id +
+                ", start_time='" + start_time + '\'' +
+                ", end_time='" + end_time + '\'' +
+                '}';
+    }
 }
 
