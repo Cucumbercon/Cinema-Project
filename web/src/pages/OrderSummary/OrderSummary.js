@@ -1,6 +1,7 @@
 import './OrderSummary.css';
 import { React, useState, useEffect } from 'react';
-import { useLocation, } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 
 function Checkout() {
     const [user_id, setUser_id] = useState('');
@@ -10,6 +11,8 @@ function Checkout() {
     const [ticket_amount, setTicket_amount] = useState('');
     const [total, setTotal] = useState('');
     const [describe, setDescribe] = useState('');
+    const navigate = useNavigate();
+
 
     const selectedSeatsCount = (useLocation().state.selectedSeatsCount);
     const selectedSeat = (useLocation().state.selectedSeat);
@@ -159,9 +162,12 @@ function Checkout() {
                     userID,
                     price,
                 }),
+               
+
             }).then((response) => response.text())
                 .then((data) => {
                     console.log(data);
+                    navigate('/confirmationpage');
                 })
                 .catch((error) => {
                     console.error('Error occurred:', error);
