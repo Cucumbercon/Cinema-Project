@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './OrderHistory.css';
+import { useNavigate } from 'react-router-dom';
 
 function OrderHistory() {
     const [orders, setOrders] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch orders from backend or local storage
@@ -72,7 +74,12 @@ function OrderHistory() {
                         <p><strong>Status:</strong> {order.purchaseStatus}</p>
                     </div>
                 ))}
+
+            <button className="home-btn" onClick={() => navigate('/')}>
+              Go back to home
+             </button>
             </div>
+            
         </div>
         </div>
     );

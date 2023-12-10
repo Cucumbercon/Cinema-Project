@@ -15,6 +15,21 @@
     width: 100%; /* Ensures the heading takes full width */
 }
 
+.home-btn {
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.home-btn:hover {
+    background-color: #ff3300;
+}
+
 .orders {
     display: flex;
     margin: 70px;
