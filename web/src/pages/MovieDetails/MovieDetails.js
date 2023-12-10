@@ -54,6 +54,9 @@ function MovieDetails() {
         setSelectedTime(time);
     };
 
+    const handleGoToHomeClick = () => {
+        navigate('/');
+    };
 
 
     //function to handle the logic for adding the show clickable show times and navigating to movie seat booking
@@ -126,7 +129,10 @@ function MovieDetails() {
 
             {/* Next Step Button */}
             <div className="next-step">
+                 <button onClick={handleGoToHomeClick}>Go back Home</button>
+                 
                 <button onClick={handleViewSeatsClick}>View Seats</button>
+                
             </div>
         </div>
     );

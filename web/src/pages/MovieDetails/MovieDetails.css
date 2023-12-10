@@ -15,6 +15,8 @@
     padding-top: 20px;
 }
 
+
+
 .trailer-section {
     margin-top: 20px;
     width: 100%;
@@ -91,6 +93,10 @@
 
 .next-step {
     text-align: center;
+    margin-left: 40px;
+    margin: 10px;
+    display: flex;
+    gap: 500px;
 }
 
 .next-step button {
