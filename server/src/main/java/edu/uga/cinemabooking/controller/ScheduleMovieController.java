@@ -57,7 +57,6 @@ public class ScheduleMovieController {
 
             } else {
                 // Create a showroom
-            shdb.addShowroom(63, jsonNode.get("startTime").asText(), jsonNode.get("selectedMovie").asText());
              // Gets the movie name and uses it to get showroomID
             Showroom showroom = shdb.getShowroomID(movie_name);
             int showroom_id = showroom.getId();
@@ -82,7 +81,6 @@ public class ScheduleMovieController {
         Schedule schedule = null;
 
         try {
-            JsonNode jsonNode = objectMapper.readTree(data);
             int movie_id = Integer.parseInt(data);
             schedule = sdb.getScheduleMovie(movie_id);
             String jsonUserProfile = objectMapper.writeValueAsString(schedule);
