@@ -91,21 +91,20 @@ public class EditProfileController {
 
         try {
             User user = udb.getLoggedInProfile(id);
+            List<Card> cards = cdb.getLoggedInCard(id);
+            Card card;
+            if (cards.size() != 0) {
+            } else {
+            cdb.addCard(id);
+            cdb.addCard(id);
+            cdb.addCard(id);
+            card = cdb.getLoggedInCard(id);
+            card = cards.get(0);
+            }
             Card card = objectMapper.readValue(data, Card.class);
             // System.out.println(card.toString());
         
             // System.out.println(" \n\n\n"+data);
-            // List<Card> cards = cdb.getLoggedInCard(id);
-            // Card card;
-            // if (cards.size() != 0) {
-            // card = cards.get(0);
-            // } else {
-            // cdb.addCard(id);
-            // cdb.addCard(id);
-            // cdb.addCard(id);
-            // cards = cdb.getLoggedInCard(id);
-            // card = cards.get(0);
-            // }
             cdb.checkNUpdateCard(card.getUserID(), card.getCardNumber(), card.getExpDate(), card.getBillingState(),
                                  card.getBillingStreet(), card.getBillingZipCode(), card.getBillingCity());
 
