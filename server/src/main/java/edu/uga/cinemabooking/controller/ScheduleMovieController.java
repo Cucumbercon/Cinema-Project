@@ -43,22 +43,22 @@ public class ScheduleMovieController {
             JsonNode jsonNode = objectMapper.readTree(data);
 
             // Gets the movie name and uses it to get movieID
-            String movie_name = jsonNode.get("selectedMovie").asText();
-            Movie movie = mdb.getMovieID(movie_name);
-            int movie_id = movie.getId();
+            int movie_id = jsonNode.get("selectedMovie").asInt();
+            System.out.println(movie_id);
 
            
-
-            String start_date = jsonNode.get("startTime").asText();
-            String end_date = jsonNode.get("endTime").asText();
+            String date = jsonNode.get("date").asText();
+            String start_date = date + " " + jsonNode.get("startTime").asText();
+            String end_date = date + " " + jsonNode.get("endTime").asText();
+            System.out.println(start_date + "\n" + end_date);
 
 
             if (sdb.checkOverlapSchedule(start_date, movie_id) || sdb.checkOverlapSchedule(end_date, movie_id)) {
-
+                System.out.println("Overlaps.");
             } else {
                 // Create a showroom
              // Gets the movie name and uses it to get showroomID
-            Showroom showroom = shdb.getShowroomID(movie_name);
+            Showroom showroom = shdb.getShowroomID(movie_id);
             int showroom_id = showroom.getId();
             
 

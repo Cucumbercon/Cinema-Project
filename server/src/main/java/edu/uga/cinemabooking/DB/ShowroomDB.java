@@ -46,7 +46,7 @@ public class ShowroomDB {
         }
     }
 
-    public Showroom getShowroomID(String movie_title) {
+    public Showroom getShowroomID(int movie_id) {
 
         String sql = "SELECT * FROM showroom WHERE name = ?";
         Showroom showroom = new Showroom();

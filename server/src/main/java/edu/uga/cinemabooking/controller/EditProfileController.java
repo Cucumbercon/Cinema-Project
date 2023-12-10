@@ -72,13 +72,13 @@ public class EditProfileController {
         try {
             user = udb.getLoggedInProfile(id);
             cards = cdb.getLoggedInCard(id);
-            if (cards.size() != 0) {
-            } else {
-            cdb.addCard(id);
-            cdb.addCard(id);
-            cdb.addCard(id);
-            cards = cdb.getLoggedInCard(id);
-            }
+            //if (cards.size() != 0) {
+            //} else {
+            //cdb.addCard(id);
+            //cdb.addCard(id);
+            //cdb.addCard(id);
+            //cards = cdb.getLoggedInCard(id);
+            //}
 
             String jsonUserProfile = objectMapper.writeValueAsString(cards);
             System.out.println(jsonUserProfile);
@@ -102,8 +102,8 @@ public class EditProfileController {
             // System.out.println(card.toString());
         
             // System.out.println(" \n\n\n"+data);
-            cdb.checkNUpdateCard(card.getUserID(), card.getCardNumber(), card.getExpDate(), card.getBillingState(),
-                                 card.getBillingStreet(), card.getBillingZipCode(), card.getBillingCity());
+            //cdb.checkNUpdateCard(card.getUserID(), card.getCardNumber(), card.getExpDate(), card.getBillingState(),
+            //                     card.getBillingStreet(), card.getBillingZipCode(), card.getBillingCity());
 
             System.out.println(card.toString());
 

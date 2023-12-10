@@ -15,13 +15,13 @@ import java.util.Date;
 public class Schedule {
     int movie_id;
     int showroom_id;
-    Date start_time;
-    Date end_time;
+    String start_time;
+    String end_time;
 
     public Schedule() {
 
     }
-    public Schedule(int id, int movie_id, int showroom_id, Date start_time, Date end_time) {
+    public Schedule(int id, int movie_id, int showroom_id, String start_time, String end_time) {
         this.movie_id = movie_id;
         this.showroom_id = showroom_id;
         this.start_time = start_time;
@@ -36,11 +36,11 @@ public class Schedule {
         return showroom_id;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return start_time;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return end_time;
     }
 
@@ -52,11 +52,11 @@ public class Schedule {
         this.showroom_id = showroom_id;
     }
 
-    public void setStartTime(Date start_time) {
+    public void setStartTime(String start_time) {
         this.start_time = start_time;
     }
 
-    public void setEndTime(Date end_time) {
+    public void setEndTime(String end_time) {
         this.end_time = end_time;
     }
 }
