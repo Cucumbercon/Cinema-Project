@@ -18,9 +18,10 @@ function MovieSeatBooking() {
     useEffect(() => {
         // This Loads the selected movie from local storage when the component mounts
         const storedMovieIndex = localStorage.getItem('selectedMovieIndex');
-        if (storedMovieIndex) {
+        if (storedMovieIndex !== null) {
+            const index = parseInt(storedMovieIndex, 10);
             setSelectedMovie({
-                index: storedMovieIndex,
+                index,
                 price: parseFloat(localStorage.getItem('selectedMoviePrice')),
             });
         }
