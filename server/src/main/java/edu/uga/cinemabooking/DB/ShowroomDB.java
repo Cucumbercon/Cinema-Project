@@ -46,13 +46,13 @@ public class ShowroomDB {
         }
     }
 
-    public Showroom getShowroomID(String movie_title) {
+    public Showroom getShowroomID(int movie_id) {
 
         String sql = "SELECT * FROM showroom WHERE name = ?";
         Showroom showroom = new Showroom();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, movie_title);
+            preparedStatement.setInt(1, movie_id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
 
