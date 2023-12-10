@@ -1,6 +1,10 @@
 package edu.uga.cinemabooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Order {
+
     private int user_id;
     private int payment_id;
     private int ticket_id;
@@ -9,6 +13,10 @@ public class Order {
     private double total;
     private String order_time;
     private String describe;
+
+    public Order() {
+
+    }
 
     // Getter and setter methods for user_id
     public int getUserId() {
@@ -80,5 +88,19 @@ public class Order {
 
     public void setDescribe(String describe) {
         this.describe = describe;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "user_id=" + user_id +
+                ", payment_id=" + payment_id +
+                ", ticket_id=" + ticket_id +
+                ", promote_id=" + promote_id +
+                ", ticket_amount=" + ticket_amount +
+                ", total=" + total +
+                ", order_time='" + order_time + '\'' +
+                ", describe='" + describe + '\'' +
+                '}';
     }
 }

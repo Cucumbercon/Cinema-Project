@@ -79,7 +79,7 @@ function OrderHistory() {
                 ))}
 
             <button className="home-btn" onClick={() => navigate('/')}>
-              Go back to home
+              Home
              </button>
             </div>
             
