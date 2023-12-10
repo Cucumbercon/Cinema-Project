@@ -11,10 +11,11 @@ export const UpdateProfile = (props) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [subscribe, setSubscribe] = useState(false);
   const [creditCardNumber, setCreditCardNumber] = useState('');
+  const [oldCreditCardNumber, setOldCreditCardNumber] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [selectedPaymentCard, setSelectedPaymentCard] = useState('');
+  const [paymentID, setPaymentID] = useState('');
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -24,12 +25,26 @@ export const UpdateProfile = (props) => {
   const [homeState, setHomeState] = useState('');
   const [homeZipCode, setHomeZipCode] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
-   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [creditCards, setCreditCards] = useState([]);
+  const [selectedCreditCard, setSelectedCreditCard] = useState('');
+  const [isCardLimitReached, setIsCardLimitReached] = useState(false);
 
 
-  // ToDO: function to load the user's existing information 
+
+
+  // ToDO: function to load the user's existing information
+  // storageUtils.js
+
+  function getUserIdFromStorage() {
+    const userId = localStorage.getItem('id');
+    console.log(userId);
+    return userId ? parseInt(userId, 10) : null;
+  }
+
   const loadUserProfile = () => {
-    fetch('http://localhost:8000/api/loadprofile', {
+    const userId = getUserIdFromStorage();
+    fetch(`http://localhost:8000/api/loadprofile?userId=${userId}`, {
       method: 'GET'
     })
       .then((response) => response.text())
@@ -52,20 +67,16 @@ export const UpdateProfile = (props) => {
   };
 
   const loadUserCard = () => {
-    fetch('http://localhost:8000/api/loadprofilecard', {
+    const userId = getUserIdFromStorage();
+    fetch(`http://localhost:8000/api/loadprofilecard?userId=${userId}`, {
       method: 'GET'
     })
       .then((response) => response.text())
       .then((data) => {
         const parsedData = JSON.parse(data);
-        setCreditCardNumber(parsedData.cardNumber);
-        setExpirationDate(parsedData.expDate);
-        setStreet(parsedData.billingStreet);
-        setCity(parsedData.billingCity);
-        setState(parsedData.billingState);
-        setZipCode(parsedData.billingZipCode);
-
-        console.log('loadUserCard', creditCardNumber)
+        console.log(parsedData);
+        setCreditCards(parsedData);
+        setIsCardLimitReached(parsedData.length >= 3);
       })
       .catch((error) => {
         console.error('Error sending message to Spring:', error)
@@ -83,17 +94,21 @@ export const UpdateProfile = (props) => {
       const pass = encrypt(password);
       const passConfirm = encrypt(confirmPassword);
       const passCurrent = encrypt(currentPassword);
-
+      const encryptedCardNumber = encrypt(creditCardNumber);
+      const userId = getUserIdFromStorage();
       const changeInfo = {
+        userId,
+        paymentID,
         fullName,
         email,
         phoneNumber,
         subscribe,
-        creditCardNumber,
+        encryptedCardNumber,
+        oldCreditCardNumber,
         expirationDate,
         pass,
         passConfirm,
-        selectedPaymentCard,
+        selectedCreditCard,
         street,
         city,
         state,
@@ -105,26 +120,67 @@ export const UpdateProfile = (props) => {
         passCurrent,
       };
       console.log(changeInfo)
-      alert('You have successfully updated your profile!');
       fetch('http://localhost:8000/api/updateprofile', {
         method: 'POST',
         body: JSON.stringify(changeInfo),
         headers: {
           'Content-Type': 'application/json'
         }
-      });
+      })
+      .then((response) => {
+        if (response.ok) {
+            setUpdateSuccess(true);
+            // 重新加载用户资料和信用卡信息
+            loadUserProfile();
+            loadUserCard();
+            alert('Profile updated successfully!');
+        } else {
+            setUpdateSuccess(false);
+            alert('There was an error updating the profile.');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
     } else {
       // Display an error message indicating that passwords do not match
-      alert('Your profile has been successfully updated!');
       console.error('Password does not match with confirm password');
     }
   };
 
   // Calls the loadUserProfile function when the component mounts to load existing data
   useEffect(() => {
+    getUserIdFromStorage();
     loadUserProfile();
     loadUserCard();
+    console.log(creditCards);
   }, []);
+
+
+  const handleCardSelection = (selectedCardNumber) => {
+    const card = creditCards.find(c => c.cardNumber === selectedCardNumber);
+    if (card) {
+      setPaymentID(card.paymentID);
+      setOldCreditCardNumber(card.cardNumber);
+      setCreditCardNumber(card.cardNumber);
+      setExpirationDate(card.expDate);
+      setStreet(card.billingStreet);
+      setCity(card.billingCity);
+      setState(card.billingState);
+      setZipCode(card.billingZipCode);
+      setSelectedCreditCard(selectedCardNumber);
+    }
+  };
+
+  const handleAddNewCard = () => {
+    setCreditCardNumber('');
+    setExpirationDate('');
+    setStreet('');
+    setCity('');
+    setState('');
+    setZipCode('');
+    setSelectedCreditCard('new'); 
+  };
 
   return (
     <div className="form-box">
@@ -219,16 +275,19 @@ export const UpdateProfile = (props) => {
             <div className="input-container">
               <label htmlFor="paymentCard">Payment Card</label>
               <select
-                value={selectedPaymentCard}
-                onChange={(e) => setSelectedPaymentCard(e.target.value)}
+                value={selectedCreditCard}
+                onChange={(e) => e.target.value === 'new' ? handleAddNewCard() : handleCardSelection(e.target.value)}
                 id="paymentCard"
                 name="paymentCard"
                 className="select-input"
               >
                 <option value="">Select Payment Card</option>
-                <option value="Payment Card 1">Payment Card 1</option>
-                <option value="Payment Card 2">Payment Card 2</option>
-                <option value="Payment Card 3">Payment Card 3</option>
+                {!isCardLimitReached && <option value="new">Add Payment Card</option>}
+                {creditCards.map((card, index) => (
+                  <option key={index} value={card.cardNumber}>
+                    {card.cardNumber}
+                  </option>
+                ))}
               </select>
             </div>
             {/* Credit Card Number */}
@@ -250,7 +309,7 @@ export const UpdateProfile = (props) => {
                 value={expirationDate}
                 onChange={(e) => setExpirationDate(e.target.value)}
                 type="text"
-                placeholder="MM/YYYY"
+                placeholder="YYYY-MM"
                 id="expirationDate"
                 name="expirationDate"
               />
@@ -356,11 +415,11 @@ export const UpdateProfile = (props) => {
             </div>
           </div>
         {/* Success Message */}
-        {updateSuccess && (
+        {/*updateSuccess && (
           <div className="success-message">
             You have successfully updated your profile!
           </div>
-        )}
+        )}*/}
 
 
         </div>

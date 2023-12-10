@@ -61,7 +61,7 @@ public class CardDB {
             preparedStatement.setString(6, city);
             preparedStatement.setString(7, state);
             preparedStatement.executeUpdate();
-            System.out.println("addcard");
+            //System.out.println("addcard");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -81,6 +81,7 @@ public class CardDB {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Card card = new Card();
+                card.setPaymentID(resultSet.getInt("ID"));
                 card.setCardNumber(decryption.decryptData(resultSet.getString("card_number")));
                 card.setExpDate(resultSet.getString("exp_date"));
                 card.setBillingZipCode(resultSet.getString("zipcode"));
@@ -101,34 +102,37 @@ public class CardDB {
         return cards;
     } // getLoggedInCard()
 
-    public void updateInfo(int userID, String cardNumber, String expDate, String state,
-            String street, String zipcode, String city) {
+    public void updateInfo(int paymentID, String cardNumber, String expDate, String state,
+                       String street, String zipcode, String city) {
 
-        // reformat the java string to sql's date
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-        java.util.Date utilDate = null;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+    java.util.Date utilDate = null;
 
-        try {
-            utilDate = sdf.parse(expDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        String sql = "UPDATE payment SET (user_id, card_number, exp_date, zipcode, street, city, state) VALUES (?,?,?,?,?,?,?) WHERE user_id = "
-                + userID;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
-            preparedStatement.setInt(1, userID);
-            preparedStatement.setString(2, cardNumber);
-            preparedStatement.setDate(3, sqlDate);
-            preparedStatement.setString(4, zipcode);
-            preparedStatement.setString(5, street);
-            preparedStatement.setString(6, city);
-            preparedStatement.setString(7, state);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    try {
+        utilDate = sdf.parse(expDate);
+    } catch (ParseException e) {
+        e.printStackTrace();
+        return; 
     }
+
+    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+    String sql = "UPDATE payment SET card_number = ?, exp_date = ?, zipcode = ?, street = ?, city = ?, state = ? WHERE ID = ?";
+
+    try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        preparedStatement.setString(1, cardNumber);
+        preparedStatement.setDate(2, sqlDate);
+        preparedStatement.setString(3, zipcode);
+        preparedStatement.setString(4, street);
+        preparedStatement.setString(5, city);
+        preparedStatement.setString(6, state);
+        preparedStatement.setInt(7, paymentID); // 
+        preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
 
     public void addCard(int userID) {
         String sql = "INSERT INTO payment (user_id) " +

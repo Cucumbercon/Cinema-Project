@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Card {
 
+    int paymentID;
     String cardNumber;
     String expDate;
     String billingState;
@@ -76,10 +77,18 @@ public class Card {
         this.userID = userID;
     }
 
+    public int getPaymentID() {
+        return paymentID;
+    }
+
+    public void setPaymentID(int paymentID) {
+        this.paymentID = paymentID;
+    }
     @Override
     public String toString() {
-        return "YourClassName{" +
-                "cardNumber='" + cardNumber + '\'' +
+        return "Card{" +
+                "cardID=" + paymentID +
+                ", cardNumber='" + cardNumber + '\'' +
                 ", expDate='" + expDate + '\'' +
                 ", billingState='" + billingState + '\'' +
                 ", billingStreet='" + billingStreet + '\'' +

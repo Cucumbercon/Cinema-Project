@@ -1,29 +1,19 @@
 package edu.uga.cinemabooking.controller;
-
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import edu.uga.cinemabooking.DB.UserDB;
 import edu.uga.cinemabooking.DB.CardDB;
 import edu.uga.cinemabooking.entity.User;
 import edu.uga.cinemabooking.entity.Card;
 import edu.uga.cinemabooking.Decryption;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.ArrayList;
+import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @RestController
@@ -40,15 +30,15 @@ public class EditProfileController {
      * 
      */
     @GetMapping("/loadprofile")
-    public ResponseEntity<String> getUserInfo() {
-        getID();
+    public ResponseEntity<String> getUserInfo(@RequestParam int userId) {
+
         ObjectMapper objectMapper = new ObjectMapper();
         User user = null;
         List<Card> cards = null;
 
         try {
-            user = udb.getLoggedInProfile(id);
-            cards = cdb.getLoggedInCard(id);
+            user = udb.getLoggedInProfile(userId);
+            cards = cdb.getLoggedInCard(userId);
             String jsonUserProfile = objectMapper.writeValueAsString(user);
 
             return ResponseEntity.ok(jsonUserProfile);
@@ -63,15 +53,14 @@ public class EditProfileController {
      * 
      */
     @GetMapping("/loadprofilecard")
-    public ResponseEntity<String> getUserCard() {
-        getID();
+    public ResponseEntity<String> getUserCard(@RequestParam int userId) {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = null;
         List<Card> cards = null;
-
+        System.out.println("get loadprofilecard request");
         try {
-            user = udb.getLoggedInProfile(id);
-            cards = cdb.getLoggedInCard(id);
+            user = udb.getLoggedInProfile(userId);
+            cards = cdb.getLoggedInCard(userId);
 
             String jsonUserProfile = objectMapper.writeValueAsString(cards);
             System.out.println(jsonUserProfile);
@@ -86,31 +75,24 @@ public class EditProfileController {
 
     @PostMapping("/updateprofile")
     public ResponseEntity<String> updateUserInfo(@RequestBody String data) {
-        getID();
+
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            User user = udb.getLoggedInProfile(id);
-            Card card = objectMapper.readValue(data, Card.class);
-            // System.out.println(card.toString());
-        
-            // System.out.println(" \n\n\n"+data);
-            // List<Card> cards = cdb.getLoggedInCard(id);
-            // Card card;
-            // if (cards.size() != 0) {
-            // card = cards.get(0);
-            // } else {
-            // cdb.addCard(id);
-            // cdb.addCard(id);
-            // cdb.addCard(id);
-            // cards = cdb.getLoggedInCard(id);
-            // card = cards.get(0);
-            // }
-            cdb.checkNUpdateCard(card.getUserID(), card.getCardNumber(), card.getExpDate(), card.getBillingState(),
-                                 card.getBillingStreet(), card.getBillingZipCode(), card.getBillingCity());
-
-            System.out.println(card.toString());
-
+            JsonNode jsonNode = objectMapper.readTree(data);
+            boolean newCard = "new".equals(jsonNode.get("selectedCreditCard").asText());
+            int userId = jsonNode.get("userId").asInt();
+            System.out.println(userId);
+            User user = udb.getLoggedInProfile(userId);
+            Card card = new Card();
+            card.setUserID(userId);
+            card.setCardNumber(jsonNode.get("encryptedCardNumber").asText());
+            card.setExpDate(jsonNode.get("expirationDate").asText());
+            card.setBillingStreet(jsonNode.get("street").asText());
+            card.setBillingCity(jsonNode.get("city").asText());
+            card.setBillingState(jsonNode.get("state").asText());
+            card.setBillingZipCode(jsonNode.get("zipCode").asText());
+            //System.out.println(card.toString());
 
             String fullName = "";
             String email = "";
@@ -122,7 +104,6 @@ public class EditProfileController {
             String homeState = "";
             String homeZipCode = "";
             String currentPassword = "";
-            JsonNode jsonNode = objectMapper.readTree(data);
             if (jsonNode.get("fullName").asText() != null) {
             fullName = jsonNode.get("fullName").asText();
             if (fullName == null) {
@@ -204,12 +185,7 @@ public class EditProfileController {
             password = user.getPassword();
             }
             boolean subscribe = jsonNode.get("subscribe").asBoolean();
-            // System.out.println("Checkpoint 2");
-            // System.out.println("Current password: " + currentPassword);
-            // System.out.println("Password: " + password);
-            // System.out.println("Confirm Password: " + confirmPassword);
-            // System.out.println(creditCardNumber);
-            // System.out.println("User.password: " + user.getPassword());
+            
             udb.updateUserName(fullName, email);
             udb.updatePassword(password, email);
             udb.updatePhone(phoneNumber, email);
@@ -218,7 +194,14 @@ public class EditProfileController {
             udb.updateHomeState(homeState, email);
             udb.updateHomeStreet(homeStreet, email);
             udb.updateHomeZipCode(homeZipCode, email);
-            // System.out.println("Checkpoint 3");
+            if(newCard){
+                //System.out.println("执行创建");
+                cdb.addCard(userId,card.getCardNumber(),card.getExpDate(),card.getBillingZipCode(),card.getBillingStreet(),card.getBillingCity(),card.getBillingState());
+            }else{
+                int paymentID = jsonNode.get("paymentID").asInt();
+                //System.out.println("执行修改");
+                cdb.updateInfo(paymentID,card.getCardNumber(),card.getExpDate(),card.getBillingState(),card.getBillingStreet(),card.getBillingZipCode(),card.getBillingCity());
+            }
             return ResponseEntity.ok("");
         } catch (Exception e) {
             e.printStackTrace();
@@ -227,17 +210,5 @@ public class EditProfileController {
 
     } // updateUserInfo
 
-    public void getID() {
-        try {
-            File idstore = new File("idstore.txt");
-            Scanner scan = new Scanner(idstore);
-            String idString;
-            idString = scan.next();
-            id = Integer.parseInt(idString);
-            scan.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Cannot read file");
-        }
-    }
 
 }
