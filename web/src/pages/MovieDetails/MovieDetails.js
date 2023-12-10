@@ -25,15 +25,15 @@ function MovieDetails() {
                 const newDates = data.map(item => {
                     const date = new Date(item.startTime);
                     return `${date.getMonth() + 1}/${date.getDate()}`;
-                  });
-          
-                  const newTimes = data.map(item => {
+                });
+
+                const newTimes = data.map(item => {
                     const startTime = new Date(item.startTime);
                     return `${startTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
-                  });
-          
-                  setDates(newDates);
-                  setTimes(newTimes);
+                });
+
+                setDates(newDates);
+                setTimes(newTimes);
             })
             .catch(error => {
                 console.error('Error fetching movie schedule:', error);
@@ -95,26 +95,32 @@ function MovieDetails() {
             <div className="showtime-section">
                 <h2>Showing Times</h2>
                 <div className="date-selector">
-                    {dates.map((date, index) => (
-                        <button
-                            key={index}
-                            className={`date-button ${selectedDate === date ? 'selected' : ''}`}
-                            onClick={() => handleDateClick(date)}
-                        >
-                            {date}
-                        </button>
-                    ))}
+                    {dates !== null && dates !== undefined
+                        ? dates.map((date, index) => (
+                            <button
+                                key={index}
+                                className={`date-button ${selectedDate === date ? 'selected' : ''}`}
+                                onClick={() => handleDateClick(date)}
+                            >
+                                {date}
+                            </button>
+                        ))
+                        : <p>Loading dates...</p>
+                    }
                 </div>
                 <div className="time-selector">
-                    {times.map((time, index) => (
-                        <button
-                            key={index}
-                            className={`time-button ${selectedTime === time ? 'selected' : ''}`}
-                            onClick={() => handleTimeClick(time)}
-                        >
-                            {time}
-                        </button>
-                    ))}
+                    {times !== null && times !== undefined
+                        ? times.map((time, index) => (
+                            <button
+                                key={index}
+                                className={`time-button ${selectedTime === time ? 'selected' : ''}`}
+                                onClick={() => handleTimeClick(time)}
+                            >
+                                {time}
+                            </button>
+                        ))
+                        : <p>Loading times...</p>
+                    }
                 </div>
             </div>
 
