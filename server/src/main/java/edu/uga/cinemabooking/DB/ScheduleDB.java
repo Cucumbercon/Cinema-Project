@@ -121,19 +121,23 @@ public class ScheduleDB {
         return false;
     }
 
-    public Schedule getScheduleMovie(int movie_id) {
-        Schedule schedule = null;
+    public List<Schedule> getScheduleMovie(int movie_id) {
+        List<Schedule> schedule = null;
         String sql = "SELECT * FROM schedule WHERE movie_id = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, movie_id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                schedule = new Schedule();
-                schedule.setMovieId(resultSet.getInt("movie_id"));
-                schedule.setShowroomId(resultSet.getInt("showroom_id"));
-                schedule.setStartTime(resultSet.getString("start_time"));
-                schedule.setEndTime(resultSet.getString("end_time"));
+            schedule = new ArrayList<>();
+            while (resultSet.next()) {
+                Schedule schedules = new Schedule();
+                schedules = new Schedule();
+                schedules.setMovieId(resultSet.getInt("movie_id"));
+                schedules.setShowroomId(resultSet.getInt("showroom_id"));
+                schedules.setStartTime(resultSet.getString("start_time"));
+                schedules.setEndTime(resultSet.getString("end_time"));
+
+                schedule.add(schedules);
             }
         } catch (Exception e) {
             e.printStackTrace();

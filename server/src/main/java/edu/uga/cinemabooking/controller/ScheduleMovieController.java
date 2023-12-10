@@ -80,7 +80,7 @@ public class ScheduleMovieController {
     @GetMapping("/getschedule")
     public ResponseEntity<String> getUserInfo(@RequestParam String data) {
         ObjectMapper objectMapper = new ObjectMapper();
-        Schedule schedule = null;
+        List<Schedule> schedule = null;
 
         try {
             int movie_id = Integer.parseInt(data);

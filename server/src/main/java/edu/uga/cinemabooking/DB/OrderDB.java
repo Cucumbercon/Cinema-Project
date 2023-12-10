@@ -21,7 +21,7 @@ public class OrderDB {
     /**
      * Calling this will init the connection to db
      */
-    public TicketDB() {
+    public OrderDB() {
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (Exception e) {
