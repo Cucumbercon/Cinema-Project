@@ -52,7 +52,7 @@ public class ShowroomDB {
         Showroom showroom = new Showroom();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, movie_title);
+            preparedStatement.setInt(1, movie_id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
 
