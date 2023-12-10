@@ -14,6 +14,7 @@ import edu.uga.cinemabooking.entity.Showroom;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,24 +45,25 @@ public class ScheduleMovieController {
 
             // Gets the movie name and uses it to get movieID
             int movie_id = jsonNode.get("selectedMovie").asInt();
-            System.out.println(movie_id);
+            System.out.println("Checkpoint 1" + movie_id);
 
            
             String date = jsonNode.get("date").asText();
-            String start_date = date + " " + jsonNode.get("startTime").asText();
-            String end_date = date + " " + jsonNode.get("endTime").asText();
-            System.out.println(start_date + "\n" + end_date);
+            String start_date = date + " " + jsonNode.get("startTime").asText() + ":00";
+            String end_date = date + " " + jsonNode.get("endTime").asText() + ":00";
+            System.out.println("Checkpoint 2" + start_date + "\n" + end_date);
 
 
-            if (sdb.checkOverlapSchedule(start_date, movie_id) || sdb.checkOverlapSchedule(end_date, movie_id)) {
+            if (sdb.checkOverlapScheduleMovie(start_date, movie_id) || sdb.checkOverlapScheduleMovie(end_date, movie_id)) {
                 System.out.println("Overlaps.");
             } else {
                 // Create a showroom
              // Gets the movie name and uses it to get showroomID
-            Showroom showroom = shdb.getShowroomID(movie_id);
-            int showroom_id = showroom.getId();
+            //Showroom showroom = shdb.getShowroomID(movie_id);
+            Random random = new Random();
+            int showroom_id = random.nextInt(8) + 1;
             
-
+            System.out.println("Checkpoint 3" + start_date + "\n" + end_date);
             sdb.addSchedule(movie_id, showroom_id, start_date, end_date);
             }
             

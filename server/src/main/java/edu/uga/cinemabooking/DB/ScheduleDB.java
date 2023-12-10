@@ -44,16 +44,17 @@ public class ScheduleDB {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        java.sql.Date sqlDate1 = new java.sql.Date(utilStart.getTime());
-        java.sql.Date sqlDate2 = new java.sql.Date(utilEnd.getTime());
+        java.sql.Timestamp sqlDate1 = new java.sql.Timestamp(utilStart.getTime());
+        java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(utilEnd.getTime());
 
-        String sql = "INSERT INTO schedule (movie_id, showroom_id, start_time, end_time) " +
-                "VALUES (?,?,?,?)";
+        String sql = "INSERT INTO schedule (ID, movie_id, showroom_id, start_time, end_time) " +
+                "VALUES (?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, movie_id);
-            preparedStatement.setInt(2, showroom_id);
-            preparedStatement.setDate(3, sqlDate1);
-            preparedStatement.setDate(4, sqlDate2);
+            preparedStatement.setInt(1, findMaxId() + 1);
+            preparedStatement.setInt(2, movie_id);
+            preparedStatement.setInt(3, showroom_id);
+            preparedStatement.setTimestamp(4, sqlDate1);
+            preparedStatement.setTimestamp(5, sqlDate2);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -89,8 +90,8 @@ public class ScheduleDB {
 
     }
 
-    public boolean checkOverlapSchedule(String input_time, int movie_id) {
-        List<Schedule> schedules = getSchedulesFromMovie(movie_id);
+    public boolean checkOverlapScheduleMovie(String input_time, int movie_id) {
+        List<Schedule> schedules = getSchedules();
         if (schedules == null) {
             return false;
         }
@@ -98,15 +99,15 @@ public class ScheduleDB {
         for (int i = 0; i < schedules.size(); i++) {
             Schedule schedule = schedules.get(i);
             try {
+                System.out.println("Check DB1" + schedule.getStartTime());
+                System.out.println("Check DB2" + schedule.getEndTime());
                 Date parsedStart = sdf.parse(schedule.getStartTime());
                 Date parsedEnd = sdf.parse(schedule.getEndTime());
                 Date parsedInput = sdf.parse(input_time);
                 Time startTime = new Time(parsedStart.getTime());
                 Time endTime = new Time(parsedEnd.getTime());
                 Time inputTime = new Time(parsedInput.getTime());
-                if (!inputTime.before(startTime) && !inputTime.after(endTime)) {
-
-                } else {
+                if (inputTime.after(startTime) && inputTime.before(endTime)) {
                     return true;
                 }
             } catch (Exception e) {
@@ -145,7 +146,7 @@ public class ScheduleDB {
 
     }
 
-    public List<Schedule> getSchedules(int movie_id) {
+    public List<Schedule> getSchedules() {
 
         String sql = "SELECT * FROM schedule";
         List<Schedule> schedules = null;
@@ -169,5 +170,22 @@ public class ScheduleDB {
         //System.out.println(movies);
         return schedules;
 
+    }
+
+    public int findMaxId() {
+        String sql = "SELECT MAX(ID) as max_id FROM schedule";
+        int maxId = -1; // default value if no rows are found
+    
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+    
+            if (resultSet.next()) {
+                maxId = resultSet.getInt("max_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        return maxId;
     }
 }
