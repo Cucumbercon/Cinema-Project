@@ -428,6 +428,20 @@ public class UserDB {
         } // try
     }
 
+
+    public void updateUserEmail(String input, int id) {
+        String sql = "UPDATE user SET email = ? WHERE id = ?";
+        //System.out.println("update verify code");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, input);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+    }
+
     public void updateUserName(String input, String email) {
         String sql = "UPDATE user SET user_name = ? WHERE email = ?";
         //System.out.println("update verify code");

@@ -4,21 +4,47 @@ import './MovieDetails.css';
 
 function MovieDetails() {
 
+
+
     const { state } = useLocation();
     const navigate = useNavigate();
 
     const [movie, setMovie] = useState(state.data);
-    console.log(movie);
 
+
+    const [dates, setDates] = useState([]);
+    const [times, setTimes] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
+
+    useEffect(() => {
+        fetch(`http://localhost:8000/api/getSchedule?id=${movie.id}`, {
+            method: 'GET',
+        }).then(response => response.json())
+            .then(data => {
+                const newDates = data.map(item => {
+                    const date = new Date(item.startTime);
+                    return `${date.getMonth() + 1}/${date.getDate()}`;
+                });
+
+                const newTimes = data.map(item => {
+                    const startTime = new Date(item.startTime);
+                    return `${startTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+                });
+
+                setDates(newDates);
+                setTimes(newTimes);
+            })
+            .catch(error => {
+                console.error('Error fetching movie schedule:', error);
+            });
+
+    }, [movie.id]);
 
     if (!movie) {
         return <div>Loading...</div>;
     }
 
-    const dates = ["10/01", "10/02", "10/03"];
-    const times = ["12:00pm", "3:15pm", "6:30pm", "9:45pm"];
 
     const handleDateClick = (date) => {
         setSelectedDate(date);
@@ -33,12 +59,12 @@ function MovieDetails() {
     //function to handle the logic for adding the show clickable show times and navigating to movie seat booking
     const handleViewSeatsClick = () => {
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    
+
         if (!selectedDate || !selectedTime) {
             alert('Please select a date and time.');
             return;
         }
-    
+
         if (!isLoggedIn) {
             // Redirect to the login page with a state indicating the user was redirected
             navigate('/login', { state: { fromBookingPage: true } });
@@ -56,7 +82,7 @@ function MovieDetails() {
             {/* Movie Details */}
             <div className="details-section">
                 <h2>{movie.title}</h2>
-                <p><strong>Duration:</strong> {movie.backdropPath}  minutes</p>
+                <p><strong>Duration:</strong> {movie.backdropPath} minutes</p>
                 <p><strong>Description:</strong> {movie.synopsis}</p>
                 <p><strong>Genre:</strong> {movie.category}</p>
                 <p><strong>Releasedate:</strong> {movie.date}</p>
@@ -69,26 +95,32 @@ function MovieDetails() {
             <div className="showtime-section">
                 <h2>Showing Times</h2>
                 <div className="date-selector">
-                    {dates.map((date, index) => (
-                        <button
-                            key={index}
-                            className={`date-button ${selectedDate === date ? 'selected' : ''}`}
-                            onClick={() => handleDateClick(date)}
-                        >
-                            {date}
-                        </button>
-                    ))}
+                    {dates !== null && dates !== undefined
+                        ? dates.map((date, index) => (
+                            <button
+                                key={index}
+                                className={`date-button ${selectedDate === date ? 'selected' : ''}`}
+                                onClick={() => handleDateClick(date)}
+                            >
+                                {date}
+                            </button>
+                        ))
+                        : <p>Loading dates...</p>
+                    }
                 </div>
                 <div className="time-selector">
-                    {times.map((time, index) => (
-                        <button
-                            key={index}
-                            className={`time-button ${selectedTime === time ? 'selected' : ''}`}
-                            onClick={() => handleTimeClick(time)}
-                        >
-                            {time}
-                        </button>
-                    ))}
+                    {times !== null && times !== undefined
+                        ? times.map((time, index) => (
+                            <button
+                                key={index}
+                                className={`time-button ${selectedTime === time ? 'selected' : ''}`}
+                                onClick={() => handleTimeClick(time)}
+                            >
+                                {time}
+                            </button>
+                        ))
+                        : <p>Loading times...</p>
+                    }
                 </div>
             </div>
 

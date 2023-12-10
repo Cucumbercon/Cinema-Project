@@ -3,7 +3,17 @@ import { React, useState, useEffect } from 'react';
 import { useLocation, } from 'react-router-dom';
 
 function Checkout() {
+    const [user_id, setUser_id] = useState('');
+    const [payment_id, setPayment_id] = useState('');
+    const [ticket_id, setTicket_id] = useState('');
+    const [promote_id, setPromote_id] = useState('');
+    const [ticket_amount, setTicket_amount] = useState('');
+    const [total, setTotal] = useState('');
+    const [describe, setDescribe] = useState('');
+
     const selectedSeatsCount = (useLocation().state.selectedSeatsCount);
+    const selectedSeat = (useLocation().state.selectedSeat);
+    console.log(selectedSeat);
     const [promoText, setPromoText] = useState('');
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [cardsList, setCardsList] = useState([]);
@@ -23,6 +33,16 @@ function Checkout() {
         total: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) * 0.06 +
             (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5)
     });
+
+    const orderData = {
+        user_id,
+        payment_id,
+        ticket_id,
+        promote_id,
+        ticket_amount,
+        total,
+        describe,
+    }
 
     const applyPromoButton = () => {
         fetch(`http://localhost:8000/api/applyPromotion?code=${promoText}`, {
@@ -76,6 +96,62 @@ function Checkout() {
             const movie = location.state.movie;
             const userID = localStorage.getItem("id");
             const price = movieDetails.total;
+
+            // add order to db
+            setUser_id(userID);
+            setTotal(movieDetails.total);
+            console.log(orderData);
+
+            setTicket_amount(selectedSeatsCount.adult + selectedSeatsCount.senior + selectedSeatsCount.child);
+            fetch(`http://localhost:8000/api/addOrder`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    orderData,
+                }),
+            }).then((response) => response.text())
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error('Error occurred:', error);
+                    alert('Error occurs: ', error);
+                });
+
+            // save the seat info into db
+
+
+            // send order confirmation 
+            // fetch(`http://localhost:8000/api/sendOrderConfirmation`, {
+            //     method: 'POST',
+            //     body: JSON.stringify({
+            //         movie,
+            //         userID,
+            //         price,
+            //     }),
+            // }).then((response) => response.text())
+            //     .then((data) => {
+            //         console.log(data);
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error occurred:', error);
+            //         alert('Error occurs: ', error);
+            //     });
+        } else {
+            alert(`Payment has been cancelled.`);
+        }
+    }
+
+    const cancelButton = () => {
+        window.history.back();
+    }
+
+    const checkoutButton = () => {
+        const result = window.confirm(`Do you want to proceed the order?`);
+
+        if (result) {
+            const movie = location.state.movie;
+            const userID = localStorage.getItem("id");
+            const price = movieDetails.total;
             fetch(`http://localhost:8000/api/sendOrderConfirmation`, {
                 method: 'POST',
                 body: JSON.stringify({
@@ -94,14 +170,6 @@ function Checkout() {
         } else {
             alert(`Payment has been cancelled.`);
         }
-    }
-
-    const cancelButton = () => {
-        window.history.back();
-    }
-
-    const checkoutButton = () => {
-
     }
 
     return (
