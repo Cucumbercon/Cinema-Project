@@ -32,17 +32,18 @@ function MovieDetails() {
 
     //function to handle the logic for adding the show clickable show times and navigating to movie seat booking
     const handleViewSeatsClick = () => {
-        // Use navigate function to go to "/movieseatsbooking"
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
-        console.log(movie);
-        
-        if (isLoggedIn) {
-            // If the user is logged in, navigate to the movie seat booking page
-            navigate('/movieseatbooking', { state: { movie } });
+    
+        if (!selectedDate || !selectedTime) {
+            alert('Please select a date and time.');
+            return;
+        }
+    
+        if (!isLoggedIn) {
+            // Redirect to the login page with a state indicating the user was redirected
+            navigate('/login', { state: { fromBookingPage: true } });
         } else {
-            // If the user is not logged in, navigate to the login page
-            navigate('/login');
+            navigate('/movieseatbooking', { state: { movie, selectedDate, selectedTime } });
         }
     };
     return (

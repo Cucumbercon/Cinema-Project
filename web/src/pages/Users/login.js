@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { encrypt } from './encryption';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
 
 import './login2.css';
 
 export const Login = (props) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState('');
   const [plainPass, setPlainPass] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+
+
+  useEffect(() => {
+    if (location.state && location.state.fromBookingPage) {
+      alert('You need to log in first!');
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,6 +95,8 @@ export const Login = (props) => {
     .catch(function (error) {
       console.error('Unhandled error:', error);
     });
+
+    
 
   }
 
