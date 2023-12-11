@@ -122,7 +122,7 @@ public class OrderDB {
                 order.setPaymentId(resultSet.getInt("payment_id"));
                 order.setPromoteId(resultSet.getInt("promote_id"));
                 order.setTicketAmount(resultSet.getInt("ticket_amount"));
-                order.setTotal(resultSet.getInt("total"));
+                order.setTotal(resultSet.getDouble("total"));
                 order.setOrderTime(resultSet.getString("order_time"));
                 order.setDescribe(resultSet.getString("discribe"));
                 orders.add(order);
