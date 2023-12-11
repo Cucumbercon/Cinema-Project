@@ -25,75 +25,75 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class Facade {
 
     // AddMovieController
-    @PostMapping("/addMovie")
+    @PostMapping("/addMovies")
     public void fetchData(@RequestBody String data) {
         AddMovieController.fetchData(data);
     }
     // EditProfileController
-    @GetMapping("/loadprofile")
+    @GetMapping("/loadprofiles")
     public void getUserInfo(@RequestParam int userId) {
         EditProfileController.getUserInfo(userId);
     }
 
-    @GetMapping("/loadprofilecard")
+    @GetMapping("/loadprofilecards")
     public void getUserCard(@RequestParam int userId) {
         EditProfileController.getUserCard(userId);
     }
 
-    @PostMapping("/updateprofile")
+    @PostMapping("/updateprofiles")
     public void updateUserInfo(@RequestBody String data) {
         EditProfileController.updateUserInfo(data);
     }
     // EmailController
 
-    @PostMapping("/sendEmail")
+    @PostMapping("/sendEmails")
     public void sendEmail(@RequestBody String data) {
         EmailController.sendEmail(data);
     }
 
-    @PostMapping("/verifyCode")
+    @PostMapping("/verifyCodes")
     public void verifyCode(@RequestBody String data) {
         EmailController.verifyCode(data);
     }
 
-    @PostMapping("/verifyForgotCode")
+    @PostMapping("/verifyForgotCodes")
     public void verifyForgotCode(@RequestBody String data) {
         EmailController.verifyForgotCode(data);
     }
 
-    @PostMapping("/sendForgotEmail")
+    @PostMapping("/sendForgotEmails")
     public void sendForgotEmail(@RequestBody String data) {
         EmailController.sendForgotEmail(data);
     }
 
-    @PostMapping("/sendOrderConfirmation")
+    @PostMapping("/sendOrderConfirmations")
     public void sendOrderConfirmation(@RequestBody String data) {
         EmailController.sendOrderConfirmation(data);
     }
 
     // ForgotPasswordController
-    @PostMapping("/forgotpassword")
+    @PostMapping("/forgotpasswords")
     public void fetchDataForgot(@RequestBody String data) {
         ForgotPasswordController.fetchData(data);
     }
 
     // GetMovieController
-    @GetMapping("/getAvailableMovie")
+    @GetMapping("/getAvailableMovies")
     public void receiveAvailable() {
         GetMovieController.receiveAvailable();
     }
 
-    @GetMapping("/getUpComingMovie")
+    @GetMapping("/getUpComingMovies")
     public void receiveUpComing() {
         GetMovieController.receiveUpComing();
     }
 
-    @GetMapping("/searchMovieByName")
+    @GetMapping("/searchMovieByNames")
     public void searchMovieByName(@RequestParam String movieName) {
         GetMovieController.searchMovieByName(movieName);
     }
 
-    @GetMapping("/getArchiveMovie")
+    @GetMapping("/getArchiveMovies")
     public void getArchiveMovie() {
         GetMovieController.getArchiveMovie();
     }

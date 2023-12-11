@@ -36,11 +36,11 @@ function Checkout() {
 
     const orderData = {
         user_id: localStorage.getItem("id"),
-        payment_id: "",
+        payment_id: 1,
         promote_id: 1,
         ticket_amount: amount,
         total: movieDetails.total,
-        describe: "",
+        describe: "Adult Ticket x " + movieDetails.adultTicket
     }
 
     const applyPromoButton = () => {
