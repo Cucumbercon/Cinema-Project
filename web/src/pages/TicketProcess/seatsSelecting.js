@@ -156,6 +156,7 @@ function MovieSeatBooking() {
     // Function to handle the checkout process
     const handleCheckout = () => {
         if (selectedSeatsCount.adult > 0 || selectedSeatsCount.senior > 0 || selectedSeatsCount.child > 0) {
+            console.log(selectedSeatsCount);
             navigate('/ordersummary', {
                 state: { selectedSeatsCount, movie, selectedSeat}
             });

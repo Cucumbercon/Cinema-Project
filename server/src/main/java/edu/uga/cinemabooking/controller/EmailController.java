@@ -234,7 +234,8 @@ public class EmailController {
             String userID = jsonNode.get("userID").asText();
             String price = jsonNode.get("price").asText();
             String email = udb.getEmail(Integer.valueOf(userID));
-            // System.out.println(email);
+            System.out.println(jsonNode.toString());
+            System.out.println(email);
             String emailMessage = String.format("Your Order Confirmation Code: 1000340 \n Ticket: %s \n Cost Total: $%s", movieName, price);
 
             sendEmailMessage(email, "Order Confirmation", emailMessage);

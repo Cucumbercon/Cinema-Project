@@ -4,18 +4,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 
 function Checkout() {
-    const [user_id, setUser_id] = useState('');
-    const [payment_id, setPayment_id] = useState('');
-    const [ticket_id, setTicket_id] = useState('');
-    const [promote_id, setPromote_id] = useState('');
-    const [ticket_amount, setTicket_amount] = useState('');
-    const [total, setTotal] = useState('');
-    const [describe, setDescribe] = useState('');
     const navigate = useNavigate();
 
-
-    const selectedSeatsCount = (useLocation().state.selectedSeatsCount);
-    const selectedSeat = (useLocation().state.selectedSeat);
+    const selectedSeatsCount = useLocation().state?.selectedSeatsCount;
+    // console.log(selectedSeatsCount);
+    const selectedSeat = (useLocation().state?.selectedSeat);
     console.log(selectedSeat);
     const [promoText, setPromoText] = useState('');
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -37,14 +30,16 @@ function Checkout() {
             (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5)
     });
 
+    const amount = selectedSeatsCount.adult + selectedSeatsCount.senior + selectedSeatsCount.child;
+
     const orderData = {
-        user_id,
-        payment_id,
-        ticket_id,
-        promote_id,
-        ticket_amount,
-        total,
-        describe,
+        user_id: localStorage.getItem("id"),
+        payment_id: "",
+        ticket_id: "",
+        promote_id: "",
+        ticket_amount: amount,
+        total: movieDetails.total,
+        describe: "",
     }
 
     const applyPromoButton = () => {
@@ -97,15 +92,8 @@ function Checkout() {
 
         if (result) {
             const movie = location.state.movie;
-            const userID = localStorage.getItem("id");
-            const price = movieDetails.total;
 
             // add order to db
-            setUser_id(userID);
-            setTotal(movieDetails.total);
-            console.log(orderData);
-
-            setTicket_amount(selectedSeatsCount.adult + selectedSeatsCount.senior + selectedSeatsCount.child);
             fetch(`http://localhost:8000/api/addOrder`, {
                 method: 'POST',
                 body: JSON.stringify({
@@ -113,7 +101,8 @@ function Checkout() {
                 }),
             }).then((response) => response.text())
                 .then((data) => {
-                    console.log(data);
+                    navigate("/ConfirmationPage");
+
                 })
                 .catch((error) => {
                     console.error('Error occurred:', error);
@@ -148,11 +137,16 @@ function Checkout() {
         window.history.back();
     }
 
-    const checkoutButton = () => {
+    const checkoutButton = (event) => {
+        event.preventDefault();
+
         const result = window.confirm(`Do you want to proceed the order?`);
+        console.log(33);
 
         if (result) {
             const movie = location.state.movie;
+            console.log(movie);
+
             const userID = localStorage.getItem("id");
             const price = movieDetails.total;
             fetch(`http://localhost:8000/api/sendOrderConfirmation`, {
@@ -162,17 +156,15 @@ function Checkout() {
                     userID,
                     price,
                 }),
-               
-
-            }).then((response) => response.text())
-                .then((data) => {
-                    console.log(data);
-                    navigate('/confirmationpage');
-                })
-                .catch((error) => {
-                    console.error('Error occurred:', error);
-                    alert('Error occurs: ', error);
-                });
+                    }).then((response) => response.text())
+                        .then((data) => {
+                            navigate("/ConfirmationPage");
+                            console.log(data);
+                        })
+                        .catch((error) => {
+                            console.error('Error occurred:', error);
+                            alert('Error occurs: ', error);
+            });
         } else {
             alert(`Payment has been cancelled.`);
         }
