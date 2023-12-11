@@ -30,14 +30,13 @@ public class TicketDB {
         }
     }
 
-    public int addTicket(int schedule_id, edu.uga.cinemabooking.entity.Ticket.State state, int seat_id) {
+    public int addTicket(int schedule_id, edu.uga.cinemabooking.entity.Ticket.State state) {
 
-        String sql = "INSERT INTO ticket (schedule_id, state, seat_id) " +
-                "VALUES (?,?,?,?)";
+        String sql = "INSERT INTO ticket (schedule_id, state) " +
+                "VALUES (?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, schedule_id);
             preparedStatement.setString(2, state.name());
-            preparedStatement.setInt(3, seat_id);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -79,7 +78,7 @@ public class TicketDB {
             while (resultSet.next()) {
                 Ticket ticket = new Ticket();
                 ticket.setScheduleId(resultSet.getInt("schedule_id"));
-                ticket.setState(edu.uga.cinemabooking.entity.Ticket.State.available);
+                ticket.setState(edu.uga.cinemabooking.entity.Ticket.State.occupied);
                 ticket.setSeatId(resultSet.getInt("seat_id"));
                 tickets.add(ticket);
             }
@@ -87,5 +86,37 @@ public class TicketDB {
             e.printStackTrace();
         }
         return tickets;
+    }
+
+    public List<Integer> getTicketIDs(int schedule_id) {
+        String sql = "SELECT * FROM ticket WHERE schedule_id = ?";
+        List<Integer> ticketIDs = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, schedule_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ticketIDs = new ArrayList<>();
+            while (resultSet.next()) {
+                int ticketID;
+                ticketID = resultSet.getInt("ID");
+                ticketIDs.add(ticketID);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ticketIDs;
+    }
+
+    public void addSeatID(int ticket_id, int seat_id) {
+
+        String sql = "INSERT INTO ticket (seat_id) WHERE ID = " + ticket_id +
+                " VALUES (?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, seat_id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

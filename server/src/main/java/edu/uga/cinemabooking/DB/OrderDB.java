@@ -30,17 +30,15 @@ public class OrderDB {
         }
     }
 
-    public void addOrder(int user_id, int payment_id, int ticket_id, int promote_id, int ticket_amount,
-    double total, String describe) {
+    public void addOrder(int user_id, int payment_id, int ticket_id, int ticket_amount, double total, String describe) {
 
-        String sql = "INSERT INTO `order` (user_id, payment_id, ticket_id, promote_id, ticket_amount) " +
-                "VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO `order` (user_id, payment_id, ticket_id, ticket_amount) " +
+                "VALUES (?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, user_id);
             preparedStatement.setInt(2, payment_id);
             preparedStatement.setInt(3, ticket_id);
-            preparedStatement.setInt(4, promote_id);
-            preparedStatement.setDouble(5, ticket_amount);
+            preparedStatement.setDouble(4, ticket_amount);
             preparedStatement.executeUpdate();
             addOrderHelper(total, describe);
         } catch (SQLException e) {
