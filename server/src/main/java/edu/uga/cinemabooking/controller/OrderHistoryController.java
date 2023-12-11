@@ -42,7 +42,7 @@ public class OrderHistoryController {
             for (int i = 0; i < orders.size(); i++) {
                 OrderHistory orderHistory = new OrderHistory();
                 Order order = orders.get(i);
-                orderHistory.bookingNum = 1;
+                orderHistory.bookingNum = order.getOrderId();
                 orderHistory.ticketNum = 1;
                 orderHistory.date = order.getOrderTime();
                 orderHistory.seats = "";
