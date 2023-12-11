@@ -40,7 +40,6 @@ public class OrderHistoryController {
         try {
             orders = odb.getAllOrders(userId);
             for (int i = 0; i < orders.size(); i++) {
-                orderHistories.add(new OrderHistory());
                 OrderHistory orderHistory = new OrderHistory();
                 Order order = orders.get(i);
                 orderHistory.bookingNum = 1;
@@ -48,13 +47,14 @@ public class OrderHistoryController {
                 orderHistory.date = order.getOrderTime();
                 orderHistory.seats = "";
                 orderHistory.amountSpent = order.getTotal();
+                orderHistories.add(orderHistory);
             }
+            String jsonOrderHistory = objectMapper.writeValueAsString(orderHistories);
+            return ResponseEntity.ok(jsonOrderHistory);
 
         } catch (Exception e) {
             System.out.println("Error: " + e.toString());
         }
-
-        return ResponseEntity.ok("Add order successful");
 
     }
 
