@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Order {
 
+    private int order_id;
     private int user_id;
     private int payment_id;
     private int ticket_id;
@@ -90,9 +91,20 @@ public class Order {
         this.describe = describe;
     }
 
+    // Getter for order_id
+    public int getOrderId() {
+        return order_id;
+    }
+
+    // Setter for order_id
+    public void setOrderId(int orderId) {
+        this.order_id = orderId;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
+                "order_id" + order_id +
                 "user_id=" + user_id +
                 ", payment_id=" + payment_id +
                 ", ticket_id=" + ticket_id +

@@ -118,6 +118,7 @@ public class OrderDB {
 
             while (resultSet.next()) {
                 Order order = new Order();
+                order.setOrderId(resultSet.getInt("ID"));
                 order.setUserId(resultSet.getInt("user_id"));
                 order.setPaymentId(resultSet.getInt("payment_id"));
                 order.setPromoteId(resultSet.getInt("promote_id"));
