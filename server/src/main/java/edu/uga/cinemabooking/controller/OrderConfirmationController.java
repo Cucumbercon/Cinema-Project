@@ -19,13 +19,13 @@ import edu.uga.cinemabooking.entity.Order;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
-public class OrderController {
+public class OrderConfirmationController {
 
     OrderDB odb = new OrderDB();
     Order order = new Order();
     TicketDB tdb = new TicketDB();
 
-    @PostMapping("/addOrder")
+    @PostMapping("/sendConfirmation")
     public ResponseEntity<String> addOrder(@RequestBody String data) {
 
         ObjectMapper objectMapper = new ObjectMapper();
