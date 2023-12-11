@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import edu.uga.cinemabooking.entity.Schedule;
+import edu.uga.cinemabooking.entity.Order;
 
 public class OrderDB {
     final static String URL = "jdbc:mysql://sg-cdb-kpa6dm3n.sql.tencentcdb.com:63965/ebooking";
@@ -117,5 +118,32 @@ public class OrderDB {
         }
 
         return maxId;
+    }
+
+    public List<Order> getAllOrders(int user_id) {
+        String sql = "SELECT * FROM order WHERE user_id = ?";
+        List<Order> orders = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, user_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            orders = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Order order = new Order();
+                order.setOrderId(resultSet.getInt("ID"));
+                order.setUserId(resultSet.getInt("user_id"));
+                order.setPaymentId(resultSet.getInt("payment_id"));
+                order.setPromoteId(resultSet.getInt("promote_id"));
+                order.setTicketAmount(resultSet.getInt("ticket_amount"));
+                order.setTotal(resultSet.getDouble("total"));
+                order.setOrderTime(resultSet.getString("order_time"));
+                order.setDescribe(resultSet.getString("discribe"));
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
     }
 }

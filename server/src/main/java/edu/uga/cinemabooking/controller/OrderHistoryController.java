@@ -32,18 +32,39 @@ public class OrderHistoryController {
     TicketDB tdb = new TicketDB();
 
     @GetMapping("/orderHistory")
-    public ResponseEntity<String> displayOrder(@RequestParam int userID) {
+    public ResponseEntity<String> displayOrder(@RequestParam int userId) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        
+        List<Order> orders = null;
+        List<OrderHistory> orderHistories = null;
         try {
-            
+            orders = odb.getAllOrders(userId);
+            for (int i = 0; i < orders.size(); i++) {
+                OrderHistory orderHistory = new OrderHistory();
+                Order order = orders.get(i);
+                orderHistory.bookingNum = order.getOrderId();
+                orderHistory.ticketNum = 1;
+                orderHistory.date = order.getOrderTime();
+                orderHistory.seats = "";
+                orderHistory.amountSpent = order.getTotal();
+                orderHistories.add(orderHistory);
+            }
+            String jsonOrderHistory = objectMapper.writeValueAsString(orderHistories);
+            return ResponseEntity.ok(jsonOrderHistory);
 
         } catch (Exception e) {
             System.out.println("Error: " + e.toString());
+            return ResponseEntity.status(500).body("Error getting order history.");
         }
 
-        return ResponseEntity.ok("Add order successful");
+    }
 
+    public class OrderHistory {
+        String movieTitle;
+        int bookingNum;
+        int ticketNum;
+        String date;
+        String seats;
+        double amountSpent;
     }
 }
