@@ -9,11 +9,11 @@ function ConfirmationPage() {
     const confirmationData = {
         confirmationNumber: "XXXXX-XXX-XXX-XXX",
         movieTitle: location.state.movie.title,
-        date: "10/01/2023",
-        time: "3:15pm",
-        seats: "A1, A2, B4, B5",
-        totalCost: "$40",
-        email: "example@example.com"
+        date: location.state.selectedDate,
+        time: location.state.selectedTime,
+        seats: location.state.seat,
+        totalCost: "$" + location.state.total,
+        email: location.state.email,
     };
 
     return (

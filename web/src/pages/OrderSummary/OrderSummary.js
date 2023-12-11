@@ -112,6 +112,9 @@ function Checkout() {
                                     seat: selectedSeat,
                                     total: movieDetails.total,
                                     email: data,
+                                    selectedDate: location.state.selectedDate,
+                                    selectedTime: location.state.selectedTime,
+
                                 },
                             });
                         })
@@ -129,24 +132,25 @@ function Checkout() {
 
 
             // save the seat info into db
+                
 
 
             // send order confirmation 
-            fetch(`http://localhost:8000/api/sendOrderConfirmation`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    movie,
-                    userID,
-                    price: orderData.total,
-                }),
-            }).then((response) => response.text())
-                .then((data) => {
-                    console.log(data);
-                })
-                .catch((error) => {
-                    console.error('Error occurred:', error);
-                    alert('Error occurs: ', error);
-                });
+            // fetch(`http://localhost:8000/api/sendOrderConfirmation`, {
+            //     method: 'POST',
+            //     body: JSON.stringify({
+            //         movie,
+            //         userID,
+            //         price: orderData.total,
+            //     }),
+            // }).then((response) => response.text())
+            //     .then((data) => {
+            //         console.log(data);
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error occurred:', error);
+            //         alert('Error occurs: ', error);
+            //     });
         } else {
             alert(`Payment has been cancelled.`);
         }
@@ -184,6 +188,9 @@ function Checkout() {
                                     seat: selectedSeat,
                                     total: movieDetails.total,
                                     email: data,
+                                    selectedDate: location.state.selectedDate,
+                                    selectedTime: location.state.selectedTime,
+
                                 },
                             });
                         })
