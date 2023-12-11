@@ -54,6 +54,7 @@ public class OrderHistoryController {
 
         } catch (Exception e) {
             System.out.println("Error: " + e.toString());
+            return ResponseEntity.status(500).body("Error getting order history.");
         }
 
     }
