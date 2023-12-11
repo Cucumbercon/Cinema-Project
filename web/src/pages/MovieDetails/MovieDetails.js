@@ -1,53 +1,33 @@
+
+
+    // Import React, useState, useEffect
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './MovieDetails.css';
 
 function MovieDetails() {
-
-
-
     const { state } = useLocation();
     const navigate = useNavigate();
 
     const [movie, setMovie] = useState(state.data);
-
-
     const [dates, setDates] = useState([]);
     const [times, setTimes] = useState([]);
+    const [showRoom, setShowRoom] = useState();
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
-    const [schedules, setSchedules] = useState([]); // 存储完整的日程数据
-    const [selectedScheduleId, setSelectedScheduleId] = useState(null); // 存储选中的scheduleId
-    useEffect(() => {
-        fetch(`http://localhost:8000/api/getSchedule?id=${movie.id}`, {
-            method: 'GET',
-        }).then(response => response.json())
-            .then(data => {
-                setSchedules(data);
-                console.log('Fetched data:', data); 
-                const newDates = data.map(item => {
-                    const date = new Date(item.startTime);
-                    return `${date.getMonth() + 1}/${date.getDate()}`;
-                });
+    const [schedules, setSchedules] = useState([]);
+    const [selectedScheduleId, setSelectedScheduleId] = useState(null);
 
-                const newTimes = data.map(item => {
-                    const startTime = new Date(item.startTime);
-                    return `${startTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
-                });
 
-                setDates(newDates);
-                setTimes(newTimes);
-            })
-            .catch(error => {
-                console.error('Error fetching movie schedule:', error);
-            });
-
-    }, [movie.id]);
-
-    if (!movie) {
-        return <div>Loading...</div>;
-    }
-
+    const findScheduleId = (date, time) => {
+        const schedule = schedules.find(sch => {
+            const startTime = new Date(sch.startTime);
+            const formattedDate = `${startTime.getMonth() + 1}/${startTime.getDate()}`;
+            const formattedTime = startTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            return formattedDate === date && formattedTime === time;
+        });
+        return schedule ? schedule.scheduleId : null;
+    };
 
     const handleDateClick = (date) => {
         setSelectedDate(date);
@@ -65,21 +45,35 @@ function MovieDetails() {
         navigate('/');
     };
 
-    const findScheduleId = (date, time) => {
-        const schedule = schedules.find(sch => {
-            const startTime = new Date(sch.startTime);
-            const formattedDate = `${startTime.getMonth() + 1}/${startTime.getDate()}`;
-            const formattedTime = startTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-            return formattedDate === date && formattedTime === time;
-        });
-        return schedule ? schedule.scheduleId : null;
-    };
+    useEffect(() => {
+        fetch(`http://localhost:8000/api/getSchedule?id=${movie.id}`, {
+            method: 'GET',
+        }).then(response => response.json())
+            .then(data => {
+                setSchedules(data);
+                setShowRoom(data.showroomId);
+                const newDates = data.map(item => {
+                    const date = new Date(item.startTime);
+                    return `${date.getMonth() + 1}/${date.getDate()}`;
+                });
 
+                const newTimes = data.map(item => {
+                    const startTime = new Date(item.startTime);
+                    return `${startTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+                });
 
-    //function to handle the logic for adding the show clickable show times and navigating to movie seat booking
+                setDates(newDates);
+                setTimes(newTimes);
+            })
+            .catch(error => {
+                console.error('Error fetching movie schedule:', error);
+            });
+    }, [movie.id]);
+
+    // ... (existing code)
+
     const handleViewSeatsClick = () => {
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-        console.log(selectedScheduleId);
         if (selectedScheduleId) {
             localStorage.setItem('scheduleId', selectedScheduleId);
         }
@@ -92,9 +86,20 @@ function MovieDetails() {
             // Redirect to the login page with a state indicating the user was redirected
             navigate('/login', { state: { fromBookingPage: true } });
         } else {
-            navigate('/movieseatbooking', { state: { movie, selectedDate, selectedTime } });
+            // Find the showroomId based on the selected schedule
+            const selectedShowroomId = findShowroomId(selectedScheduleId);
+            console.log(selectedShowroomId);
+            navigate('/movieseatbooking', { state: { movie, selectedDate, selectedTime, selectedShowroomId } });
         }
     };
+
+    // Function to find showroomId based on scheduleId
+    const findShowroomId = (scheduleId) => {
+        const schedule = schedules.find(sch => sch.scheduleId === scheduleId);
+        return schedule ? schedule.showroomId : null;
+    };
+
+
     return (
         <div className="movie-details-container">
             {/* Trailer Section */}

@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 function Checkout() {
     const navigate = useNavigate();
 
+    const location = useLocation();
     const selectedSeatsCount = useLocation().state?.selectedSeatsCount;
     const userID = localStorage.getItem('id');
     const selectedSeat = (useLocation().state?.selectedSeat);
@@ -14,7 +15,7 @@ function Checkout() {
     const [email, setEmail] = useState('');
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [cardsList, setCardsList] = useState([]);
-    const location = useLocation();
+    const [showRoomID, setShowRoomID] = useState(location.state.selectedShowRoomID);
     const [scheduleId, setScheduleId] = useState(null);
 
     const toggleDropdown = () => {
@@ -85,6 +86,11 @@ function Checkout() {
 
     }
 
+    function createTicket(ticketCount) {
+        
+    }
+
+
     function handleCardClick(card) {
         const result = window.confirm(`Selected Card: ${card}. \nDo you want to proceed?`);
 
@@ -97,7 +103,6 @@ function Checkout() {
                 method: 'GET',
             }).then((response) => response.text())
                 .then((data) => {
-
                     // add order to db
                     fetch(`http://localhost:8000/api/addOrder`, {
                         method: 'POST',
@@ -114,7 +119,6 @@ function Checkout() {
                                     email: data,
                                     selectedDate: location.state.selectedDate,
                                     selectedTime: location.state.selectedTime,
-
                                 },
                             });
                         })
@@ -132,7 +136,7 @@ function Checkout() {
 
 
             // save the seat info into db
-                
+
 
 
             // send order confirmation 

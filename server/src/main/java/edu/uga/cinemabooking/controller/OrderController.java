@@ -33,19 +33,18 @@ public class OrderController {
             JsonNode jsonNode = objectMapper.readTree(data);
             System.out.println(jsonNode);
 
-
             int user_id = jsonNode.get("orderData").get("user_id").asInt();
             double total = jsonNode.get("orderData").get("total").asDouble();
             int ticket_amount = jsonNode.get("orderData").get("ticket_amount").asInt();
             int payment_id = jsonNode.get("orderData").get("payment_id").asInt();
-            String description = jsonNode.get("description").asText();
+            int promote_id = jsonNode.get("orderData").get("promote_id").asInt();
+            String description = jsonNode.get("orderData").get("describe").asText();
+            // int schedule_id = jsonNode.get("schedule_id").asInt();
 
-
-            int schedule_id = jsonNode.get("schedule_id").asInt();
-            List<Integer> ticket_ids = tdb.getTicketIDs(schedule_id);
-            for (int i = 0; i < ticket_ids.size(); i++) {
-                odb.addOrder(user_id, payment_id, ticket_ids.get(i), ticket_amount, total, description);
-            }
+            // List<Integer> ticket_ids = tdb.getTicketIDs(schedule_id);
+            // for (int i = 0; i < ticket_ids.size(); i++) {
+                odb.addOrder(user_id, payment_id, promote_id, ticket_amount, total, description);
+            // }
             
 
         } catch (Exception e) {
