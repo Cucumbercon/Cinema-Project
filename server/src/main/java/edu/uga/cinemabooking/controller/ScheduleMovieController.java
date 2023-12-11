@@ -55,6 +55,7 @@ public class ScheduleMovieController {
             if (sdb.checkOverlapScheduleMovie(start_date, movie_id)
                     || sdb.checkOverlapScheduleMovie(end_date, movie_id)) {
                 System.out.println("Overlaps.");
+                return ResponseEntity.status(501).body("Schedule overlaps.");
             } else {
                 // Create a showroom
                 // Gets the movie name and uses it to get showroomID
