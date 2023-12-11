@@ -35,7 +35,8 @@ public class OrderHistoryController {
     public ResponseEntity<String> displayOrder(@RequestParam int userID) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        
+        Order order = null;
+        List<Order> orders = null;
         try {
             
 
