@@ -121,13 +121,11 @@ public class OrderDB {
     }
 
     public List<Order> getAllOrders(int user_id) {
-        String sql = "SELECT * FROM order WHERE user_id = ?";
-        List<Order> orders = null;
+        String sql = "SELECT * FROM `order` WHERE user_id = ?";
+        List<Order> orders = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, user_id);
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            orders = new ArrayList<>();
 
             while (resultSet.next()) {
                 Order order = new Order();
@@ -144,6 +142,7 @@ public class OrderDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        //System.out.println(orders);
         return orders;
     }
 }

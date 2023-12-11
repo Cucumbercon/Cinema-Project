@@ -104,8 +104,8 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "order_id" + order_id +
-                "user_id=" + user_id +
+                "order_id=" + order_id +
+                ", user_id=" + user_id +
                 ", payment_id=" + payment_id +
                 ", ticket_id=" + ticket_id +
                 ", promote_id=" + promote_id +

@@ -35,12 +35,14 @@ function OrderHistory() {
 
     // path for how you connect to backend and database
     useEffect(() => {
-        const userId = localStorage.getItem('userId');
-
-        fetch(`http://localhost:8000/api/orders/history/${userId}`, {
+        // 获取用户ID
+        const userId = localStorage.getItem('id');
+        console.log(userId);
+        // 使用正确的API地址
+        fetch(`http://localhost:8000/api/orderHistory?userId=${userId}`, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // or however you handle auth
+                //'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // 或其他认证方式
                 'Content-Type': 'application/json',
             },
         })
@@ -51,12 +53,13 @@ function OrderHistory() {
             return response.json();
         })
         .then((data) => {
+            console.log(data);
             setOrders(data);
         })
         .catch((error) => {
             console.error('Error fetching order history:', error);
         });
-    }, []);
+    }, []); // 空依赖数组表示这个effect只在组件挂载时运行一次
 
 
     return (
@@ -68,11 +71,14 @@ function OrderHistory() {
                     <div key={order.id} className="order">
                     {/* <div key={order.id} className="order-item"> */}
                         <h3>{order.movieTitle}</h3>
-                            <p><strong>Booking Number:</strong> {order.bookingNumber}</p>
-                            <p><strong>Ticket Number:</strong> {order.ticketNumber}</p>
-                            <p><strong>Date:</strong> {order.date}</p>
-                            <p><strong>Seats:</strong> {order.seats.join(', ')}</p>
-                            <p><strong>Amount Spent:</strong> ${order.amountSpent}</p>
+
+
+                            <p><strong>Booking Number:</strong> {order.orderId}</p>
+                            <p><strong>Order Time:</strong> {order.orderTime}</p>
+                            <p><strong>Ticket Number:</strong> {order.ticketNumber?order.ticketNumber:45}</p>
+                            {/*<p><strong>Date:</strong> {order.date}</p>*/}
+                            <p><strong>Details:</strong> {order.describe}</p>
+                            <p><strong>Amount Spent:</strong> ${order.total}</p>
                     </div>
                 ))}
 
