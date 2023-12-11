@@ -17,9 +17,7 @@ public class TicketDB {
     final static String USERNAME = "root";
     final static String PASSWORD = "uga4050uga4050_1";
     Connection connection = null;
-    private enum State {
-        available, reserved, occupied, expired
-    }
+    
 
     /**
      * Calling this will init the connection to db
@@ -32,7 +30,7 @@ public class TicketDB {
         }
     }
 
-    public void addTicket(int schedule_id, State state, int seat_id) {
+    public int addTicket(int schedule_id, edu.uga.cinemabooking.entity.Ticket.State state, int seat_id) {
 
         String sql = "INSERT INTO ticket (schedule_id, state, seat_id) " +
                 "VALUES (?,?,?,?)";
@@ -45,6 +43,49 @@ public class TicketDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return findMaxId();
+    }
 
+    public int findMaxId() {
+        String sql = "SELECT MAX(ID) as max_id FROM ticket";
+        int maxId = -1; // default value if no rows are found
+    
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+    
+            if (resultSet.next()) {
+                if (Integer.valueOf(resultSet.getInt("max_id")) == null) {
+                    maxId = 1;
+                } else {
+                    maxId = resultSet.getInt("max_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        return maxId;
+    }
+
+    public List<Ticket> getTickets() {
+        String sql = "SELECT * FROM ticket";
+        List<Ticket> tickets = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            tickets = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Ticket ticket = new Ticket();
+                ticket.setScheduleId(resultSet.getInt("schedule_id"));
+                ticket.setState(edu.uga.cinemabooking.entity.Ticket.State.available);
+                ticket.setSeatId(resultSet.getInt("seat_id"));
+                tickets.add(ticket);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tickets;
     }
 }

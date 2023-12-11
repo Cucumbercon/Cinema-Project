@@ -4,6 +4,7 @@ import './ConfirmationPage.css';
 
 function ConfirmationPage() {
 
+
     const confirmationData = {
         confirmationNumber: "XXXXX-XXX-XXX-XXX",
         movieTitle: "Avatar",

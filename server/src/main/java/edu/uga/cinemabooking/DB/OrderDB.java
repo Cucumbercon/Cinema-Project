@@ -78,7 +78,11 @@ public class OrderDB {
             ResultSet resultSet = preparedStatement.executeQuery();
     
             if (resultSet.next()) {
-                maxId = resultSet.getInt("max_id");
+                if (Integer.valueOf(resultSet.getInt("max_id")) == null) {
+                    maxId = 1;
+                } else {
+                    maxId = resultSet.getInt("max_id");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

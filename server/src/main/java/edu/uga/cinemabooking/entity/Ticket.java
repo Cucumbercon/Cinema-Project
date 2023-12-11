@@ -3,7 +3,7 @@ package edu.uga.cinemabooking.entity;
 public class Ticket {
     int id;
     int schedule_id;
-    private enum State {
+    public enum State {
         available, reserved, occupied, expired
     }
     State state;
@@ -32,8 +32,8 @@ public class Ticket {
         return state;
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void setState(State available) {
+        this.state = available;
     }
 
     // Getter and Setter for seat_id

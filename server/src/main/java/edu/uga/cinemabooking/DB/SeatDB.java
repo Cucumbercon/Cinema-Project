@@ -29,20 +29,41 @@ public class SeatDB {
         }
     }
 
-    public void addSeat(int ticket_id, int showroom_id, int column, int row) {
+    public void addSeat(int ticket_id, int showroom_id, int column, String row) {
 
-        String sql = "INSERT INTO seat (ticket_id, showroom_id, column, row) " +
+        String sql = "INSERT INTO seat (ticket_id, showroom_id, column, row_alphabet) " +
                 "VALUES (?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, ticket_id);
             preparedStatement.setInt(2, showroom_id);
             preparedStatement.setInt(3, column);
-            preparedStatement.setInt(4, row);
+            preparedStatement.setString(4, row);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public int findMaxId() {
+        String sql = "SELECT MAX(ID) as max_id FROM seat";
+        int maxId = -1; // default value if no rows are found
+    
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+    
+            if (resultSet.next()) {
+                if (Integer.valueOf(resultSet.getInt("max_id")) == null) {
+                    maxId = 1;
+                } else {
+                    maxId = resultSet.getInt("max_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        return maxId;
     }
 }
