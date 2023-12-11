@@ -132,6 +132,7 @@ public class ScheduleDB {
             while (resultSet.next()) {
                 Schedule schedules = new Schedule();
                 schedules = new Schedule();
+                schedules.setScheduleId(resultSet.getInt("ID"));
                 schedules.setMovieId(resultSet.getInt("movie_id"));
                 schedules.setShowroomId(resultSet.getInt("showroom_id"));
                 schedules.setStartTime(resultSet.getString("start_time"));

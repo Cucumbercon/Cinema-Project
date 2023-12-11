@@ -13,6 +13,7 @@ import java.sql.Time;
 import java.util.Date;
 
 public class Schedule {
+    int schedule_id = 0;
     int movie_id;
     int showroom_id;
     String start_time;
@@ -26,6 +27,10 @@ public class Schedule {
         this.showroom_id = showroom_id;
         this.start_time = start_time;
         this.end_time = end_time;
+    }
+
+    public int getScheduleId() {
+        return schedule_id;
     }
 
     public int getMovieId() {
@@ -44,6 +49,9 @@ public class Schedule {
         return end_time;
     }
 
+    public void setScheduleId(int schedule_id) {
+        this.schedule_id = schedule_id;
+    }
     public void setMovieId(int movie_id) {
         this.movie_id = movie_id;
     }
@@ -63,6 +71,7 @@ public class Schedule {
     @Override
     public String toString() {
         return "MovieSchedule{" +
+                "schedule_id=" + schedule_id +
                 "movie_id=" + movie_id +
                 ", showroom_id=" + showroom_id +
                 ", start_time='" + start_time + '\'' +
