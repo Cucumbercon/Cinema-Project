@@ -3,7 +3,10 @@ package edu.uga.cinemabooking.DB;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import edu.uga.cinemabooking.entity.Promotion;
 
 public class PromoDB {
@@ -21,23 +24,33 @@ public class PromoDB {
         }
     }
 
-    public double getDisount(String code) {
+    public Map<String, Object> getDisount(String code) {
         String sql = "SELECT * FROM promotion WHERE promotion_code = ?";
+        Map<String, Object> response = new HashMap<>();
+        double discount = 0.0;
+        int id = 1;
+        response.put("discount", discount);
+        response.put("id", id);
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, code);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return Double.parseDouble(resultSet.getString("discount_amount"));
+
+                    response.put("discount", Double.parseDouble(resultSet.getString("discount_amount")));
+                    response.put("id", Integer.parseInt(resultSet.getString("ID")));
+                    return response;
                 }
             }
         } catch (SQLException e) {
             // Handle SQL exceptions
             e.printStackTrace();
         }
-        return 0;
+        return response;
     }
 
-    public void addPromotion(String promotion_code, String description, double discount_amount, String startDate, String endDate) {
+    public void addPromotion(String promotion_code, String description, double discount_amount, String startDate,
+            String endDate) {
         String sql = "INSERT INTO promotion (promotion_code, description, discount_amount, start_date, end_date, status) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, promotion_code);
@@ -46,7 +59,7 @@ public class PromoDB {
             preparedStatement.setString(4, startDate);
             preparedStatement.setString(5, endDate);
             preparedStatement.setInt(6, 0); // Assuming status 0 as default for new entries
-            //System.err.println(sql);
+            // System.err.println(sql);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,7 +72,7 @@ public class PromoDB {
         List<Promotion> promotions = new ArrayList<>();
         String sql = "SELECT * FROM promotion";
         try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+                ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 Promotion promotion = new Promotion();
                 promotion.setId(resultSet.getInt("id"));
@@ -77,7 +90,8 @@ public class PromoDB {
         return promotions;
     }
 
-    public void updatePromotion(int id, String promotion_code, String description, double discount_amount, Date startDate, Date endDate, int status) {
+    public void updatePromotion(int id, String promotion_code, String description, double discount_amount,
+            Date startDate, Date endDate, int status) {
         String sql = "UPDATE promotion SET promotion_code = ?, description = ?, discount_amount = ?, start_date = ?, end_date = ?, status = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, promotion_code);
@@ -102,6 +116,7 @@ public class PromoDB {
             e.printStackTrace();
         }
     }
+
     public void updatePromotionStatus(Date inputDate) {
         String procedureCall = "{call UpdatePromotionStatus(?)}";
 

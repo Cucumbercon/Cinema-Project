@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -41,9 +43,11 @@ public class PromotionController {
     }
 
     @GetMapping("/applyPromotion")
-    public ResponseEntity<Double> applyPromotion(@RequestParam String code) {
-        double discount = pdb.getDisount(code);
-        return ResponseEntity.ok(discount);
+    public ResponseEntity<Map<String, Object>> applyPromotion(@RequestParam String code) {
+
+        Map<String, Object> response = pdb.getDisount(code);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/addpromotion")

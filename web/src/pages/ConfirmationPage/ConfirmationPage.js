@@ -1,13 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Assuming you're using React Router
+import { useLocation, useNavigate, Link } from 'react-router-dom'; // Assuming you're using React Router
 import './ConfirmationPage.css';
 
 function ConfirmationPage() {
 
+    const location = useLocation();
 
     const confirmationData = {
         confirmationNumber: "XXXXX-XXX-XXX-XXX",
-        movieTitle: "Avatar",
+        movieTitle: location.state.movie.title,
         date: "10/01/2023",
         time: "3:15pm",
         seats: "A1, A2, B4, B5",

@@ -44,6 +44,13 @@ public class UserController {
         }
     }
 
+    @GetMapping("/getEmail")
+    public ResponseEntity<String> getEmail(int id) {
+        String email = udb.getEmail(id);
+        System.out.println(email);
+        return ResponseEntity.ok(email);
+    }
+
     /**
      * This method is to fetch the user's payment card
      * 
