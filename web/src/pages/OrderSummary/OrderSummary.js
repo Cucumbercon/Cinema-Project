@@ -15,6 +15,7 @@ function Checkout() {
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [cardsList, setCardsList] = useState([]);
     const location = useLocation();
+    const [scheduleId, setScheduleId] = useState(null);
 
     const toggleDropdown = () => {
         setIsDropdownVisible(!isDropdownVisible);
@@ -222,6 +223,16 @@ function Checkout() {
             alert(`Payment has been cancelled.`);
         }
     }
+    useEffect(() => {
+        const storedScheduleId = localStorage.getItem('scheduleId');
+        if (storedScheduleId) {
+            setScheduleId(storedScheduleId);
+            console.log("schedule_id = " + storedScheduleId);
+        } else {
+            // err in getting schedule_id
+            console.log('No scheduleId found in localStorage');
+        }
+    }, []); // only running at the beginning
 
     return (
         <div className="checkout-container">
