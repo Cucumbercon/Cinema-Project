@@ -111,7 +111,7 @@ const MovieBooking = (props) => {
     };
 
     const goToOrderSummary = () => {
-        navigate('/ordersummary');
+        navigate('/orderhistory');
     };
 
     const handleLogout = () => {
@@ -340,7 +340,7 @@ const MovieBooking = (props) => {
                                                 </div>
                                             ) : (
                                                 <div>
-                                                    <button onClick={goToOrderSummary}>Order Summay</button>
+                                                    <button onClick={goToOrderSummary}>Order History</button>
                                                     <button onClick={goToProfilePage}>Update Profile</button>
                                                     <button onClick={handleLogout}>Logout</button>
                                                 </div>
