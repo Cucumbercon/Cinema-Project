@@ -28,9 +28,14 @@ public class OrderController {
         try {
             JsonNode jsonNode = objectMapper.readTree(data);
             System.out.println(jsonNode);
+
+            
             int id = jsonNode.get("orderData").get("user_id").asInt();
             double total = jsonNode.get("orderData").get("total").asDouble();
             int ticket_amount = jsonNode.get("orderData").get("ticket_amount").asInt();
+
+
+            int schedule_id = jsonNode.get("schedule_id").asInt();
 
             odb.addOrder(id, 0, 0, 0, ticket_amount, total, "");
 

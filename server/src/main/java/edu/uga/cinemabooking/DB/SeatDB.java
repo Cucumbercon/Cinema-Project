@@ -29,7 +29,7 @@ public class SeatDB {
         }
     }
 
-    public void addSeat(int ticket_id, int showroom_id, int column, String row) {
+    public int addSeat(int ticket_id, int showroom_id, int column, String row) {
 
         String sql = "INSERT INTO seat (ticket_id, showroom_id, column, row_alphabet) " +
                 "VALUES (?,?,?,?)";
@@ -44,6 +44,7 @@ public class SeatDB {
             e.printStackTrace();
         }
 
+        return findMaxId();
     }
 
     public int findMaxId() {

@@ -60,10 +60,11 @@ public class SeatController {
                 int num = Integer.parseInt(seat.replaceAll("[^0-9]", ""));
                 rowAlphabet.add(alphabet);
                 columns.add(num);
-                ticket_ids.add(tdb.addTicket(schedule_id, edu.uga.cinemabooking.entity.Ticket.State.available, numCounter));
+                ticket_ids.add(tdb.addTicket(schedule_id, edu.uga.cinemabooking.entity.Ticket.State.occupied));
             }
             for (int i = 0; i < numCounter; i++) {
-                seatdb.addSeat(ticket_ids.get(i), showroom_id, columns.get(i), rowAlphabet.get(i));
+                int seat_id = seatdb.addSeat(ticket_ids.get(i), showroom_id, columns.get(i), rowAlphabet.get(i));
+                tdb.addSeatID(ticket_ids.get(i), seat_id);
             }
             return ResponseEntity.ok("");
         } catch (Exception e) {
