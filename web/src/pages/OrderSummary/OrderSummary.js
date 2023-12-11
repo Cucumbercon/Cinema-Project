@@ -7,10 +7,11 @@ function Checkout() {
     const navigate = useNavigate();
 
     const selectedSeatsCount = useLocation().state?.selectedSeatsCount;
-    // console.log(selectedSeatsCount);
+    const userID = localStorage.getItem('id');
     const selectedSeat = (useLocation().state?.selectedSeat);
     console.log(selectedSeat);
     const [promoText, setPromoText] = useState('');
+    const [email, setEmail] = useState('');
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [cardsList, setCardsList] = useState([]);
     const location = useLocation();
@@ -35,8 +36,7 @@ function Checkout() {
     const orderData = {
         user_id: localStorage.getItem("id"),
         payment_id: "",
-        ticket_id: "",
-        promote_id: "",
+        promote_id: 1,
         ticket_amount: amount,
         total: movieDetails.total,
         describe: "",
@@ -48,14 +48,14 @@ function Checkout() {
         }).then((response) => response.text())
             .then((data) => {
                 const parsedData = JSON.parse(data);
-                if (parsedData.prom != 0) {
-                    setMovieDetails((prevDetails) => ({
-                        ...prevDetails,
-                        discount: parsedData,
-                        total: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) * 0.06 +
-                            (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) - parsedData
-                    }));
-                }
+
+                setMovieDetails((prevDetails) => ({
+                    ...prevDetails,
+                    discount: parsedData.discount,
+                    total: (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) * 0.06 +
+                        (selectedSeatsCount.adult * 15 + selectedSeatsCount.senior * 8 + selectedSeatsCount.child * 5) - parsedData.discount * 0.
+                }));
+                orderData.payment_id = parsedData.id;
             })
             .catch((error) => {
                 console.error('Error searching movies:', error);
@@ -64,16 +64,13 @@ function Checkout() {
 
 
     const saveCardButton = () => {
-        const userID = localStorage.getItem('id');
         if (!isDropdownVisible) {
             fetch(`http://localhost:8000/api/fetchCardInfo?id=${userID}`, {
                 method: 'GET',
             }).then((response) => response.text())
                 .then((data) => {
                     const parsedData = JSON.parse(data);
-
                     const cardNumbers = parsedData.map(card => card.cardNumber);
-
                     // Now set cardsList to the entire array
                     setCardsList(cardNumbers);
                     // console.log(cardNumbers[0]);
@@ -92,16 +89,35 @@ function Checkout() {
 
         if (result) {
             const movie = location.state.movie;
+            orderData.payment_id = card;
 
-            // add order to db
-            fetch(`http://localhost:8000/api/addOrder`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    orderData,
-                }),
+            // get the user email
+            fetch(`http://localhost:8000/api/getEmail?id=${userID}`, {
+                method: 'GET',
             }).then((response) => response.text())
                 .then((data) => {
-                    navigate("/ConfirmationPage");
+
+                    // add order to db
+                    fetch(`http://localhost:8000/api/addOrder`, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            orderData,
+                        }),
+                    }).then((responsee) => responsee.text())
+                        .then((dataa) => {
+                            navigate("/ConfirmationPage", {
+                                state: {
+                                    movie,
+                                    seat: selectedSeat,
+                                    total: movieDetails.total,
+                                    email: data,
+                                },
+                            });
+                        })
+                        .catch((error) => {
+                            console.error('Error occurred:', error);
+                            alert('Error occurs: ', error);
+                        });
 
                 })
                 .catch((error) => {
@@ -109,25 +125,27 @@ function Checkout() {
                     alert('Error occurs: ', error);
                 });
 
+
+
             // save the seat info into db
 
 
             // send order confirmation 
-            // fetch(`http://localhost:8000/api/sendOrderConfirmation`, {
-            //     method: 'POST',
-            //     body: JSON.stringify({
-            //         movie,
-            //         userID,
-            //         price,
-            //     }),
-            // }).then((response) => response.text())
-            //     .then((data) => {
-            //         console.log(data);
-            //     })
-            //     .catch((error) => {
-            //         console.error('Error occurred:', error);
-            //         alert('Error occurs: ', error);
-            //     });
+            fetch(`http://localhost:8000/api/sendOrderConfirmation`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    movie,
+                    userID,
+                    price: orderData.total,
+                }),
+            }).then((response) => response.text())
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error('Error occurred:', error);
+                    alert('Error occurs: ', error);
+                });
         } else {
             alert(`Payment has been cancelled.`);
         }
@@ -141,30 +159,65 @@ function Checkout() {
         event.preventDefault();
 
         const result = window.confirm(`Do you want to proceed the order?`);
-        console.log(33);
 
         if (result) {
             const movie = location.state.movie;
-            console.log(movie);
 
-            const userID = localStorage.getItem("id");
-            const price = movieDetails.total;
+            // get the user email
+            fetch(`http://localhost:8000/api/getEmail?id=${userID}`, {
+                method: 'GET',
+            }).then((response) => response.text())
+                .then((data) => {
+
+                    // add order to db
+                    fetch(`http://localhost:8000/api/addOrder`, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            orderData,
+                        }),
+                    }).then((responsee) => responsee.text())
+                        .then((dataa) => {
+                            navigate("/ConfirmationPage", {
+                                state: {
+                                    movie,
+                                    seat: selectedSeat,
+                                    total: movieDetails.total,
+                                    email: data,
+                                },
+                            });
+                        })
+                        .catch((error) => {
+                            console.error('Error occurred:', error);
+                            alert('Error occurs: ', error);
+                        });
+
+                })
+                .catch((error) => {
+                    console.error('Error occurred:', error);
+                    alert('Error occurs: ', error);
+                });
+
+
+
+            // save the seat info into db
+
+
+            // send order confirmation 
             fetch(`http://localhost:8000/api/sendOrderConfirmation`, {
                 method: 'POST',
                 body: JSON.stringify({
                     movie,
                     userID,
-                    price,
+                    price: orderData.total,
                 }),
-                    }).then((response) => response.text())
-                        .then((data) => {
-                            navigate("/ConfirmationPage");
-                            console.log(data);
-                        })
-                        .catch((error) => {
-                            console.error('Error occurred:', error);
-                            alert('Error occurs: ', error);
-            });
+            }).then((response) => response.text())
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error('Error occurred:', error);
+                    alert('Error occurs: ', error);
+                });
         } else {
             alert(`Payment has been cancelled.`);
         }

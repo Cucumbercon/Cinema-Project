@@ -31,8 +31,9 @@ public class OrderController {
             int id = jsonNode.get("orderData").get("user_id").asInt();
             double total = jsonNode.get("orderData").get("total").asDouble();
             int ticket_amount = jsonNode.get("orderData").get("ticket_amount").asInt();
+            int promote_id = jsonNode.get("orderData").get("promote_id").asInt();
 
-            odb.addOrder(id, 0, 0, 0, ticket_amount, total, "");
+            odb.addOrder(id, 1, promote_id, ticket_amount, total, "");
 
         } catch (Exception e) {
             System.out.println("Error: " + e.toString());
