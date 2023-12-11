@@ -103,6 +103,15 @@ function ScheduleMovie() {
                     'Content-Type': 'application/json'
                 }
             })
+                .then(function (response) {
+                    if (response.status === 501) {
+                        alert('Error: The selected time overlaps with an existing scheduled movie. Please choose a different time.');
+                        return;
+                    } else if (response.status === 500) {
+                        alert('Schedule movie successfully added!');
+                        return;
+                    }
+                })
                 .catch(function (error) {
                     // if error occurs other than http, direct to error page or something else
                     console.error('Error:', error);

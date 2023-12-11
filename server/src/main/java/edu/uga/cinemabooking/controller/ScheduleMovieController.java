@@ -65,6 +65,7 @@ public class ScheduleMovieController {
 
                 System.out.println("Checkpoint 3" + start_date + "\n" + end_date);
                 sdb.addSchedule(movie_id, showroom_id, start_date, end_date);
+                return ResponseEntity.status(500).body("Schedule successfully added!");
             }
 
         } catch (IOException e) {
@@ -72,7 +73,7 @@ public class ScheduleMovieController {
             return new ResponseEntity<>("Invalid data format", HttpStatus.BAD_REQUEST);
         }
 
-        return ResponseEntity.ok("Schedule movies successful");
+        //return ResponseEntity.ok("Schedule movies successful");
 
     }
 
