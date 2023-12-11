@@ -24,78 +24,78 @@
 // @CrossOrigin(origins = "*")
 // public class Facade {
 
-//     // AddMovieController
-//     @PostMapping("/addMovie")
-//     public void fetchData(@RequestBody String data) {
-//         AddMovieController.fetchData(data);
-//     }
-//     // EditProfileController
-//     @GetMapping("/loadprofile")
-//     public void getUserInfo(@RequestParam int userId) {
-//         EditProfileController.getUserInfo(userId);
-//     }
+    // AddMovieController
+    @PostMapping("/addMovies")
+    public void fetchData(@RequestBody String data) {
+        AddMovieController.fetchData(data);
+    }
+    // EditProfileController
+    @GetMapping("/loadprofiles")
+    public void getUserInfo(@RequestParam int userId) {
+        EditProfileController.getUserInfo(userId);
+    }
 
-//     @GetMapping("/loadprofilecard")
-//     public void getUserCard(@RequestParam int userId) {
-//         EditProfileController.getUserCard(userId);
-//     }
+    @GetMapping("/loadprofilecard")
+    public void getUserCard(@RequestParam int userId) {
+        EditProfileController.getUserCard(userId);
+    }
 
-//     @PostMapping("/updateprofile")
-//     public void updateUserInfo(@RequestBody String data) {
-//         EditProfileController.updateUserInfo(data);
-//     }
-//     // EmailController
+    @PostMapping("/updateprofile")
+    public void updateUserInfo(@RequestBody String data) {
+        EditProfileController.updateUserInfo(data);
+    }
+    // EmailController
 
-//     @PostMapping("/sendEmail")
-//     public void sendEmail(@RequestBody String data) {
-//         EmailController.sendEmail(data);
-//     }
+    @PostMapping("/sendEmail")
+    public void sendEmail(@RequestBody String data) {
+        EmailController.sendEmail(data);
+    }
 
-//     @PostMapping("/verifyCode")
-//     public void verifyCode(@RequestBody String data) {
-//         EmailController.verifyCode(data);
-//     }
+    @PostMapping("/verifyCode")
+    public void verifyCode(@RequestBody String data) {
+        EmailController.verifyCode(data);
+    }
 
-//     @PostMapping("/verifyForgotCode")
-//     public void verifyForgotCode(@RequestBody String data) {
-//         EmailController.verifyForgotCode(data);
-//     }
+    @PostMapping("/verifyForgotCode")
+    public void verifyForgotCode(@RequestBody String data) {
+        EmailController.verifyForgotCode(data);
+    }
 
-//     @PostMapping("/sendForgotEmail")
-//     public void sendForgotEmail(@RequestBody String data) {
-//         EmailController.sendForgotEmail(data);
-//     }
+    @PostMapping("/sendForgotEmail")
+    public void sendForgotEmail(@RequestBody String data) {
+        EmailController.sendForgotEmail(data);
+    }
 
-//     @PostMapping("/sendOrderConfirmation")
-//     public void sendOrderConfirmation(@RequestBody String data) {
-//         EmailController.sendOrderConfirmation(data);
-//     }
+    @PostMapping("/sendOrderConfirmation")
+    public void sendOrderConfirmation(@RequestBody String data) {
+        EmailController.sendOrderConfirmation(data);
+    }
 
-//     // ForgotPasswordController
-//     @PostMapping("/forgotpassword")
-//     public void fetchDataForgot(@RequestBody String data) {
-//         ForgotPasswordController.fetchData(data);
-//     }
+    // ForgotPasswordController
+    @PostMapping("/forgotpassword")
+    public void fetchDataForgot(@RequestBody String data) {
+        ForgotPasswordController.fetchData(data);
+    }
 
-//     // GetMovieController
-//     @GetMapping("/getAvailableMovie")
-//     public void receiveAvailable() {
-//         GetMovieController.receiveAvailable();
-//     }
+    // GetMovieController
+    @GetMapping("/getAvailableMovie")
+    public void receiveAvailable() {
+        GetMovieController.receiveAvailable();
+    }
 
-//     @GetMapping("/getUpComingMovie")
-//     public void receiveUpComing() {
-//         GetMovieController.receiveUpComing();
-//     }
+    @GetMapping("/getUpComingMovie")
+    public void receiveUpComing() {
+        GetMovieController.receiveUpComing();
+    }
 
-//     @GetMapping("/searchMovieByName")
-//     public void searchMovieByName(@RequestParam String movieName) {
-//         GetMovieController.searchMovieByName(movieName);
-//     }
+    @GetMapping("/searchMovieByName")
+    public void searchMovieByName(@RequestParam String movieName) {
+        GetMovieController.searchMovieByName(movieName);
+    }
 
-//     @GetMapping("/getArchiveMovie")
-//     public void getArchiveMovie() {
-//         GetMovieController.getArchiveMovie();
-//     }
+    @GetMapping("/getArchiveMovie")
+    public void getArchiveMovie() {
+        GetMovieController.getArchiveMovie();
+    }
 
 // }

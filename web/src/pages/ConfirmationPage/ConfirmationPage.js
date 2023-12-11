@@ -7,7 +7,7 @@ function ConfirmationPage() {
     const location = useLocation();
 
     const confirmationData = {
-        confirmationNumber: "XXXXX-XXX-XXX-XXX",
+        confirmationNumber: "1000340",
         movieTitle: location.state.movie.title,
         date: location.state.selectedDate,
         time: location.state.selectedTime,
