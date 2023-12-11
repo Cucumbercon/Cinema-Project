@@ -86,8 +86,34 @@ function Checkout() {
 
     }
 
-    function createTicket(ticketCount) {
-        
+    function createTicket(orderID) {
+
+        const selectedSeats = location.state.selectedSeat;
+        const selectedShowRoomId = location.state.selectedShowroomId;
+
+        // for (let i = 0; i < selectedSeatsCount; i++) {
+
+        const ticketData = {
+            selectedShowRoomId,
+            orderID,
+            selectedSeats,
+            scheduleId
+        }
+
+            fetch(`http://localhost:8000/api/addTicket`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    ticketData,
+                }),
+            }).then((response) => response.text())
+                .then((data) => {
+                })
+                .catch((error) => {
+                    console.error('Error occurred:', error);
+                    alert('Error occurs: ', error);
+                });
+        // }
+
     }
 
 
@@ -111,6 +137,8 @@ function Checkout() {
                         }),
                     }).then((responsee) => responsee.text())
                         .then((dataa) => {
+                            createTicket(dataa)
+
                             navigate("/ConfirmationPage", {
                                 state: {
                                     movie,
@@ -119,6 +147,7 @@ function Checkout() {
                                     email: data,
                                     selectedDate: location.state.selectedDate,
                                     selectedTime: location.state.selectedTime,
+                                    selectedShowroomId: location.state.selectedShowroomId,
                                 },
                             });
                         })
@@ -135,26 +164,22 @@ function Checkout() {
 
 
 
-            // save the seat info into db
-
-
-
             // send order confirmation 
-            // fetch(`http://localhost:8000/api/sendOrderConfirmation`, {
-            //     method: 'POST',
-            //     body: JSON.stringify({
-            //         movie,
-            //         userID,
-            //         price: orderData.total,
-            //     }),
-            // }).then((response) => response.text())
-            //     .then((data) => {
-            //         console.log(data);
-            //     })
-            //     .catch((error) => {
-            //         console.error('Error occurred:', error);
-            //         alert('Error occurs: ', error);
-            //     });
+            fetch(`http://localhost:8000/api/sendOrderConfirmation`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    movie,
+                    userID,
+                    price: orderData.total,
+                }),
+            }).then((response) => response.text())
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error('Error occurred:', error);
+                    alert('Error occurs: ', error);
+                });
         } else {
             alert(`Payment has been cancelled.`);
         }
@@ -186,6 +211,7 @@ function Checkout() {
                         }),
                     }).then((responsee) => responsee.text())
                         .then((dataa) => {
+                            createTicket(dataa);
                             navigate("/ConfirmationPage", {
                                 state: {
                                     movie,

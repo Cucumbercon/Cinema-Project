@@ -50,10 +50,10 @@ public class SeatDB {
     public int findMaxId() {
         String sql = "SELECT MAX(ID) as max_id FROM seat";
         int maxId = -1; // default value if no rows are found
-    
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet resultSet = preparedStatement.executeQuery();
-    
+
             if (resultSet.next()) {
                 if (Integer.valueOf(resultSet.getInt("max_id")) == null) {
                     maxId = 1;
@@ -64,7 +64,37 @@ public class SeatDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    
+
         return maxId;
     }
+
+    public int assignSeat(int selectedShowRoomId, String selectedSeats) {
+        // Construct SQL query
+        String sql = "SELECT * FROM seat WHERE showroom_id = ? AND (row_alphabet = ? AND `column` = ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            // Parse selectedSeats
+            char rowAlphabet = selectedSeats.charAt(0);
+            int column = Integer.parseInt(selectedSeats.substring(1));
+    
+            // Set parameters for the prepared statement
+            preparedStatement.setInt(1, selectedShowRoomId);
+            preparedStatement.setString(2, String.valueOf(rowAlphabet));
+            preparedStatement.setInt(3, column);
+    
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Seat found, handle accordingly
+                    return Integer.parseInt(resultSet.getString("ID"));
+                } else {
+                    // Seat not found, handle accordingly
+                    System.out.println("Seat not found.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

@@ -1,5 +1,6 @@
 package edu.uga.cinemabooking.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.uga.cinemabooking.DB.OrderDB;
+import edu.uga.cinemabooking.DB.SeatDB;
 import edu.uga.cinemabooking.DB.TicketDB;
 import edu.uga.cinemabooking.entity.Order;
 
@@ -22,11 +24,14 @@ import edu.uga.cinemabooking.entity.Order;
 public class OrderController {
 
     OrderDB odb = new OrderDB();
+    SeatDB sdb = new SeatDB();
     Order order = new Order();
     TicketDB tdb = new TicketDB();
 
     @PostMapping("/addOrder")
-    public ResponseEntity<String> addOrder(@RequestBody String data) {
+    public ResponseEntity<Integer> addOrder(@RequestBody String data) {
+
+        int orderID = 0;
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -43,15 +48,49 @@ public class OrderController {
 
             // List<Integer> ticket_ids = tdb.getTicketIDs(schedule_id);
             // for (int i = 0; i < ticket_ids.size(); i++) {
-                odb.addOrder(user_id, payment_id, promote_id, ticket_amount, total, description);
+            orderID = odb.addOrder(user_id, payment_id, promote_id, ticket_amount, total, description);
             // }
-            
 
         } catch (Exception e) {
             System.out.println("Error: " + e.toString());
         }
 
-        return ResponseEntity.ok("Add order successful");
+        return ResponseEntity.ok(orderID);
+
+    }
+
+    @PostMapping("/addTicket")
+    public ResponseEntity<List<Integer>> addTicket(@RequestBody String data) {
+
+        List<Integer> seatID = new ArrayList<>();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(data);
+            int selectedShowRoomId = jsonNode.get("ticketData").get("selectedShowRoomId").asInt();
+            int orderID = jsonNode.get("ticketData").get("orderID").asInt();
+            int scheduleID = jsonNode.get("ticketData").get("scheduleId").asInt();
+            JsonNode selectedSeatsNode = jsonNode.get("ticketData").get("selectedSeats");
+            if (selectedSeatsNode.isArray()) {
+                for (JsonNode seatNode : selectedSeatsNode) {
+                    String selectedSeat = seatNode.asText();
+                    System.out.println(selectedSeat);
+                    seatID.add(sdb.assignSeat(selectedShowRoomId, selectedSeat));
+                }
+            } else {
+                String selectedSeat = selectedSeatsNode.asText();
+                sdb.assignSeat(selectedShowRoomId, selectedSeat);
+                    seatID.add(sdb.assignSeat(selectedShowRoomId, selectedSeat));
+            }
+
+            for (int i = 0; i < seatID.size(); i++) {
+                tdb.addTicket(scheduleID, seatID.get(i), orderID);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return ResponseEntity.ok(seatID);
 
     }
 }

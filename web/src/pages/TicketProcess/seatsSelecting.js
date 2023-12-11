@@ -165,6 +165,7 @@ function MovieSeatBooking() {
                     selectedSeat,
                     selectedDate: location.state.selectedDate,
                     selectedTime: location.state.selectedTime,
+                    selectedShowroomId: location.state.selectedShowroomId,
                 }
             });
         } else {

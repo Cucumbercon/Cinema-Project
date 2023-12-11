@@ -30,13 +30,14 @@ public class TicketDB {
         }
     }
 
-    public int addTicket(int schedule_id, edu.uga.cinemabooking.entity.Ticket.State state) {
+    public int addTicket(int scheduleID, int seatID, int orderID) {
 
-        String sql = "INSERT INTO ticket (schedule_id, state) " +
-                "VALUES (?,?)";
+        String sql = "INSERT INTO ticket (schedule_id, seat_id, order_id) " +
+                "VALUES (?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, schedule_id);
-            preparedStatement.setString(2, state.name());
+            preparedStatement.setInt(1, scheduleID);
+            preparedStatement.setInt(2, seatID);
+            preparedStatement.setInt(3, orderID);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {

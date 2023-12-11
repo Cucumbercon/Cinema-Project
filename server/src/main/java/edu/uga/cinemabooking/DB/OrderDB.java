@@ -32,12 +32,14 @@ public class OrderDB {
         }
     }
 
-    public void addOrder(int user_id, int payment_id, int promote_id, int ticket_amount,
+    public int addOrder(int user_id, int payment_id, int promote_id, int ticket_amount,
             double total, String describe) {
 
         String sql = "INSERT INTO `order` (user_id, payment_id, promote_id, ticket_amount, total, order_time, discribe) "
                 +
                 "VALUES (?,?,?,?,?,?,?)";
+        String idSQL = "SELECT * FROM `order` WHERE order_time = ?";
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String parsableString = sdf.format(Calendar.getInstance().getTime());
         java.util.Date utilDate = null;
@@ -48,7 +50,8 @@ public class OrderDB {
         }
         java.sql.Timestamp sqlDate = new java.sql.Timestamp(utilDate.getTime());
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                PreparedStatement idStatement = connection.prepareStatement(idSQL)) {
             preparedStatement.setInt(1, user_id);
             preparedStatement.setInt(2, payment_id);
             preparedStatement.setInt(3, promote_id);
@@ -58,9 +61,19 @@ public class OrderDB {
             preparedStatement.setString(7, describe);
 
             preparedStatement.executeUpdate();
+
+            idStatement.setTimestamp(1, sqlDate);
+            try (ResultSet resultSet = idStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int lastInsertedID = resultSet.getInt("ID");
+                    return lastInsertedID;
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return 0;
 
     }
 
