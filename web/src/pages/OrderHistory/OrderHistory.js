@@ -73,8 +73,6 @@ function OrderHistory() {
                             <p><strong>Date:</strong> {order.date}</p>
                             <p><strong>Seats:</strong> {order.seats.join(', ')}</p>
                             <p><strong>Amount Spent:</strong> ${order.amountSpent}</p>
-                            <p><strong>Credit Card Number:</strong> {order.creditCardNumber}</p>
-                            <p><strong>Status:</strong> {order.purchaseStatus}</p>
                     </div>
                 ))}
 
